@@ -1,0 +1,26 @@
+.manubar {
+    width: 100%;
+    background-color: darkblue;
+    color: white;
+    font-size: 18pt;
+    display: flex;
+    justify-content: space-between;
+}
+
+.content {
+    margin-top: 2em;
+    text-align: center;
+}
+
+.title {
+    font-size: 2.4em;
+    margin-top: 1em;
+}
+
+.footer {
+    width: 100%;
+    margin-top: 5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
