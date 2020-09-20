@@ -12,6 +12,15 @@
     text-align: center;
 }
 
+.banner {
+    max-width: 1200px;
+    height: 628px;
+    background-image: url("/images//biswap-cryptocurrency.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin: 0 auto;
+}
+
 .title {
     font-size: 2.4em;
     margin-top: 1em;
