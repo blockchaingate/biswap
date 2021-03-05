@@ -1,4 +1,4 @@
-.manubar {
+/* .manubar {
     width: 100%;
     background-color: darkblue;
     color: white;
@@ -37,4 +37,37 @@
     display: flex;
     align-items: center;
     justify-content: center;
+} */
+
+.logo {
+    font-weight: 900;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    font-size: 40px;
+}
+
+.logoimg {
+    width: 100px;
+    height: 100px;
+    margin-right: 15px;
+}
+
+.site-header .navbar-brand img {
+    width: auto;
+    max-width: 100%;
+    max-height: 60px;
+}
+
+a.navbar-brand.animated {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logos li img {
+    max-height: 50px;
+}
+
+.widget-about {
+    text-align: center;
 }
