@@ -1,0 +1,57 @@
+::ng-deep .cdk-overlay-pane {
+  width: 25%;
+  border-radius: 20px;
+}
+
+::ng-deep .mat-dialog-container {
+  border-radius: 20px;
+}
+
+::ng-deep .mat-dialog-content {
+  padding: 15px 24px;
+}
+
+.sparater {
+  margin: 10px -30px 10px;
+  border: 0;
+  border-top: 1px solid #c9c7c7;
+  opacity: 0.2;
+}
+
+.search-token-input {
+  width: 100%;
+  border-radius: 20px;
+  background-color: #6c6666;
+  height: 50px;
+  input {
+    display: flex;
+    align-items: center;
+    place-self: center;
+  }
+}
+
+::ng-deep .mat-form-field-flex {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+::ng-deep .mat-input-element{
+    caret-color: white;
+    font-size: larger;
+}
+
+.list-button {
+  height: 40px;
+  width: 100%;
+  line-height: 40px;
+  cursor: pointer;
+  background-color: #424242;
+  :hover{
+    height: 40px;
+    line-height: 40px;
+    background-color: black;
+  }
+  span {
+    color: white;
+  }
+}

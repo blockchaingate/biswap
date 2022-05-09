@@ -1,0 +1,61 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="swapBody">
+  <div fxFlex="25">
+    <mat-card>
+      <div fxLayout="row" fxLayoutAlign="space-between center" >
+        <mat-card-title fxLayout="column">
+         <span class="paddingTop5">
+           Your Liquidity
+         </span> 
+         <h5 class="paddingTop5">
+          Remove liquidity to receive tokens back
+         </h5>
+        </mat-card-title>
+
+        <div class="paddingBottom20">
+          <button
+            mat-icon-button
+            class="example-icon"
+            aria-label="Example icon-button with share icon"
+          >
+            <mat-icon>settings</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            class="example-icon"
+            aria-label="Example icon-button with share icon"
+          >
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <mat-card-content>
+        <div class="emty-liquidity" *ngIf="isWalletConnect != true; else other">
+          <span>
+            Connect to a wallet to view your liquidity.
+          </span>
+        </div>
+
+        <ng-template #other>
+          <div class="emty-liquidity" fxLayout="column" fxLayoutAlign="center center">
+            <span>No liquidity found.
+            </span>
+            <span class="marginTop20">Don't see a pool you joined?
+            </span>
+          </div>
+        </ng-template>
+      </mat-card-content>
+
+      
+        <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
+        <mat-card-actions fxLayout="row" fxLayoutAlign="center center" class="mat-card-action" >
+          <button mat-raised-button color="primary" (click)="connectWallet()" *ngIf="!isWalletConnect; else asd" >Connect a wallet</button>
+  
+          <ng-template #asd> 
+            <button mat-raised-button color="primary" (click)="addLiquidityFunction()">+ Add Liquidity</button>
+          </ng-template>
+        
+        </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

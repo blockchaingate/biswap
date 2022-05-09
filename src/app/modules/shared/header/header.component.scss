@@ -1,0 +1,26 @@
+.header-tab-items span{
+    width: 10rem;
+    border: 1px solid gray;
+    padding: 3px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    &:hover {
+        border-bottom: 2px solid white;
+        color: white;
+        background-color: #222f3e;
+    }
+}
+
+.mat-toolbar {
+    color: #fff;
+}
+
+::ng-deep .mat-menu-panel {
+    margin-top: 30px;
+}
+
+.hedaer-logo {
+    height: 40px;
+}

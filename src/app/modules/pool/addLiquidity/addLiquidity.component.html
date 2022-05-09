@@ -1,0 +1,122 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="swapBody">
+  <div fxFlex="25">
+    <mat-card>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-card-title>Add Liquidity </mat-card-title>
+
+        <div>
+          <button
+            mat-icon-button
+            class="example-icon"
+            aria-label="Example icon-button with share icon"
+          >
+            <mat-icon>settings</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            class="example-icon"
+            aria-label="Example icon-button with share icon"
+          >
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div fxLayoutAlign="start center" class="paddingBottom5">
+        <span>Add liquidity to receive LP tokens </span>
+      </div>
+
+      <hr class="sparater" />
+
+      <div fxLayout="column" fxLayoutGap="10px">
+        <div class="tokenSelectButton" (click)="openFirstTokenListDialog()">
+          <span
+            class="tokenwithIcon"
+            *ngIf="firstToken.tickerName != null; else select"
+          >
+            {{ firstToken.tickerName }} <mat-icon>expand_more</mat-icon>
+          </span>
+
+          <ng-template #select>
+            <span class="tokenwithIcon">
+              Select Token <mat-icon>expand_more</mat-icon>
+            </span>
+          </ng-template>
+        </div>
+
+        <div
+          class="coins-input-body"
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+        >
+          <mat-form-field>
+            <mat-label></mat-label>
+            <input
+              #token1
+              matInput
+              name="firstCoinAmount"
+              type="number"
+              [(ngModel)]="firstCoinAmount"
+              placeholder="0.0"
+            />
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <mat-icon>add</mat-icon>
+        </div>
+
+        <div class="tokenSelectButton" (click)="openSecondTokenListDialog()">
+          <span
+            class="tokenwithIcon"
+            *ngIf="secondToken.tickerName != null; else selecta"
+          >
+            {{ secondToken.tickerName }} <mat-icon>expand_more</mat-icon>
+          </span>
+
+          <ng-template #selecta>
+            <span class="tokenwithIcon">
+              Select Token <mat-icon>expand_more</mat-icon>
+            </span>
+          </ng-template>
+        </div>
+
+        <div
+          class="coins-input-body"
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+        >
+          <mat-form-field>
+            <mat-label></mat-label>
+            <input
+              #token2
+              matInput
+              name="secondCointAmount"
+              type="number"
+              [(ngModel)]="secondCoinAmount"
+              placeholder="0.0"
+            />
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <span> Price </span>
+          <span>
+            {{ swapAmount }}
+          </span>
+        </div>
+      </div>
+
+      <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
+      <mat-card-actions
+        fxLayout="row"
+        fxLayoutAlign="center center"
+        class="mat-card-action"
+      >
+        <button mat-raised-button color="primary" (click)="callRPC()">
+          Add Liquidity
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
