@@ -75,7 +75,7 @@ export class AddLiquidityComponent implements OnInit {
   }
 
   callRPC(){
-    var abiHex = this.web3Service.getTransferFuncABI('a');
+    var abiHex = this.web3Service.getAmountIn('a');
     console.log('abiHex')
     console.log(abiHex)
   }

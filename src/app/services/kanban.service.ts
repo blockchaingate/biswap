@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Coin } from '../models/coin';
-import { KanbanCallModel } from '../models/kanban.model';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +58,7 @@ export class KanbanService {
     return this.http.get(path);
   }
 
- kanbanCall(to: string, abiData: string) {
+kanbanCall(to: string, abiData: string) {
     const data = {
         "transactionOptions": {
             to: to,
@@ -69,17 +68,5 @@ export class KanbanService {
     const path = 'kanban/call';
     const res = this.post(path, data);
     return res;
-  }
-
-  kanbanCallPost(model: KanbanCallModel) {
-    var url = 'http://18.223.17.4:8545/';
-    const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Cache-Control': 'no-cache',
-    });
-    const options = {
-      headers: httpHeaders,
-    };
-    return this.http.post(url, model, options);
   }
 }

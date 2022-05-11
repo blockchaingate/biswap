@@ -113,7 +113,7 @@ export class PoolComponent implements OnInit {
       });
   }
   callRPC(){
-    var abiHex = this.web3Service.getTransferFuncABI('a');
+    var abiHex = this.web3Service.getAmountIn('a');
     var txHex = this.web3Service.signAbiHexWithPrivateKey(abiHex,'0xa2370c422e2074ae2fc3d9d24f1e654c7fa3c181', '0xa2370c422e2074ae2fc3d9d24f1e654c7fa3c181', 1 )
     console.log('abiHex')
     console.log(abiHex)
