@@ -32,7 +32,7 @@ export class KanbanService {
     return addr;
   }
 
-  getTokenList() {
+ getTokenList() {
     return this.http.get<Coin[]>(`${this.url}exchangily/getTokenList`);
   }
 

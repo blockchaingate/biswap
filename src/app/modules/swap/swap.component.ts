@@ -6,7 +6,6 @@ import { Coin } from 'src/app/models/coin';
 import { DataService } from 'src/app/services/data.service';
 import { KanbanService } from 'src/app/services/kanban.service';
 import { StorageService } from 'src/app/services/storage.service';
-import { UtilsService } from 'src/app/services/utils.service';
 import { WalletService } from 'src/app/services/wallet.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { environment } from 'src/environments/environment';
@@ -81,52 +80,77 @@ export class SwapComponent implements OnInit {
   }
 
   async onKey(value: number, isFistToken: boolean) {
-    // if (
-    //   this.firstToken.tickerName != null 
-    //   &&
-    //   this.secondToken.tickerName != null
-    // ) {
+    console.log(value);
+    console.log(isFistToken);
+
+    if (
+      this.firstToken.tickerName != null &&
+      this.secondToken.tickerName != null &&
+      value != null &&
+      value != undefined
+    ) {
       await this.getFeePrice(isFistToken, value).then((value) => {
         this.swapAmount = value;
       });
-    // }
+    } else if (value == null && value == undefined) {
+      if (isFistToken) {
+        this.secondCoinAmount = 0;
+      } else {
+        this.firstCoinAmount = 0;
+      }
+    }
   }
-  
 
   async getFeePrice(isFirst: boolean, value: number) {
     if (isFirst) {
+      var amount: number = this.firstCoinAmount;
+      var reserve1: BigNumber = new BigNumber(100000000000000000);
+      var reserve2: BigNumber = new BigNumber(100000000000000000);
 
-      var amount: number = 0.1;
-      var amount1: number = 10000;
-      var amount2: number = 10000;
+      let value = new BigNumber(amount)
+        .multipliedBy(new BigNumber(1e18))
+        .toFixed();
+    
+      value = value.split('.')[0];
 
-      let value = new BigNumber(amount).multipliedBy(new BigNumber(1e18)).toFixed();
-      let value1 = new BigNumber(amount1).multipliedBy(new BigNumber(1e18)).toFixed();
-      let value2 = new BigNumber(amount2).multipliedBy(new BigNumber(1e18)).toFixed();
+      const params = [value, reserve1, reserve2];
+
+      var abiHex = this.web3Service.getAmountOut(params);
+
+      console.log('abiHex => ' + abiHex);
+
+      this.kanbanService
+        .kanbanCall(environment.smartConractAdressRouter, abiHex)
+        .subscribe((data) => {
+          let res: any = data;
+          var result = this.web3Service.decodeabiHex(res.data, 'uint256');
+          this.secondCoinAmount = Number(result);
+        });
+    } else {
+      var amount: number = this.secondCoinAmount;
+      var reserve1: BigNumber = new BigNumber(100000000000000000);
+      var reserve2: BigNumber = new BigNumber(100000000000000000);
+
+      let value = new BigNumber(amount)
+        .multipliedBy(new BigNumber(1e18))
+        .toFixed();
+     
 
       value = value.split('.')[0];
 
-      const params = [value, value1, value2];
+      const params = [value, reserve1, reserve2];
 
-      
-      var abiHex = this.web3Service.getAmountOut(params);
+      var abiHex = this.web3Service.getAmountIn(params);
 
-      console.log('abiHex => ' + abiHex)
+      console.log('abiHex => ' + abiHex);
 
       this.kanbanService
-      .kanbanCall(environment.smartConractAdressRouter, abiHex)
-      .subscribe((data) => {
-        console.log('data');
-        console.log(data);
-        let res: any = data;
-        var valueasd = this.web3Service.decodeabiHex(res.data, 'uint256');
-        console.log('valueasd')
-        console.log(valueasd)
-        this.secondCoinAmount = Number(valueasd);
-      });
-
-    } else {
-      this.firstCoinAmount = value / 0.494;
+        .kanbanCall(environment.smartConractAdressRouter, abiHex)
+        .subscribe((data) => {
+          let res: any = data;
+          var result = this.web3Service.decodeabiHex(res.data, 'uint256');
+          this.firstCoinAmount = Number(result);
+        });
     }
 
     return value / 1000;
@@ -157,8 +181,6 @@ export class SwapComponent implements OnInit {
         }
 
         if (this.firstToken.type != null && this.secondToken.type != null) {
-          console.log('-------------------------------------------------');
-
           var params = [this.firstToken.type, this.secondToken.type];
 
           var abiHex = this.web3Service.getPair(params);
@@ -168,8 +190,6 @@ export class SwapComponent implements OnInit {
           this.kanbanService
             .kanbanCall(environment.smartConractAdressFactory, abiHex)
             .subscribe((data) => {
-              console.log('data');
-              console.log(data);
               let res: any = data;
               var valueasd = this.web3Service.decodeabiHex(res.data, 'address');
               this.needtodecode = valueasd.toString();
@@ -177,15 +197,9 @@ export class SwapComponent implements OnInit {
 
           var abiHexa = this.web3Service.getReserves();
 
-          console.log('abiHexa =>' + abiHexa);
-
-          console.log('this.needtodecode =>' + this.needtodecode);
-
           this.kanbanService
             .kanbanCall('0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc', abiHexa)
             .subscribe((data: any) => {
-              console.log('data => ' + data.data);
-
               var param = ['uint112', 'uint112', 'uint32'];
               var value = this.web3Service.decodeabiHexs(data.data, param);
               console.log('value =>' + value[0]);
@@ -210,6 +224,34 @@ export class SwapComponent implements OnInit {
           this.dataService.GetSecondToken.subscribe((data) => {
             this.secondToken = data;
           });
+        }
+
+        if (this.firstToken.type != null && this.secondToken.type != null) {
+          var params = [this.firstToken.type, this.secondToken.type];
+
+          var abiHex = this.web3Service.getPair(params);
+
+          console.log('abiHex => ' + abiHex);
+
+          this.kanbanService
+            .kanbanCall(environment.smartConractAdressFactory, abiHex)
+            .subscribe((data) => {
+              let res: any = data;
+              var valueasd = this.web3Service.decodeabiHex(res.data, 'address');
+              this.needtodecode = valueasd.toString();
+            });
+
+          var abiHexa = this.web3Service.getReserves();
+
+          this.kanbanService
+            .kanbanCall('0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc', abiHexa)
+            .subscribe((data: any) => {
+              var param = ['uint112', 'uint112', 'uint32'];
+              var value = this.web3Service.decodeabiHexs(data.data, param);
+              console.log('value =>' + value[0]);
+              console.log('value =>' + value[1]);
+              console.log('value =>' + value[2]);
+            });
         }
       });
   }

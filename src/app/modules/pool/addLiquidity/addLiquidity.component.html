@@ -52,6 +52,7 @@
           <mat-form-field>
             <mat-label></mat-label>
             <input
+            (keyup)="onKey(firstCoinAmount, true)"
               #token1
               matInput
               name="firstCoinAmount"
@@ -89,6 +90,7 @@
           <mat-form-field>
             <mat-label></mat-label>
             <input
+            (keyup)="onKey(secondCoinAmount, false)"
               #token2
               matInput
               name="secondCointAmount"
@@ -118,5 +120,9 @@
         </button>
       </mat-card-actions>
     </mat-card>
+
+    <div *ngIf="needtodecode">
+      <span> {{ needtodecode }}</span>
+  </div>
   </div>
 </div>

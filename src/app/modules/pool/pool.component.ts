@@ -29,6 +29,8 @@ export class PoolComponent implements OnInit {
   walletSession: any;
 
 
+
+
   constructor(
     public walletService: WalletService,
     public storageService:StorageService,
@@ -77,41 +79,6 @@ export class PoolComponent implements OnInit {
   }
 
 
-  openFirstTokenListDialog() {
-    this.dialog
-      .open(TokenListComponent, {
-        data: {
-          tokens: this.tokenList,
-          isFirst: true,
-        },
-      })
-      .afterClosed()
-      .subscribe((x) => {
-        if (x.isFirst) {
-          this.dataService.GetFirstToken.subscribe((data) => {
-            this.firstToken = data;
-          });
-        }
-      });
-  }
-
-  openSecondTokenListDialog() {
-    this.dialog
-      .open(TokenListComponent, {
-        data: {
-          tokens: this.tokenList,
-          isSecond: true,
-        },
-      })
-      .afterClosed()
-      .subscribe((x) => {
-        if (x.isSecond) {
-          this.dataService.GetSecondToken.subscribe((data) => {
-            this.secondToken = data;
-          });
-        }
-      });
-  }
   callRPC(){
     var abiHex = this.web3Service.getAmountIn('a');
     var txHex = this.web3Service.signAbiHexWithPrivateKey(abiHex,'0xa2370c422e2074ae2fc3d9d24f1e654c7fa3c181', '0xa2370c422e2074ae2fc3d9d24f1e654c7fa3c181', 1 )

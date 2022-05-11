@@ -82,6 +82,13 @@ export class Web3Service {
     return abiHex;
   }
 
+  quote(params: any) {
+    var func = this.smartContractService.quoteFunc();
+
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }
+
   async signAbiHexWithPrivateKey(
     abiHex: string,
     keyPair: any,
