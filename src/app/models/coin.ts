@@ -1,5 +1,4 @@
 import { Blockchain } from './blockchain';
-import { environment } from '../../environments/environment';
 export class Coin {
 
     tickerName: string;

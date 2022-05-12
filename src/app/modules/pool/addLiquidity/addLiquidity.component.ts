@@ -4,6 +4,8 @@ import BigNumber from 'bignumber.js';
 import { Coin } from 'src/app/models/coin';
 import { DataService } from 'src/app/services/data.service';
 import { KanbanService } from 'src/app/services/kanban.service';
+import { StorageService } from 'src/app/services/storage.service';
+import { UtilsService } from 'src/app/services/utils.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { environment } from 'src/environments/environment';
 import { TokenListComponent } from '../../shared/tokenList/tokenList.component';
@@ -11,7 +13,7 @@ import { TokenListComponent } from '../../shared/tokenList/tokenList.component';
 @Component({
   selector: 'app-addLiquidity',
   templateUrl: './addLiquidity.component.html',
-  styleUrls: ['./addLiquidity.component.scss']
+  styleUrls: ['./addLiquidity.component.scss'],
 })
 export class AddLiquidityComponent implements OnInit {
   firstToken: Coin = new Coin();
@@ -28,6 +30,8 @@ export class AddLiquidityComponent implements OnInit {
   needtodecode: any;
 
   constructor(
+    private utilService: UtilsService,
+    private storageService: StorageService,
     private web3Service: Web3Service,
     private dataService: DataService,
     public dialog: MatDialog,
@@ -71,12 +75,12 @@ export class AddLiquidityComponent implements OnInit {
       let value = new BigNumber(amount)
         .multipliedBy(new BigNumber(1e18))
         .toFixed();
-    
+
       value = value.split('.')[0];
 
       const params = [value, reserve1, reserve2];
 
-      var abiHex = this.web3Service.getAmountOut(params);
+      var abiHex = this.web3Service.quote(params);
 
       console.log('abiHex => ' + abiHex);
 
@@ -85,7 +89,12 @@ export class AddLiquidityComponent implements OnInit {
         .subscribe((data) => {
           let res: any = data;
           var result = this.web3Service.decodeabiHex(res.data, 'uint256');
-          this.secondCoinAmount = Number(result);
+
+          var temp = Number(result);
+
+          this.secondCoinAmount = Number(
+            new BigNumber(temp).dividedBy(new BigNumber(1e18)).toFixed()
+          );
         });
     } else {
       var amount: number = this.secondCoinAmount;
@@ -95,13 +104,12 @@ export class AddLiquidityComponent implements OnInit {
       let value = new BigNumber(amount)
         .multipliedBy(new BigNumber(1e18))
         .toFixed();
-     
 
       value = value.split('.')[0];
 
       const params = [value, reserve1, reserve2];
 
-      var abiHex = this.web3Service.getAmountIn(params);
+      var abiHex = this.web3Service.quote(params);
 
       console.log('abiHex => ' + abiHex);
 
@@ -110,14 +118,18 @@ export class AddLiquidityComponent implements OnInit {
         .subscribe((data) => {
           let res: any = data;
           var result = this.web3Service.decodeabiHex(res.data, 'uint256');
-          this.firstCoinAmount = Number(result);
+
+          var temp = Number(result);
+
+          this.firstCoinAmount = Number(
+            new BigNumber(temp).dividedBy(new BigNumber(1e18))
+          );
         });
     }
 
     return value / 1000;
   }
 
- 
   openFirstTokenListDialog() {
     this.dialog
       .open(TokenListComponent, {
@@ -210,10 +222,62 @@ export class AddLiquidityComponent implements OnInit {
       });
   }
 
-  callRPC(){
-    var abiHex = this.web3Service.getAmountIn('a');
-    console.log('abiHex')
-    console.log(abiHex)
+  addLiqudity() {
+    const addressArray = this.storageService
+      .getWalletSession()
+      .state.accounts[0].split(':');
+    const walletAddress = addressArray[addressArray.length - 1];
+
+    let amountADesired = new BigNumber(this.firstCoinAmount)
+      .multipliedBy(new BigNumber(1e18))
+      .toFixed();
+    let amountBDesired = new BigNumber(this.secondCoinAmount)
+      .multipliedBy(new BigNumber(1e18))
+      .toFixed();
+
+    var tokenA = this.firstToken.type;
+    var tokenB = this.secondToken.type;
+
+    var amountADesireda = new BigNumber(amountADesired);
+    var amountBDesireda = new BigNumber(amountBDesired);
+
+    var amountAMin = new BigNumber(Number(amountADesired) - 1000);
+    var amountBMin = new BigNumber(Number(amountBDesired) - 1000);
+    var to = this.utilService.fabToExgAddress(walletAddress);
+    var deadline = 1652408085;
+
+    const params = [
+      tokenA,
+      tokenB,
+      amountADesireda,
+      amountBDesireda,
+      amountAMin,
+      amountBMin,
+      to,
+      deadline,
+    ];
+
+    var abiHex = this.web3Service.addLiquidity(params);
+
+    console.log('abiHex');
+    console.log(abiHex);
+
+    var decode = this.web3Service.decodeabiHexs(abiHex, [
+      'uint256',
+      'uint256',
+      'uint256',
+    ]);
+
+    console.log('decode');
+    console.log(decode);
+
+    this.kanbanService
+      .send(environment.smartConractAdressRouter, abiHex)
+      .then((data) => {
+        console.log('data');
+        console.log(data);
+        this.needtodecode =
+          'https://test.exchangily.com/explorer/tx-detail/' + data;
+      });
   }
 }
-

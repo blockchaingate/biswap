@@ -22,7 +22,6 @@ export class WalletService {
 
   async createConnection() {
     var clientSession = this.storageService.getWalletSession();
-
     if (!clientSession) {
       this.walletModel.client = await WalletConnectClient.init({
         logger: 'debug',
@@ -36,6 +35,8 @@ export class WalletService {
         },
       });
       this.showQrCode();
+      console.log(this.walletModel.client);
+      this.dataService.setWalletClient(this.walletModel.client);
     } else {
       this.onSessionConnected(JSON.parse(clientSession));
     }
@@ -76,24 +77,6 @@ export class WalletService {
       this.walletModel.account = accounts[0];
     }
   }
-
-  // async send() {
-  //   const tx = {
-  //     to: this.to,
-  //     value: this.value,
-  //     data: this.data,
-  //   };
-  //   const requestBody = {
-  //     topic: this.session.topic,
-  //     chainId: this.session.permissions.blockchain.chains[0],
-  //     request: {
-  //       method: 'kanban_sendTransaction',
-  //       params: [tx],
-  //     },
-  //   };
-  //   const result = await this.client.request(requestBody);
-  //   this.result = result;
-  // }
 
   connectWallet() {
     var clientSession = this.storageService.getWalletSession();

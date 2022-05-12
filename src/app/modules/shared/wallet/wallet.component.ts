@@ -47,6 +47,7 @@ export class WalletComponent implements OnInit {
   }
 
   async showQrCode() {
+
     this.client.on(
       CLIENT_EVENTS.pairing.proposal,
       async (proposal: PairingTypes.Proposal) => {
@@ -67,13 +68,20 @@ export class WalletComponent implements OnInit {
         },
       },
     });
+    console.log('-----------------------------')
+    console.log(this.client)
     this.storageService.createWalletSession(session);
     this.onSessionConnected(session);
   }
 
   onSessionConnected(session: any) {
+
+
     this.session = session;
     QRCodeModal.close();
+
+    console.log('123121312321331313213313')
+    console.log(this.client)
     const accounts = session.state.accounts;
     if (accounts && accounts.length > 0) {
       this.account = accounts[0];

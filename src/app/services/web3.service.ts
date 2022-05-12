@@ -13,7 +13,6 @@ import { SmartContractServices } from './smartcontract.service';
 export class Web3Service {
   constructor(
     private smartContractService: SmartContractServices,
-    private kanbanService: KanbanService
   ) {}
 
   getWeb3Provider() {
@@ -43,21 +42,24 @@ export class Web3Service {
 
   getBalanceOf(params: any) {
     var func = this.smartContractService.balanceOfFunc();
-
     const abiHex = this.getGeneralFunctionABI(func, params);
     return abiHex;
   }
 
   getPair(params: any) {
     var func = this.smartContractService.getPairFunc();
-
     const abiHex = this.getGeneralFunctionABI(func, params);
     return abiHex;
   }
 
   swap(params: any) {
     var func = this.smartContractService.swapFunc();
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }
 
+  addLiquidity(params: any) {
+    var func = this.smartContractService.addLiquidityFunc();
     const abiHex = this.getGeneralFunctionABI(func, params);
     return abiHex;
   }
@@ -77,14 +79,12 @@ export class Web3Service {
 
   getAmountOut(params: any) {
     var func = this.smartContractService.getAmountOutFunc();
-
     const abiHex = this.getGeneralFunctionABI(func, params);
     return abiHex;
   }
 
   quote(params: any) {
     var func = this.smartContractService.quoteFunc();
-
     const abiHex = this.getGeneralFunctionABI(func, params);
     return abiHex;
   }

@@ -115,14 +115,13 @@
         fxLayoutAlign="center center"
         class="mat-card-action"
       >
-        <button mat-raised-button color="primary" (click)="callRPC()">
+        <button mat-raised-button color="primary" (click)="addLiqudity()">
           Add Liquidity
         </button>
       </mat-card-actions>
     </mat-card>
 
     <div *ngIf="needtodecode">
-      <span> {{ needtodecode }}</span>
-  </div>
+        {{ needtodecode }}
   </div>
 </div>
