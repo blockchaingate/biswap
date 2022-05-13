@@ -20,5 +20,20 @@ export class StorageService {
     createWalletSession(session: any){
         localStorage.setItem('client-session', JSON.stringify(session));
     }
+
+    getWalletClient(){
+        var clientWallet = sessionStorage.getItem('client-wallet');
+        if(clientWallet != undefined || clientWallet != null){
+            return JSON.parse(clientWallet);
+        }else return null;
+    }
+
+    removeWalletClient(){
+        sessionStorage.removeItem('client-wallet');
+    }
+
+    createWalletClient(client: any){
+        sessionStorage.setItem('client-wallet', JSON.stringify(client));
+    }
     
 }

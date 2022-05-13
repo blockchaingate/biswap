@@ -88,6 +88,12 @@ export class Web3Service {
     const abiHex = this.getGeneralFunctionABI(func, params);
     return abiHex;
   }
+  
+  swapExactTokensForTokens(params: any) {
+    var func = this.smartContractService.swapExactTokensForTokensFunc();
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }
 
   async signAbiHexWithPrivateKey(
     abiHex: string,

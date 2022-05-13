@@ -21,8 +21,11 @@ export class WalletService {
   ) {}
 
   async createConnection() {
-    var clientSession = this.storageService.getWalletSession();
-    if (!clientSession) {
+    // var clientSession = this.storageService.getWalletSession();
+
+    // console.log('clientSession');
+    // console.log(clientSession);
+    // if (clientSession == null) {
       this.walletModel.client = await WalletConnectClient.init({
         logger: 'debug',
         projectId: '3acbabd1deb4672edfd4ca48226cfc0f',
@@ -34,12 +37,13 @@ export class WalletService {
           icons: ['https://walletconnect.com/walletconnect-logo.png'],
         },
       });
-      this.showQrCode();
-      console.log(this.walletModel.client);
+      await this.showQrCode();
+      console.log('this.walletModel.client' , this.walletModel.client);
       this.dataService.setWalletClient(this.walletModel.client);
-    } else {
-      this.onSessionConnected(JSON.parse(clientSession));
-    }
+      this.storageService.createWalletClient(this.walletModel.client);
+    // } else {
+    //   this.onSessionConnected(JSON.parse(clientSession));
+    // }
   }
 
   async showQrCode() {
@@ -88,6 +92,7 @@ export class WalletService {
     }else{
     this.dataService.sendWalletLabel('Connect Wallet');
       this.storageService.removeWalletSession();
+      this.storageService.removeWalletClient();
       this.dataService.setIsWalletConnect(false);
     }
   }

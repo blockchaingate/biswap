@@ -25,9 +25,13 @@ export class AddLiquidityComponent implements OnInit {
   firstCoinAmount: number;
   secondCoinAmount: number;
 
-  swapAmount: number;
+  perAmount: string;
+  perAmountLabel: string = "";
 
   needtodecode: any;
+
+  firstTokenReserve: BigNumber = new BigNumber(0);
+  secondTokenReserve: BigNumber = new BigNumber(0);
 
   constructor(
     private utilService: UtilsService,
@@ -54,9 +58,7 @@ export class AddLiquidityComponent implements OnInit {
       value != null &&
       value != undefined
     ) {
-      await this.getFeePrice(isFistToken, value).then((value) => {
-        this.swapAmount = value;
-      });
+      await this.getFeePrice(isFistToken, value);
     } else if (value == null && value == undefined) {
       if (isFistToken) {
         this.secondCoinAmount = 0;
@@ -66,7 +68,7 @@ export class AddLiquidityComponent implements OnInit {
     }
   }
 
-  async getFeePrice(isFirst: boolean, value: number) {
+   getFeePrice(isFirst: boolean, value: number) {
     if (isFirst) {
       var amount: number = this.firstCoinAmount;
       var reserve1: BigNumber = new BigNumber(100000000000000000);
@@ -126,8 +128,6 @@ export class AddLiquidityComponent implements OnInit {
           );
         });
     }
-
-    return value / 1000;
   }
 
   openFirstTokenListDialog() {
@@ -168,9 +168,20 @@ export class AddLiquidityComponent implements OnInit {
             .subscribe((data: any) => {
               var param = ['uint112', 'uint112', 'uint32'];
               var value = this.web3Service.decodeabiHexs(data.data, param);
+
+              this.firstTokenReserve = value[0];
+              this.secondTokenReserve = value[1];
+
               console.log('value =>' + value[0]);
               console.log('value =>' + value[1]);
               console.log('value =>' + value[2]);
+
+              var perAmount = (value[0] / value[1]).toString();
+
+            
+              this.perAmountLabel = this.firstToken.tickerName + " per " + this.secondToken.tickerName;
+
+              this.perAmount = perAmount;
             });
         }
       });
@@ -214,10 +225,21 @@ export class AddLiquidityComponent implements OnInit {
             .subscribe((data: any) => {
               var param = ['uint112', 'uint112', 'uint32'];
               var value = this.web3Service.decodeabiHexs(data.data, param);
+
+              this.firstTokenReserve = value[0];
+              this.secondTokenReserve = value[1];
+
               console.log('value =>' + value[0]);
               console.log('value =>' + value[1]);
               console.log('value =>' + value[2]);
-            });
+
+       
+              var perAmount = (value[0] / value[1]).toString();
+
+              this.perAmountLabel = this.firstToken.tickerName + " per " + this.secondToken.tickerName;
+
+              this.perAmount = perAmount;
+             });
         }
       });
   }
@@ -259,23 +281,9 @@ export class AddLiquidityComponent implements OnInit {
 
     var abiHex = this.web3Service.addLiquidity(params);
 
-    console.log('abiHex');
-    console.log(abiHex);
-
-    var decode = this.web3Service.decodeabiHexs(abiHex, [
-      'uint256',
-      'uint256',
-      'uint256',
-    ]);
-
-    console.log('decode');
-    console.log(decode);
-
     this.kanbanService
       .send(environment.smartConractAdressRouter, abiHex)
       .then((data) => {
-        console.log('data');
-        console.log(data);
         this.needtodecode =
           'https://test.exchangily.com/explorer/tx-detail/' + data;
       });

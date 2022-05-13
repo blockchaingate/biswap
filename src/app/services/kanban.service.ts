@@ -80,30 +80,30 @@ kanbanCall(to: string, abiData: string) {
 
 
 
-async send(to: string, data: string ) {
-  var client: any;
-  this.dataService.GetWalletClient.subscribe((data) => {
-    client = data;
-  });
-
-  const session =  this.storageService.getWalletSession();
-
-    const tx = {
-      to: to,
-      data: data,
-    };
-    const requestBody = {
-      topic: session.topic,
-      chainId: session.permissions.blockchain.chains[0],
-      request: {
-        method: 'kanban_sendTransaction',
-        params: [tx],
-      },
-    };
-
-    const result = await client.request(requestBody);
-    console.log(result)
-
-    return result;
-  }
+  async send(to: string, data: string ) {
+    var client: any;
+    this.dataService.GetWalletClient.subscribe((data) => {
+      client = data;
+    });
+  
+    const session =  this.storageService.getWalletSession();
+  
+      const tx = {
+        to: to,
+        data: data,
+      };
+      const requestBody = {
+        topic: session.topic,
+        chainId: session.permissions.blockchain.chains[0],
+        request: {
+          method: 'kanban_sendTransaction',
+          params: [tx],
+        },
+      };
+  
+      const result = await client.request(requestBody);
+      console.log(result)
+  
+      return result;
+    }
 }

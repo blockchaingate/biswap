@@ -18,6 +18,7 @@ import { TokenListComponent } from './tokenList/tokenList.component';
     FormsModule,
     FlexLayoutModule,
     AppRoutingModule,
+    
   ],
   exports:[
     HeaderComponent,
