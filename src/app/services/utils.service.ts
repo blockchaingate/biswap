@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import BigNumber from 'bignumber.js';
 import * as bs58 from 'bs58';
+import { TimestampModel } from '../models/temistampModel';
 
 @Injectable({
   providedIn: 'root',
@@ -59,5 +60,13 @@ toBigNumber(amount:any, decimal: number) {
   let amountStrFull = (numPart1 ? amountPart1 : '') + amountPart2;
   amountStrFull = amountStrFull.replace(/^0+/, '');
   return amountStrFull;
+}
+
+getTimestamp(value: TimestampModel){
+var d = new Date();
+d.setDate(d.getDate() + value.day!);
+d.setHours(d.getHours() + value.hour!)
+d.setMinutes(d.getMinutes() + value.minute!);
+ return d.getTime();
 }
 }

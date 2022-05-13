@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
 import { Coin } from 'src/app/models/coin';
+import { TimestampModel } from 'src/app/models/temistampModel';
 import { DataService } from 'src/app/services/data.service';
 import { KanbanService } from 'src/app/services/kanban.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -58,7 +59,7 @@ export class AddLiquidityComponent implements OnInit {
       value != null &&
       value != undefined
     ) {
-      await this.getFeePrice(isFistToken, value);
+      await this.setInputValues(isFistToken);
     } else if (value == null && value == undefined) {
       if (isFistToken) {
         this.secondCoinAmount = 0;
@@ -68,11 +69,11 @@ export class AddLiquidityComponent implements OnInit {
     }
   }
 
-   getFeePrice(isFirst: boolean, value: number) {
+  setInputValues(isFirst: boolean) {
     if (isFirst) {
       var amount: number = this.firstCoinAmount;
-      var reserve1: BigNumber = new BigNumber(100000000000000000);
-      var reserve2: BigNumber = new BigNumber(100000000000000000);
+      var reserve1: BigNumber = this.firstTokenReserve;
+      var reserve2: BigNumber = this.secondTokenReserve;
 
       let value = new BigNumber(amount)
         .multipliedBy(new BigNumber(1e18))
@@ -100,8 +101,8 @@ export class AddLiquidityComponent implements OnInit {
         });
     } else {
       var amount: number = this.secondCoinAmount;
-      var reserve1: BigNumber = new BigNumber(100000000000000000);
-      var reserve2: BigNumber = new BigNumber(100000000000000000);
+      var reserve1: BigNumber = this.firstTokenReserve;
+      var reserve2: BigNumber = this.secondTokenReserve;
 
       let value = new BigNumber(amount)
         .multipliedBy(new BigNumber(1e18))
@@ -226,8 +227,8 @@ export class AddLiquidityComponent implements OnInit {
               var param = ['uint112', 'uint112', 'uint32'];
               var value = this.web3Service.decodeabiHexs(data.data, param);
 
-              this.firstTokenReserve = value[0];
-              this.secondTokenReserve = value[1];
+              this.firstTokenReserve = value[1];
+              this.secondTokenReserve = value[0];
 
               console.log('value =>' + value[0]);
               console.log('value =>' + value[1]);
@@ -266,7 +267,10 @@ export class AddLiquidityComponent implements OnInit {
     var amountAMin = new BigNumber(Number(amountADesired) - 1000);
     var amountBMin = new BigNumber(Number(amountBDesired) - 1000);
     var to = this.utilService.fabToExgAddress(walletAddress);
-    var deadline = 1652408085;
+    var timestamp = new TimestampModel(
+      0,2,0,0 // here need to set for future timestamp
+    );
+    var deadline = this.utilService.getTimestamp(timestamp);
 
     const params = [
       tokenA,

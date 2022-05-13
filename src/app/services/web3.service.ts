@@ -64,6 +64,12 @@ export class Web3Service {
     return abiHex;
   }
 
+  removeLiquidity(params: any) {
+    var func = this.smartContractService.removeLiquidityFunc();
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }
+
   getReserves() {
     var params: string[] = [];
     var func = this.smartContractService.getReservesFunc();

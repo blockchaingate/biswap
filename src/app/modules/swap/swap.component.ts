@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import BigNumber from 'bignumber.js';
 import { Coin } from 'src/app/models/coin';
+import { TimestampModel } from 'src/app/models/temistampModel';
 import { DataService } from 'src/app/services/data.service';
 import { KanbanService } from 'src/app/services/kanban.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -32,7 +33,7 @@ export class SwapComponent implements OnInit {
   secondCoinAmount: number;
 
   perAmount: string;
-  perAmountLabel: string = "";
+  perAmountLabel: string = '';
 
   needtodecode: string;
 
@@ -48,23 +49,7 @@ export class SwapComponent implements OnInit {
     private dataService: DataService,
     private dialog: MatDialog,
     private kanbanService: KanbanService
-  ) {
-    this.kanbanService.getKanbanStatus().subscribe(
-      (res: any) => {
-        if (res && res.success) {
-          const data = res.body;
-          if (data != 'live') {
-          }
-        }
-      },
-      (err) => {
-        if (environment.production) {
-        }
-
-        console.log(err);
-      }
-    );
-  }
+  ) {}
 
   ngOnInit() {
     this.walletSession = this.storageService.getWalletSession();
@@ -95,75 +80,13 @@ export class SwapComponent implements OnInit {
       value != null &&
       value != undefined
     ) {
-      await this.getFeePrice(isFistToken, value);
+      await this.setInputValues(isFistToken);
     } else if (value == null && value == undefined) {
       if (isFistToken) {
         this.secondCoinAmount = 0;
       } else {
         this.firstCoinAmount = 0;
       }
-    }
-  }
-
- getFeePrice(isFirst: boolean, value: number) {
-    if (isFirst) {
-      var amount: number = this.firstCoinAmount;
-      var reserve1: BigNumber = this.firstTokenReserve;
-      var reserve2: BigNumber = this.secondTokenReserve;
-
-      let value = new BigNumber(amount)
-        .multipliedBy(new BigNumber(1e18))
-        .toFixed();
-    
-      value = value.split('.')[0];
-
-      const params = [value, reserve1, reserve2];
-
-      var abiHex = this.web3Service.quote(params);
-
-      console.log('abiHex => ' + abiHex);
-
-      this.kanbanService
-        .kanbanCall(environment.smartConractAdressRouter, abiHex)
-        .subscribe((data) => {
-          let res: any = data;
-          var result = this.web3Service.decodeabiHex(res.data, 'uint256');
-          var temp = Number(result);
-
-          this.secondCoinAmount = Number(
-            new BigNumber(temp).dividedBy(new BigNumber(1e18)).toFixed()
-          );
-        });
-    } else {
-      var amount: number = this.secondCoinAmount;
-      var reserve1: BigNumber = this.firstTokenReserve;
-      var reserve2: BigNumber = this.secondTokenReserve;
-
-      let value = new BigNumber(amount)
-        .multipliedBy(new BigNumber(1e18))
-        .toFixed();
-     
-
-      value = value.split('.')[0];
-
-      const params = [value, reserve1, reserve2];
-
-      var abiHex = this.web3Service.quote(params);
-
-      console.log('abiHex => ' + abiHex);
-
-      this.kanbanService
-        .kanbanCall(environment.smartConractAdressRouter, abiHex)
-        .subscribe((data) => {
-          let res: any = data;
-          var result = this.web3Service.decodeabiHex(res.data, 'uint256');
-          
-          var temp = Number(result);
-
-          this.firstCoinAmount = Number(
-            new BigNumber(temp).dividedBy(new BigNumber(1e18))
-          );
-        });
     }
   }
 
@@ -196,39 +119,37 @@ export class SwapComponent implements OnInit {
 
           var abiHex = this.web3Service.getPair(params);
 
-          console.log('abiHex => ' + abiHex);
-
           this.kanbanService
             .kanbanCall(environment.smartConractAdressFactory, abiHex)
             .subscribe((data) => {
               let res: any = data;
-              var valueasd = this.web3Service.decodeabiHex(res.data, 'address');
-              this.needtodecode = valueasd.toString();
-            });
 
-          var abiHexa = this.web3Service.getReserves();
+              var address = this.web3Service.decodeabiHex(res.data, 'address');
 
-          this.kanbanService
-            .kanbanCall('0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc', abiHexa)
-            .subscribe((data: any) => {
-              var param = ['uint112', 'uint112', 'uint32'];
-              var value = this.web3Service.decodeabiHexs(data.data, param);
+              this.needtodecode = address.toString();
 
+              var abiHexa = this.web3Service.getReserves();
 
-              this.firstTokenReserve = value[0];
-              this.secondTokenReserve = value[1];
+              this.kanbanService
+                .kanbanCall(address.toString(), abiHexa)
+                .subscribe((data: any) => {
+                  var param = ['uint112', 'uint112', 'uint32'];
+                  var value = this.web3Service.decodeabiHexs(data.data, param);
 
+                  if (this.firstToken.type > this.secondToken.type) {
+                    this.firstTokenReserve = value[0];
+                    this.secondTokenReserve = value[1];
+                  } else {
+                    this.firstTokenReserve = value[1];
+                    this.secondTokenReserve = value[0];
+                  }
+                  this.perAmount = (value[1] / value[0]).toString();
 
-              console.log('value =>' + value[0]);
-              console.log('value =>' + value[1]);
-              console.log('value =>' + value[2]);
-
-              var perAmount = (value[0] / value[1]).toString();
-
-            
-              this.perAmountLabel = this.firstToken.tickerName + " per " + this.secondToken.tickerName;
-
-              this.perAmount = perAmount;
+                  this.perAmountLabel =
+                    this.firstToken.tickerName +
+                    ' per ' +
+                    this.secondToken.tickerName;
+                });
             });
         }
       });
@@ -261,32 +182,91 @@ export class SwapComponent implements OnInit {
             .kanbanCall(environment.smartConractAdressFactory, abiHex)
             .subscribe((data) => {
               let res: any = data;
-              var valueasd = this.web3Service.decodeabiHex(res.data, 'address');
-              this.needtodecode = valueasd.toString();
-            });
 
-          var abiHexa = this.web3Service.getReserves();
+              var address = this.web3Service.decodeabiHex(res.data, 'address');
 
-          this.kanbanService
-            .kanbanCall('0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc', abiHexa)
-            .subscribe((data: any) => {
-              var param = ['uint112', 'uint112', 'uint32'];
-              var value = this.web3Service.decodeabiHexs(data.data, param);
-              console.log('value =>' + value[0]);
-              console.log('value =>' + value[1]);
-              console.log('value =>' + value[2]);
+              this.needtodecode = address.toString();
 
-              this.firstTokenReserve = value[0];
-              this.secondTokenReserve = value[1];
+              var abiHexa = this.web3Service.getReserves();
 
-              var perAmount = (value[0] / value[1]).toString();
+              this.kanbanService
+                .kanbanCall(address.toString(), abiHexa)
+                .subscribe((data: any) => {
+                  var param = ['uint112', 'uint112', 'uint32'];
+                  var value = this.web3Service.decodeabiHexs(data.data, param);
 
-              this.perAmountLabel = this.firstToken.tickerName + " per " + this.secondToken.tickerName;
+                  if (this.firstToken.type < this.secondToken.type) {
+                    this.firstTokenReserve = value[0];
+                    this.secondTokenReserve = value[1];
+                  } else {
+                    this.firstTokenReserve = value[1];
+                    this.secondTokenReserve = value[0];
+                  }
 
-              this.perAmount = perAmount;
+                  this.perAmount = (value[0] / value[1]).toString();
+
+                  this.perAmountLabel =
+                    this.firstToken.tickerName +
+                    ' per ' +
+                    this.secondToken.tickerName;
+                });
             });
         }
       });
+  }
+
+  setInputValues(isFirst: boolean) {
+    if (isFirst) {
+      var amount: number = this.firstCoinAmount;
+
+      let value = new BigNumber(amount)
+        .multipliedBy(new BigNumber(1e18))
+        .toFixed();
+
+      value = value.split('.')[0];
+
+      const params = [value, this.firstTokenReserve, this.secondTokenReserve];
+
+      var abiHex = this.web3Service.quote(params);
+
+      this.kanbanService
+        .kanbanCall(environment.smartConractAdressRouter, abiHex)
+        .subscribe((data) => {
+          let res: any = data;
+
+          var result = this.web3Service.decodeabiHex(res.data, 'uint256');
+
+          var temp = Number(result);
+          this.secondCoinAmount = Number(
+            new BigNumber(temp).dividedBy(new BigNumber(1e18)).toFixed()
+          );
+        });
+    } else {
+      var amount: number = this.secondCoinAmount;
+
+      let value = new BigNumber(amount)
+        .multipliedBy(new BigNumber(1e18))
+        .toFixed();
+
+      value = value.split('.')[0];
+
+      const params = [value, this.firstTokenReserve, this.secondTokenReserve];
+
+      var abiHex = this.web3Service.quote(params);
+
+      this.kanbanService
+        .kanbanCall(environment.smartConractAdressRouter, abiHex)
+        .subscribe((data) => {
+          let res: any = data;
+          var result = this.web3Service.decodeabiHex(res.data, 'uint256');
+
+          var temp = Number(result);
+
+          this.firstCoinAmount = Number(
+            new BigNumber(temp).dividedBy(new BigNumber(1e18))
+          );
+        });
+    }
   }
 
   changeTokens() {
@@ -308,45 +288,42 @@ export class SwapComponent implements OnInit {
   }
 
   async swapFunction() {
-
     let amountIn = new BigNumber(this.firstCoinAmount)
-    .multipliedBy(new BigNumber(1e18))
-    .toFixed();
-  let amountOutMin = new BigNumber(this.secondCoinAmount)
-    .multipliedBy(new BigNumber(1e18))
-    .toFixed();
+      .multipliedBy(new BigNumber(1e18))
+      .toFixed();
+    let amountOutMin = new BigNumber(this.secondCoinAmount / 2)
+      .multipliedBy(new BigNumber(1e18))
+      .toFixed();
 
     const addressArray = this.storageService
       .getWalletSession()
       .state.accounts[0].split(':');
     const walletAddress = addressArray[addressArray.length - 1];
 
-
-    var path = [this.firstToken.type, this.secondToken.type]
+    var path = [this.firstToken.type, this.secondToken.type];
 
     var to = this.utilService.fabToExgAddress(walletAddress);
-    var deadline = 1652408085;
+    var timestamp = new TimestampModel(
+      0,2,0,0 // here need to set for future timestamp
+    );
+    var deadline = this.utilService.getTimestamp(timestamp);
 
-
-    const params = [
-      amountIn,
-      amountOutMin,
-      path,
-      to,
-      deadline,
-    ];
-
-
+    const params = [amountIn, amountOutMin, path, to, deadline];
 
     var abiHex = this.web3Service.swapExactTokensForTokens(params);
 
-    console.log('abiHex => ' + abiHex);
-
     this.kanbanService
-    .send(environment.smartConractAdressRouter, abiHex)
-    .then((data) => {
-      this.needtodecode =
-        'https://test.exchangily.com/explorer/tx-detail/' + data;
-    });
+      .send(environment.smartConractAdressRouter, abiHex)
+      .then((data) => {
+        this.needtodecode =
+          'https://test.exchangily.com/explorer/tx-detail/' + data;
+      });
   }
 }
+
+
+
+//TODO
+//- timestamp will be functional  -  done
+//- amountOutMin will be calculated with fee price 
+//- wallet client will come from local session

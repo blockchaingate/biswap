@@ -40,7 +40,6 @@ export class WalletService {
       await this.showQrCode();
       console.log('this.walletModel.client' , this.walletModel.client);
       this.dataService.setWalletClient(this.walletModel.client);
-      this.storageService.createWalletClient(this.walletModel.client);
     // } else {
     //   this.onSessionConnected(JSON.parse(clientSession));
     // }
@@ -92,7 +91,6 @@ export class WalletService {
     }else{
     this.dataService.sendWalletLabel('Connect Wallet');
       this.storageService.removeWalletSession();
-      this.storageService.removeWalletClient();
       this.dataService.setIsWalletConnect(false);
     }
   }

@@ -5,9 +5,10 @@ import * as Btc from 'bitcoinjs-lib';
 
 export const environment = {
   production: false,
-  smartConractAdressRouter: "0xa2370c422e2074ae2fc3d9d24f1e654c7fa3c181",
-  smartConractAdressProxy: "0xfd5ba9e06b3cdc2da3f4094619f838217b88f519",
+  smartConractAdressRouter:  "0xa2370c422e2074ae2fc3d9d24f1e654c7fa3c181",
+  smartConractAdressProxy:   "0xfd5ba9e06b3cdc2da3f4094619f838217b88f519",
   smartConractAdressFactory: "0x9dfc45bbed0626c6c2d0a125e50148ba706b681e",
+                            //  "0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc",
   
   endpoints: {
     // blockchaingate: 'http://localhost:3002/v2/',
