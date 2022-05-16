@@ -5,6 +5,7 @@ import { Coin } from '../models/coin';
 import { StorageService } from './storage.service';
 import { WalletModel } from '../models/wallet.model';
 import { DataService } from './data.service';
+import { BaseResponseModel } from '../models/baseResponseModel';
 
 @Injectable({
   providedIn: 'root',
@@ -18,10 +19,9 @@ export class KanbanService {
   constructor(
     private dataService: DataService,
     private storageService: StorageService,
-    private http: HttpClient) {
-    this.getTokenList().subscribe((cos) => (this.coins = cos));
+    private http: HttpClient
+  ) {
   }
-
 
   async getCoinPoolAddress() {
     const headers = new HttpHeaders().set(
@@ -40,8 +40,21 @@ export class KanbanService {
     return addr;
   }
 
- getTokenList() {
-    return this.http.get<Coin[]>(`${this.url}exchangily/getTokenList`);
+  getTokenList() {
+    var tempTokenList: Coin[] = [];
+    var removeItems = [196629, 524290, 196628, 458753, 589826, 196609, 196613];
+    this.http
+      .get<BaseResponseModel>(`${this.url}exchangily/getTokenList`)
+      .subscribe((x) => {
+        var tokenList: Coin[] = [];
+        tokenList = x.data.tokenList;
+        tokenList.forEach((element) => {
+          if (removeItems.indexOf(element.type) === -1) {
+            tempTokenList.push(element);
+          }
+        });
+      });
+    this.dataService.settokenList(tempTokenList);
   }
 
   getKanbanStatus() {
@@ -66,44 +79,42 @@ export class KanbanService {
     return this.http.get(path);
   }
 
-kanbanCall(to: string, abiData: string) {
+  kanbanCall(to: string, abiData: string) {
     const data = {
-        "transactionOptions": {
-            to: to,
-            data: abiData,
-          }
-    }; 
+      transactionOptions: {
+        to: to,
+        data: abiData,
+      },
+    };
     const path = 'kanban/call';
     const res = this.post(path, data);
     return res;
   }
 
-
-
-  async send(to: string, data: string ) {
+  async send(to: string, data: string) {
     var client: any;
     this.dataService.GetWalletClient.subscribe((data) => {
       client = data;
     });
-  
-    const session =  this.storageService.getWalletSession();
-  
-      const tx = {
-        to: to,
-        data: data,
-      };
-      const requestBody = {
-        topic: session.topic,
-        chainId: session.permissions.blockchain.chains[0],
-        request: {
-          method: 'kanban_sendTransaction',
-          params: [tx],
-        },
-      };
-  
-      const result = await client.request(requestBody);
-      console.log(result)
-  
-      return result;
-    }
+
+    const session = this.storageService.getWalletSession();
+
+    const tx = {
+      to: to,
+      data: data,
+    };
+    const requestBody = {
+      topic: session.topic,
+      chainId: session.permissions.blockchain.chains[0],
+      request: {
+        method: 'kanban_sendTransaction',
+        params: [tx],
+      },
+    };
+
+    const result = await client.request(requestBody);
+    console.log(result);
+
+    return result;
+  }
 }

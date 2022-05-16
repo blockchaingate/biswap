@@ -44,9 +44,9 @@ export class AddLiquidityComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.kanbanService.getTokenList().subscribe((x) => {
+    this.dataService.GettokenList.subscribe(x => {
       this.tokenList = x;
-    });
+    })
   }
 
   async onKey(value: number, isFistToken: boolean) {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import Web3 from 'web3';
+import { KanbanService } from './services/kanban.service';
 
 
 
@@ -10,15 +11,11 @@ import Web3 from 'web3';
 })
 export class AppComponent {
   title = 'biSwap';
-  private web3: Web3;
 
-  constructor() {
-    // this.web3 = new Web3("http://localhost:4200/");
-    // const accountTemp = this.web3.eth.getAccounts();
-    // console.log("Accounts temp: " + accountTemp);
-    // console.log(" account: " + (this.web3.eth.accounts.create()).address);
-    // console.log("SignContracts:");
-
+  constructor(
+    private kanbanService: KanbanService
+  ) {
+    this.kanbanService.getTokenList();
   }
 
 }

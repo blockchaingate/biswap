@@ -56,7 +56,7 @@ export class PoolComponent implements OnInit {
       this.isWalletConnect = data;
     })
 
-    this.kanbanService.getTokenList().subscribe(x => {
+    this.dataService.GettokenList.subscribe(x => {
       this.tokenList = x;
     })
   }

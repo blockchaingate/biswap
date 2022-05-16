@@ -22,7 +22,7 @@ export class TokenListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.tokenList = this.data.tokens.data.tokenList;
+    this.tokenList = this.data.tokens;
     this.filteredTokens = this.tokenList;
   }
 
