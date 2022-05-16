@@ -65,8 +65,7 @@ export class SwapComponent implements OnInit {
       this.isWalletConnect = data;
     });
 
-    this.dataService.GettokenList
-    .subscribe((x) => {
+    this.dataService.GettokenList.subscribe((x) => {
       this.tokenList = x;
     });
   }
@@ -116,68 +115,19 @@ export class SwapComponent implements OnInit {
         }
 
         if (this.firstToken.type != null && this.secondToken.type != null) {
-          var params = [this.firstToken.type, this.secondToken.type];
 
-          var abiHex = this.web3Service.getPair(params);
+          this.kanbanCallMethod();
 
-          this.kanbanService
-            .kanbanCall(environment.smartConractAdressFactory, abiHex)
-            .subscribe((data) => {
-              let res: any = data;
-
-              var address = this.web3Service.decodeabiHex(res.data, 'address');
-
-              this.needtodecode = address.toString();
-
-              var abiHexa = this.web3Service.getReserves();
-
-              this.kanbanService
-                .kanbanCall(address.toString(), abiHexa)
-                .subscribe((data: any) => {
-                  var param = ['uint112', 'uint112', 'uint32'];
-                  var value = this.web3Service.decodeabiHexs(data.data, param);
-
-                  if (this.firstToken.type > this.secondToken.type) {
-                    this.firstTokenReserve = value[0];
-                    this.secondTokenReserve = value[1];
-                  } else {
-                    this.firstTokenReserve = value[1];
-                    this.secondTokenReserve = value[0];
-                  }
-                  this.perAmount = (value[1] / value[0]).toString();
-
-                  this.perAmountLabel =
-                    this.firstToken.tickerName +
-                    ' per ' +
-                    this.secondToken.tickerName;
-                });
-            });
+        
         }
       });
   }
 
-  openSecondTokenListDialog() {
-    this.dialog
-      .open(TokenListComponent, {
-        data: {
-          tokens: this.tokenList,
-          isSecond: true,
-        },
-      })
-      .afterClosed()
-      .subscribe((x) => {
-        if (x.isSecond) {
-          this.dataService.GetSecondToken.subscribe((data) => {
-            this.secondToken = data;
-          });
-        }
+  kanbanCallMethod(){
 
-        if (this.firstToken.type != null && this.secondToken.type != null) {
-          var params = [this.firstToken.type, this.secondToken.type];
+      var params = [this.firstToken.type, this.secondToken.type];
 
           var abiHex = this.web3Service.getPair(params);
-
-          console.log('abiHex => ' + abiHex);
 
           this.kanbanService
             .kanbanCall(environment.smartConractAdressFactory, abiHex)
@@ -212,6 +162,27 @@ export class SwapComponent implements OnInit {
                     this.secondToken.tickerName;
                 });
             });
+
+  }
+
+  openSecondTokenListDialog() {
+    this.dialog
+      .open(TokenListComponent, {
+        data: {
+          tokens: this.tokenList,
+          isSecond: true,
+        },
+      })
+      .afterClosed()
+      .subscribe((x) => {
+        if (x.isSecond) {
+          this.dataService.GetSecondToken.subscribe((data) => {
+            this.secondToken = data;
+          });
+        }
+
+        if (this.firstToken.type != null && this.secondToken.type != null) {
+          this.kanbanCallMethod();
         }
       });
   }
@@ -251,7 +222,7 @@ export class SwapComponent implements OnInit {
 
       value = value.split('.')[0];
 
-      const params = [value, this.firstTokenReserve, this.secondTokenReserve];
+      const params = [value, this.secondTokenReserve, this.firstTokenReserve];
 
       var abiHex = this.web3Service.quote(params);
 
@@ -275,9 +246,10 @@ export class SwapComponent implements OnInit {
     this.dataService.sendFirstToken(this.secondToken);
     this.dataService.sendSecondToken(temp);
 
-    var tempAmount = this.firstCoinAmount;
-    this.firstCoinAmount = this.secondCoinAmount;
-    this.secondCoinAmount = tempAmount;
+    this.firstCoinAmount = 0;
+    this.secondCoinAmount = 0;
+
+    this.kanbanCallMethod()
   }
 
   openSnackBar(message: string, action: string) {
@@ -305,7 +277,10 @@ export class SwapComponent implements OnInit {
 
     var to = this.utilService.fabToExgAddress(walletAddress);
     var timestamp = new TimestampModel(
-      0,2,0,0 // here need to set for future timestamp
+      0,
+      2,
+      0,
+      0 // here need to set for future timestamp
     );
     var deadline = this.utilService.getTimestamp(timestamp);
 
@@ -322,9 +297,6 @@ export class SwapComponent implements OnInit {
   }
 }
 
-
-
 //TODO
-//- timestamp will be functional  -  done
-//- amountOutMin will be calculated with fee price 
+//- amountOutMin will be calculated with fee price
 //- wallet client will come from local session

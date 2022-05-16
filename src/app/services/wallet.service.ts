@@ -21,11 +21,7 @@ export class WalletService {
   ) {}
 
   async createConnection() {
-    // var clientSession = this.storageService.getWalletSession();
-
-    // console.log('clientSession');
-    // console.log(clientSession);
-    // if (clientSession == null) {
+  
       this.walletModel.client = await WalletConnectClient.init({
         logger: 'debug',
         projectId: '3acbabd1deb4672edfd4ca48226cfc0f',
@@ -40,9 +36,7 @@ export class WalletService {
       await this.showQrCode();
       console.log('this.walletModel.client' , this.walletModel.client);
       this.dataService.setWalletClient(this.walletModel.client);
-    // } else {
-    //   this.onSessionConnected(JSON.parse(clientSession));
-    // }
+
   }
 
   async showQrCode() {

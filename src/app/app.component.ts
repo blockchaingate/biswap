@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import Web3 from 'web3';
 import { KanbanService } from './services/kanban.service';
+import { StorageService } from './services/storage.service';
 
 
 
@@ -13,9 +13,11 @@ export class AppComponent {
   title = 'biSwap';
 
   constructor(
-    private kanbanService: KanbanService
+    private kanbanService: KanbanService,
+    private storageService: StorageService,
   ) {
     this.kanbanService.getTokenList();
+    this.storageService.removeWalletSession();
   }
 
 }

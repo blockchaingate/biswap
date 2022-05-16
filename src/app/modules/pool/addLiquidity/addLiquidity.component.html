@@ -122,6 +122,6 @@
     </mat-card>
 
     <div *ngIf="needtodecode">
-        {{ needtodecode }}
+      <a [href]="needtodecode" target="_blank" [textContent]="needtodecode"> </a> 
   </div>
 </div>

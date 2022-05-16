@@ -27,7 +27,7 @@ export class AddLiquidityComponent implements OnInit {
   secondCoinAmount: number;
 
   perAmount: string;
-  perAmountLabel: string = "";
+  perAmountLabel: string = '';
 
   needtodecode: any;
 
@@ -44,9 +44,9 @@ export class AddLiquidityComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.dataService.GettokenList.subscribe(x => {
+    this.dataService.GettokenList.subscribe((x) => {
       this.tokenList = x;
-    })
+    });
   }
 
   async onKey(value: number, isFistToken: boolean) {
@@ -110,7 +110,7 @@ export class AddLiquidityComponent implements OnInit {
 
       value = value.split('.')[0];
 
-      const params = [value, reserve1, reserve2];
+      const params = [value, reserve2, reserve1];
 
       var abiHex = this.web3Service.quote(params);
 
@@ -131,6 +131,46 @@ export class AddLiquidityComponent implements OnInit {
     }
   }
 
+  kanbanCallMethod() {
+    var params = [this.firstToken.type, this.secondToken.type];
+
+    var abiHex = this.web3Service.getPair(params);
+
+    console.log('abiHex => ' + abiHex);
+
+    this.kanbanService
+      .kanbanCall(environment.smartConractAdressFactory, abiHex)
+      .subscribe((data) => {
+        let res: any = data;
+        var valueasd = this.web3Service.decodeabiHex(res.data, 'address');
+        this.needtodecode = valueasd.toString();
+      });
+
+    var abiHexa = this.web3Service.getReserves();
+
+    this.kanbanService
+      .kanbanCall('0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc', abiHexa)
+      .subscribe((data: any) => {
+        var param = ['uint112', 'uint112', 'uint32'];
+        var value = this.web3Service.decodeabiHexs(data.data, param);
+
+        if (this.firstToken.type < this.secondToken.type) {
+          this.firstTokenReserve = value[0];
+          this.secondTokenReserve = value[1];
+        } else {
+          this.firstTokenReserve = value[1];
+          this.secondTokenReserve = value[0];
+        }
+
+        var perAmount = (value[0] / value[1]).toString();
+
+        this.perAmountLabel =
+          this.firstToken.tickerName + ' per ' + this.secondToken.tickerName;
+
+        this.perAmount = perAmount;
+      });
+  }
+
   openFirstTokenListDialog() {
     this.dialog
       .open(TokenListComponent, {
@@ -148,42 +188,7 @@ export class AddLiquidityComponent implements OnInit {
         }
 
         if (this.firstToken.type != null && this.secondToken.type != null) {
-          var params = [this.firstToken.type, this.secondToken.type];
-
-          var abiHex = this.web3Service.getPair(params);
-
-          console.log('abiHex => ' + abiHex);
-
-          this.kanbanService
-            .kanbanCall(environment.smartConractAdressFactory, abiHex)
-            .subscribe((data) => {
-              let res: any = data;
-              var valueasd = this.web3Service.decodeabiHex(res.data, 'address');
-              this.needtodecode = valueasd.toString();
-            });
-
-          var abiHexa = this.web3Service.getReserves();
-
-          this.kanbanService
-            .kanbanCall('0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc', abiHexa)
-            .subscribe((data: any) => {
-              var param = ['uint112', 'uint112', 'uint32'];
-              var value = this.web3Service.decodeabiHexs(data.data, param);
-
-              this.firstTokenReserve = value[0];
-              this.secondTokenReserve = value[1];
-
-              console.log('value =>' + value[0]);
-              console.log('value =>' + value[1]);
-              console.log('value =>' + value[2]);
-
-              var perAmount = (value[0] / value[1]).toString();
-
-            
-              this.perAmountLabel = this.firstToken.tickerName + " per " + this.secondToken.tickerName;
-
-              this.perAmount = perAmount;
-            });
+          this.kanbanCallMethod();
         }
       });
   }
@@ -205,42 +210,7 @@ export class AddLiquidityComponent implements OnInit {
         }
 
         if (this.firstToken.type != null && this.secondToken.type != null) {
-          var params = [this.firstToken.type, this.secondToken.type];
-
-          var abiHex = this.web3Service.getPair(params);
-
-          console.log('abiHex => ' + abiHex);
-
-          this.kanbanService
-            .kanbanCall(environment.smartConractAdressFactory, abiHex)
-            .subscribe((data) => {
-              let res: any = data;
-              var valueasd = this.web3Service.decodeabiHex(res.data, 'address');
-              this.needtodecode = valueasd.toString();
-            });
-
-          var abiHexa = this.web3Service.getReserves();
-
-          this.kanbanService
-            .kanbanCall('0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc', abiHexa)
-            .subscribe((data: any) => {
-              var param = ['uint112', 'uint112', 'uint32'];
-              var value = this.web3Service.decodeabiHexs(data.data, param);
-
-              this.firstTokenReserve = value[1];
-              this.secondTokenReserve = value[0];
-
-              console.log('value =>' + value[0]);
-              console.log('value =>' + value[1]);
-              console.log('value =>' + value[2]);
-
-       
-              var perAmount = (value[0] / value[1]).toString();
-
-              this.perAmountLabel = this.firstToken.tickerName + " per " + this.secondToken.tickerName;
-
-              this.perAmount = perAmount;
-             });
+          this.kanbanCallMethod();
         }
       });
   }
@@ -268,7 +238,10 @@ export class AddLiquidityComponent implements OnInit {
     var amountBMin = new BigNumber(Number(amountBDesired) - 1000);
     var to = this.utilService.fabToExgAddress(walletAddress);
     var timestamp = new TimestampModel(
-      0,2,0,0 // here need to set for future timestamp
+      0,
+      2,
+      0,
+      0 // here need to set for future timestamp
     );
     var deadline = this.utilService.getTimestamp(timestamp);
 
