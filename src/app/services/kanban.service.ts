@@ -79,7 +79,7 @@ export class KanbanService {
     return this.http.get(path);
   }
 
-  kanbanCall(to: string, abiData: string) {
+  async kanbanCall(to: string, abiData: string) {
     const data = {
       transactionOptions: {
         to: to,

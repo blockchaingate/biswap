@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
+import { ErrorMessagesComponent } from 'src/app/components/errorMessages/errorMessages.component';
 import { Coin } from 'src/app/models/coin';
 import { TimestampModel } from 'src/app/models/temistampModel';
 import { DataService } from 'src/app/services/data.service';
@@ -29,7 +30,10 @@ export class AddLiquidityComponent implements OnInit {
   perAmount: string;
   perAmountLabel: string = '';
 
-  needtodecode: any;
+  txHash: String;
+  newPair: String;
+
+  isNewPair: boolean = false;
 
   firstTokenReserve: BigNumber = new BigNumber(0);
   secondTokenReserve: BigNumber = new BigNumber(0);
@@ -50,126 +54,138 @@ export class AddLiquidityComponent implements OnInit {
   }
 
   async onKey(value: number, isFistToken: boolean) {
-    console.log(value);
-    console.log(isFistToken);
 
     if (
-      this.firstToken.tickerName != null &&
+      (this.firstToken.tickerName != null &&
       this.secondToken.tickerName != null &&
       value != null &&
-      value != undefined
-    ) {
+      value != undefined ) && !this.isNewPair
+     ) {
       await this.setInputValues(isFistToken);
-    } else if (value == null && value == undefined) {
+    } else if ((value == null && value == undefined) && !this.isNewPair) {
       if (isFistToken) {
         this.secondCoinAmount = 0;
       } else {
         this.firstCoinAmount = 0;
       }
+    } else if(this.isNewPair){
+      if (!isFistToken) {
+        this.secondCoinAmount = value;
+      } else {
+        this.firstCoinAmount = value;
+      }
     }
   }
 
   setInputValues(isFirst: boolean) {
-    if (isFirst) {
+
+ if (isFirst) {
       var amount: number = this.firstCoinAmount;
       var reserve1: BigNumber = this.firstTokenReserve;
       var reserve2: BigNumber = this.secondTokenReserve;
-
       let value = new BigNumber(amount)
         .multipliedBy(new BigNumber(1e18))
         .toFixed();
-
       value = value.split('.')[0];
-
       const params = [value, reserve1, reserve2];
-
       var abiHex = this.web3Service.quote(params);
-
       console.log('abiHex => ' + abiHex);
-
       this.kanbanService
-        .kanbanCall(environment.smartConractAdressRouter, abiHex)
-        .subscribe((data) => {
-          let res: any = data;
-          var result = this.web3Service.decodeabiHex(res.data, 'uint256');
+        .kanbanCall(environment.smartConractAdressRouter, abiHex).then((data) => {
+          data.subscribe((data1) => {
+            let res: any = data1;
+            var result = this.web3Service.decodeabiHex(res.data, 'uint256');
+            var temp = Number(result);
+            this.secondCoinAmount = Number(
+              new BigNumber(temp).dividedBy(new BigNumber(1e18)).toFixed()
+            );
+          });
 
-          var temp = Number(result);
-
-          this.secondCoinAmount = Number(
-            new BigNumber(temp).dividedBy(new BigNumber(1e18)).toFixed()
-          );
-        });
+        })
+        
     } else {
       var amount: number = this.secondCoinAmount;
       var reserve1: BigNumber = this.firstTokenReserve;
       var reserve2: BigNumber = this.secondTokenReserve;
-
       let value = new BigNumber(amount)
         .multipliedBy(new BigNumber(1e18))
         .toFixed();
-
       value = value.split('.')[0];
-
       const params = [value, reserve2, reserve1];
-
       var abiHex = this.web3Service.quote(params);
-
       console.log('abiHex => ' + abiHex);
-
       this.kanbanService
-        .kanbanCall(environment.smartConractAdressRouter, abiHex)
-        .subscribe((data) => {
-          let res: any = data;
-          var result = this.web3Service.decodeabiHex(res.data, 'uint256');
-
-          var temp = Number(result);
-
-          this.firstCoinAmount = Number(
-            new BigNumber(temp).dividedBy(new BigNumber(1e18))
-          );
-        });
+        .kanbanCall(environment.smartConractAdressRouter, abiHex).then((data) => {
+          data.subscribe((data1) => {
+            let res: any = data1;
+            var result = this.web3Service.decodeabiHex(res.data, 'uint256');
+            var temp = Number(result);
+            this.firstCoinAmount = Number(
+              new BigNumber(temp).dividedBy(new BigNumber(1e18))
+            );
+          });
+        })
     }
+    
+
+   
+  }
+  openDialog(errorMessage: String) {
+    this.dialog.open(ErrorMessagesComponent, { data: errorMessage });
   }
 
   kanbanCallMethod() {
     var params = [this.firstToken.type, this.secondToken.type];
-
     var abiHex = this.web3Service.getPair(params);
-
     console.log('abiHex => ' + abiHex);
-
     this.kanbanService
       .kanbanCall(environment.smartConractAdressFactory, abiHex)
-      .subscribe((data) => {
-        let res: any = data;
-        var addeess = this.web3Service.decodeabiHex(res.data, 'address');
-        this.needtodecode = addeess.toString();
+      .then((data) => {
+        data.subscribe((data1) => {
+          let res: any = data1;
+          var addeess = this.web3Service.decodeabiHex(res.data, 'address');
+          if (
+            addeess.toString() != '0x0000000000000000000000000000000000000000'
+          ) {
+            var abiHexa = this.web3Service.getReserves();
+            this.kanbanService
+              .kanbanCall(addeess.toString(), abiHexa)
+              .then((data2) => {
+                data2.subscribe((data3) => {
+                  var param = ['uint112', 'uint112', 'uint32'];
+                  let res: any = data3;
+                  console.log('res.data');
+                  console.log(res.data);
+                    var value = this.web3Service.decodeabiHexs(res.data, param);
+                    console.log(value);
+                    if (this.firstToken.type < this.secondToken.type) {
+                      this.firstTokenReserve = value[0];
+                      this.secondTokenReserve = value[1];
+                    } else {
+                      this.firstTokenReserve = value[1];
+                      this.secondTokenReserve = value[0];
+                    }
+                    var perAmount = (value[0] / value[1]).toString();
 
-        var abiHexa = this.web3Service.getReserves();
+                    this.perAmountLabel =
+                      this.firstToken.tickerName +
+                      ' per ' +
+                      this.secondToken.tickerName;
 
-        this.kanbanService
-          .kanbanCall(addeess.toString(), abiHexa)
-          .subscribe((data: any) => {
-            var param = ['uint112', 'uint112', 'uint32'];
-            var value = this.web3Service.decodeabiHexs(data.data, param);
-
-            if (this.firstToken.type < this.secondToken.type) {
-              this.firstTokenReserve = value[0];
-              this.secondTokenReserve = value[1];
-            } else {
-              this.firstTokenReserve = value[1];
-              this.secondTokenReserve = value[0];
-            }
-
-            var perAmount = (value[0] / value[1]).toString();
-
-            this.perAmountLabel =
-              this.firstToken.tickerName +
-              ' per ' +
-              this.secondToken.tickerName;
-
-            this.perAmount = perAmount;
-          });
+                    this.perAmount = perAmount;
+                 
+                });
+              });
+              this.isNewPair= false;
+              this.newPair = "";
+          }else{
+            this.newPair = 'You are adding liquidity to new pair';
+            this.isNewPair = true;
+          }
+        });
+      })
+      .catch((error) => {
+        this.openDialog(error);
       });
   }
 
@@ -263,7 +279,7 @@ export class AddLiquidityComponent implements OnInit {
     this.kanbanService
       .send(environment.smartConractAdressRouter, abiHex)
       .then((data) => {
-        this.needtodecode =
+        this.txHash =
           'https://test.exchangily.com/explorer/tx-detail/' + data;
       });
   }

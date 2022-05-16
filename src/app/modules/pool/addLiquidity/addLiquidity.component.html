@@ -121,7 +121,10 @@
       </mat-card-actions>
     </mat-card>
 
-    <div *ngIf="needtodecode">
-      <a [href]="needtodecode" target="_blank" [textContent]="needtodecode"> </a> 
+    <div *ngIf="txHash">
+      <a [href]="txHash" target="_blank" [textContent]="txHash"> </a> 
+  </div>
+    <div *ngIf="newPair">
+      <p>{{newPair}}</p>
   </div>
 </div>
