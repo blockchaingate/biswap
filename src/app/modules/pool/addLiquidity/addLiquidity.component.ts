@@ -142,32 +142,34 @@ export class AddLiquidityComponent implements OnInit {
       .kanbanCall(environment.smartConractAdressFactory, abiHex)
       .subscribe((data) => {
         let res: any = data;
-        var valueasd = this.web3Service.decodeabiHex(res.data, 'address');
-        this.needtodecode = valueasd.toString();
-      });
+        var addeess = this.web3Service.decodeabiHex(res.data, 'address');
+        this.needtodecode = addeess.toString();
 
-    var abiHexa = this.web3Service.getReserves();
+        var abiHexa = this.web3Service.getReserves();
 
-    this.kanbanService
-      .kanbanCall('0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc', abiHexa)
-      .subscribe((data: any) => {
-        var param = ['uint112', 'uint112', 'uint32'];
-        var value = this.web3Service.decodeabiHexs(data.data, param);
+        this.kanbanService
+          .kanbanCall(addeess.toString(), abiHexa)
+          .subscribe((data: any) => {
+            var param = ['uint112', 'uint112', 'uint32'];
+            var value = this.web3Service.decodeabiHexs(data.data, param);
 
-        if (this.firstToken.type < this.secondToken.type) {
-          this.firstTokenReserve = value[0];
-          this.secondTokenReserve = value[1];
-        } else {
-          this.firstTokenReserve = value[1];
-          this.secondTokenReserve = value[0];
-        }
+            if (this.firstToken.type < this.secondToken.type) {
+              this.firstTokenReserve = value[0];
+              this.secondTokenReserve = value[1];
+            } else {
+              this.firstTokenReserve = value[1];
+              this.secondTokenReserve = value[0];
+            }
 
-        var perAmount = (value[0] / value[1]).toString();
+            var perAmount = (value[0] / value[1]).toString();
 
-        this.perAmountLabel =
-          this.firstToken.tickerName + ' per ' + this.secondToken.tickerName;
+            this.perAmountLabel =
+              this.firstToken.tickerName +
+              ' per ' +
+              this.secondToken.tickerName;
 
-        this.perAmount = perAmount;
+            this.perAmount = perAmount;
+          });
       });
   }
 

@@ -1,12 +1,18 @@
 .dashboard-body {
-    height: 50vh;
+  height: 50vh;
 }
 
-.dash-mat-card{
-    padding: 0 !important;
+.dash-mat-card {
+  padding: 0 !important;
 }
 
 .card-h2 {
-    padding-top: 20px;
-    padding-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.instructions {
+  display: block;
+  justify-content: center;
+  text-align: center;
 }
