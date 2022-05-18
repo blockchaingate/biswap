@@ -6,6 +6,8 @@ import { StorageService } from './storage.service';
 import { WalletModel } from '../models/wallet.model';
 import { DataService } from './data.service';
 import { BaseResponseModel } from '../models/baseResponseModel';
+import { Web3Service } from './web3.service';
+import BigNumber from 'bignumber.js';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +19,7 @@ export class KanbanService {
   walletModel: WalletModel = new WalletModel();
 
   constructor(
+    private web3Service: Web3Service,
     private dataService: DataService,
     private storageService: StorageService,
     private http: HttpClient
@@ -89,6 +92,18 @@ export class KanbanService {
     const path = 'kanban/call';
     const res = this.post(path, data);
     return res;
+  }
+
+  async kanbanCall1(to: string, abiData: string) {
+    const data = {
+      transactionOptions: {
+        to: to,
+        data: abiData,
+      },
+    };
+    const path = 'kanban/call';
+    const res = this.post(path, data);
+    return res.toPromise();
   }
 
   async send(to: string, data: string) {

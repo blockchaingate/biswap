@@ -11,32 +11,28 @@ import QRCodeModal from '@walletconnect/qrcode-modal';
   providedIn: 'root',
 })
 export class WalletService {
-
   walletModel: WalletModel = new WalletModel();
-     
+
   constructor(
-      public dataService: DataService,
-      public storageService: StorageService,
-      public dialog: MatDialog
+    public dataService: DataService,
+    public storageService: StorageService,
+    public dialog: MatDialog
   ) {}
 
   async createConnection() {
-  
-      this.walletModel.client = await WalletConnectClient.init({
-        logger: 'debug',
-        projectId: '3acbabd1deb4672edfd4ca48226cfc0f',
-        relayUrl: 'wss://relay.walletconnect.com',
-        metadata: {
-          name: 'Example Dapp',
-          description: 'Example Dapp',
-          url: 'http://localhost:4200',
-          icons: ['https://walletconnect.com/walletconnect-logo.png'],
-        },
-      });
-      await this.showQrCode();
-      console.log('this.walletModel.client' , this.walletModel.client);
-      this.dataService.setWalletClient(this.walletModel.client);
-
+    this.walletModel.client = await WalletConnectClient.init({
+      logger: 'debug',
+      projectId: '3acbabd1deb4672edfd4ca48226cfc0f',
+      relayUrl: 'wss://relay.walletconnect.com',
+      metadata: {
+        name: 'Example Dapp',
+        description: 'Example Dapp',
+        url: 'http://localhost:4200',
+        icons: ['https://walletconnect.com/walletconnect-logo.png'],
+      },
+    });
+    var session = await this.showQrCode();
+    return session;
   }
 
   async showQrCode() {
@@ -62,8 +58,8 @@ export class WalletService {
         },
       },
     });
-    this.storageService.createWalletSession(session);
     this.onSessionConnected(session);
+    return session;
   }
 
   onSessionConnected(session: any) {
@@ -73,17 +69,19 @@ export class WalletService {
     if (accounts && accounts.length > 0) {
       this.walletModel.account = accounts[0];
     }
+    this.storageService.createWalletSession(session);
+    console.log('this.walletModel.client', this.walletModel.client);
+    this.dataService.setWalletClient(this.walletModel.client);
   }
 
-  connectWallet() {
+  async connectWallet() {
     var clientSession = this.storageService.getWalletSession();
-    if(clientSession == null || clientSession == undefined){
+    if (clientSession == null || clientSession == undefined) {
       this.createConnection();
       this.dataService.sendWalletLabel('Disconnect Wallet');
       this.dataService.setIsWalletConnect(true);
-
-    }else{
-    this.dataService.sendWalletLabel('Connect Wallet');
+    } else {
+      this.dataService.sendWalletLabel('Connect Wallet');
       this.storageService.removeWalletSession();
       this.dataService.setIsWalletConnect(false);
     }

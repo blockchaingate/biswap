@@ -1,91 +1,103 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import BigNumber from 'bignumber.js';
-import { Coin } from 'src/app/models/coin';
 import { DataService } from 'src/app/services/data.service';
-import { KanbanService } from 'src/app/services/kanban.service';
+import { KanbanMiddlewareService } from 'src/app/services/kanban.middleware.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { UtilsService } from 'src/app/services/utils.service';
 import { WalletService } from 'src/app/services/wallet.service';
-import { Web3Service } from 'src/app/services/web3.service';
-import { TokenListComponent } from '../shared/tokenList/tokenList.component';
 
 @Component({
   selector: 'app-pool',
   templateUrl: './pool.component.html',
-  styleUrls: ['./pool.component.scss']
+  styleUrls: ['./pool.component.scss'],
 })
 export class PoolComponent implements OnInit {
-  firstToken: Coin = new Coin();
-  secondToken: Coin = new Coin();
-  tokenList: Coin[]
-  firstCoinAmount: BigNumber = new BigNumber(0.0)
-  secondCoinAmount: BigNumber = new BigNumber(0.0)
-
   isWalletConnect: boolean = false;
-
   addLiquidityActive: boolean = false;
-
   walletSession: any;
 
+  usersProportionOfLiquidityToWhole: number;
 
+  panelOpenState = false;
 
+  firstTokeninPair: number;
+  secondTokeninPair: number;
+  totalPoolToken: number;
+  totalSupply: number;
+  yourPoolShare: number;
 
   constructor(
-    public walletService: WalletService,
-    public storageService:StorageService,
-    public router: Router,
-    private dataService: DataService,
-    public dialog: MatDialog,
-    private kanbanService: KanbanService,
-    private web3Service: Web3Service) {}
+    private kanbanMiddlewareService: KanbanMiddlewareService,
+    private utilService: UtilsService,
+    private walletService: WalletService,
+    private storageService: StorageService,
+    private router: Router,
+    private dataService: DataService
+  ) {}
 
-  ngOnInit() {
-
+  async ngOnInit() {
     this.walletSession = this.storageService.getWalletSession();
     if (this.walletSession != null) {
       this.dataService.sendWalletLabel('Disconnect Wallet');
       this.dataService.setIsWalletConnect(true);
-    }
-    else{
+      await this.getExistLiquidity();
+    } else {
       this.dataService.sendWalletLabel('Connect Wallet');
       this.dataService.setIsWalletConnect(false);
     }
 
-    this.dataService.GetIsWalletConnect.subscribe(data => {
+    this.dataService.GetIsWalletConnect.subscribe((data) => {
       this.isWalletConnect = data;
-    })
-
-    this.dataService.GettokenList.subscribe(x => {
-      this.tokenList = x;
-    })
-  }
-
-  openTokenListDialog() {
-    this.dialog.open(TokenListComponent, {
-      data: this.tokenList
-    }).afterClosed().subscribe(x => {
-    })
+    });
   }
 
   addLiquidityFunction() {
-    this.router.navigate([
-      "/pool/add"
-    ])
+    this.router.navigate(['/pool/add']);
   }
 
-  connectWallet(){
-    this.walletService.connectWallet();
+ async connectWallet() {
+   //TODO after wallet connect need to call getExistLiquidity() methid 
+     await this.walletService.connectWallet();
   }
 
+  async getExistLiquidity() {
+    //TODO 
+    // wallet connection needed here to calculate all numbers
+    // and 
+    // need to have user pair address, this will come from Muchtar 
+    var totalToken =
+      await this.kanbanMiddlewareService.getliquidityBalanceOfuser(
+        '0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc'
+      );
+    var totalSupply = await this.kanbanMiddlewareService.getTotalSupply(
+      '0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc'
+    );
 
-  callRPC(){
-    var abiHex = this.web3Service.getAmountIn('a');
-    var txHex = this.web3Service.signAbiHexWithPrivateKey(abiHex,'0xa2370c422e2074ae2fc3d9d24f1e654c7fa3c181', '0xa2370c422e2074ae2fc3d9d24f1e654c7fa3c181', 1 )
-    console.log('abiHex')
-    console.log(abiHex)
-    console.log('txHex')
-    console.log(txHex)
+    if (totalToken != null)
+      this.totalPoolToken = this.utilService.toFixedNumber(totalToken);
+    this.totalSupply = this.utilService.toFixedNumber(totalSupply);
+
+    this.usersProportionOfLiquidityToWhole =
+      this.totalPoolToken / this.totalSupply;
+    this.yourPoolShare = (100 * this.totalPoolToken) / this.totalSupply;
+
+    var fisrtToken = await this.kanbanMiddlewareService.balanceOfToken(
+      '0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc',
+      131072
+    );
+    var secondToken = await this.kanbanMiddlewareService.balanceOfToken(
+      '0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc',
+      131073
+    );
+
+    this.firstTokeninPair =
+      this.utilService.toFixedNumber(fisrtToken) *
+      this.usersProportionOfLiquidityToWhole;
+    this.secondTokeninPair =
+      this.utilService.toFixedNumber(secondToken) *
+      this.usersProportionOfLiquidityToWhole;
+
+    console.log('usersProportionOfLiquidityToWhole');
+    console.log(this.usersProportionOfLiquidityToWhole);
   }
-
 }

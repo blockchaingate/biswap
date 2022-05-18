@@ -10,11 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatListModule} from '@angular/material/list';
-
-
-
-
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({
@@ -30,7 +27,8 @@ import {MatListModule} from '@angular/material/list';
     MatDialogModule,
     LayoutModule,
     MatSnackBarModule,
-    MatListModule
+    MatListModule,
+    MatExpansionModule
   ],
   exports: [
     MatToolbarModule,
@@ -44,7 +42,8 @@ import {MatListModule} from '@angular/material/list';
     MatDialogModule,
     LayoutModule,
     MatSnackBarModule,
-    MatListModule
+    MatListModule,
+    MatExpansionModule
   ],
   providers: [],
 })

@@ -50,3 +50,17 @@
         border-radius: 20px;
     }
 }
+
+.exist-liquddity {
+    margin-top: 15px;
+    border-radius: 20px;
+}
+
+::ng-deep .mat-expansion-panel-header-description {
+    flex-grow: 0 !important; 
+}
+
+.action-buttons {
+    width: 125px;
+    border-radius: 10px;
+}

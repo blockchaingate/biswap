@@ -21,6 +21,9 @@ export class StorageService {
         localStorage.setItem('client-session', JSON.stringify(session));
     }
 
+
+    //cant store clinet into local Storage 
+
     // getWalletClient(){
     //     var clientWallet = sessionStorage.getItem('client-wallet');
     //     if(clientWallet != undefined || clientWallet != null){

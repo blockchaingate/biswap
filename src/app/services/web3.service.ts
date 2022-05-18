@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import BigNumber from 'bignumber.js';
 import { environment } from 'src/environments/environment';
 import Web3 from 'web3';
 import Common from 'ethereumjs-common';
 import * as Eth from 'ethereumjs-tx';
-import { KanbanService } from './kanban.service';
 import { SmartContractServices } from './smartcontract.service';
 
 @Injectable({
@@ -42,6 +40,12 @@ export class Web3Service {
 
   getBalanceOf(params: any) {
     var func = this.smartContractService.balanceOfFunc();
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }
+
+  getBalanceOfProxy(params: any) {
+    var func = this.smartContractService.balanceOfProxyFunc();
     const abiHex = this.getGeneralFunctionABI(func, params);
     return abiHex;
   }
@@ -97,6 +101,19 @@ export class Web3Service {
   
   swapExactTokensForTokens(params: any) {
     var func = this.smartContractService.swapExactTokensForTokensFunc();
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }
+
+  ngetBalanceOd(params: any) {
+    var func = this.smartContractService.getPairFunc();
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }
+
+  totalSupply() {
+    var params: string[] = [];
+    var func = this.smartContractService.totalSupplyFunc();
     const abiHex = this.getGeneralFunctionABI(func, params);
     return abiHex;
   }

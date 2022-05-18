@@ -162,6 +162,27 @@ export class SmartContractServices {
     return func;
   }
 
+  totalSupplyFunc() {
+    const func = {
+      "constant": true,
+      "inputs": [
+      ],
+      "name": "totalSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    };
+
+    return func;
+  }
+
   getAmountOutFunc() {
     const func = {
       inputs: [
@@ -191,6 +212,36 @@ export class SmartContractServices {
       ],
       stateMutability: 'pure',
       type: 'function',
+    };
+
+    return func;
+  }
+  balanceOfProxyFunc() {
+    const func = {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "internalType": "uint32",
+          "name": "_coinType",
+          "type": "uint32"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
     };
 
     return func;
@@ -401,9 +452,5 @@ export class SmartContractServices {
 
     return func;
   }
-
-
-
-
 
 }

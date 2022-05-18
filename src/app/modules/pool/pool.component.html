@@ -1,14 +1,10 @@
 <div fxLayout="row" fxLayoutAlign="center center" class="swapBody">
   <div fxFlex="25">
     <mat-card>
-      <div fxLayout="row" fxLayoutAlign="space-between center" >
+      <div fxLayout="row" fxLayoutAlign="space-between center">
         <mat-card-title fxLayout="column">
-         <span class="paddingTop5">
-           Your Liquidity
-         </span> 
-         <h5 class="paddingTop5">
-          Remove liquidity to receive tokens back
-         </h5>
+          <span class="paddingTop5"> Your Liquidity </span>
+          <h5 class="paddingTop5">Remove liquidity to receive tokens back</h5>
         </mat-card-title>
 
         <div class="paddingBottom20">
@@ -31,33 +27,92 @@
 
       <mat-card-content>
         <div class="emty-liquidity" *ngIf="isWalletConnect != true; else other">
-          <span>
-            Connect to a wallet to view your liquidity.
-          </span>
+          <span> Connect to a wallet to view your liquidity. </span>
         </div>
 
         <ng-template #other>
-          <div class="emty-liquidity" fxLayout="column" fxLayoutAlign="center center">
-            <span>No liquidity found.
-            </span>
-            <span class="marginTop20">Don't see a pool you joined?
-            </span>
+          <div
+            class="emty-liquidity"
+            fxLayout="column"
+            fxLayoutAlign="center center"
+          >
+            <span>No liquidity found. </span>
+            <span class="marginTop20">Don't see a pool you joined? </span>
           </div>
         </ng-template>
       </mat-card-content>
 
-      
-        <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
-        <mat-card-actions fxLayout="row" fxLayoutAlign="center center" class="mat-card-action" >
-          <button mat-raised-button color="primary" (click)="connectWallet()" *ngIf="!isWalletConnect; else asd" >Connect a wallet</button>
-  
-          <ng-template #asd> 
-            <button mat-raised-button color="primary" (click)="addLiquidityFunction()">+ Add Liquidity</button>
-          </ng-template>
-        
-        </mat-card-actions>
+      <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
+      <mat-card-actions
+        fxLayout="row"
+        fxLayoutAlign="center center"
+        class="mat-card-action"
+      >
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="connectWallet()"
+          *ngIf="!isWalletConnect; else asd"
+        >
+          Connect a wallet
+        </button>
+
+        <ng-template #asd>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="addLiquidityFunction()"
+          >
+            + Add Liquidity
+          </button>
+        </ng-template>
+      </mat-card-actions>
     </mat-card>
 
-   
+    <mat-expansion-panel *ngIf="totalPoolToken != null"
+      class="exist-liquddity"
+      (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title> FAB/EXG </mat-panel-title>
+        <mat-panel-description>
+          Manage
+          <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <p>Your total pool tokens:</p>
+        <p>{{ totalPoolToken }}</p>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <p>Pooled FAB:</p>
+        <p>{{firstTokeninPair}}</p>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <p>Pooled EXG:</p>
+        <p>{{secondTokeninPair}}</p>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <p>Your pool share:</p>
+        <p> < {{ yourPoolShare }} %</p>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-around center">
+        <button class="action-buttons"
+            mat-raised-button
+            color="primary"
+          >
+           Add
+          </button>
+
+          <button class="action-buttons"
+            mat-raised-button
+            color="primary"
+          >
+            Remove
+          </button>
+        
+      </div>
+    </mat-expansion-panel>
   </div>
 </div>

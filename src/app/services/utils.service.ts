@@ -69,4 +69,8 @@ d.setHours(d.getHours() + value.hour!)
 d.setMinutes(d.getMinutes() + value.minute!);
  return d.getTime();
 }
+
+toFixedNumber(param: number){
+  return Number(param.toFixed(4));
+}
 }

@@ -5,6 +5,7 @@ import { ErrorMessagesComponent } from 'src/app/components/errorMessages/errorMe
 import { Coin } from 'src/app/models/coin';
 import { TimestampModel } from 'src/app/models/temistampModel';
 import { DataService } from 'src/app/services/data.service';
+import { KanbanMiddlewareService } from 'src/app/services/kanban.middleware.service';
 import { KanbanService } from 'src/app/services/kanban.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -39,6 +40,7 @@ export class AddLiquidityComponent implements OnInit {
   secondTokenReserve: BigNumber = new BigNumber(0);
 
   constructor(
+    private kanbanMiddlewareService: KanbanMiddlewareService,
     private utilService: UtilsService,
     private storageService: StorageService,
     private web3Service: Web3Service,
@@ -54,21 +56,21 @@ export class AddLiquidityComponent implements OnInit {
   }
 
   async onKey(value: number, isFistToken: boolean) {
-
     if (
-      (this.firstToken.tickerName != null &&
+      this.firstToken.tickerName != null &&
       this.secondToken.tickerName != null &&
       value != null &&
-      value != undefined ) && !this.isNewPair
-     ) {
+      value != undefined &&
+      !this.isNewPair
+    ) {
       await this.setInputValues(isFistToken);
-    } else if ((value == null && value == undefined) && !this.isNewPair) {
+    } else if (value == null && value == undefined && !this.isNewPair) {
       if (isFistToken) {
         this.secondCoinAmount = 0;
       } else {
         this.firstCoinAmount = 0;
       }
-    } else if(this.isNewPair){
+    } else if (this.isNewPair) {
       if (!isFistToken) {
         this.secondCoinAmount = value;
       } else {
@@ -77,9 +79,8 @@ export class AddLiquidityComponent implements OnInit {
     }
   }
 
-  setInputValues(isFirst: boolean) {
-
- if (isFirst) {
+  async setInputValues(isFirst: boolean) {
+    if (isFirst) {
       var amount: number = this.firstCoinAmount;
       var reserve1: BigNumber = this.firstTokenReserve;
       var reserve2: BigNumber = this.secondTokenReserve;
@@ -88,21 +89,10 @@ export class AddLiquidityComponent implements OnInit {
         .toFixed();
       value = value.split('.')[0];
       const params = [value, reserve1, reserve2];
-      var abiHex = this.web3Service.quote(params);
-      console.log('abiHex => ' + abiHex);
-      this.kanbanService
-        .kanbanCall(environment.smartConractAdressRouter, abiHex).then((data) => {
-          data.subscribe((data1) => {
-            let res: any = data1;
-            var result = this.web3Service.decodeabiHex(res.data, 'uint256');
-            var temp = Number(result);
-            this.secondCoinAmount = Number(
-              new BigNumber(temp).dividedBy(new BigNumber(1e18)).toFixed()
-            );
-          });
 
-        })
-        
+      this.secondCoinAmount = await this.kanbanMiddlewareService.getQuote(
+        params
+      );
     } else {
       var amount: number = this.secondCoinAmount;
       var reserve1: BigNumber = this.firstTokenReserve;
@@ -112,24 +102,13 @@ export class AddLiquidityComponent implements OnInit {
         .toFixed();
       value = value.split('.')[0];
       const params = [value, reserve2, reserve1];
-      var abiHex = this.web3Service.quote(params);
-      console.log('abiHex => ' + abiHex);
-      this.kanbanService
-        .kanbanCall(environment.smartConractAdressRouter, abiHex).then((data) => {
-          data.subscribe((data1) => {
-            let res: any = data1;
-            var result = this.web3Service.decodeabiHex(res.data, 'uint256');
-            var temp = Number(result);
-            this.firstCoinAmount = Number(
-              new BigNumber(temp).dividedBy(new BigNumber(1e18))
-            );
-          });
-        })
-    }
-    
 
-   
+      this.firstCoinAmount = await this.kanbanMiddlewareService.getQuote(
+        params
+      );
+    }
   }
+  
   openDialog(errorMessage: String) {
     this.dialog.open(ErrorMessagesComponent, { data: errorMessage });
   }
@@ -156,29 +135,28 @@ export class AddLiquidityComponent implements OnInit {
                   let res: any = data3;
                   console.log('res.data');
                   console.log(res.data);
-                    var value = this.web3Service.decodeabiHexs(res.data, param);
-                    console.log(value);
-                    if (this.firstToken.type < this.secondToken.type) {
-                      this.firstTokenReserve = value[0];
-                      this.secondTokenReserve = value[1];
-                    } else {
-                      this.firstTokenReserve = value[1];
-                      this.secondTokenReserve = value[0];
-                    }
-                    var perAmount = (value[0] / value[1]).toString();
+                  var value = this.web3Service.decodeabiHexs(res.data, param);
+                  console.log(value);
+                  if (this.firstToken.type < this.secondToken.type) {
+                    this.firstTokenReserve = value[0];
+                    this.secondTokenReserve = value[1];
+                  } else {
+                    this.firstTokenReserve = value[1];
+                    this.secondTokenReserve = value[0];
+                  }
+                  var perAmount = (value[0] / value[1]).toString();
 
-                    this.perAmountLabel =
-                      this.firstToken.tickerName +
-                      ' per ' +
-                      this.secondToken.tickerName;
+                  this.perAmountLabel =
+                    this.firstToken.tickerName +
+                    ' per ' +
+                    this.secondToken.tickerName;
 
-                    this.perAmount = perAmount;
-                 
+                  this.perAmount = perAmount;
                 });
               });
-              this.isNewPair= false;
-              this.newPair = "";
-          }else{
+            this.isNewPair = false;
+            this.newPair = '';
+          } else {
             this.newPair = 'You are adding liquidity to new pair';
             this.isNewPair = true;
           }
@@ -279,8 +257,7 @@ export class AddLiquidityComponent implements OnInit {
     this.kanbanService
       .send(environment.smartConractAdressRouter, abiHex)
       .then((data) => {
-        this.txHash =
-          'https://test.exchangily.com/explorer/tx-detail/' + data;
+        this.txHash = 'https://test.exchangily.com/explorer/tx-detail/' + data;
       });
   }
 }

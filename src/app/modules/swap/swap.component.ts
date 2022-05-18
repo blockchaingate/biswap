@@ -6,6 +6,7 @@ import { ErrorMessagesComponent } from 'src/app/components/errorMessages/errorMe
 import { Coin } from 'src/app/models/coin';
 import { TimestampModel } from 'src/app/models/temistampModel';
 import { DataService } from 'src/app/services/data.service';
+import { KanbanMiddlewareService } from 'src/app/services/kanban.middleware.service';
 import { KanbanService } from 'src/app/services/kanban.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -44,6 +45,7 @@ export class SwapComponent implements OnInit {
   secondTokenReserve: BigNumber = new BigNumber(0);
 
   constructor(
+    private kanbanMiddlewareService: KanbanMiddlewareService,
     private utilService: UtilsService,
     private web3Service: Web3Service,
     private walletService: WalletService,
@@ -74,21 +76,21 @@ export class SwapComponent implements OnInit {
   }
 
   async onKey(value: number, isFistToken: boolean) {
-    
     if (
-      (this.firstToken.tickerName != null &&
+      this.firstToken.tickerName != null &&
       this.secondToken.tickerName != null &&
       value != null &&
-      value != undefined ) && !this.isNewPair
-     ) {
+      value != undefined &&
+      !this.isNewPair
+    ) {
       await this.setInputValues(isFistToken);
-    } else if ((value == null && value == undefined) && !this.isNewPair) {
+    } else if (value == null && value == undefined && !this.isNewPair) {
       if (isFistToken) {
         this.secondCoinAmount = 0;
       } else {
         this.firstCoinAmount = 0;
       }
-    } else if(this.isNewPair){
+    } else if (this.isNewPair) {
       if (!isFistToken) {
         this.secondCoinAmount = value;
       } else {
@@ -170,12 +172,13 @@ export class SwapComponent implements OnInit {
                     this.secondToken.tickerName;
 
                   this.perAmount = perAmount;
-
                 });
               });
             this.isNewPair = false;
           } else {
-            this.openDialog('there is no pair, please first add liquidity to create this pair');
+            this.openDialog(
+              'there is no pair, please first add liquidity to create this pair'
+            );
             this.isNewPair = true;
           }
         });
@@ -207,46 +210,34 @@ export class SwapComponent implements OnInit {
       });
   }
 
-  setInputValues(isFirst: boolean) {
+
+  async setInputValues(isFirst: boolean) {
     if (isFirst) {
       var amount: number = this.firstCoinAmount;
+      var reserve1: BigNumber = this.firstTokenReserve;
+      var reserve2: BigNumber = this.secondTokenReserve;
       let value = new BigNumber(amount)
         .multipliedBy(new BigNumber(1e18))
         .toFixed();
       value = value.split('.')[0];
-      const params = [value, this.firstTokenReserve, this.secondTokenReserve];
-      var abiHex = this.web3Service.quote(params);
-      this.kanbanService
-      .kanbanCall(environment.smartConractAdressRouter, abiHex).then((data) => {
-        data.subscribe((data1) => {
-          let res: any = data1;
-          var result = this.web3Service.decodeabiHex(res.data, 'uint256');
-          var temp = Number(result);
-          this.secondCoinAmount = Number(
-            new BigNumber(temp).dividedBy(new BigNumber(1e18)).toFixed()
-          );
-        });
+      const params = [value, reserve1, reserve2];
 
-      })
+      this.secondCoinAmount = await this.kanbanMiddlewareService.getQuote(
+        params
+      );
     } else {
       var amount: number = this.secondCoinAmount;
+      var reserve1: BigNumber = this.firstTokenReserve;
+      var reserve2: BigNumber = this.secondTokenReserve;
       let value = new BigNumber(amount)
         .multipliedBy(new BigNumber(1e18))
         .toFixed();
       value = value.split('.')[0];
-      const params = [value, this.secondTokenReserve, this.firstTokenReserve];
-      var abiHex = this.web3Service.quote(params);
-      this.kanbanService
-      .kanbanCall(environment.smartConractAdressRouter, abiHex).then((data) => {
-        data.subscribe((data1) => {
-          let res: any = data1;
-          var result = this.web3Service.decodeabiHex(res.data, 'uint256');
-          var temp = Number(result);
-          this.firstCoinAmount = Number(
-            new BigNumber(temp).dividedBy(new BigNumber(1e18))
-          );
-        });
-      })
+      const params = [value, reserve2, reserve1];
+
+      this.firstCoinAmount = await this.kanbanMiddlewareService.getQuote(
+        params
+      );
     }
   }
 
@@ -300,8 +291,7 @@ export class SwapComponent implements OnInit {
     this.kanbanService
       .send(environment.smartConractAdressRouter, abiHex)
       .then((data) => {
-        this.txHash =
-          'https://test.exchangily.com/explorer/tx-detail/' + data;
+        this.txHash = 'https://test.exchangily.com/explorer/tx-detail/' + data;
       });
   }
 }
