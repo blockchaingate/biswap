@@ -12,6 +12,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSliderModule } from '@angular/material/slider';
+
 
 
 @NgModule({
@@ -28,7 +30,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     LayoutModule,
     MatSnackBarModule,
     MatListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSliderModule
   ],
   exports: [
     MatToolbarModule,
@@ -43,7 +46,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     LayoutModule,
     MatSnackBarModule,
     MatListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSliderModule
   ],
   providers: [],
 })

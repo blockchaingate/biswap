@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddLiquidityComponent } from './addLiquidity/addLiquidity.component';
 import { PoolComponent } from './pool.component';
+import { RemoveLiquidityComponent } from './removeLiquidity/removeLiquidity.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'add',
     component: AddLiquidityComponent
+  },
+  {
+    path: 'remove',
+    component: RemoveLiquidityComponent
   },
 ];
 

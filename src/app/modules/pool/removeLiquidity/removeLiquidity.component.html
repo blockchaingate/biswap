@@ -1,0 +1,105 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="swapBody">
+  <div fxFlex="25" fxFlex.sm="50" fxFlex.xs="70" fxFlex.md="35">
+    <mat-card>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button
+          mat-icon-button
+          class="example-icon"
+          (click)="goBack()"
+          aria-label="Example icon-button with share icon"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <mat-card-title>Remove Liquidity </mat-card-title>
+
+        <div>
+          <button
+            mat-icon-button
+            class="example-icon"
+            aria-label="Example icon-button with share icon"
+          >
+            <mat-icon>settings</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div fxLayoutAlign="start center" class="tip-text paddingBottom5">
+        <span class="tip-span"
+          >Tip: Removing pool tokens converts your position back into underlying
+          tokens at the current rate, proportional to your share of the pool.
+          Accrued fees are included in the amounts you receive.
+        </span>
+      </div>
+
+      <div class="paddingTop20">
+        <span>Remove Amount</span>
+
+        <div class="percentage paddingTop20">
+          <span> {{ percentage }} % </span>
+        </div>
+      </div>
+
+      <div class="paddingTop10">
+        <mat-slider
+          [displayWith]="formatLabel"
+          step="1"
+          min="0"
+          max="100"
+          aria-label="units"
+          [(ngModel)]="percentage"
+        ></mat-slider>
+      </div>
+
+      <div>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span> - </span>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div>
+              <img
+                class="paddingRight20 paddingTop5 token-size"
+                src="https://www.exchangily.com/assets/coins/fab.png"
+                alt="image"
+              />
+            </div>
+            <span> {{firstTokenName}} </span>
+          </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span> - </span>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div>
+              <img
+                class="paddingRight20 paddingTop5 token-size"
+                src="https://www.exchangily.com/assets/coins/exg.png"
+                alt="image"
+              />
+            </div>
+            <span> {{secondTokenName}} </span>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span>Price:</span>
+          <div fxLayout="column" fxLayoutAlign="end end">
+            <span>1 {{firstTokenName}} = 65741400000000 {{secondTokenName}}</span>
+            <span>1 {{secondTokenName}} = 0.0000000000000152111 {{firstTokenName}}</span>
+          </div>
+      </div>
+
+
+      <mat-action-row fxLayoutAlign="space-around center" class="paddingTop20"> 
+       
+
+        <button class="action-buttons" fxFlex="40"
+            mat-raised-button
+            color="primary"
+            (click)="removeLiquidity()"
+          >
+            Remove
+          </button>
+      </mat-action-row>
+    </mat-card>
+  </div>
+</div>

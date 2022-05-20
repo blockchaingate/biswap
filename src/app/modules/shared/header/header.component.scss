@@ -24,3 +24,19 @@
 .hedaer-logo {
     height: 40px;
 }
+
+
+@media only screen and (max-width: 600px) {
+    .hedaer-logo {
+        height: 0px;
+    }
+    .header-tab-items {
+        display: none !important; 
+    }
+  }
+
+@media only screen and (max-width: 1275px) {
+    .hedaer-logo {
+        height: 0px;
+    }
+  }

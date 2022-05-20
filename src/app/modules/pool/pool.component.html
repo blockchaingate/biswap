@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="center center" class="swapBody">
-  <div fxFlex="25">
+  <div fxFlex="25" fxFlex.sm="50" fxFlex.xs="70" fxFlex.md="40">
     <mat-card>
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <mat-card-title fxLayout="column">
@@ -36,8 +36,10 @@
             fxLayout="column"
             fxLayoutAlign="center center"
           >
-            <span>No liquidity found. </span>
-            <span class="marginTop20">Don't see a pool you joined? </span>
+            <span *ngIf="totalPoolToken == null">No liquidity found. </span>
+            <span *ngIf="totalPoolToken == null" class="marginTop20">Don't see a pool you joined? </span>
+
+            <span *ngIf="totalPoolToken != null"> Liquidity providers earn a 0.3% fee on all trades proportional to their share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.</span>
           </div>
         </ng-template>
       </mat-card-content>
@@ -97,17 +99,12 @@
         <p>Your pool share:</p>
         <p> < {{ yourPoolShare }} %</p>
       </div>
-      <div fxLayout="row" fxLayoutAlign="space-around center">
-        <button class="action-buttons"
-            mat-raised-button
-            color="primary"
-          >
-           Add
-          </button>
+      <div fxLayout="row" fxLayoutAlign="center center">
 
           <button class="action-buttons"
             mat-raised-button
             color="primary"
+            (click)="removeLiquidity()"
           >
             Remove
           </button>

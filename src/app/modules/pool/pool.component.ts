@@ -45,7 +45,6 @@ export class PoolComponent implements OnInit {
       this.dataService.sendWalletLabel('Connect Wallet');
       this.dataService.setIsWalletConnect(false);
     }
-
     this.dataService.GetIsWalletConnect.subscribe((data) => {
       this.isWalletConnect = data;
     });
@@ -58,6 +57,10 @@ export class PoolComponent implements OnInit {
  async connectWallet() {
    //TODO after wallet connect need to call getExistLiquidity() methid 
      await this.walletService.connectWallet();
+  }
+
+  removeLiquidity(){
+    this.router.navigate(['/pool/remove']);
   }
 
   async getExistLiquidity() {
@@ -100,4 +103,9 @@ export class PoolComponent implements OnInit {
     console.log('usersProportionOfLiquidityToWhole');
     console.log(this.usersProportionOfLiquidityToWhole);
   }
+
+
+
+
+
 }

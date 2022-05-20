@@ -35,7 +35,10 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  connectWallet() {
-    this.walletService.connectWallet();
+  async connectWallet() {
+   var result = await this.walletService.connectWallet();
+   if(!result){
+     this.connectWallet();
+   }
   }
 }

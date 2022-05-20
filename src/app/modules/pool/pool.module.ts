@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { PoolRoutingModule } from './pool.routing.module';
 import { Web3Service } from 'src/app/services/web3.service';
 import { AddLiquidityComponent } from './addLiquidity/addLiquidity.component';
+import { RemoveLiquidityComponent } from './removeLiquidity/removeLiquidity.component';
 
 @NgModule({
   imports: [
@@ -18,9 +19,8 @@ import { AddLiquidityComponent } from './addLiquidity/addLiquidity.component';
     FlexLayoutModule,
     FormsModule,
     PoolRoutingModule,
-    
   ],
   providers:[KanbanService, Web3Service],
-  declarations: [PoolComponent, AddLiquidityComponent]
+  declarations: [PoolComponent, AddLiquidityComponent, RemoveLiquidityComponent]
 })
 export class PoolModule { }

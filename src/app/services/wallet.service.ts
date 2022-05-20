@@ -77,13 +77,20 @@ export class WalletService {
   async connectWallet() {
     var clientSession = this.storageService.getWalletSession();
     if (clientSession == null || clientSession == undefined) {
-      this.createConnection();
-      this.dataService.sendWalletLabel('Disconnect Wallet');
-      this.dataService.setIsWalletConnect(true);
+      var session = await this.createConnection();
+      if(session != null){
+        this.dataService.sendWalletLabel('Disconnect Wallet');
+        this.dataService.setIsWalletConnect(true);
+        return true;
+      }else{
+        return false;
+      }
     } else {
       this.dataService.sendWalletLabel('Connect Wallet');
       this.storageService.removeWalletSession();
       this.dataService.setIsWalletConnect(false);
+      return false;
     }
+    
   }
 }

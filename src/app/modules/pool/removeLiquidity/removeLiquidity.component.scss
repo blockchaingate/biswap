@@ -1,0 +1,35 @@
+.swapBody {
+    margin-top: 100px;
+    background-color: white;
+}
+
+::ng-deep .mat-card {
+    border-radius: 25px !important; 
+}
+
+.tip-text {
+    background-color: #7e87df;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.tip-span {
+    color: #022c86;
+}
+
+mat-slider {
+   width: 100%;
+}
+
+.percentage {
+    font-size: 50px;
+}
+
+.token-size {
+    width: 25px;
+}
+
+.action-buttons {
+    width: 125px;
+    border-radius: 10px;
+}
