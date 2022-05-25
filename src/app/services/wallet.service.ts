@@ -6,6 +6,7 @@ import WalletConnectClient, { CLIENT_EVENTS } from '@walletconnect/client';
 import { WalletModel } from '../models/wallet.model';
 import { PairingTypes } from '@walletconnect/types';
 import QRCodeModal from '@walletconnect/qrcode-modal';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +15,12 @@ export class WalletService {
   walletModel: WalletModel = new WalletModel();
 
   constructor(
+    private ngxService: NgxUiLoaderService,
     public dataService: DataService,
     public storageService: StorageService,
     public dialog: MatDialog
   ) {}
+
 
   async createConnection() {
     this.walletModel.client = await WalletConnectClient.init({
@@ -25,13 +28,14 @@ export class WalletService {
       projectId: '3acbabd1deb4672edfd4ca48226cfc0f',
       relayUrl: 'wss://relay.walletconnect.com',
       metadata: {
-        name: 'Example Dapp',
-        description: 'Example Dapp',
+        name: 'Biswap Dapp',
+        description: 'Biswap Dapp',
         url: 'http://localhost:4200',
         icons: ['https://walletconnect.com/walletconnect-logo.png'],
       },
     });
-    var session = await this.showQrCode();
+    var session = await this.showQrCode().finally(() => {
+    });
     return session;
   }
 
@@ -45,6 +49,7 @@ export class WalletService {
           console.log('EVENT', 'QR Code Modal closed');
           this.dataService.sendWalletLabel('Connect Wallet');
           this.dataService.setIsWalletConnect(false);
+          this.ngxService.stop();
         });
       }
     );
@@ -65,6 +70,7 @@ export class WalletService {
   onSessionConnected(session: any) {
     this.walletModel.session = session;
     QRCodeModal.close();
+    this.ngxService.stop();
     const accounts = session.state.accounts;
     if (accounts && accounts.length > 0) {
       this.walletModel.account = accounts[0];
@@ -77,6 +83,7 @@ export class WalletService {
   async connectWallet() {
     var clientSession = this.storageService.getWalletSession();
     if (clientSession == null || clientSession == undefined) {
+      this.ngxService.start();
       var session = await this.createConnection();
       if(session != null){
         this.dataService.sendWalletLabel('Disconnect Wallet');
@@ -90,7 +97,6 @@ export class WalletService {
       this.storageService.removeWalletSession();
       this.dataService.setIsWalletConnect(false);
       return false;
-    }
-    
+    }    
   }
 }

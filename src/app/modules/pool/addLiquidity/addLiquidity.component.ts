@@ -108,7 +108,7 @@ export class AddLiquidityComponent implements OnInit {
       );
     }
   }
-  
+
   openDialog(errorMessage: String) {
     this.dialog.open(ErrorMessagesComponent, { data: errorMessage });
   }

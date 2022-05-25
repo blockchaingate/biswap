@@ -41,7 +41,7 @@
 
       <div class="paddingTop10">
         <mat-slider
-          [displayWith]="formatLabel"
+        (input)="onInputChange($event)"
           step="1"
           min="0"
           max="100"
@@ -52,7 +52,8 @@
 
       <div>
         <div fxLayout="row" fxLayoutAlign="space-between center">
-          <span> - </span>
+          <span *ngIf="selectedFirstTokenAmount != 0"> {{selectedFirstTokenAmount}} </span>
+          <span *ngIf="selectedFirstTokenAmount == 0"> - </span>
           <div fxLayout="row" fxLayoutAlign="center center">
             <div>
               <img
@@ -61,12 +62,13 @@
                 alt="image"
               />
             </div>
-            <span> {{firstTokenName}} </span>
+            <span> {{firstToken.tickerName}} </span>
           </div>
         </div>
 
         <div fxLayout="row" fxLayoutAlign="space-between center">
-          <span> - </span>
+          <span *ngIf="selectedSecondTokenAmount != 0"> {{selectedSecondTokenAmount}} </span>
+          <span *ngIf="selectedSecondTokenAmount == 0"> - </span>
           <div fxLayout="row" fxLayoutAlign="center center">
             <div>
               <img
@@ -75,7 +77,7 @@
                 alt="image"
               />
             </div>
-            <span> {{secondTokenName}} </span>
+            <span> {{secondToken.tickerName}} </span>
           </div>
         </div>
       </div>
@@ -83,23 +85,96 @@
       <div fxLayout="row" fxLayoutAlign="space-between center">
           <span>Price:</span>
           <div fxLayout="column" fxLayoutAlign="end end">
-            <span>1 {{firstTokenName}} = 65741400000000 {{secondTokenName}}</span>
-            <span>1 {{secondTokenName}} = 0.0000000000000152111 {{firstTokenName}}</span>
+            <span>1 {{firstToken.tickerName}} = 65741400000000 {{secondToken.tickerName}}</span>
+            <span>1 {{secondToken.tickerName}} = 0.0000000000000152111 {{firstToken.tickerName}}</span>
           </div>
       </div>
 
 
       <mat-action-row fxLayoutAlign="space-around center" class="paddingTop20"> 
        
-
         <button class="action-buttons" fxFlex="40"
-            mat-raised-button
-            color="primary"
-            (click)="removeLiquidity()"
-          >
-            Remove
-          </button>
+        mat-raised-button
+        color="primary"
+        (click)="removeLiquidity()"
+        *ngIf="percentage != 0; else add"
+      >
+        Remove
+      </button>
+
+      <ng-template #add>
+        <button class="disable-button"
+          mat-raised-button
+          color="primary"
+        
+        >
+         Enter Amount
+        </button>
+      </ng-template>
       </mat-action-row>
     </mat-card>
+
+
+    <div class="paddingTop20 your-position" >
+      <mat-card id="position-mat-card" >
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <mat-card-title>Your Position </mat-card-title>
+        </div>
+  
+  
+        <div>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="0px">
+        
+                <img
+                  class="paddingTop5 token-size"
+                  src="https://www.exchangily.com/assets/coins/fab.png"
+                  alt="image"
+                />
+                <img
+                class="paddingTop5 token-size"
+                src="https://www.exchangily.com/assets/coins/exg.png"
+                alt="image"
+              />
+              <span> {{firstToken.tickerName}} </span>
+              <span>/</span>
+                <span> {{secondToken.tickerName}} </span>
+            </div>
+            <span> {{totalPoolToken}}% </span>
+            
+          </div>
+  
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
+            <span> Your pool share: </span>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              
+          
+              <span> {{yourPoolShare}}</span>
+            </div>
+          </div>
+  
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
+            <span> {{firstToken.tickerName}}: </span>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              
+              <span> {{firstTokeninPair}} </span>
+     
+            </div>
+          </div>
+  
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
+            <span> {{secondToken.tickerName}}: </span>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              
+              
+              <span> {{secondTokeninPair}} </span>
+            </div>
+          </div>
+        
+        </div>
+      </mat-card>
+    </div>
+   
+    
   </div>
 </div>

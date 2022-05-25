@@ -9,6 +9,7 @@ import { PoolRoutingModule } from './pool.routing.module';
 import { Web3Service } from 'src/app/services/web3.service';
 import { AddLiquidityComponent } from './addLiquidity/addLiquidity.component';
 import { RemoveLiquidityComponent } from './removeLiquidity/removeLiquidity.component';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { RemoveLiquidityComponent } from './removeLiquidity/removeLiquidity.comp
     FlexLayoutModule,
     FormsModule,
     PoolRoutingModule,
+    NgxUiLoaderModule.forRoot({})
   ],
   providers:[KanbanService, Web3Service],
   declarations: [PoolComponent, AddLiquidityComponent, RemoveLiquidityComponent]

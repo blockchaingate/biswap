@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Coin } from 'src/app/models/coin';
 import { DataService } from 'src/app/services/data.service';
 import { KanbanMiddlewareService } from 'src/app/services/kanban.middleware.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -19,6 +20,9 @@ export class PoolComponent implements OnInit {
   usersProportionOfLiquidityToWhole: number;
 
   panelOpenState = false;
+
+  fisrtToken: Coin = new Coin();
+  secondToken: Coin = new Coin();
 
   firstTokeninPair: number;
   secondTokeninPair: number;
@@ -51,16 +55,28 @@ export class PoolComponent implements OnInit {
   }
 
   addLiquidityFunction() {
-    this.router.navigate(['/pool/add']);
+    this.router.navigate(['/pool/add'],);
   }
 
  async connectWallet() {
    //TODO after wallet connect need to call getExistLiquidity() methid 
-     await this.walletService.connectWallet();
+    var result =  await this.walletService.connectWallet();
+    if(result == null) {
+     this.connectWallet();
+    }else{
+      this.ngOnInit()
+    }
   }
 
   removeLiquidity(){
-    this.router.navigate(['/pool/remove']);
+    this.router.navigate(['/pool/remove'],{state: {
+      firstToken: this.fisrtToken,
+      secondToken: this.secondToken,
+      yourPoolShare: this.yourPoolShare,
+      firstTokeninPair: this.firstTokeninPair,
+      secondTokeninPair: this.secondTokeninPair,
+      totalPoolToken: this.totalPoolToken,
+    }});
   }
 
   async getExistLiquidity() {
@@ -84,28 +100,34 @@ export class PoolComponent implements OnInit {
       this.totalPoolToken / this.totalSupply;
     this.yourPoolShare = (100 * this.totalPoolToken) / this.totalSupply;
 
-    var fisrtToken = await this.kanbanMiddlewareService.balanceOfToken(
+
+
+    //here token will fetch from service Muchtar will set 
+
+    this.fisrtToken.tickerName = "FAB";
+    this.secondToken.tickerName = "EXG";
+
+    this.fisrtToken.coinType = 131072;
+    this.secondToken.coinType = 131073;
+
+    this.fisrtToken.decimal = await this.kanbanMiddlewareService.balanceOfToken(
       '0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc',
-      131072
+      this.fisrtToken.coinType
     );
-    var secondToken = await this.kanbanMiddlewareService.balanceOfToken(
+    this.secondToken.decimal = await this.kanbanMiddlewareService.balanceOfToken(
       '0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc',
-      131073
+      this.secondToken.coinType
     );
 
     this.firstTokeninPair =
-      this.utilService.toFixedNumber(fisrtToken) *
+      this.utilService.toFixedNumber(this.fisrtToken.decimal) *
       this.usersProportionOfLiquidityToWhole;
     this.secondTokeninPair =
-      this.utilService.toFixedNumber(secondToken) *
+      this.utilService.toFixedNumber(this.secondToken.decimal) *
       this.usersProportionOfLiquidityToWhole;
 
     console.log('usersProportionOfLiquidityToWhole');
     console.log(this.usersProportionOfLiquidityToWhole);
   }
-
-
-
-
 
 }

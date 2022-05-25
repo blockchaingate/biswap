@@ -18,14 +18,13 @@ import { TokenListComponent } from './tokenList/tokenList.component';
     FormsModule,
     FlexLayoutModule,
     AppRoutingModule,
-    
   ],
   exports:[
     HeaderComponent,
     FooterComponent,
     WalletComponent,
     GenerateUrlPipe,
-    TokenListComponent
+    TokenListComponent,
   ],
   declarations: [
     HeaderComponent,

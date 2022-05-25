@@ -107,28 +107,6 @@ export class SwapComponent implements OnInit {
     }, 0);
   }
 
-  openFirstTokenListDialog() {
-    this.dialog
-      .open(TokenListComponent, {
-        data: {
-          tokens: this.tokenList,
-          isFirst: true,
-        },
-      })
-      .afterClosed()
-      .subscribe((x) => {
-        if (x.isFirst) {
-          this.dataService.GetFirstToken.subscribe((data) => {
-            this.firstToken = data;
-          });
-        }
-
-        if (this.firstToken.type != null && this.secondToken.type != null) {
-          this.kanbanCallMethod();
-        }
-      });
-  }
-
   openDialog(errorMessage: String) {
     this.dialog.open(ErrorMessagesComponent, { data: errorMessage });
   }
@@ -188,6 +166,28 @@ export class SwapComponent implements OnInit {
       });
   }
 
+  openFirstTokenListDialog() {
+    this.dialog
+      .open(TokenListComponent, {
+        data: {
+          tokens: this.tokenList,
+          isFirst: true,
+        },
+      })
+      .afterClosed()
+      .subscribe((x) => {
+        if ( x != undefined && x.isFirst) {
+          this.dataService.GetFirstToken.subscribe((data) => {
+            this.firstToken = data;
+          });
+        }
+
+        if (this.firstToken.type != null && this.secondToken.type != null) {
+          this.kanbanCallMethod();
+        }
+      });
+  }
+
   openSecondTokenListDialog() {
     this.dialog
       .open(TokenListComponent, {
@@ -198,7 +198,7 @@ export class SwapComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((x) => {
-        if (x.isSecond) {
+        if (x != undefined && x.isSecond) {
           this.dataService.GetSecondToken.subscribe((data) => {
             this.secondToken = data;
           });

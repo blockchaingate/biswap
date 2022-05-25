@@ -24,7 +24,7 @@ import { Web3Service } from './services/web3.service';
     FlexLayoutModule,
     MaterialModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
 
   ],
   providers: [KanbanService, Web3Service],

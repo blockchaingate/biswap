@@ -39,7 +39,7 @@
             <span *ngIf="totalPoolToken == null">No liquidity found. </span>
             <span *ngIf="totalPoolToken == null" class="marginTop20">Don't see a pool you joined? </span>
 
-            <span *ngIf="totalPoolToken != null"> Liquidity providers earn a 0.3% fee on all trades proportional to their share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.</span>
+            <span *ngIf="totalPoolToken != null && isWalletConnect"> Liquidity providers earn a 0.3% fee on all trades proportional to their share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.</span>
           </div>
         </ng-template>
       </mat-card-content>
@@ -71,7 +71,7 @@
       </mat-card-actions>
     </mat-card>
 
-    <mat-expansion-panel *ngIf="totalPoolToken != null"
+    <mat-expansion-panel *ngIf="totalPoolToken != null && isWalletConnect"
       class="exist-liquddity"
       (opened)="panelOpenState = true"
       (closed)="panelOpenState = false"
@@ -113,3 +113,5 @@
     </mat-expansion-panel>
   </div>
 </div>
+
+<ngx-ui-loader></ngx-ui-loader>

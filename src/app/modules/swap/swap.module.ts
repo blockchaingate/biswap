@@ -6,6 +6,7 @@ import { MaterialModule } from '../material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { KanbanService } from 'src/app/services/kanban.service';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { KanbanService } from 'src/app/services/kanban.service';
     MaterialModule,
     FlexLayoutModule,
     FormsModule,
+    NgxUiLoaderModule.forRoot({}),
   ],
   providers:[KanbanService],
   declarations: [SwapComponent]
