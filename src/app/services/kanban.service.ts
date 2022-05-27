@@ -7,7 +7,6 @@ import { WalletModel } from '../models/wallet.model';
 import { DataService } from './data.service';
 import { BaseResponseModel } from '../models/baseResponseModel';
 import { Web3Service } from './web3.service';
-import BigNumber from 'bignumber.js';
 
 @Injectable({
   providedIn: 'root',

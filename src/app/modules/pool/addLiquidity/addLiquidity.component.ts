@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js';
 import { ErrorMessagesComponent } from 'src/app/components/errorMessages/errorMessages.component';
 import { Coin } from 'src/app/models/coin';
 import { TimestampModel } from 'src/app/models/temistampModel';
+import { ApiService } from 'src/app/services/api.services';
 import { DataService } from 'src/app/services/data.service';
 import { KanbanMiddlewareService } from 'src/app/services/kanban.middleware.service';
 import { KanbanService } from 'src/app/services/kanban.service';
@@ -39,7 +40,11 @@ export class AddLiquidityComponent implements OnInit {
   firstTokenReserve: BigNumber = new BigNumber(0);
   secondTokenReserve: BigNumber = new BigNumber(0);
 
+  walletAddress:string;
+  pairAddress: string;
+
   constructor(
+    private apiService: ApiService,
     private kanbanMiddlewareService: KanbanMiddlewareService,
     private utilService: UtilsService,
     private storageService: StorageService,
@@ -126,6 +131,7 @@ export class AddLiquidityComponent implements OnInit {
           if (
             addeess.toString() != '0x0000000000000000000000000000000000000000'
           ) {
+            this.pairAddress = addeess.toString();
             var abiHexa = this.web3Service.getReserves();
             this.kanbanService
               .kanbanCall(addeess.toString(), abiHexa)
@@ -215,7 +221,7 @@ export class AddLiquidityComponent implements OnInit {
     const addressArray = this.storageService
       .getWalletSession()
       .state.accounts[0].split(':');
-    const walletAddress = addressArray[addressArray.length - 1];
+    this.walletAddress = addressArray[addressArray.length - 1];
 
     let amountADesired = new BigNumber(this.firstCoinAmount)
       .multipliedBy(new BigNumber(1e18))
@@ -232,7 +238,7 @@ export class AddLiquidityComponent implements OnInit {
 
     var amountAMin = new BigNumber(Number(amountADesired) - 1000);
     var amountBMin = new BigNumber(Number(amountBDesired) - 1000);
-    var to = this.utilService.fabToExgAddress(walletAddress);
+    var to = this.utilService.fabToExgAddress(this.walletAddress);
     var timestamp = new TimestampModel(
       0,
       2,
@@ -258,6 +264,14 @@ export class AddLiquidityComponent implements OnInit {
       .send(environment.smartConractAdressRouter, abiHex)
       .then((data) => {
         this.txHash = 'https://test.exchangily.com/explorer/tx-detail/' + data;
+        const param = {
+          userAddress: this.walletAddress,
+          pairAddress: this.pairAddress,
+        };
+        this.apiService.sendUserPair(param).subscribe((res: any) => {
+          console.log(res);
+          console.log(res.data);
+        })
       });
   }
 }
