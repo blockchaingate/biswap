@@ -19,6 +19,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/vote/vote.module').then(x => x.VoteModule)
   },
   {
+    path: 'staking',
+    loadChildren: () => import('./modules/staking/staking.module').then(x => x.StakingModule)
+  },
+  {
     path: 'charts',
     loadChildren: () => import('./modules/charts/charts.module').then(x => x.ChartsModule)
   }

@@ -68,6 +68,12 @@ export class Web3Service {
     return abiHex;
   }
 
+  deposit(params: any) {
+    const func = this.smartContractService.depositFunc();
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex; 
+  }
+  
   removeLiquidity(params: any) {
     var func = this.smartContractService.removeLiquidityFunc();
     const abiHex = this.getGeneralFunctionABI(func, params);

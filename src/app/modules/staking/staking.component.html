@@ -1,0 +1,55 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="swapBody">
+    <div fxFlex="25" fxFlex.sm="50" fxFlex.xs="70" fxFlex.md="40">
+      <mat-card>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-card-title fxLayout="column">
+            <span class="paddingTop5"> Your Stakings </span>
+            <h5 class="paddingTop5">Redeem your stakings to receive tokens back</h5>
+          </mat-card-title>
+        </div>
+
+        <mat-card-content>
+            <div class="emty-liquidity" *ngIf="isWalletConnect != true; else other">
+              <span> Connect to a wallet to view your stakings. </span>
+            </div>
+    
+            <ng-template #other>
+              <div
+                class="emty-liquidity"
+                fxLayout="column"
+                fxLayoutAlign="center center"
+              >
+                <span *ngIf="totalStaking == null">No staking found. </span>
+
+                <span *ngIf="totalStaking != null && isWalletConnect"> You can earn extra tokens by staking your tokens.</span>
+              </div>
+            </ng-template>
+          </mat-card-content>
+
+          <mat-card-actions
+          fxLayout="row"
+          fxLayoutAlign="center center"
+          class="mat-card-action"
+        >
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="connectWallet()"
+            *ngIf="!isWalletConnect; else asd"
+          >
+            Connect a wallet
+          </button>
+  
+          <ng-template #asd>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="addStaking()"
+            >
+              + Add Staking
+            </button>
+          </ng-template>
+        </mat-card-actions>          
+      </mat-card>
+    </div>
+</div>

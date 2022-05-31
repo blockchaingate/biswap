@@ -1,0 +1,6 @@
+Testnet
+StakingProxy: 0xe0bb18816d72f32a3a8338c66d0d7a2007e69424
+Token Staking: 0x9f90d8ca16fea1879812bcf97ee2168111813282
+For testing purpose, cointype for staking is BST(131077), and token holder is 0xdcd0f23125f74ef621dfa3310625f8af0dcd971b (also known as contract owner)
+ABI can be found here.
+https://github.com/blockchaingate/devdoc/blob/master/SmartContracts/TokenStake/DeploymentGuide.md#abi

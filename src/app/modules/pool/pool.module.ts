@@ -17,7 +17,6 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
     MaterialModule,
     FlexLayoutModule,
     MaterialModule,
-    FlexLayoutModule,
     FormsModule,
     PoolRoutingModule,
     NgxUiLoaderModule.forRoot({})
