@@ -36,10 +36,10 @@
             fxLayout="column"
             fxLayoutAlign="center center"
           >
-            <span *ngIf="totalPoolToken == null">No liquidity found. </span>
-            <span *ngIf="totalPoolToken == null" class="marginTop20">Don't see a pool you joined? </span>
+            <span *ngIf="existedLiquidities == null && existedLiquidities ">No liquidity found. </span>
+            <span *ngIf="existedLiquidities == null" class="marginTop20">Don't see a pool you joined? </span>
 
-            <span *ngIf="totalPoolToken != null && isWalletConnect"> Liquidity providers earn a 0.3% fee on all trades proportional to their share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.</span>
+            <span *ngIf="existedLiquidities != null && isWalletConnect"> Liquidity providers earn a 0.3% fee on all trades proportional to their share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.</span>
           </div>
         </ng-template>
       </mat-card-content>
@@ -71,13 +71,16 @@
       </mat-card-actions>
     </mat-card>
 
-    <mat-expansion-panel *ngIf="totalPoolToken != null && isWalletConnect"
+
+   <div *ngFor="let existedLiquidity of existedLiquidities">
+
+    <mat-expansion-panel *ngIf="existedLiquidities != null && existedLiquidities.length > 0"
       class="exist-liquddity"
       (opened)="panelOpenState = true"
       (closed)="panelOpenState = false"
     >
       <mat-expansion-panel-header>
-        <mat-panel-title> FAB/EXG </mat-panel-title>
+        <mat-panel-title> {{existedLiquidity.firstTokenName}} / {{existedLiquidity.secondTokenName}} </mat-panel-title>
         <mat-panel-description>
           Manage
           <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
@@ -85,19 +88,19 @@
       </mat-expansion-panel-header>
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <p>Your total pool tokens:</p>
-        <p>{{ totalPoolToken }}</p>
+        <p>{{ existedLiquidity.totalPoolToken }}</p>
       </div>
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <p>Pooled FAB:</p>
-        <p>{{firstTokeninPair}}</p>
+        <p>{{existedLiquidity.pooledFirstToken}}</p>
       </div>
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <p>Pooled EXG:</p>
-        <p>{{secondTokeninPair}}</p>
+        <p>{{existedLiquidity.pooledSecondToken}}</p>
       </div>
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <p>Your pool share:</p>
-        <p> < {{ yourPoolShare }} %</p>
+        <p> < {{ existedLiquidity.yourPoolShare }} %</p>
       </div>
       <div fxLayout="row" fxLayoutAlign="center center">
 
@@ -111,6 +114,16 @@
         
       </div>
     </mat-expansion-panel>
+
+   </div> 
+
+ 
+
+
+
+
+
+
   </div>
 </div>
 

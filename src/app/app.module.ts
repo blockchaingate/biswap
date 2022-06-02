@@ -25,7 +25,6 @@ import { Web3Service } from './services/web3.service';
     MaterialModule,
     SharedModule,
     HttpClientModule,
-
   ],
   providers: [KanbanService, Web3Service],
   bootstrap: [AppComponent]

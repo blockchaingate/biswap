@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import BigNumber from 'bignumber.js';
-import { ErrorMessagesComponent } from 'src/app/components/errorMessages/errorMessages.component';
+import { ErrorMessagesComponent } from 'src/app/components/dialogMessages/dialogMessages.component';
 import { Coin } from 'src/app/models/coin';
 import { TimestampModel } from 'src/app/models/temistampModel';
 import { DataService } from 'src/app/services/data.service';

@@ -34,8 +34,7 @@ export class WalletService {
         icons: ['https://walletconnect.com/walletconnect-logo.png'],
       },
     });
-    var session = await this.showQrCode().finally(() => {
-    });
+    var session = await this.showQrCode();
     return session;
   }
 
@@ -84,6 +83,7 @@ export class WalletService {
     var clientSession = this.storageService.getWalletSession();
     if (clientSession == null || clientSession == undefined) {
       this.ngxService.start();
+      this.ngxService.getDefaultConfig();
       var session = await this.createConnection();
       if(session != null){
         this.dataService.sendWalletLabel('Disconnect Wallet');

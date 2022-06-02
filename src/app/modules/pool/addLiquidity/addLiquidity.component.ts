@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
-import { ErrorMessagesComponent } from 'src/app/components/errorMessages/errorMessages.component';
+import { ErrorMessagesComponent } from 'src/app/components/dialogMessages/dialogMessages.component';
 import { Coin } from 'src/app/models/coin';
 import { TimestampModel } from 'src/app/models/temistampModel';
 import { ApiService } from 'src/app/services/api.services';
@@ -32,18 +32,19 @@ export class AddLiquidityComponent implements OnInit {
   perAmount: string;
   perAmountLabel: string = '';
 
-  txHash: String;
-  newPair: String;
+  txHash: string;
+  newPair: string;
 
   isNewPair: boolean = false;
 
   firstTokenReserve: BigNumber = new BigNumber(0);
   secondTokenReserve: BigNumber = new BigNumber(0);
 
-  walletAddress:string;
+  walletAddress: string;
   pairAddress: string;
 
   constructor(
+    // private ngxService: NgxUiLoaderService,
     private apiService: ApiService,
     private kanbanMiddlewareService: KanbanMiddlewareService,
     private utilService: UtilsService,
@@ -66,6 +67,7 @@ export class AddLiquidityComponent implements OnInit {
       this.secondToken.tickerName != null &&
       value != null &&
       value != undefined &&
+      value != 0 &&
       !this.isNewPair
     ) {
       await this.setInputValues(isFistToken);
@@ -114,8 +116,13 @@ export class AddLiquidityComponent implements OnInit {
     }
   }
 
-  openDialog(errorMessage: String) {
-    this.dialog.open(ErrorMessagesComponent, { data: errorMessage });
+  openDialog(dilaogTitle: string, dilaogMessage: string) {
+    this.dialog.open(ErrorMessagesComponent, {
+      data: {
+        dilaogTitle,
+        dilaogMessage,
+      },
+    });
   }
 
   kanbanCallMethod() {
@@ -128,6 +135,7 @@ export class AddLiquidityComponent implements OnInit {
         data.subscribe((data1) => {
           let res: any = data1;
           var addeess = this.web3Service.decodeabiHex(res.data, 'address');
+
           if (
             addeess.toString() != '0x0000000000000000000000000000000000000000'
           ) {
@@ -169,7 +177,7 @@ export class AddLiquidityComponent implements OnInit {
         });
       })
       .catch((error) => {
-        this.openDialog(error);
+        this.openDialog('', error);
       });
   }
 
@@ -218,6 +226,8 @@ export class AddLiquidityComponent implements OnInit {
   }
 
   addLiqudity() {
+    // this.ngxService.start();
+
     const addressArray = this.storageService
       .getWalletSession()
       .state.accounts[0].split(':');
@@ -263,15 +273,57 @@ export class AddLiquidityComponent implements OnInit {
     this.kanbanService
       .send(environment.smartConractAdressRouter, abiHex)
       .then((data) => {
-        this.txHash = 'https://test.exchangily.com/explorer/tx-detail/' + data;
-        const param = {
-          userAddress: this.walletAddress,
-          pairAddress: this.pairAddress,
-        };
-        this.apiService.sendUserPair(param).subscribe((res: any) => {
-          console.log(res);
-          console.log(res.data);
-        })
+        this.txHash = data;
+
+        // /kanban/gettransactionreceipt/
+        // status ox1 confirm ox0 failed
+
+        setTimeout(() => {
+          var params = [this.firstToken.type, this.secondToken.type];
+          var abiHex = this.web3Service.getPair(params);
+          console.log('abiHex => ' + abiHex);
+          this.kanbanService
+            .kanbanCall(environment.smartConractAdressFactory, abiHex)
+            .then((data) => {
+              data.subscribe((data1) => {
+                let res: any = data1;
+                var addeess = this.web3Service.decodeabiHex(
+                  res.data,
+                  'address'
+                );
+
+                this.apiService
+                  .gettransactionreceipt(this.txHash)
+                  .subscribe((res: any) => {
+                    if (res.transactionReceipt.status == '0x1') {
+                      const param = {
+                        userAddress: this.walletAddress,
+                        pairName:
+                          this.firstToken.tickerName +
+                          ' / ' +
+                          this.secondToken.tickerName,
+                        pairAddress: addeess,
+                        tokenAName: this.firstToken.tickerName,
+                        tokenBName: this.secondToken.tickerName,
+                      };
+                      this.apiService
+                        .sendUserPair(param)
+                        .subscribe((res: any) => {
+                          this.openDialog(
+                            'Tx confirmed',
+                            'Congratulations, your transaction was successful.'
+                          );
+                        });
+                    } else {
+                      this.openDialog(
+                        'Tx failed',
+                        'Congratulations, your transaction was unsuccessful'
+                      );
+                    }
+                  });
+              });
+            });
+        }, 5000);
       });
   }
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Coin } from 'src/app/models/coin';
+import { ExistedLiquidity } from 'src/app/models/existLiquidityModel';
+import { ResponseExistedLiquidity } from 'src/app/models/resonseModels/response.existedLiquidity';
 import { ApiService } from 'src/app/services/api.services';
 import { DataService } from 'src/app/services/data.service';
 import { KanbanMiddlewareService } from 'src/app/services/kanban.middleware.service';
@@ -22,14 +24,12 @@ export class PoolComponent implements OnInit {
 
   panelOpenState = false;
 
+  existedLiquidities: ExistedLiquidity[] = [];
+
+  responseList: ResponseExistedLiquidity[];
+
   fisrtToken: Coin = new Coin();
   secondToken: Coin = new Coin();
-
-  firstTokeninPair: number;
-  secondTokeninPair: number;
-  totalPoolToken: number;
-  totalSupply: number;
-  yourPoolShare: number;
 
   walletAddress: string;
 
@@ -49,7 +49,6 @@ export class PoolComponent implements OnInit {
       this.dataService.sendWalletLabel('Disconnect Wallet');
       this.dataService.setIsWalletConnect(true);
       this.getExistPair();
-      await this.getExistLiquidity();
     } else {
       this.dataService.sendWalletLabel('Connect Wallet');
       this.dataService.setIsWalletConnect(false);
@@ -57,21 +56,32 @@ export class PoolComponent implements OnInit {
     this.dataService.GetIsWalletConnect.subscribe((data) => {
       this.isWalletConnect = data;
     });
-
-    
   }
 
+  getExistPair() {
+    const addressArray = this.walletSession.state.accounts[0].split(':');
+    this.walletAddress = addressArray[addressArray.length - 1];
+    console.log(this.walletAddress);
 
-  getExistPair(){
-    const addressArray = this.walletSession
-        .state.accounts[0].split(':');
-      this.walletAddress = addressArray[addressArray.length - 1];
-      console.log(this.walletAddress);
+    this.apiService
+      .getUserExistPair(this.walletAddress)
+      .subscribe((res: any) => {
+        this.responseList = res.data.pairs;
 
-    this.apiService.getUserExistPair(this.walletAddress).subscribe((res: any) =>{
-      console.log(res)
-      console.log(res.data)
-    })
+        console.log(this.responseList);
+        this.responseList.forEach((element, index) => {
+          this.getExistLiquidity(element, index);
+        });
+
+        // this.getExistLiquidity(res.data);
+        // console.log(res)
+        // console.log(res.data)
+        // console.log(res.data.pairs[0].pairAddress)
+        // console.log(res.data.pairs[0].tokens[0].tokenAName)
+        // console.log(res.data.pairs[0].tokens[0].tokenACoinType)
+        // console.log(res.data.pairs[0].tokens[1].tokenBName)
+        // console.log(res.data.pairs[0].tokens[1].tokenBCoinType)
+      });
   }
 
   addLiquidityFunction() {
@@ -93,61 +103,78 @@ export class PoolComponent implements OnInit {
       state: {
         firstToken: this.fisrtToken,
         secondToken: this.secondToken,
-        yourPoolShare: this.yourPoolShare,
-        firstTokeninPair: this.firstTokeninPair,
-        secondTokeninPair: this.secondTokeninPair,
-        totalPoolToken: this.totalPoolToken,
+        // yourPoolShare: this.yourPoolShare,
+        // firstTokeninPair: this.firstTokeninPair,
+        // secondTokeninPair: this.secondTokeninPair,
+        // totalPoolToken: this.totalPoolToken,
       },
     });
   }
 
-  async getExistLiquidity() {
+  // TODO burada olan listeyi html kisminda da liste seklinde gostermek lazim
+
+  async getExistLiquidity(param: ResponseExistedLiquidity, i: number) {
+    // if data returns 0 we wont display
+
     //TODO
     // wallet connection needed here to calculate all numbers
     // and
     // need to have user pair address, this will come from Muchtar
+
     var totalToken =
       await this.kanbanMiddlewareService.getliquidityBalanceOfuser(
-        '0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc'
+        param.pairAddress
       );
     var totalSupply = await this.kanbanMiddlewareService.getTotalSupply(
-      '0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc'
+      param.pairAddress
     );
 
-    if (totalToken != null)
-      this.totalPoolToken = this.utilService.toFixedNumber(totalToken);
-    this.totalSupply = this.utilService.toFixedNumber(totalSupply);
+    if (totalToken != null) {
+      const model: ExistedLiquidity = {
+        firstTokenName:"",
+        firstTokenType: 0,
+        secondTokenName: "",
+        secondTokenType: 0,
+        pooledFirstToken: 0,
+        pooledSecondToken: 0,
+        totalPoolToken: 0,
+        yourPoolShare: 0,
+      };
 
-    this.usersProportionOfLiquidityToWhole =
-      this.totalPoolToken / this.totalSupply;
-    this.yourPoolShare = (100 * this.totalPoolToken) / this.totalSupply;
+      model.totalPoolToken = this.utilService.toFixedNumber(totalToken);
 
-    //here token will fetch from service Muchtar will set
+      totalSupply = this.utilService.toFixedNumber(totalSupply);
 
-    this.fisrtToken.tickerName = 'FAB';
-    this.secondToken.tickerName = 'EXG';
+      this.usersProportionOfLiquidityToWhole =
+        model.totalPoolToken / totalSupply;
+      model.yourPoolShare = (100 * model.totalPoolToken) / totalSupply;
 
-    this.fisrtToken.coinType = 131072;
-    this.secondToken.coinType = 131073;
+      (model.firstTokenName = param.tokens[0].tokenAName),
+        (model.firstTokenType = param.tokens[0].tokenACoinType),
+        (model.secondTokenName = param.tokens[1].tokenBName),
+        (model.secondTokenType = param.tokens[1].tokenBCoinType),
+        (this.fisrtToken.decimal =
+          await this.kanbanMiddlewareService.balanceOfToken(
+            param.pairAddress,
+            model.firstTokenType
+          ));
+      this.secondToken.decimal =
+        await this.kanbanMiddlewareService.balanceOfToken(
+          param.pairAddress,
+          model.secondTokenType
+        );
 
-    this.fisrtToken.decimal = await this.kanbanMiddlewareService.balanceOfToken(
-      '0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc',
-      this.fisrtToken.coinType
-    );
-    this.secondToken.decimal =
-      await this.kanbanMiddlewareService.balanceOfToken(
-        '0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc',
-        this.secondToken.coinType
-      );
+      model.pooledFirstToken =
+        this.utilService.toFixedNumber(this.fisrtToken.decimal) *
+        this.usersProportionOfLiquidityToWhole;
+      model.pooledSecondToken =
+        this.utilService.toFixedNumber(this.secondToken.decimal) *
+        this.usersProportionOfLiquidityToWhole;
 
-    this.firstTokeninPair =
-      this.utilService.toFixedNumber(this.fisrtToken.decimal) *
-      this.usersProportionOfLiquidityToWhole;
-    this.secondTokeninPair =
-      this.utilService.toFixedNumber(this.secondToken.decimal) *
-      this.usersProportionOfLiquidityToWhole;
+      this.existedLiquidities.push(model);
 
-    console.log('usersProportionOfLiquidityToWhole');
-    console.log(this.usersProportionOfLiquidityToWhole);
+      console.log('model =>>>>>>>');
+      console.log(model);
+    }
   }
 }
