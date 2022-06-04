@@ -7,11 +7,16 @@ import { WalletModel } from '../models/wallet.model';
 import { PairingTypes } from '@walletconnect/types';
 import QRCodeModal from '@walletconnect/qrcode-modal';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WalletService {
+  session: any;
+  client: any;
+  accountSubject = new Subject<string>();
+
   walletModel: WalletModel = new WalletModel();
 
   constructor(
@@ -81,7 +86,8 @@ export class WalletService {
   }
 
   async connectWallet() {
-    var clientSession = this.storageService.getWalletSession();
+    const clientSession = this.storageService.getWalletSession();
+    console.log('clientSession===', clientSession);
     if (clientSession == null || clientSession == undefined) {
       this.ngxService.start();
       var session = await this.createConnection();
@@ -98,5 +104,60 @@ export class WalletService {
       this.dataService.setIsWalletConnect(false);
       return false;
     }    
+  }
+
+  connectWalletNew() {
+    console.log('connecting');
+    WalletConnectClient.init({
+      logger: 'debug',
+      projectId: '3acbabd1deb4672edfd4ca48226cfc0f',
+      relayUrl: 'wss://relay.walletconnect.com',
+      metadata: {
+        name: 'Biswap Dapp',
+        description: 'Biswap Dapp',
+        url: 'http://localhost:4200',
+        icons: ['https://walletconnect.com/walletconnect-logo.png'],
+      },
+    }).then(
+      (client) => {
+        console.log('client=', client);
+        this.client = client;
+        client.on(
+          CLIENT_EVENTS.pairing.proposal,
+          (proposal: PairingTypes.Proposal) => {
+            const { uri } = proposal.signal.params;
+            //this.walletModel.uri = uri;
+            QRCodeModal.open(uri, () => {
+              console.log('EVENT', 'QR Code Modal closed');
+
+            });
+          }
+        );
+        client.connect({
+          permissions: {
+            blockchain: {
+              chains: ['eip155:fab'],
+            },
+            jsonrpc: {
+              methods: ['kanban_sendTransaction'],
+            },
+          },
+        }).then(session => {
+          console.log('session=', session);
+          this.onSessionConnectedNew(session);
+        });
+      }
+    );
+  }
+
+  onSessionConnectedNew(session: any) {
+    this.session = session;
+    QRCodeModal.close();
+    const accounts = session.state.accounts;
+    if(accounts && (accounts.length > 0)) {
+      const account = accounts[0];
+      const address = account.split(':')[2];
+      this.accountSubject.next(address);
+    }
   }
 }

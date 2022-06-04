@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Web3Service } from 'src/app/services/web3.service';
 import { KanbanService } from 'src/app/services/kanban.service';
 import { environment } from 'src/environments/environment';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-staking',
@@ -12,6 +13,7 @@ export class AddStakingComponent implements OnInit {
 
   coinAmount: number;
   constructor(
+    private _snackBar: MatSnackBar,
     private web3Service: Web3Service,
     private kanbanService: KanbanService) { }
 
@@ -29,6 +31,7 @@ export class AddStakingComponent implements OnInit {
     .send(environment.smartConractStaking, abiHex)
     .then((data) => {
       console.log('data for deposit===', data);
+      this._snackBar.open(data);
     });
   }
 }

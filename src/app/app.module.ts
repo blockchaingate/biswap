@@ -10,7 +10,7 @@ import { SharedModule } from './modules/shared/shared.module';
 import { KanbanService } from './services/kanban.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Web3Service } from './services/web3.service';
-
+import { StakeService } from './services/stake.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { Web3Service } from './services/web3.service';
     HttpClientModule,
 
   ],
-  providers: [KanbanService, Web3Service],
+  providers: [KanbanService, Web3Service, StakeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

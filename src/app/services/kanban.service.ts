@@ -7,6 +7,7 @@ import { WalletModel } from '../models/wallet.model';
 import { DataService } from './data.service';
 import { BaseResponseModel } from '../models/baseResponseModel';
 import { Web3Service } from './web3.service';
+import { WalletService } from './wallet.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,7 @@ export class KanbanService {
     private web3Service: Web3Service,
     private dataService: DataService,
     private storageService: StorageService,
+    private walletService: WalletService,
     private http: HttpClient
   ) {
   }
@@ -106,12 +108,9 @@ export class KanbanService {
   }
 
   async send(to: string, data: string) {
-    var client: any;
-    this.dataService.GetWalletClient.subscribe((data) => {
-      client = data;
-    });
+    const client = this.walletService.client;
 
-    const session = this.storageService.getWalletSession();
+    const session = this.walletService.session;
 
     const tx = {
       to: to,

@@ -9,7 +9,7 @@
         </div>
 
         <mat-card-content>
-            <div class="emty-liquidity" *ngIf="isWalletConnect != true; else other">
+            <div class="emty-liquidity" *ngIf="!account; else other">
               <span> Connect to a wallet to view your stakings. </span>
             </div>
     
@@ -19,9 +19,26 @@
                 fxLayout="column"
                 fxLayoutAlign="center center"
               >
-                <span *ngIf="totalStaking == null">No staking found. </span>
+                <div *ngIf="!amount">No staking found. </div>
+                <div *ngIf="amount">
+                  <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxFlex.md="40">
+                      Amount:
+                    </div>
+                    <div fxFlex.md="60">
+                      {{amount}}
+                    </div>                   
+                  </div>
 
-                <span *ngIf="totalStaking != null && isWalletConnect"> You can earn extra tokens by staking your tokens.</span>
+                  <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxFlex.md="40">
+                      Reward:
+                    </div>
+                    <div fxFlex.md="60">
+                      {{reward}}
+                    </div>                   
+                  </div>
+                </div>
               </div>
             </ng-template>
           </mat-card-content>
@@ -35,7 +52,7 @@
             mat-raised-button
             color="primary"
             (click)="connectWallet()"
-            *ngIf="!isWalletConnect; else asd"
+            *ngIf="!account; else asd"
           >
             Connect a wallet
           </button>

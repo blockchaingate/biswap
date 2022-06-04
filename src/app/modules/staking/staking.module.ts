@@ -6,6 +6,7 @@ import { StakingRoutingModule } from './staking-routing.module';
 import { MaterialModule } from '../material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddStakingComponent } from './add-staking/add-staking.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { AddStakingComponent } from './add-staking/add-staking.component';
     StakingRoutingModule,
     MaterialModule,
     FlexLayoutModule,
+    MatSnackBarModule,
     FormsModule
   ]
 })
