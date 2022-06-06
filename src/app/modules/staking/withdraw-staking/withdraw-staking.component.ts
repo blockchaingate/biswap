@@ -6,11 +6,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import BigNumber from 'bignumber.js';
 
 @Component({
-  selector: 'app-add-staking',
-  templateUrl: './add-staking.component.html',
-  styleUrls: ['./add-staking.component.scss']
+  selector: 'app-withdraw-staking',
+  templateUrl: './withdraw-staking.component.html',
+  styleUrls: ['./withdraw-staking.component.scss']
 })
-export class AddStakingComponent implements OnInit {
+export class WithdrawStakingComponent implements OnInit {
 
   coinAmount: number;
   constructor(
@@ -21,17 +21,17 @@ export class AddStakingComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addStaking() {
+  withdrawStaking() {
     const params = [
       '0x' + new BigNumber(this.coinAmount).shiftedBy(18).toString(16)
     ];
 
-    const abiHex = this.web3Service.deposit(params);
+    const abiHex = this.web3Service.withdraw(params);
 
     this.kanbanService
     .send(environment.smartConractStaking, abiHex)
     .then((data) => {
-      console.log('data for deposit===', data);
+      console.log('data for withdraw===', data);
       this._snackBar.open(data);
     });
   }

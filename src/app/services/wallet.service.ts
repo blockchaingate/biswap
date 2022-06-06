@@ -15,6 +15,7 @@ import { Subject } from 'rxjs';
 export class WalletService {
   session: any;
   client: any;
+  account: string;
   accountSubject = new Subject<string>();
 
   walletModel: WalletModel = new WalletModel();
@@ -157,6 +158,7 @@ export class WalletService {
     if(accounts && (accounts.length > 0)) {
       const account = accounts[0];
       const address = account.split(':')[2];
+      this.account = address;
       this.accountSubject.next(address);
     }
   }

@@ -472,4 +472,22 @@ export class SmartContractServices {
     return func;
   }
 
+  withdrawFunc() {
+    const func = {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [
+        
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };
+    return func;
+  }
 }

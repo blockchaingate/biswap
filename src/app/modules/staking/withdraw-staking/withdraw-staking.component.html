@@ -1,0 +1,59 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="swapBody">
+    <div fxFlex="25" fxFlex.sm="50" fxFlex.xs="70" fxFlex.md="40">
+      <mat-card>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-card-title>Withdraw Staking </mat-card-title>
+  
+          <div>
+            <button
+              mat-icon-button
+              class="example-icon"
+              aria-label="Example icon-button with share icon"
+            >
+              <mat-icon>settings</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              class="example-icon"
+              aria-label="Example icon-button with share icon"
+            >
+              <mat-icon>more_horiz</mat-icon>
+            </button>
+          </div>
+        </div>
+  
+        <div fxLayoutAlign="start center" class="paddingBottom5">
+          <span>Add staking to earn tokens </span>
+        </div>
+  
+        <div
+        class="coins-input-body"
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+      >
+        <mat-form-field>
+          <mat-label></mat-label>
+          <input
+            #token1
+            matInput
+            name="coinAmount"
+            type="number"
+            [(ngModel)]="coinAmount"
+            placeholder="0.0"
+          />
+        </mat-form-field>
+      </div>
+
+      <mat-card-actions
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      class="mat-card-action"
+    >
+      <button mat-raised-button color="primary" (click)="withdrawStaking()">
+        Add Staking
+      </button>
+    </mat-card-actions>
+      </mat-card>
+  </div>
+</div>
+  

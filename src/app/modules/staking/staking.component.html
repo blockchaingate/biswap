@@ -6,6 +6,18 @@
             <span class="paddingTop5"> Your Stakings </span>
             <h5 class="paddingTop5">Redeem your stakings to receive tokens back</h5>
           </mat-card-title>
+
+          <div class="paddingBottom20">
+
+            <button
+              mat-icon-button
+              class="example-icon"
+              aria-label="Example icon-button with share icon"
+              (click)="showStakings()"
+            >
+              <mat-icon>more_horiz</mat-icon>
+            </button>
+          </div>
         </div>
 
         <mat-card-content>
@@ -44,7 +56,7 @@
           </mat-card-content>
 
           <mat-card-actions
-          fxLayout="row"
+          fxLayout="column"
           fxLayoutAlign="center center"
           class="mat-card-action"
         >
@@ -58,13 +70,22 @@
           </button>
   
           <ng-template #asd>
-            <button
+              <button
               mat-raised-button
               color="primary"
               (click)="addStaking()"
             >
               + Add Staking
             </button>
+              <button
+              *ngIf="amount"
+              mat-raised-button
+              color="basic"
+              (click)="withdrawStaking()"
+            >
+              + Withdraw Staking
+            </button>
+
           </ng-template>
         </mat-card-actions>          
       </mat-card>
