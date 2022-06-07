@@ -24,4 +24,16 @@ import { environment } from 'src/environments/environment';
       console.log('url===', url);
       return this.http.get(url);
     }
+
+    getStakeWithdrawsTotalCount() {
+      const url = environment.endpoints.explorerapi + '/kanban/stake/withdraws/totalCount';
+      console.log('url===', url);
+      return this.http.get(url);
+    }
+
+    getAllStakeWithdraws(pageSize: number, pageNum: number) {
+      const url = environment.endpoints.explorerapi + '/kanban/stake/withdraws/' + pageSize + '/' + pageNum;
+      console.log('url===', url);
+      return this.http.get(url);
+    }
   }

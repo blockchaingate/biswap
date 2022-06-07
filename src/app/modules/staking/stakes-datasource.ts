@@ -6,6 +6,7 @@ export interface StakeElement {
     event: string;
     position: number;
     amount: number;
+    timestamp: number;
     status: string;
 }
 export class StakesDataSource implements DataSource<StakeElement> {
@@ -40,4 +41,16 @@ export class StakesDataSource implements DataSource<StakeElement> {
         });
     }  
 
+    loadStakeWithdraws(pageSize = 10, pageNum = 0) {
+
+        this.loadingSubject.next(true);
+
+        this.stakeService.getAllStakeWithdraws(pageSize, pageNum).pipe(
+            catchError(() => of([])),
+            finalize(() => this.loadingSubject.next(false))
+        )
+        .subscribe((stakes: any) => {
+            this.stakesSubject.next(stakes)
+        });
+    }  
 }

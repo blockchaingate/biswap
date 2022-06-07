@@ -11,13 +11,15 @@ import { AddStakingComponent } from './add-staking/add-staking.component';
 import { WithdrawStakingComponent } from './withdraw-staking/withdraw-staking.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { StakingHistoryComponent } from './staking-history/staking-history.component';
+import { WithdrawsComponent } from './withdraws/withdraws.component';
 
 @NgModule({
   declarations: [
     StakingComponent,
     AddStakingComponent,
     WithdrawStakingComponent,
-    StakingHistoryComponent
+    StakingHistoryComponent,
+    WithdrawsComponent
   ],
   imports: [
     CommonModule,

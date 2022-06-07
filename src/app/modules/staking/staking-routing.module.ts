@@ -5,6 +5,7 @@ import { StakingComponent } from './staking.component';
 import { AddStakingComponent } from './add-staking/add-staking.component';
 import { WithdrawStakingComponent } from './withdraw-staking/withdraw-staking.component';
 import { StakingHistoryComponent } from './staking-history/staking-history.component';
+import { WithdrawsComponent } from './withdraws/withdraws.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,11 @@ const routes: Routes = [
   {
     path: 'history',
     component: StakingHistoryComponent
-  }
+  },
+  {
+    path: 'withdraws',
+    component: WithdrawsComponent
+  },
 ];
 
 @NgModule({
