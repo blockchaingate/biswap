@@ -11,6 +11,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/swap/swap.module').then(x => x.SwapModule)
   },
   {
+    path: 'info',
+    loadChildren: () => import('./modules/info/info.module').then(x => x.InfoModule)
+  },
+  {
     path: 'pool',
     loadChildren: () => import('./modules/pool/pool.module').then(x => x.PoolModule)
   },

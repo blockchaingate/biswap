@@ -1,0 +1,16 @@
+<div class="container">
+    <mat-button-toggle-group name="tabName" [(ngModel)]="tabName" aria-label="Font Style">
+        <mat-button-toggle value="overview">Overview</mat-button-toggle>
+        <mat-button-toggle value="pools">Pools</mat-button-toggle>
+        <mat-button-toggle value="tokens">Tokens</mat-button-toggle>
+    </mat-button-toggle-group>
+    <div *ngIf="tabName=='overview'">
+        <app-overview></app-overview>
+    </div>
+    <div *ngIf="tabName=='pools'">
+        <app-pools></app-pools>
+    </div>
+    <div *ngIf="tabName=='tokens'">
+        <app-tokens></app-tokens>
+    </div>
+</div>

@@ -134,6 +134,7 @@ export class WalletService {
             });
           }
         );
+        //client.disconnect
         client.connect({
           permissions: {
             blockchain: {

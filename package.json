@@ -31,6 +31,7 @@
     "bs58": "^4.0.1",
     "ethereumjs-common": "1.5.2",
     "ethereumjs-tx": "^2.1.2",
+    "lightweight-charts": "^3.8.0",
     "ngx-ui-loader": "^13.0.0",
     "pino": "^7.11.0",
     "rxjs": "~7.5.0",

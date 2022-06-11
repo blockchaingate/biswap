@@ -12,6 +12,7 @@ import { WalletService } from 'src/app/services/wallet.service';
 export class HeaderComponent implements OnInit {
   walletSession: any;
   walletLabel: string;
+  account: string;
 
   constructor(
     public dataService: DataService,
@@ -21,6 +22,7 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    /*
     this.walletSession = this.storageService.getWalletSession();
     if (this.walletSession != null) {
       this.dataService.sendWalletLabel('Disconnect Wallet');
@@ -33,9 +35,23 @@ export class HeaderComponent implements OnInit {
     this.dataService.GetWaletLabel.subscribe((data) => {
       this.walletLabel = data;
     });
+    */
+    this.account = this.walletService.account;
+    if(!this.account) {
+      this.walletService.accountSubject.subscribe(
+        account => {
+          this.account = account;
+        }
+      );
+    }
   }
 
-  async connectWallet() {
-   await this.walletService.connectWallet();
+  connectWallet() {
+   //await this.walletService.connectWallet();
+   this.walletService.connectWalletNew();
+  }
+
+  disConnectWallet() {
+
   }
 }

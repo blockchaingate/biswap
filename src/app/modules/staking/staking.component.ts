@@ -16,6 +16,7 @@ export class StakingComponent implements OnInit {
   walletSession: any;
   totalStaking: number;
 
+  intervalId: any;
 
   constructor(
     private router: Router,
@@ -24,19 +25,34 @@ export class StakingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.walletService.accountSubject.subscribe(
-      account => {
-        this.account = account;
+    this.account = this.walletService.account;
+    if(this.account) {
+      this.getSummary();
+      this.intervalId = setInterval(() => {
         this.getSummary();
-        interval(5000).subscribe((x =>{
-          this.getSummary();
-        }));
+      }, 5000);
 
-      }
-    );
+    } else {
+      this.walletService.accountSubject.subscribe(
+        account => {
+          this.account = account;
+          this.getSummary();
+          this.intervalId = setInterval(() => {
+            this.getSummary();
+          }, 5000);
+  
+        }
+      );
+    }
+
   }
 
-
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+  
   getSummary() {
     this.stakeServ.getSummary(this.account).subscribe(
       (summary: any) => {

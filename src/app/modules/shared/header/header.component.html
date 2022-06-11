@@ -17,10 +17,12 @@
   <!-- <span class="example-spacer"></span> -->
 
   <div fxLayoutGap="20px">
-    <button mat-raised-button color="primary" (click)="connectWallet()">
-      {{ walletLabel }}
+    <button mat-raised-button color="primary" *ngIf="!account" (click)="connectWallet()">
+      {{ 'Connect Wallet' }}
     </button>
-
+    <button mat-raised-button color="primary" *ngIf="account" (click)="disConnectWallet()">
+      {{ 'Disconnect' }}
+    </button>    
     <button
       mat-icon-button
       class="example-icon"
@@ -42,6 +44,10 @@
       <button mat-menu-item>
         <mat-icon>notifications_off</mat-icon>
         <span>Disable alerts</span>
+      </button>
+      <button mat-menu-item routerLink="/info">
+        <mat-icon>info</mat-icon>
+        <span>Info</span>
       </button>
     </mat-menu>
   </div>
