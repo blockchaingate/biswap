@@ -5,8 +5,8 @@ import { InfoRoutingModule } from './info-routing.module';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { FormsModule } from '@angular/forms';
 import { OverviewComponent } from './overview/overview.component';
-import { PoolsComponent } from './pools/pools.component';
-import { TokensComponent } from './tokens/tokens.component';
+import { AllPoolsComponent } from './all-pools/all-pools.component';
+import { AllTokensComponent } from './all-tokens/all-tokens.component';
 import { AllLiquidityComponent } from './overview/all-liquidity/all-liquidity.component';
 import { AllVolumeComponent } from './overview/all-volume/all-volume.component';
 import { TopTokensComponent } from './overview/top-tokens/top-tokens.component';
@@ -15,13 +15,14 @@ import { AllTransactionsComponent } from './overview/all-transactions/all-transa
 import { LiquidityComponent } from './components/liquidity/liquidity.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { VolumeComponent } from './components/volume/volume.component';
-
+import { PoolsComponent } from './components/pools/pools.component';
+import { TokensComponent } from './components/tokens/tokens.component';
 @NgModule({
   declarations: [
     InfoComponent,
     OverviewComponent,
-    PoolsComponent,
-    TokensComponent,
+    AllPoolsComponent,
+    AllTokensComponent,
     AllLiquidityComponent,
     AllVolumeComponent,
     TopTokensComponent,
@@ -29,7 +30,9 @@ import { VolumeComponent } from './components/volume/volume.component';
     AllTransactionsComponent,
     LiquidityComponent,
     TransactionsComponent,
-    VolumeComponent
+    VolumeComponent,
+    PoolsComponent,
+    TokensComponent
   ],
   imports: [
     CommonModule,

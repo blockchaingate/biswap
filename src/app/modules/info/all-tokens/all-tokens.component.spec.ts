@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TokensComponent } from './tokens.component';
+import { AllTokensComponent } from './all-okens.component';
 
 describe('TokensComponent', () => {
-  let component: TokensComponent;
-  let fixture: ComponentFixture<TokensComponent>;
+  let component: AllTokensComponent;
+  let fixture: ComponentFixture<AllTokensComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TokensComponent ]
+      declarations: [ AllTokensComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TokensComponent);
+    fixture = TestBed.createComponent(AllTokensComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

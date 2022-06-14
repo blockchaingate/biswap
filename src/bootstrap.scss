@@ -1,26 +1,9 @@
-.d-flex {
-    display: flex;
+.table-data {
+    border-top: 1px solid rgb(231, 227, 235);;
 }
 
-.justify-content-between {
-    justify-content: space-between;
-}
-.container {
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-@media (min-width: 768px) {
-    .container {
-        width: 750px;
-    }
-}
-
-
-@media (min-width: 992px) {
-    .container {
-        width: 970px;
-    }
+.rounded-card {
+    border: 1px solid rgb(231, 227, 235);;
+    border-radius: 5px;
+    padding: 20px;
 }
