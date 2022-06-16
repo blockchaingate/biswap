@@ -57,6 +57,7 @@ export class AddLiquidityComponent implements OnInit {
   ngOnInit() {
     this.dataService.GettokenList.subscribe((x) => {
       this.tokenList = x;
+      console.log('tokenList===', this.tokenList);
     });
   }
 
