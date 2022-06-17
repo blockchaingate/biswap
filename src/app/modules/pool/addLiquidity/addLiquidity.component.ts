@@ -10,6 +10,7 @@ import { KanbanMiddlewareService } from 'src/app/services/kanban.middleware.serv
 import { KanbanService } from 'src/app/services/kanban.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { WalletService } from 'src/app/services/wallet.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { environment } from 'src/environments/environment';
 import { TokenListComponent } from '../../shared/tokenList/tokenList.component';
@@ -20,6 +21,7 @@ import { TokenListComponent } from '../../shared/tokenList/tokenList.component';
   styleUrls: ['./addLiquidity.component.scss'],
 })
 export class AddLiquidityComponent implements OnInit {
+  slipery = 0.05;
   firstToken: Coin = new Coin();
   secondToken: Coin = new Coin();
   tokenList: Coin[];
@@ -28,6 +30,7 @@ export class AddLiquidityComponent implements OnInit {
 
   firstCoinAmount: number;
   secondCoinAmount: number;
+  account: string;
 
   perAmount: string;
   perAmountLabel: string = '';
@@ -40,7 +43,7 @@ export class AddLiquidityComponent implements OnInit {
   firstTokenReserve: BigNumber = new BigNumber(0);
   secondTokenReserve: BigNumber = new BigNumber(0);
 
-  walletAddress:string;
+  //walletAddress:string;
   pairAddress: string;
 
   constructor(
@@ -51,14 +54,22 @@ export class AddLiquidityComponent implements OnInit {
     private web3Service: Web3Service,
     private dataService: DataService,
     public dialog: MatDialog,
-    private kanbanService: KanbanService
+    private kanbanService: KanbanService,
+    private walletService: WalletService
   ) {}
 
   ngOnInit() {
     this.dataService.GettokenList.subscribe((x) => {
       this.tokenList = x;
-      console.log('tokenList===', this.tokenList);
     });
+    this.account = this.walletService.account;
+    if(!this.account){
+      this.walletService.accountSubject.subscribe(
+        account => {
+          this.account = account;
+        }
+      );
+    }
   }
 
   async onKey(value: number, isFistToken: boolean) {
@@ -129,6 +140,7 @@ export class AddLiquidityComponent implements OnInit {
         data.subscribe((data1) => {
           let res: any = data1;
           var addeess = this.web3Service.decodeabiHex(res.data, 'address');
+          console.log('address=', addeess);
           if (
             addeess.toString() != '0x0000000000000000000000000000000000000000'
           ) {
@@ -196,6 +208,10 @@ export class AddLiquidityComponent implements OnInit {
       });
   }
 
+  connectWallet() {
+    this.walletService.connectWalletNew();
+  }
+
   openSecondTokenListDialog() {
     this.dialog
       .open(TokenListComponent, {
@@ -219,11 +235,13 @@ export class AddLiquidityComponent implements OnInit {
   }
 
   addLiqudity() {
+    /*
     const addressArray = this.storageService
       .getWalletSession()
       .state.accounts[0].split(':');
+    
     this.walletAddress = addressArray[addressArray.length - 1];
-
+*/
     let amountADesired = new BigNumber(this.firstCoinAmount)
       .multipliedBy(new BigNumber(1e18))
       .toFixed();
@@ -237,14 +255,18 @@ export class AddLiquidityComponent implements OnInit {
     var amountADesireda = new BigNumber(amountADesired);
     var amountBDesireda = new BigNumber(amountBDesired);
 
-    var amountAMin = new BigNumber(Number(amountADesired) - 1000);
-    var amountBMin = new BigNumber(Number(amountBDesired) - 1000);
-    var to = this.utilService.fabToExgAddress(this.walletAddress);
+    var amountAMin = new BigNumber(this.firstCoinAmount)
+    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slipery))).multipliedBy(new BigNumber(1e18))
+    .toFixed();;
+    var amountBMin = new BigNumber(this.secondCoinAmount)
+    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slipery))).multipliedBy(new BigNumber(1e18))
+    .toFixed();
+    var to = this.utilService.fabToExgAddress(this.account);
     var timestamp = new TimestampModel(
       0,
-      2,
+      5,
       0,
-      0 // here need to set for future timestamp
+      1 // here need to set for future timestamp
     );
     var deadline = this.utilService.getTimestamp(timestamp);
 
@@ -259,14 +281,15 @@ export class AddLiquidityComponent implements OnInit {
       deadline,
     ];
 
+    console.log('params====', params);
     var abiHex = this.web3Service.addLiquidity(params);
-
+    console.log('abiHex====', abiHex);
     this.kanbanService
       .send(environment.smartConractAdressRouter, abiHex)
       .then((data) => {
         this.txHash = 'https://test.exchangily.com/explorer/tx-detail/' + data;
         const param = {
-          userAddress: this.walletAddress,
+          userAddress: this.account,
           pairAddress: this.pairAddress,
         };
         this.apiService.sendUserPair(param).subscribe((res: any) => {

@@ -49,8 +49,11 @@
       fxLayoutAlign="center center"
       class="mat-card-action"
     >
-      <button mat-raised-button color="primary" (click)="addStaking()">
+      <button *ngIf="account" mat-raised-button color="primary" (click)="addStaking()">
         Add Staking
+      </button>
+      <button *ngIf="!account" mat-raised-button color="primary" (click)="connectWallet()">
+        Connect a wallet
       </button>
     </mat-card-actions>
       </mat-card>

@@ -64,6 +64,7 @@ toBigNumber(amount:any, decimal: number) {
 
 getTimestamp(value: TimestampModel){
 var d = new Date();
+d.setFullYear(d.getFullYear() + value.year);
 d.setDate(d.getDate() + value.day!);
 d.setHours(d.getHours() + value.hour!)
 d.setMinutes(d.getMinutes() + value.minute!);

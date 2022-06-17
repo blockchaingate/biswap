@@ -257,7 +257,7 @@ export class SwapComponent implements OnInit {
   }
 
   connectWallet() {
-    this.walletService.connectWallet();
+    this.walletService.connectWalletNew();
   }
 
   async swapFunction() {

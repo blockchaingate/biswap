@@ -115,9 +115,18 @@
         fxLayoutAlign="center center"
         class="mat-card-action"
       >
-        <button mat-raised-button color="primary" (click)="addLiqudity()">
+        <button mat-raised-button color="primary" *ngIf="account" (click)="addLiqudity()">
           Add Liquidity
         </button>
+
+        <button
+        mat-raised-button
+        color="primary"
+        *ngIf="!account"
+        (click)="connectWallet()"
+      >
+        Connect a wallet
+      </button>
       </mat-card-actions>
     </mat-card>
 

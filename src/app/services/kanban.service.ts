@@ -48,7 +48,7 @@ export class KanbanService {
     var tempTokenList: Coin[] = [];
     var removeItems = [196629, 524290, 196628, 458753, 589826, 196609, 196613];
     this.http
-      .get<BaseResponseModel>(`${this.url}exchangily/getTokenList`)
+      .get<BaseResponseModel>(`${this.url}exchangily/getTokenList/coinpool`)
       .subscribe((x) => {
         var tokenList: Coin[] = [];
         tokenList = x.data.tokenList;
@@ -116,9 +116,11 @@ export class KanbanService {
       to: to,
       data: data,
     };
+
+
     const requestBody = {
       topic: session.topic,
-      chainId: session.permissions.blockchain.chains[0],
+      chainId: this.walletService.chainId,
       request: {
         method: 'kanban_sendTransaction',
         params: [tx],

@@ -19,7 +19,7 @@ export class PoolComponent implements OnInit {
   walletSession: any;
 
   usersProportionOfLiquidityToWhole: number;
-
+  account: string;
   panelOpenState = false;
 
   fisrtToken: Coin = new Coin();
@@ -44,6 +44,7 @@ export class PoolComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    /*
     this.walletSession = this.storageService.getWalletSession();
     if (this.walletSession != null) {
       this.dataService.sendWalletLabel('Disconnect Wallet');
@@ -57,8 +58,15 @@ export class PoolComponent implements OnInit {
     this.dataService.GetIsWalletConnect.subscribe((data) => {
       this.isWalletConnect = data;
     });
-
-    
+    */
+    this.account = this.walletService.account;
+    if(!this.account) {
+      this.walletService.accountSubject.subscribe(
+        account => {
+          this.account = account;
+        }
+      );
+    }
   }
 
 
@@ -79,13 +87,16 @@ export class PoolComponent implements OnInit {
   }
 
   async connectWallet() {
+    this.walletService.connectWalletNew();
     //TODO after wallet connect need to call getExistLiquidity() methid
+    /*
     var result = await this.walletService.connectWallet();
     if (result == null) {
       this.connectWallet();
     } else {
       this.ngOnInit();
     }
+    */
   }
 
   removeLiquidity() {

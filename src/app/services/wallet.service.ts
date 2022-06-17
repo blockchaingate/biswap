@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DataService } from './data.service';
 import { StorageService } from './storage.service';
-import WalletConnectClient, { CLIENT_EVENTS } from '@walletconnect/client';
+import SignClient from "@walletconnect/sign-client";
 import { WalletModel } from '../models/wallet.model';
-import { PairingTypes } from '@walletconnect/types';
 import QRCodeModal from '@walletconnect/qrcode-modal';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Subject } from 'rxjs';
@@ -16,6 +15,7 @@ export class WalletService {
   session: any;
   client: any;
   account: string;
+  chainId: string;
   accountSubject = new Subject<string>();
 
   walletModel: WalletModel = new WalletModel();
@@ -28,130 +28,102 @@ export class WalletService {
   ) {}
 
 
-  async createConnection() {
-    this.walletModel.client = await WalletConnectClient.init({
-      logger: 'debug',
-      projectId: '3acbabd1deb4672edfd4ca48226cfc0f',
-      relayUrl: 'wss://relay.walletconnect.com',
+  async connectWalletNew() {
+    console.log('connecting');
+    const client = await SignClient.init({
+      projectId: "3acbabd1deb4672edfd4ca48226cfc0f",
       metadata: {
-        name: 'Biswap Dapp',
-        description: 'Biswap Dapp',
-        url: 'http://localhost:4200',
-        icons: ['https://walletconnect.com/walletconnect-logo.png'],
-      },
+        name: "Example Dapp",
+        description: "Example Dapp",
+        url: "#",
+        icons: ["https://walletconnect.com/walletconnect-logo.png"],
+      }
     });
-    var session = await this.showQrCode().finally(() => {
+
+    this.client = client;
+
+    client.on("session_event", (args) => {
+         const id = args.id;
+         const ddd = args.params;
+         const topic = args.topic;
+         console.log('id===', id);
+        // Handle session events, such as "chainChanged", "accountsChanged", etc.
+        
     });
-    return session;
+      
+    client.on("session_update", ({ topic, params }) => {
+      console.log('topic===', topic);
+        const { namespaces } = params;
+        const _session = client.session.get(topic);
+        // Overwrite the `namespaces` of the existing session with the incoming one.
+        const updatedSession = { ..._session, namespaces };
+        // Integrate the updated session state into your dapp state.
+        this.onSessionUpdate(updatedSession);
+    });
+      
+    client.on("session_delete", () => {
+        // Session was deleted -> reset the dapp state, clean up from user session, etc.
+    });    
+      
+
+    await this.showQrcode();
   }
 
-  async showQrCode() {
-    this.walletModel.client.on(
-      CLIENT_EVENTS.pairing.proposal,
-      async (proposal: PairingTypes.Proposal) => {
-        const { uri } = proposal.signal.params;
-        this.walletModel.uri = uri;
+  onSessionUpdate(updatedSession: any) {
+    console.log('updatedSession===', updatedSession);
+  }
+
+  async showQrcode() {
+    try {
+      const { uri, approval } = await this.client.connect({
+
+        // Provide the namespaces and chains (e.g. `eip155` for EVM-based chains) we want to use in this session.
+        requiredNamespaces: {
+          eip155: {
+            methods: [
+              "kanban_sendTransaction"
+            ],
+            chains: ["eip155:fab"],
+            events: [],
+          },
+        },
+      });
+    
+      // Open QRCode modal if a URI was returned (i.e. we're not connecting an existing pairing).
+      if (uri) {
         QRCodeModal.open(uri, () => {
-          console.log('EVENT', 'QR Code Modal closed');
-          this.dataService.sendWalletLabel('Connect Wallet');
-          this.dataService.setIsWalletConnect(false);
-          this.ngxService.stop();
+          console.log("EVENT", "QR Code Modal closed");
         });
       }
-    );
-    const session = await this.walletModel.client.connect({
-      permissions: {
-        blockchain: {
-          chains: ['eip155:fab'],
-        },
-        jsonrpc: {
-          methods: ['kanban_sendTransaction'],
-        },
-      },
-    });
-    this.onSessionConnected(session);
-    return session;
+    
+      // Await session approval from the wallet.
+      const session = await approval();
+      // Handle the returned session (e.g. update UI to "connected" state).
+      await this.onSessionConnected(session);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      // Close the QRCode modal in case it was open.
+      QRCodeModal.close();
+    }
   }
+
 
   onSessionConnected(session: any) {
-    this.walletModel.session = session;
+    this.session = session;
+    console.log('session===', session);
     QRCodeModal.close();
-    this.ngxService.stop();
-    const accounts = session.state.accounts;
-    if (accounts && accounts.length > 0) {
-      this.walletModel.account = accounts[0];
+    const accounts = session.namespaces.eip155.accounts;
+    console.log('accounts=',accounts);
+    if(accounts && (accounts.length > 0)) {
+      const account = accounts[0];
+      const [namespace, reference, address] = account.split(":");
+      this.chainId = namespace + ':' + reference;
+      this.account = address;
+      this.accountSubject.next(address);
     }
-    this.storageService.createWalletSession(session);
-    console.log('this.walletModel.client', this.walletModel.client);
-    this.dataService.setWalletClient(this.walletModel.client);
   }
-
-  async connectWallet() {
-    const clientSession = this.storageService.getWalletSession();
-    console.log('clientSession===', clientSession);
-    if (clientSession == null || clientSession == undefined) {
-      this.ngxService.start();
-      var session = await this.createConnection();
-      if(session != null){
-        this.dataService.sendWalletLabel('Disconnect Wallet');
-        this.dataService.setIsWalletConnect(true);
-        return true;
-      }else{
-        return false;
-      }
-    } else {
-      this.dataService.sendWalletLabel('Connect Wallet');
-      this.storageService.removeWalletSession();
-      this.dataService.setIsWalletConnect(false);
-      return false;
-    }    
-  }
-
-  connectWalletNew() {
-    console.log('connecting');
-    WalletConnectClient.init({
-      logger: 'debug',
-      projectId: '3acbabd1deb4672edfd4ca48226cfc0f',
-      relayUrl: 'wss://relay.walletconnect.com',
-      metadata: {
-        name: 'Biswap Dapp',
-        description: 'Biswap Dapp',
-        url: 'http://localhost:4200',
-        icons: ['https://walletconnect.com/walletconnect-logo.png'],
-      },
-    }).then(
-      (client) => {
-        console.log('client=', client);
-        this.client = client;
-        client.on(
-          CLIENT_EVENTS.pairing.proposal,
-          (proposal: PairingTypes.Proposal) => {
-            const { uri } = proposal.signal.params;
-            //this.walletModel.uri = uri;
-            QRCodeModal.open(uri, () => {
-              console.log('EVENT', 'QR Code Modal closed');
-
-            });
-          }
-        );
-        //client.disconnect
-        client.connect({
-          permissions: {
-            blockchain: {
-              chains: ['eip155:fab'],
-            },
-            jsonrpc: {
-              methods: ['kanban_sendTransaction'],
-            },
-          },
-        }).then(session => {
-          console.log('session=', session);
-          this.onSessionConnectedNew(session);
-        });
-      }
-    );
-  }
-
+  /*
   onSessionConnectedNew(session: any) {
     this.session = session;
     QRCodeModal.close();
@@ -163,4 +135,5 @@ export class WalletService {
       this.accountSubject.next(address);
     }
   }
+  */
 }

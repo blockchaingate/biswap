@@ -54,7 +54,7 @@
           mat-raised-button
           color="primary"
           (click)="connectWallet()"
-          *ngIf="!isWalletConnect; else asd"
+          *ngIf="!account; else asd"
         >
           Connect a wallet
         </button>
