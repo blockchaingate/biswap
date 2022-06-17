@@ -21,7 +21,6 @@ export class WalletService {
   walletModel: WalletModel = new WalletModel();
 
   constructor(
-    private ngxService: NgxUiLoaderService,
     public dataService: DataService,
     public storageService: StorageService,
     public dialog: MatDialog
@@ -30,6 +29,10 @@ export class WalletService {
 
   async connectWalletNew() {
     console.log('connecting');
+    if(this.client) {
+      return;
+    }
+    console.log('length===', SignClient.length);
     const client = await SignClient.init({
       projectId: "3acbabd1deb4672edfd4ca48226cfc0f",
       metadata: {

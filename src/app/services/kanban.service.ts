@@ -46,7 +46,8 @@ export class KanbanService {
 
   getTokenList() {
     var tempTokenList: Coin[] = [];
-    var removeItems = [196629, 524290, 196628, 458753, 589826, 196609, 196613];
+    //var removeItems = [196629, 524290, 196628, 458753, 589826, 196609, 196613];
+    var removeItems: any = [];
     this.http
       .get<BaseResponseModel>(`${this.url}exchangily/getTokenList/coinpool`)
       .subscribe((x) => {
