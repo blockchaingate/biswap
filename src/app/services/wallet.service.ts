@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DataService } from './data.service';
 import { StorageService } from './storage.service';
-import SignClient from "@walletconnect/sign-client";
+import SignClient from "../walletconnect/sign-client";
 import { WalletModel } from '../models/wallet.model';
 import QRCodeModal from '@walletconnect/qrcode-modal';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Subject } from 'rxjs';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -29,10 +27,13 @@ export class WalletService {
 
   async connectWalletNew() {
     console.log('connecting');
+    /*
     if(this.client) {
       return;
     }
-    console.log('length===', SignClient.length);
+    */
+    
+    console.log('lengthhhhh===', SignClient.length);
     const client = await SignClient.init({
       projectId: "3acbabd1deb4672edfd4ca48226cfc0f",
       metadata: {
@@ -43,6 +44,7 @@ export class WalletService {
       }
     });
 
+    console.log('client====', client);
     this.client = client;
 
     client.on("session_event", (args) => {
