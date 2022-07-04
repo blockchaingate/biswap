@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, Input, SimpleChanges } from '@angular/core';
 import { createChart, MouseEventParams } from 'lightweight-charts';
 
 @Component({
@@ -7,6 +7,7 @@ import { createChart, MouseEventParams } from 'lightweight-charts';
   styleUrls: ['./liquidity.component.scss']
 })
 export class LiquidityComponent implements OnInit {
+  @Input() items: any;
   currentLiquidity: number | Object;
   currentTime: string;
   @ViewChild('liquidity') liquidity: ElementRef;
@@ -17,29 +18,41 @@ export class LiquidityComponent implements OnInit {
     this.currentTime = '';
   }
 
-  ngAfterViewInit() { 
+  ngOnChanges(changes: any){
+    const items = changes && changes.items && changes.items.currentValue;
+    if(items && items.length > 0) {
+      this.createChart(items);
+    }
+  }
 
+  createChart(items: any) {
+
+    console.log('this.currentLiquidity===', this.currentLiquidity);
     const chart = createChart(this.renderer.selectRootElement(this.liquidity["nativeElement"]), { width: 400, height: 300 });
     const lineSeries = chart.addLineSeries(
       { color: 'rgb(118, 69, 217)', baseLineColor: 'rgb(118, 69, 217)', priceLineColor: 'rgb(118, 69, 217)' }
     );
-    lineSeries.setData([
-        { time: '2019-04-11', value: 80.01 },
-        { time: '2019-04-12', value: 96.63 },
-        { time: '2019-04-13', value: 76.64 },
-        { time: '2019-04-14', value: 81.89 },
-        { time: '2019-04-15', value: 74.43 },
-        { time: '2019-04-16', value: 80.01 },
-        { time: '2019-04-17', value: 96.63 },
-        { time: '2019-04-18', value: 76.64 },
-        { time: '2019-04-19', value: 81.89 },
-        { time: '2019-04-20', value: 74.43 },
-    ]);
+    const lineDatas = items.map((item: any) => {
+      const date = new Date(item.date * 1000);
+      const timeString = date.getFullYear() + '-0' + date.getMonth() + '-' + date.getDate();
+      console.log('timeString===', timeString);
+      const lineData = {
+        time: timeString,
+        value: item.totalLiquidityUSD
+      };
+      return lineData;
+    });
+    console.log('lineDatas===', lineDatas);
+
+    const currentItem = lineDatas[lineDatas.length - 1];
+    console.log('currentItem=====', currentItem);
+    this.currentLiquidity = currentItem.value;
+    this.currentTime = currentItem.time;
+
+    lineSeries.setData(lineDatas);
 
     var that = this;
     chart.subscribeCrosshairMove(function(param: MouseEventParams) {
-      console.log('param====', param);
-      console.log('seriesPrices==', param.seriesPrices);
 
       const time: any = param.time;
       const seriesPrices = param.seriesPrices;
@@ -57,5 +70,8 @@ export class LiquidityComponent implements OnInit {
         that.currentTime = year + '-' + month + '-' + day;
       }
     });
+  }
+  ngAfterViewInit() { 
+
   }
 }

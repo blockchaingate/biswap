@@ -5,7 +5,7 @@
         <mat-button-toggle value="tokens">Tokens</mat-button-toggle>
     </mat-button-toggle-group>
     <div *ngIf="tabName=='overview'">
-        <app-overview></app-overview>
+        <app-overview [items]="items"></app-overview>
     </div>
     <div *ngIf="tabName=='pools'">
         <app-all-pools></app-all-pools>

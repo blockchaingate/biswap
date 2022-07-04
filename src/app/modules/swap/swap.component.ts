@@ -29,7 +29,7 @@ export class SwapComponent implements OnInit {
 
   walletSession: any;
 
-  isWalletConnect: boolean = false;
+  account: string;
 
   firstCoinAmount: number;
   secondCoinAmount: number;
@@ -57,6 +57,7 @@ export class SwapComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    /*
     this.walletSession = this.storageService.getWalletSession();
     if (this.walletSession != null) {
       this.dataService.sendWalletLabel('Disconnect Wallet');
@@ -69,7 +70,15 @@ export class SwapComponent implements OnInit {
     this.dataService.GetIsWalletConnect.subscribe((data) => {
       this.isWalletConnect = data;
     });
-
+    */
+    this.account = this.walletService.account;
+    if(!this.account){
+      this.walletService.accountSubject.subscribe(
+        account => {
+          this.account = account;
+        }
+      );
+    }
     this.dataService.GettokenList.subscribe((x) => {
       this.tokenList = x;
     });
@@ -268,14 +277,15 @@ export class SwapComponent implements OnInit {
       .multipliedBy(new BigNumber(1e18))
       .toFixed();
 
+      /*
     const addressArray = this.storageService
       .getWalletSession()
       .state.accounts[0].split(':');
-    const walletAddress = addressArray[addressArray.length - 1];
+      */
 
     var path = [this.firstToken.type, this.secondToken.type];
 
-    var to = this.utilService.fabToExgAddress(walletAddress);
+    var to = this.utilService.fabToExgAddress(this.account);
     var timestamp = new TimestampModel(
       0,
       2,

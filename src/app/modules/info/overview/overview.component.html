@@ -1,8 +1,10 @@
 <h1>Biswap Info & Analytics</h1>
 <div class="d-flex justify-content-between">
-    <app-all-liquidity></app-all-liquidity>
-    <app-all-volume></app-all-volume>
+    <app-all-liquidity [items]="items"></app-all-liquidity>
+    <app-all-volume [items]="items"></app-all-volume>
 </div>
+
+
 <h1 class="mt-3">Top tokens</h1>
 <app-top-tokens></app-top-tokens>
 <h1 class="mt-3">Top pools</h1>

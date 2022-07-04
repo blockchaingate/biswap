@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BiswapService } from 'src/app/services/biswap.service';
 
 @Component({
   selector: 'app-info',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InfoComponent implements OnInit {
   tabName = 'overview';
-  constructor() { }
+  items: any;
+  constructor(private biswapServ: BiswapService) { }
 
   ngOnInit(): void {
+    this.biswapServ.getDayDatas(100, 0).subscribe((items: any) => {
+      this.items = items.reverse();
+    })
   }
 
 }

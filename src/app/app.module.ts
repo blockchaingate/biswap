@@ -11,6 +11,7 @@ import { KanbanService } from './services/kanban.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Web3Service } from './services/web3.service';
 import { StakeService } from './services/stake.service';
+import { BiswapService } from './services/biswap.service';
 
 @NgModule({
   declarations: [
@@ -24,10 +25,9 @@ import { StakeService } from './services/stake.service';
     FlexLayoutModule,
     MaterialModule,
     SharedModule,
-    HttpClientModule,
-
+    HttpClientModule
   ],
-  providers: [KanbanService, Web3Service, StakeService],
+  providers: [KanbanService, Web3Service, StakeService, BiswapService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

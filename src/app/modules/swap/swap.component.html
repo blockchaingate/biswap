@@ -117,7 +117,7 @@
 
       <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
       <mat-card-actions fxLayout="row" fxLayoutAlign="center center" class="mat-card-action" >
-        <button mat-raised-button color="primary" (click)="connectWallet()" *ngIf="!isWalletConnect; else asd">Connect a wallet</button>
+        <button mat-raised-button color="primary" (click)="connectWallet()" *ngIf="!account; else asd">Connect a wallet</button>
 
         <ng-template #asd> 
           <button mat-raised-button color="primary" (click)="swapFunction()">Swap</button>

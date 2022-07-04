@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, Input } from '@angular/core';
 import { createChart, MouseEventParams } from 'lightweight-charts';
 
 @Component({
@@ -7,6 +7,7 @@ import { createChart, MouseEventParams } from 'lightweight-charts';
   styleUrls: ['./volume.component.scss']
 })
 export class VolumeComponent implements OnInit {
+  @Input() items: any;
   currentVolume: number | Object;
   currentTime: string;
   @ViewChild('volume') volume: ElementRef;
@@ -15,27 +16,42 @@ export class VolumeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  ngAfterViewInit() { 
+  ngOnChanges(changes: any){
+    const items = changes && changes.items && changes.items.currentValue;
+    if(items && items.length > 0) {
+      this.createChart(items);
+    }
+  }
+
+  createChart(items: any) {
+    console.log('items on volume=', items);
     const chart = createChart(this.renderer.selectRootElement(this.volume["nativeElement"]), { width: 400, height: 300 });
     //const lineSeries = chart.addLineSeries();
     const histogramSeries = chart.addHistogramSeries({ color: '#26a69a' });
-    histogramSeries.setData([
-        { time: '2019-04-11', value: 80.01 },
-        { time: '2019-04-12', value: 96.63 },
-        { time: '2019-04-13', value: 76.64 },
-        { time: '2019-04-14', value: 81.89 },
-        { time: '2019-04-15', value: 74.43 },
-        { time: '2019-04-16', value: 80.01 },
-        { time: '2019-04-17', value: 96.63 },
-        { time: '2019-04-18', value: 76.64 },
-        { time: '2019-04-19', value: 81.89 },
-        { time: '2019-04-20', value: 74.43 },
-    ]);
+
+
+    const histogramDatas = items.map((item: any) => {
+      const date = new Date(item.date * 1000);
+      const timeString = date.getFullYear() + '-0' + date.getMonth() + '-' + date.getDate();
+      console.log('timeString===', timeString);
+      const lineData = {
+        time: timeString,
+        value: item.dailyVolumeUSD
+      };
+      return lineData;
+    });
+    console.log('histogramDatas===', histogramDatas);
+
+    const currentItem = histogramDatas[histogramDatas.length - 1];
+    console.log('currentItem=====', currentItem);
+    this.currentVolume = currentItem.value;
+    this.currentTime = currentItem.time;
+
+    histogramSeries.setData(histogramDatas);
+
 
     var that = this;
     chart.subscribeCrosshairMove(function(param: MouseEventParams) {
-      console.log('param====', param);
-      console.log('seriesPrices==', param.seriesPrices);
 
       const time: any = param.time;
       const seriesPrices = param.seriesPrices;
@@ -53,6 +69,10 @@ export class VolumeComponent implements OnInit {
         that.currentTime = year + '-' + month + '-' + day;
       }
     });
+  }
+
+  ngAfterViewInit() { 
+
   }
 
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InfoComponent } from './info.component';
+
 import { InfoRoutingModule } from './info-routing.module';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { FormsModule } from '@angular/forms';
@@ -17,9 +17,9 @@ import { TransactionsComponent } from './components/transactions/transactions.co
 import { VolumeComponent } from './components/volume/volume.component';
 import { PoolsComponent } from './components/pools/pools.component';
 import { TokensComponent } from './components/tokens/tokens.component';
+import { InfoComponent } from './info.component';
 @NgModule({
   declarations: [
-    InfoComponent,
     OverviewComponent,
     AllPoolsComponent,
     AllTokensComponent,
@@ -32,7 +32,8 @@ import { TokensComponent } from './components/tokens/tokens.component';
     TransactionsComponent,
     VolumeComponent,
     PoolsComponent,
-    TokensComponent
+    TokensComponent,
+    InfoComponent
   ],
   imports: [
     CommonModule,

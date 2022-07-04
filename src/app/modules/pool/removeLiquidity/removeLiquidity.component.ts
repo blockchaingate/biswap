@@ -34,7 +34,6 @@ export class RemoveLiquidityComponent implements OnInit {
     this.firstTokeninPair = state.firstTokeninPair;
     this.secondTokeninPair = state.secondTokeninPair;
     this.totalPoolToken = state.totalPoolToken;
-
    }
 
   ngOnInit() {
