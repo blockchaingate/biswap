@@ -21,12 +21,12 @@
             </div>
         </div>
 
-        <div class="row table-data py-2">
+        <div class="row table-data py-2" *ngFor="let token of tokens">
             <div class="col col-2">
                 1
             </div>
             <div class="col col-2">
-                Name
+                {{showName(token.id)}}
             </div>
             <div class="col col-2">
                 Price

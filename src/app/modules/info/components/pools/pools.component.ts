@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-pools',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pools.component.scss']
 })
 export class PoolsComponent implements OnInit {
-
+  @Input() pairs: any;
   constructor() { }
 
   ngOnInit(): void {

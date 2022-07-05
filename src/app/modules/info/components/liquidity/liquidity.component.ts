@@ -34,7 +34,7 @@ export class LiquidityComponent implements OnInit {
     );
     const lineDatas = items.map((item: any) => {
       const date = new Date(item.date * 1000);
-      const timeString = date.getFullYear() + '-0' + date.getMonth() + '-' + date.getDate();
+      const timeString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
       console.log('timeString===', timeString);
       const lineData = {
         time: timeString,

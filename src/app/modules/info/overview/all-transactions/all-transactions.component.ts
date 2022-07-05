@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./all-transactions.component.scss']
 })
 export class AllTransactionsComponent implements OnInit {
-  @Input() items: any;
+  @Input() transactions: any;
   constructor() { }
 
   ngOnInit(): void {

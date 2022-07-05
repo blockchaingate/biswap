@@ -32,18 +32,14 @@ export class VolumeComponent implements OnInit {
 
     const histogramDatas = items.map((item: any) => {
       const date = new Date(item.date * 1000);
-      const timeString = date.getFullYear() + '-0' + date.getMonth() + '-' + date.getDate();
-      console.log('timeString===', timeString);
+      const timeString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
       const lineData = {
         time: timeString,
         value: item.dailyVolumeUSD
       };
       return lineData;
     });
-    console.log('histogramDatas===', histogramDatas);
-
     const currentItem = histogramDatas[histogramDatas.length - 1];
-    console.log('currentItem=====', currentItem);
     this.currentVolume = currentItem.value;
     this.currentTime = currentItem.time;
 
