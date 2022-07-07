@@ -12,9 +12,4 @@ export class TokensComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  showName(tokenId: string) {
-    const id = parseInt(tokenId, 16);
-    console.log('id=', id);
-    return id;
-  }
 }

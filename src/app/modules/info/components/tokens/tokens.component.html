@@ -21,15 +21,15 @@
             </div>
         </div>
 
-        <div class="row table-data py-2" *ngFor="let token of tokens">
+        <div class="row table-data py-2" *ngFor="let token of tokens;let i = index">
             <div class="col col-2">
-                1
+                {{i+1}}
             </div>
             <div class="col col-2">
-                {{showName(token.id)}}
+                {{token.name}}
             </div>
             <div class="col col-2">
-                Price
+                {{token.price}}
             </div>
             <div class="col col-2">
                 Price change
@@ -38,7 +38,7 @@
                 Volume 24h
             </div>
             <div class="col col-2">
-                Liquidity
+                {{token.totalLiquidity}}
             </div>
         </div>
     </div>

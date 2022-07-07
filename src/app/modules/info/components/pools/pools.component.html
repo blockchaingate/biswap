@@ -22,15 +22,15 @@
             </div>
         </div>
 
-        <div class="row table-data py-2" *ngFor="let pair of pairs">
+        <div class="row table-data py-2" *ngFor="let pair of pairs;let i = index">
             <div class="col col-2">
-                1
+                {{i + 1}}
             </div>
             <div class="col col-2">
-                Name
+                {{pair.name}}
             </div>
             <div class="col col-2">
-                Price
+                {{pair.token0Price}}
             </div>
             <div class="col col-2">
                 Price change
@@ -39,7 +39,7 @@
                 Volume 24h
             </div>
             <div class="col col-2">
-                Liquidity
+                {{pair.totalLiquidity}}
             </div>
         </div>
     </div>

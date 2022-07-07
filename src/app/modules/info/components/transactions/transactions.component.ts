@@ -12,4 +12,7 @@ export class TransactionsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  toIdentityString(id: string) {
+    return id.substring(0,3) + '...' + id.substring(id.length - 3);
+  }
 }

@@ -21,24 +21,24 @@
             </div>
         </div>
 
-        <div class="row table-data py-2" *ngFor="let transaction of transactions">
+        <div class="row table-data py-2" *ngFor="let transaction of transactions;let i = index">
             <div class="col col-2">
-                1
+                {{transaction.name}}
             </div>
             <div class="col col-2">
-                Name
+                {{transaction.amountUSD}}
             </div>
             <div class="col col-2">
-                Price
+                {{transaction.amount0}}
             </div>
             <div class="col col-2">
-                Price change
+                {{transaction.amount1}}
             </div>
             <div class="col col-2">
-                Volume 24h
+                {{toIdentityString(transaction.account)}}
             </div>
             <div class="col col-2">
-                Liquidity
+                {{transaction.time}}
             </div>
         </div>
     </div>

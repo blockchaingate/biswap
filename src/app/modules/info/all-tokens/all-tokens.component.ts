@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BiswapService } from 'src/app/services/biswap.service';
 
 @Component({
   selector: 'app-all-tokens',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./all-tokens.component.scss']
 })
 export class AllTokensComponent implements OnInit {
-
-  constructor() { }
+  tokens: any;
+  constructor(private biswapServ: BiswapService) { }
 
   ngOnInit(): void {
+    this.biswapServ.getTokens(100, 0).subscribe((tokens: any) => {
+      this.tokens = tokens;
+    });
   }
 
 }
