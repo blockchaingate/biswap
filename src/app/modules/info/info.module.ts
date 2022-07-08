@@ -18,6 +18,8 @@ import { VolumeComponent } from './components/volume/volume.component';
 import { PoolsComponent } from './components/pools/pools.component';
 import { TokensComponent } from './components/tokens/tokens.component';
 import { InfoComponent } from './info.component';
+import { PoolComponent } from './pool/pool.component';
+import { TokenComponent } from './token/token.component';
 @NgModule({
   declarations: [
     OverviewComponent,
@@ -33,7 +35,9 @@ import { InfoComponent } from './info.component';
     VolumeComponent,
     PoolsComponent,
     TokensComponent,
-    InfoComponent
+    InfoComponent,
+    PoolComponent,
+    TokenComponent
   ],
   imports: [
     CommonModule,

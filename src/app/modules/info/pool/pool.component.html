@@ -1,0 +1,58 @@
+<div class="container py-3" *ngIf="pair">
+    <div class="d-flex py-2">
+        <a href="/info">Home </a>
+        >
+        <a href="/info?tabName=pools">Pools</a>
+        >
+        {{pairName}} {{pair.summary.priceChange24h}}%
+    </div>
+    <div class="py-2">
+        <h2>{{pairName}} {{pair.summary.priceChange24h}}%</h2>
+    </div>
+    <div class="py-2 d-flex justify-content-between">
+        <div class="d-flex">
+            <div>1 {{pair.token0Name}} = {{pair.token0Price}} {{pair.token1Name}}</div>
+            <div class="px-3">1 {{pair.token1Name}} = {{pair.token1Price}} {{pair.token0Name}}</div>
+        </div>
+        <div class="d-flex">
+            <button type="button" class="btn btn-secondary">Add Liquidity</button>
+            <button type="button" class="mx-3 btn btn-primary">Trade</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-md-3 col-12">
+            <div class="py-2">
+                <div>Total Tokens Locked</div>
+                <div class="d-flex justify-content-between">
+                    <div>{{pair.token0Name}}</div>
+                    <div>{{pair.reserve0}}</div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div>{{pair.token1Name}}</div>
+                    <div>{{pair.reserve1}}</div>
+                </div>
+            </div>
+            <div class="py-2">
+                <div>Total Liquidity</div>
+                <div>${{pair.totalLiquidity}}</div>
+            </div>
+            <div class="py-2">
+                <div>Volume 24h</div>
+                <div>${{pair.summary.dailyVolumeUSD}}</div>
+            </div>
+            <div class="py-2">
+                <div>24h Fees</div>
+                <div>${{pair.summary.dailyVolumeUSD * 0.003}}</div>
+            </div>
+        </div>
+        <div class="col col-md-9 col-12">
+            right
+        </div>
+    </div>
+    <div>
+        <div>Transactions</div>
+        <app-transactions [transactions]="transactions"></app-transactions>
+    </div>
+</div>
+

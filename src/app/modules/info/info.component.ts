@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import {Router, ActivatedRoute, Params} from '@angular/router';
 
 @Component({
   selector: 'app-info',
@@ -8,8 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InfoComponent implements OnInit {
   tabName = 'overview';
+  constructor(private activatedRoute: ActivatedRoute) {}
   ngOnInit() {
-
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      if(params && params['tabName']) {
+        this.tabName = params['tabName'];
+      }
+    });
   }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -25,6 +25,18 @@ import { environment } from 'src/environments/environment';
 
     getTransactions(pageSize: number, pageNum: number) {
       const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/' + pageSize + '/' + pageNum;
+      return this.http.get(url);
+    }
+
+    getPair(pairIdentity: string) {
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/pair/' + pairIdentity;
+      return this.http.get(url);      
+    }
+
+    getTransactionsByPair(pairIdentity: string) {
+      const pageSize = 10;
+      const pageNum = 0;
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/pair/' + pairIdentity + '/' + pageSize + '/' + pageNum;
       return this.http.get(url);
     }
   }
