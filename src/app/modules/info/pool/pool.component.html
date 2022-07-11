@@ -4,10 +4,10 @@
         >
         <a href="/info?tabName=pools">Pools</a>
         >
-        {{pairName}} {{pair.summary.priceChange24h}}%
+        {{pair.token0Name}} / {{pair.token1Name}} {{pair.summary.priceChange24h}}%
     </div>
     <div class="py-2">
-        <h2>{{pairName}} {{pair.summary.priceChange24h}}%</h2>
+        <h2><a href="/info/token/{{pair.token0Identity}}">{{pair.token0Name}}</a> / <a href="/info/token/{{pair.token1Identity}}">{{pair.token1Name}}</a> {{pair.summary.priceChange24h}}%</h2>
     </div>
     <div class="py-2 d-flex justify-content-between">
         <div class="d-flex">
@@ -34,8 +34,8 @@
                 </div>
             </div>
             <div class="py-2">
-                <div>Total Liquidity</div>
-                <div>${{pair.totalLiquidity}}</div>
+                <div>TVL</div>
+                <div>${{pair.summary.reserveUSD}}</div>
             </div>
             <div class="py-2">
                 <div>Volume 24h</div>
@@ -47,7 +47,24 @@
             </div>
         </div>
         <div class="col col-md-9 col-12">
-            right
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div>{{title}}</div>
+                    <div><b>${{value}}</b></div>
+                    <div>{{currentTime}}</div>
+                </div>
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" (click)="changeTab('Volume')" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="btnradio1">Volume</label>
+                  
+                    <input type="radio" (click)="changeTab('Liquidity')" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio2">Liquidity</label>
+                  
+                    <input type="radio" (click)="changeTab('Fees')" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio3">Fees</label>
+                </div>
+            </div>
+            <div #chart id="chart" class="p-3"></div>
         </div>
     </div>
     <div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BiswapService } from 'src/app/services/biswap.service';
 
@@ -9,8 +9,12 @@ import { BiswapService } from 'src/app/services/biswap.service';
 })
 export class PoolComponent implements OnInit {
   pair: any;
-  pairName: string;
   transactions: any;
+  title: string;
+  value: number;
+  currentTime: any;
+  @ViewChild('chart') chart: ElementRef;
+
   constructor(private biswapServ: BiswapService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -19,7 +23,6 @@ export class PoolComponent implements OnInit {
       this.biswapServ.getPair(identity).subscribe(
         (pair: any) => {
           this.pair = pair;
-          this.pairName = pair.token0Name + '/' + pair.token1Name;
         }
       );
 
@@ -29,7 +32,34 @@ export class PoolComponent implements OnInit {
         }
       );
     });
+
+    this.changeTab('Volume');
+  }
+
+  changeTab(tabName: string) {
+    this.title = tabName;
+    switch(tabName) {
+      case 'Volume':
+        this.createVolumeChart();
+        break;
+      case 'Volume':
+        this.createLiquidityChart();
+        break;
+      case 'Volume':
+        this.createFeesChart();
+        break;        
+    }
+  }
+
+  createVolumeChart() {
+
+  }
+  
+  createLiquidityChart() {
     
+  }
+  createFeesChart() {
+
   }
 
 }

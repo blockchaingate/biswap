@@ -33,6 +33,21 @@ import { environment } from 'src/environments/environment';
       return this.http.get(url);      
     }
 
+    getToken(tokenIdentity: string) {
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/token/' + tokenIdentity;
+      return this.http.get(url);  
+    }
+
+    getPairsByToken(tokenIdentity: string) {
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/pair/token/' + tokenIdentity + '/10/0';
+      return this.http.get(url);  
+    }
+
+    getTransactionsByToken(tokenIdentity: string) {
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/token/' + tokenIdentity + '/10/0';
+      return this.http.get(url);  
+    }
+
     getTransactionsByPair(pairIdentity: string) {
       const pageSize = 10;
       const pageNum = 0;
