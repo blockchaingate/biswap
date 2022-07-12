@@ -117,6 +117,12 @@ export class Web3Service {
     return abiHex;
   }
 
+  swapTokensForExactTokens(params: any) {
+    var func = this.smartContractService.swapTokensForExactTokensFunc();
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }
+
   ngetBalanceOd(params: any) {
     var func = this.smartContractService.getPairFunc();
     const abiHex = this.getGeneralFunctionABI(func, params);

@@ -7,17 +7,23 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { KanbanService } from 'src/app/services/kanban.service';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { SettingsComponent } from './settings/settings.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   imports: [
     CommonModule,
     SwapRoutingModule,
     MaterialModule,
+    MatInputModule,
+    MatFormFieldModule,
     FlexLayoutModule,
     FormsModule,
     NgxUiLoaderModule.forRoot({}),
   ],
+  bootstrap: [SettingsComponent],
   providers:[KanbanService],
-  declarations: [SwapComponent]
+  declarations: [SwapComponent, SettingsComponent]
 })
 export class SwapModule { }

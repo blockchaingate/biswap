@@ -15,7 +15,7 @@ import { WalletService } from 'src/app/services/wallet.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { environment } from 'src/environments/environment';
 import { TokenListComponent } from '../shared/tokenList/tokenList.component';
-
+import { SettingsComponent } from './settings/settings.component';
 @Component({
   selector: 'app-swap',
   templateUrl: './swap.component.html',
@@ -24,6 +24,7 @@ import { TokenListComponent } from '../shared/tokenList/tokenList.component';
 export class SwapComponent implements OnInit {
   @ViewChild('token1') token1Element: ElementRef;
   @ViewChild('token2') token2Element: ElementRef;
+  isFistToken: boolean;
   firstToken: Coin = new Coin();
   secondToken: Coin = new Coin();
   tokenList: Coin[];
@@ -44,19 +45,35 @@ export class SwapComponent implements OnInit {
 
   firstTokenReserve: BigNumber = new BigNumber(0);
   secondTokenReserve: BigNumber = new BigNumber(0);
-
+  slippage = 50;
+  deadline = 20;
   constructor(
-    private kanbanMiddlewareService: KanbanMiddlewareService,
     private utilService: UtilsService,
     private web3Service: Web3Service,
     private walletService: WalletService,
-    private storageService: StorageService,
     private _snackBar: MatSnackBar,
     private dataService: DataService,
     private dialog: MatDialog,
     private kanbanService: KanbanService,
     private biswapServ: BiswapService
   ) {}
+
+  openSettings() {
+    const dialogRef = this.dialog.open(SettingsComponent, {
+      width: '250px',
+      data: {slippage: this.slippage, deadline: this.deadline},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log('result===', result);
+      if(result) {
+        this.slippage = result.slippage;
+        this.deadline = result.deadline;
+      }
+
+    });
+  }
 
   ngOnInit() {
     /*
@@ -87,6 +104,7 @@ export class SwapComponent implements OnInit {
   }
 
   async onKey(value: number, isFistToken: boolean) {
+    this.isFistToken = isFistToken;
     if (
       this.firstToken.tickerName != null &&
       this.secondToken.tickerName != null &&
@@ -271,12 +289,7 @@ export class SwapComponent implements OnInit {
   }
 
   async swapFunction() {
-    let amountIn = new BigNumber(this.firstCoinAmount)
-      .multipliedBy(new BigNumber(1e18))
-      .toFixed();
-    let amountOutMin = new BigNumber(this.secondCoinAmount / 2)
-      .multipliedBy(new BigNumber(1e18))
-      .toFixed();
+
 
       /*
     const addressArray = this.storageService
@@ -284,20 +297,41 @@ export class SwapComponent implements OnInit {
       .state.accounts[0].split(':');
       */
 
-    var path = [this.firstToken.type, this.secondToken.type];
+    
 
     var to = this.utilService.fabToExgAddress(this.account);
     var timestamp = new TimestampModel(
+      this.deadline,
       0,
-      2,
       0,
       0 // here need to set for future timestamp
     );
     var deadline = this.utilService.getTimestamp(timestamp);
 
-    const params = [amountIn, amountOutMin, path, to, deadline];
+    
 
-    var abiHex = this.web3Service.swapExactTokensForTokens(params);
+    let abiHex = '';
+    if(this.isFistToken) {
+      var path = [this.firstToken.type, this.secondToken.type];
+      const amountIn = new BigNumber(this.firstCoinAmount)
+      .multipliedBy(new BigNumber(1e18))
+      .toFixed();
+      const amountOutMin = new BigNumber(this.secondCoinAmount).multipliedBy(new BigNumber(1-this.slippage * 0.01))
+      .multipliedBy(new BigNumber(1e18))
+      .toFixed();
+      const params = [amountIn, amountOutMin, path, to, deadline];
+      abiHex = this.web3Service.swapExactTokensForTokens(params);
+    } else {
+      var path = [this.secondToken.type, this.firstToken.type];
+      const amountOut = new BigNumber(this.secondCoinAmount)
+      .multipliedBy(new BigNumber(1e18))
+      .toFixed();
+      const amountInMax = new BigNumber(this.firstCoinAmount).multipliedBy(new BigNumber(1+this.slippage * 0.01))
+      .multipliedBy(new BigNumber(1e18))
+      .toFixed();
+      const params = [amountOut, amountInMax, path, to, deadline];
+      abiHex = this.web3Service.swapTokensForExactTokens(params);
+    }
 
     this.kanbanService
       .send(environment.smartConractAdressRouter, abiHex)
