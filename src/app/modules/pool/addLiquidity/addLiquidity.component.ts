@@ -288,6 +288,7 @@ export class AddLiquidityComponent implements OnInit {
       .send(environment.smartConractAdressRouter, abiHex)
       .then((data) => {
         this.txHash = 'https://test.exchangily.com/explorer/tx-detail/' + data;
+        /*
         const param = {
           userAddress: this.account,
           pairAddress: this.pairAddress,
@@ -296,6 +297,7 @@ export class AddLiquidityComponent implements OnInit {
           console.log(res);
           console.log(res.data);
         })
+        */
       });
   }
 }

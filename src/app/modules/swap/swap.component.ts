@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js';
 import { ErrorMessagesComponent } from 'src/app/components/errorMessages/errorMessages.component';
 import { Coin } from 'src/app/models/coin';
 import { TimestampModel } from 'src/app/models/temistampModel';
+import { BiswapService } from 'src/app/services/biswap.service';
 import { DataService } from 'src/app/services/data.service';
 import { KanbanMiddlewareService } from 'src/app/services/kanban.middleware.service';
 import { KanbanService } from 'src/app/services/kanban.service';
@@ -53,7 +54,8 @@ export class SwapComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private dataService: DataService,
     private dialog: MatDialog,
-    private kanbanService: KanbanService
+    private kanbanService: KanbanService,
+    private biswapServ: BiswapService
   ) {}
 
   ngOnInit() {
@@ -145,20 +147,13 @@ export class SwapComponent implements OnInit {
                   var value = this.web3Service.decodeabiHexs(res.data, param);
                   console.log(value);
                   if (this.firstToken.type < this.secondToken.type) {
-                    this.firstTokenReserve = value[0];
-                    this.secondTokenReserve = value[1];
+                    this.firstTokenReserve = new BigNumber(value[0]);
+                    this.secondTokenReserve = new BigNumber(value[1]);
                   } else {
-                    this.firstTokenReserve = value[1];
-                    this.secondTokenReserve = value[0];
+                    this.firstTokenReserve = new BigNumber(value[1]);
+                    this.secondTokenReserve = new BigNumber(value[0]);
                   }
-                  var perAmount = (value[0] / value[1]).toString();
 
-                  this.perAmountLabel =
-                    this.firstToken.tickerName +
-                    ' per ' +
-                    this.secondToken.tickerName;
-
-                  this.perAmount = perAmount;
                 });
               });
             this.isNewPair = false;
@@ -229,11 +224,9 @@ export class SwapComponent implements OnInit {
         .multipliedBy(new BigNumber(1e18))
         .toFixed();
       value = value.split('.')[0];
-      const params = [value, reserve1, reserve2];
+      //const params = [value, reserve1, reserve2];
 
-      this.secondCoinAmount = await this.kanbanMiddlewareService.getQuote(
-        params
-      );
+      this.secondCoinAmount = this.biswapServ.getAmountOut(amount, reserve1, reserve2);
     } else {
       var amount: number = this.secondCoinAmount;
       var reserve1: BigNumber = this.firstTokenReserve;
@@ -244,10 +237,18 @@ export class SwapComponent implements OnInit {
       value = value.split('.')[0];
       const params = [value, reserve2, reserve1];
 
-      this.firstCoinAmount = await this.kanbanMiddlewareService.getQuote(
-        params
-      );
+      this.firstCoinAmount = this.biswapServ.getAmountIn(amount, reserve1, reserve2);
+
     }
+
+    var perAmount = (this.firstCoinAmount / this.secondCoinAmount).toString();
+
+    this.perAmountLabel =
+      this.firstToken.tickerName +
+      ' per ' +
+      this.secondToken.tickerName;
+
+    this.perAmount = perAmount;   
   }
 
   changeTokens() {
