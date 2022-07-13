@@ -7,9 +7,7 @@ import { Coin } from 'src/app/models/coin';
 import { TimestampModel } from 'src/app/models/temistampModel';
 import { BiswapService } from 'src/app/services/biswap.service';
 import { DataService } from 'src/app/services/data.service';
-import { KanbanMiddlewareService } from 'src/app/services/kanban.middleware.service';
 import { KanbanService } from 'src/app/services/kanban.service';
-import { StorageService } from 'src/app/services/storage.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { WalletService } from 'src/app/services/wallet.service';
 import { Web3Service } from 'src/app/services/web3.service';
@@ -42,7 +40,7 @@ export class SwapComponent implements OnInit {
 
   txHash: string;
 
-  isNewPair: boolean = false;
+  //isNewPair: boolean = false;
 
   firstTokenReserve: BigNumber = new BigNumber(0);
   secondTokenReserve: BigNumber = new BigNumber(0);
@@ -89,6 +87,7 @@ export class SwapComponent implements OnInit {
     this.dataService.GettokenList.subscribe((x) => {
       this.tokenList = x;
     });
+
   }
 
   async onKey(value: number, isFistToken: boolean) {
@@ -97,22 +96,9 @@ export class SwapComponent implements OnInit {
       this.firstToken.tickerName != null &&
       this.secondToken.tickerName != null &&
       value != null &&
-      value != undefined &&
-      !this.isNewPair
+      value != undefined
     ) {
       await this.setInputValues(isFistToken);
-    } else if (value == null && value == undefined && !this.isNewPair) {
-      if (isFistToken) {
-        this.secondCoinAmount = 0;
-      } else {
-        this.firstCoinAmount = 0;
-      }
-    } else if (this.isNewPair) {
-      if (!isFistToken) {
-        this.secondCoinAmount = value;
-      } else {
-        this.firstCoinAmount = value;
-      }
     }
   }
 
@@ -128,6 +114,7 @@ export class SwapComponent implements OnInit {
     this.dialog.open(ErrorMessagesComponent, { data: errorMessage });
   }
 
+  /*
   kanbanCallMethod() {
     var params = [this.firstToken.type, this.secondToken.type];
     var abiHex = this.web3Service.getPair(params);
@@ -178,6 +165,21 @@ export class SwapComponent implements OnInit {
         this.openDialog(error);
       });
   }
+  */
+  getPair() {
+    var params = [this.firstToken.type, this.secondToken.type];
+    var abiHex = this.web3Service.getPair(params);
+    console.log('abiHex => ' + abiHex);
+    this.kanbanService
+      .kanbanCall(environment.smartConractAdressFactory, abiHex)
+      .then((data) => {
+        data.subscribe((data1) => {
+          let res: any = data1;
+          var addeess = this.web3Service.decodeabiHex(res.data, 'address');
+          this.tokenId = addeess.toString();
+        })
+      });
+  }
 
   openFirstTokenListDialog() {
     this.dialog
@@ -196,7 +198,7 @@ export class SwapComponent implements OnInit {
         }
 
         if (this.firstToken.type != null && this.secondToken.type != null) {
-          this.kanbanCallMethod();
+          this.getPair();
         }
       });
   }
@@ -218,7 +220,7 @@ export class SwapComponent implements OnInit {
         }
 
         if (this.firstToken.type != null && this.secondToken.type != null) {
-          this.kanbanCallMethod();
+          this.getPair();
         }
       });
   }
@@ -246,9 +248,6 @@ export class SwapComponent implements OnInit {
             this.secondTokenReserve = new BigNumber(value[0]);
           }
 
-
-
-
           if (isFirst) {
             var amount: number = this.firstCoinAmount;
             var reserve1: BigNumber = this.firstTokenReserve;
@@ -257,7 +256,6 @@ export class SwapComponent implements OnInit {
               .multipliedBy(new BigNumber(1e18))
               .toFixed();
             value = value.split('.')[0];
-            //const params = [value, reserve1, reserve2];
       
             this.secondCoinAmount = this.biswapServ.getAmountOut(amount, reserve1, reserve2);
           } else {
@@ -301,7 +299,7 @@ export class SwapComponent implements OnInit {
     this.firstCoinAmount = 0;
     this.secondCoinAmount = 0;
 
-    this.kanbanCallMethod();
+    //this.kanbanCallMethod();
   }
 
   openSnackBar(message: string, action: string) {
