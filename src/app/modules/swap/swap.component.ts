@@ -227,7 +227,9 @@ export class SwapComponent implements OnInit {
 
 
   async setInputValues(isFirst: boolean) {
-
+    if(this.tokenId == '0x0000000000000000000000000000000000000000') {
+      return;
+    }
     var abiHexa = this.web3Service.getReserves();
     this.kanbanService
       .kanbanCall(this.tokenId, abiHexa)
