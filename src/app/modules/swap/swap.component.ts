@@ -32,6 +32,7 @@ export class SwapComponent implements OnInit {
   walletSession: any;
 
   account: string;
+  tokenId: string;
 
   firstCoinAmount: number;
   secondCoinAmount: number;
@@ -76,20 +77,7 @@ export class SwapComponent implements OnInit {
   }
 
   ngOnInit() {
-    /*
-    this.walletSession = this.storageService.getWalletSession();
-    if (this.walletSession != null) {
-      this.dataService.sendWalletLabel('Disconnect Wallet');
-      this.dataService.setIsWalletConnect(true);
-    } else {
-      this.dataService.sendWalletLabel('Connect Wallet');
-      this.dataService.setIsWalletConnect(false);
-    }
 
-    this.dataService.GetIsWalletConnect.subscribe((data) => {
-      this.isWalletConnect = data;
-    });
-    */
     this.account = this.walletService.account;
     if(!this.account){
       this.walletService.accountSubject.subscribe(
@@ -150,9 +138,11 @@ export class SwapComponent implements OnInit {
         data.subscribe((data1) => {
           let res: any = data1;
           var addeess = this.web3Service.decodeabiHex(res.data, 'address');
+          
           if (
             addeess.toString() != '0x0000000000000000000000000000000000000000'
           ) {
+            this.tokenId = addeess.toString();
             var abiHexa = this.web3Service.getReserves();
             this.kanbanService
               .kanbanCall(addeess.toString(), abiHexa)
@@ -160,14 +150,15 @@ export class SwapComponent implements OnInit {
                 data2.subscribe((data3) => {
                   var param = ['uint112', 'uint112', 'uint32'];
                   let res: any = data3;
-                  console.log('res.data');
-                  console.log(res.data);
+
                   var value = this.web3Service.decodeabiHexs(res.data, param);
-                  console.log(value);
+
                   if (this.firstToken.type < this.secondToken.type) {
+                    console.log('value1111===', value);
                     this.firstTokenReserve = new BigNumber(value[0]);
                     this.secondTokenReserve = new BigNumber(value[1]);
                   } else {
+                    console.log('value222===', value);
                     this.firstTokenReserve = new BigNumber(value[1]);
                     this.secondTokenReserve = new BigNumber(value[0]);
                   }
@@ -234,39 +225,72 @@ export class SwapComponent implements OnInit {
 
 
   async setInputValues(isFirst: boolean) {
-    if (isFirst) {
-      var amount: number = this.firstCoinAmount;
-      var reserve1: BigNumber = this.firstTokenReserve;
-      var reserve2: BigNumber = this.secondTokenReserve;
-      let value = new BigNumber(amount)
-        .multipliedBy(new BigNumber(1e18))
-        .toFixed();
-      value = value.split('.')[0];
-      //const params = [value, reserve1, reserve2];
 
-      this.secondCoinAmount = this.biswapServ.getAmountOut(amount, reserve1, reserve2);
-    } else {
-      var amount: number = this.secondCoinAmount;
-      var reserve1: BigNumber = this.firstTokenReserve;
-      var reserve2: BigNumber = this.secondTokenReserve;
-      let value = new BigNumber(amount)
-        .multipliedBy(new BigNumber(1e18))
-        .toFixed();
-      value = value.split('.')[0];
-      const params = [value, reserve2, reserve1];
+    var abiHexa = this.web3Service.getReserves();
+    this.kanbanService
+      .kanbanCall(this.tokenId, abiHexa)
+      .then((data2) => {
+        data2.subscribe((data1) => {
+          console.log('data1===', data1);
 
-      this.firstCoinAmount = this.biswapServ.getAmountIn(amount, reserve1, reserve2);
+          var param = ['uint112', 'uint112', 'uint32'];
+          let res: any = data1;
 
-    }
+          var value = this.web3Service.decodeabiHexs(res.data, param);
 
-    var perAmount = (this.firstCoinAmount / this.secondCoinAmount).toString();
+          if (this.firstToken.type < this.secondToken.type) {
+            this.firstTokenReserve = new BigNumber(value[0]);
+            this.secondTokenReserve = new BigNumber(value[1]);
+          } else {
+            this.firstTokenReserve = new BigNumber(value[1]);
+            this.secondTokenReserve = new BigNumber(value[0]);
+          }
 
-    this.perAmountLabel =
-      this.firstToken.tickerName +
-      ' per ' +
-      this.secondToken.tickerName;
 
-    this.perAmount = perAmount;   
+
+
+          if (isFirst) {
+            var amount: number = this.firstCoinAmount;
+            var reserve1: BigNumber = this.firstTokenReserve;
+            var reserve2: BigNumber = this.secondTokenReserve;
+            let value = new BigNumber(amount)
+              .multipliedBy(new BigNumber(1e18))
+              .toFixed();
+            value = value.split('.')[0];
+            //const params = [value, reserve1, reserve2];
+      
+            this.secondCoinAmount = this.biswapServ.getAmountOut(amount, reserve1, reserve2);
+          } else {
+            var amount: number = this.secondCoinAmount;
+            var reserve1: BigNumber = this.firstTokenReserve;
+            var reserve2: BigNumber = this.secondTokenReserve;
+            let value = new BigNumber(amount)
+              .multipliedBy(new BigNumber(1e18))
+              .toFixed();
+            value = value.split('.')[0];
+            const params = [value, reserve2, reserve1];
+            var path = [this.firstToken.type, this.secondToken.type];
+            console.log('path===', path);
+            this.firstCoinAmount = this.biswapServ.getAmountIn(amount, reserve1, reserve2);
+      
+          }
+      
+          var perAmount = (this.firstCoinAmount / this.secondCoinAmount).toString();
+      
+          this.perAmountLabel =
+            this.firstToken.tickerName +
+            ' per ' +
+            this.secondToken.tickerName;
+      
+          this.perAmount = perAmount;   
+
+
+
+
+        });
+        
+      });
+
   }
 
   changeTokens() {
@@ -322,7 +346,7 @@ export class SwapComponent implements OnInit {
       const params = [amountIn, amountOutMin, path, to, deadline];
       abiHex = this.web3Service.swapExactTokensForTokens(params);
     } else {
-      var path = [this.secondToken.type, this.firstToken.type];
+      var path = [this.firstToken.type, this.secondToken.type];
       const amountOut = new BigNumber(this.secondCoinAmount)
       .multipliedBy(new BigNumber(1e18))
       .toFixed();

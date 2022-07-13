@@ -310,7 +310,7 @@ export class SmartContractServices {
           "type": "uint256"
         }
       ],
-      "name": "swapTokensForExactTokensFunc",
+      "name": "swapTokensForExactTokens",
       "outputs": [
         {
           "internalType": "uint256[]",
