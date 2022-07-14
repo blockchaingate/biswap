@@ -28,7 +28,7 @@ export class LiquidityComponent implements OnInit {
   createChart(items: any) {
 
     console.log('this.currentLiquidity===', this.currentLiquidity);
-    const chart = createChart(this.renderer.selectRootElement(this.liquidity["nativeElement"]), { width: 400, height: 300 });
+    const chart = createChart(this.liquidity["nativeElement"], { width: 400, height: 300 });
     const lineSeries = chart.addLineSeries(
       { color: 'rgb(118, 69, 217)', baseLineColor: 'rgb(118, 69, 217)', priceLineColor: 'rgb(118, 69, 217)' }
     );
