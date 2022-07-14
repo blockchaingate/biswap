@@ -17,8 +17,12 @@
         </div>
 
         <div class="d-flex">
-            <button type="button" class="btn btn-secondary">Add Liquidity</button>
-            <button type="button" class="mx-3 btn btn-primary">Trade</button>
+            <button type="button" class="btn btn-secondary"
+            [routerLink]="['/', 'pool', 'add', 'token', identity]"
+            >Add Liquidity</button>
+            <button type="button" class="mx-3 btn btn-primary"
+            [routerLink]="['/', 'swap', 'token', identity]"
+            >Trade</button>
         </div>
     </div>   
     
@@ -48,8 +52,8 @@
                     <input type="radio" (click)="changeTab('Volume')" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
                     <label class="btn btn-outline-primary" for="btnradio1">Volume</label>
                   
-                    <input type="radio" (click)="changeTab('Liquidity')" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio2">Liquidity</label>
+                    <input type="radio" (click)="changeTab('TLV')" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio2">TLV</label>
                   
                     <input type="radio" (click)="changeTab('Fees')" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
                     <label class="btn btn-outline-primary" for="btnradio3">Fees</label>

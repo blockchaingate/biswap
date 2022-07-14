@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import {RouterModule} from '@angular/router';
 import { InfoRoutingModule } from './info-routing.module';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { FormsModule } from '@angular/forms';
@@ -43,6 +43,7 @@ import { TokenComponent } from './token/token.component';
     CommonModule,
     InfoRoutingModule,
     MatButtonToggleModule,
+    RouterModule,
     FormsModule
   ]
 })

@@ -15,8 +15,8 @@
             <div class="px-3">1 {{pair.token1Name}} = {{pair.token0Price}} {{pair.token0Name}}</div>
         </div>
         <div class="d-flex">
-            <button type="button" class="btn btn-secondary">Add Liquidity</button>
-            <button type="button" class="mx-3 btn btn-primary">Trade</button>
+            <button type="button" class="btn btn-secondary" [routerLink]="['/', 'pool', 'add', 'pair', identity]">Add Liquidity</button>
+            <button type="button" class="mx-3 btn btn-primary" [routerLink]="['/', 'swap', 'pair', identity]">Trade</button>
         </div>
     </div>
 

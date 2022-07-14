@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Renderer2, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterContentInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BiswapService } from 'src/app/services/biswap.service';
 import { createChart, MouseEventParams } from 'lightweight-charts';
@@ -21,7 +21,6 @@ export class PoolComponent implements OnInit, AfterContentInit {
   @ViewChild('chart') chart: ElementRef;
 
   constructor(
-    private renderer: Renderer2,
     private biswapServ: BiswapService, 
     private activatedRoute: ActivatedRoute) { }
 

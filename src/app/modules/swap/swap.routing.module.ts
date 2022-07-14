@@ -7,6 +7,14 @@ const routes: Routes = [
     path: '',
     component: SwapComponent
   },
+  {
+    path: 'pair/:identity',
+    component: SwapComponent
+  },
+  {
+    path: 'token/:identity',
+    component: SwapComponent
+  },
 ];
 
 @NgModule({
