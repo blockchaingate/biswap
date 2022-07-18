@@ -29,13 +29,13 @@
                 <a href="/info/token/{{token._id}}">{{token.name}}</a>
             </div>
             <div class="col col-2">
-                {{token.price}}
+                {{token.summary.priceUSD}}
             </div>
             <div class="col col-2">
-                Price change
+                {{token.summary.priceChange24h}}
             </div>
             <div class="col col-2">
-                Volume 24h
+                {{token.summary.dailyVolumeUSD}}
             </div>
             <div class="col col-2">
                 {{token.totalLiquidity}}

@@ -77,4 +77,18 @@ import BigNumber from 'bignumber.js';
       const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/pair/' + pairIdentity + '/' + pageSize + '/' + pageNum;
       return this.http.get(url);
     }
+
+    getPairDayDatas(pairIdentity: string) {
+      const pageSize = 100;
+      const pageNum = 0;
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/pairdaydata/pair/' + pairIdentity + '/' + pageSize + '/' + pageNum;
+      return this.http.get(url);      
+    }
+
+    getTokenDayDatas(pairIdentity: string) {
+      const pageSize = 100;
+      const pageNum = 0;
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/tokendaydata/token/' + pairIdentity + '/' + pageSize + '/' + pageNum;
+      return this.http.get(url);      
+    }
   }

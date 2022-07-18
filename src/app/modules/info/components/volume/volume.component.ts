@@ -25,7 +25,7 @@ export class VolumeComponent implements OnInit {
 
   createChart(items: any) {
     console.log('items on volume=', items);
-    const chart = createChart(this.renderer.selectRootElement(this.volume["nativeElement"]), { width: 400, height: 300 });
+    const chart = createChart(this.volume["nativeElement"], { width: 400, height: 300 });
     //const lineSeries = chart.addLineSeries();
     const histogramSeries = chart.addHistogramSeries({ color: '#26a69a' });
 

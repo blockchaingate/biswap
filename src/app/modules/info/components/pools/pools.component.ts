@@ -12,4 +12,10 @@ export class PoolsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getARP(pair: any) {
+    if(!pair.summary || !pair.summary.totalLiquidityUSD) {
+      return 0;
+    }
+    return Number((pair.summary.dailyVolumeUSD * 0.003 / pair.summary.totalLiquidityUSD * 365 * 100).toFixed(2));
+  }
 }
