@@ -13,12 +13,11 @@ import BigNumber from 'bignumber.js';
       if(amountIn <= 0 || reserveIn.lte(0) || reserveOut.lte(0)) {
         return 0;
       }
-      //reserveIn = reserveIn.shiftedBy(-18);
-      //reserveOut = reserveOut.shiftedBy(-18);
       const amountInWithFee = new BigNumber(amountIn).shiftedBy(18).multipliedBy(new BigNumber(997));
       const numerator = amountInWithFee.multipliedBy(reserveOut);
       const denominator = reserveIn.multipliedBy(new BigNumber(1000)).plus(amountInWithFee);
       const amountOut = numerator.dividedBy(denominator).shiftedBy(-18).toNumber();
+
       return amountOut;
     }
 
@@ -26,12 +25,9 @@ import BigNumber from 'bignumber.js';
     if(amountOut <= 0 || reserveIn.lte(0) || reserveOut.lte(0)) {
       return 0;
     }
-    console.log('amountOut===', new BigNumber(amountOut).shiftedBy(18).toNumber());
-    console.log('reserveIn===', reserveIn.toNumber());
-    console.log('reserveOut===', reserveOut.toNumber());
     const numerator = reserveIn.multipliedBy(new BigNumber(amountOut).shiftedBy(18)).multipliedBy(new BigNumber(1000));
     const denominator = reserveOut.minus(new BigNumber(amountOut).shiftedBy(18)).multipliedBy(new BigNumber(997));
-    const amountIn = (numerator.dividedBy(denominator)).plus(new BigNumber(1)).shiftedBy(-18).toNumber();
+    const amountIn = (numerator.dividedBy(denominator))   .plus(new BigNumber(1)).shiftedBy(-18).toNumber();
     return amountIn;
   }
 

@@ -14,6 +14,14 @@ const routes: Routes = [
     component: AddLiquidityComponent
   },
   {
+    path: 'add/token/:tokenid',
+    component: AddLiquidityComponent
+  },
+  {
+    path: 'add/pair/:tokenid',
+    component: AddLiquidityComponent
+  },
+  {
     path: 'remove',
     component: RemoveLiquidityComponent
   },

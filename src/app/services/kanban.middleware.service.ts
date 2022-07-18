@@ -42,6 +42,7 @@ export class KanbanMiddlewareService {
     return Number(new BigNumber(temp).dividedBy(new BigNumber(1e18)));
   }
 
+
   async getliquidityBalanceOfuser(pairAddress: string) {
     if (this.storageService.getWalletSession() != null) {
       const addressArray = this.storageService

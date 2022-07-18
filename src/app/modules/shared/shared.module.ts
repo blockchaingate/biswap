@@ -31,7 +31,7 @@ import { TokenListComponent } from './tokenList/tokenList.component';
     FooterComponent,
     WalletComponent,
     GenerateUrlPipe,
-    TokenListComponent
+    TokenListComponent,
   ]
 })
 export class SharedModule {}

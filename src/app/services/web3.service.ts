@@ -56,6 +56,12 @@ export class Web3Service {
     return abiHex;
   }
 
+  getApprove(params: any) {
+    var func = this.smartContractService.getApproveFunc();
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }
+
   swap(params: any) {
     var func = this.smartContractService.swapFunc();
     const abiHex = this.getGeneralFunctionABI(func, params);

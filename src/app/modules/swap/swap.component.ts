@@ -1,10 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import BigNumber from 'bignumber.js';
 import { ErrorMessagesComponent } from 'src/app/components/errorMessages/errorMessages.component';
 import { Coin } from 'src/app/models/coin';
 import { TimestampModel } from 'src/app/models/temistampModel';
+import { ApiService } from 'src/app/services/api.services';
 import { BiswapService } from 'src/app/services/biswap.service';
 import { DataService } from 'src/app/services/data.service';
 import { KanbanService } from 'src/app/services/kanban.service';
@@ -54,7 +56,10 @@ export class SwapComponent implements OnInit {
     private dataService: DataService,
     private dialog: MatDialog,
     private kanbanService: KanbanService,
-    private biswapServ: BiswapService
+    private biswapServ: BiswapService,
+    private currentRoute: ActivatedRoute,
+    private apiService: ApiService,
+    private router: Router
   ) {}
 
   openSettings() {
@@ -64,8 +69,6 @@ export class SwapComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log('result===', result);
       if(result) {
         this.slippage = result.slippage;
         this.deadline = result.deadline;
@@ -75,7 +78,6 @@ export class SwapComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.account = this.walletService.account;
     if(!this.account){
       this.walletService.accountSubject.subscribe(
@@ -87,7 +89,29 @@ export class SwapComponent implements OnInit {
     this.dataService.GettokenList.subscribe((x) => {
       this.tokenList = x;
     });
-
+    this.checkUrlToken();
+  }
+ 
+ 
+  checkUrlToken(){
+    this.currentRoute.params.subscribe((x) =>{
+      var type = this.router.url.split("/")
+      if (type[2] == "token") {
+        let params: any = x;
+        this.apiService.getTokenInfoFromId(params.tokenid).subscribe((res: any) =>{
+          let first = res["name"];
+          this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
+})  
+      } else {
+        let params: any = x;
+         this.apiService.getTokensInfoFromPair(params.tokenid).subscribe((res: any) =>{
+              let first = res["token0Name"];
+              let sescond = res["token1Name"];
+              this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
+              this.secondToken = this.tokenList.find(x => x.tickerName == sescond) || new Coin();
+    })
+      }
+  });
   }
 
   async onKey(value: number, isFistToken: boolean) {
@@ -114,58 +138,6 @@ export class SwapComponent implements OnInit {
     this.dialog.open(ErrorMessagesComponent, { data: errorMessage });
   }
 
-  /*
-  kanbanCallMethod() {
-    var params = [this.firstToken.type, this.secondToken.type];
-    var abiHex = this.web3Service.getPair(params);
-    console.log('abiHex => ' + abiHex);
-    this.kanbanService
-      .kanbanCall(environment.smartConractAdressFactory, abiHex)
-      .then((data) => {
-        data.subscribe((data1) => {
-          let res: any = data1;
-          var addeess = this.web3Service.decodeabiHex(res.data, 'address');
-          
-          if (
-            addeess.toString() != '0x0000000000000000000000000000000000000000'
-          ) {
-            this.tokenId = addeess.toString();
-            var abiHexa = this.web3Service.getReserves();
-            this.kanbanService
-              .kanbanCall(addeess.toString(), abiHexa)
-              .then((data2) => {
-                data2.subscribe((data3) => {
-                  var param = ['uint112', 'uint112', 'uint32'];
-                  let res: any = data3;
-
-                  var value = this.web3Service.decodeabiHexs(res.data, param);
-
-                  if (this.firstToken.type < this.secondToken.type) {
-                    console.log('value1111===', value);
-                    this.firstTokenReserve = new BigNumber(value[0]);
-                    this.secondTokenReserve = new BigNumber(value[1]);
-                  } else {
-                    console.log('value222===', value);
-                    this.firstTokenReserve = new BigNumber(value[1]);
-                    this.secondTokenReserve = new BigNumber(value[0]);
-                  }
-
-                });
-              });
-            this.isNewPair = false;
-          } else {
-            this.openDialog(
-              'there is no pair, please first add liquidity to create this pair'
-            );
-            this.isNewPair = true;
-          }
-        });
-      })
-      .catch((error) => {
-        this.openDialog(error);
-      });
-  }
-  */
   getPair() {
     var params = [this.firstToken.type, this.secondToken.type];
     var abiHex = this.web3Service.getPair(params);
@@ -250,6 +222,7 @@ export class SwapComponent implements OnInit {
             this.secondTokenReserve = new BigNumber(value[0]);
           }
 
+
           if (isFirst) {
             var amount: number = this.firstCoinAmount;
             var reserve1: BigNumber = this.firstTokenReserve;
@@ -260,6 +233,7 @@ export class SwapComponent implements OnInit {
             value = value.split('.')[0];
       
             this.secondCoinAmount = this.biswapServ.getAmountOut(amount, reserve1, reserve2);
+
           } else {
             var amount: number = this.secondCoinAmount;
             var reserve1: BigNumber = this.firstTokenReserve;

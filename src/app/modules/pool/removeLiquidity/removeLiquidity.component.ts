@@ -1,7 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 import { Router } from '@angular/router';
-import { Coin } from 'src/app/models/coin';
+import BigNumber from 'bignumber.js';
+import { TimestampModel } from 'src/app/models/temistampModel';
+import { ApiService } from 'src/app/services/api.services';
+import { KanbanService } from 'src/app/services/kanban.service';
+import { UtilsService } from 'src/app/services/utils.service';
+import { WalletService } from 'src/app/services/wallet.service';
+import { Web3Service } from 'src/app/services/web3.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-removeLiquidity',
@@ -10,47 +17,49 @@ import { Coin } from 'src/app/models/coin';
 })
 export class RemoveLiquidityComponent implements OnInit {
 
-   firstToken: Coin = new Coin();
-   secondToken: Coin = new Coin();
-   yourPoolShare: number;
+   firstToken: String;
+   secondToken: String;
 
-   firstTokeninPair:number;
-   secondTokeninPair:number;
+   yourPoolShare: number;
+   pooledFirstToken:number;
+   pooledSecondToken:number;
    totalPoolToken:number;
 
-   selectedFirstTokenAmount: number;
-   selectedSecondTokenAmount: number;
+   selectedFirstTokenAmount: number = 0;
+   selectedSecondTokenAmount: number = 0;
+
+   pairId: String;
 
   percentage= 0;
+  deadline = 200;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private web3Service: Web3Service,
+    private kanbanService: KanbanService,
+    private apiService: ApiService,
+    private utilService: UtilsService,
+    private walletService: WalletService,
   ) {
     const navigation = this.router.getCurrentNavigation();
-    const state = navigation!.extras.state as {firstToken: Coin, secondToken: Coin, yourPoolShare: number, firstTokeninPair:number, secondTokeninPair:number , totalPoolToken:number};
+    const state = navigation!.extras.state as {
+      pairId: String, 
+      firstToken: String, 
+      secondToken: String, 
+      yourPoolShare: number, 
+      pooledFirstToken:number, 
+      pooledSecondToken:number, 
+      totalPoolToken:number};
     this.firstToken = state.firstToken;
     this.secondToken = state.secondToken;
     this.yourPoolShare = state.yourPoolShare;
-    this.firstTokeninPair = state.firstTokeninPair;
-    this.secondTokeninPair = state.secondTokeninPair;
+    this.pooledFirstToken = state.pooledFirstToken;
+    this.pooledSecondToken = state.pooledSecondToken;
     this.totalPoolToken = state.totalPoolToken;
+    this.pairId = state.pairId;
    }
 
   ngOnInit() {
-
-    // this.firstToken.tickerName = "FAB"
-    // this.secondToken.tickerName = "EXG"
-
-    // this.firstToken.decimal= 324234;
-    // this.secondToken.decimal =12131;
-
-    // this.yourPoolShare = 344;
-    // this.firstTokeninPair = 3424;
-    // this.secondTokeninPair = 0.0034242;
-    // this.totalPoolToken = 5.432
-
-    // this.selectedFirstTokenAmount = 0;
-    // this.selectedSecondTokenAmount = 0;
 
   }
 
@@ -58,19 +67,64 @@ export class RemoveLiquidityComponent implements OnInit {
     this.router.navigate(['/pool']);
   }
 
+  setAmount(percentage: number) {
+    this.percentage = percentage;
+    this.selectedFirstTokenAmount = (percentage * this.pooledFirstToken) / 100;
+    this.selectedSecondTokenAmount = (percentage* this.pooledSecondToken) / 100;
+  }
+
 
   onInputChange(event: MatSliderChange) {
     this.percentage = event.value!;
-    this.selectedFirstTokenAmount = (this.percentage * this.firstTokeninPair) / 100;
-    this.selectedSecondTokenAmount = (this.percentage* this.secondTokeninPair) / 100;
+    this.selectedFirstTokenAmount = (this.percentage * this.pooledFirstToken) / 100;
+    this.selectedSecondTokenAmount = (this.percentage* this.pooledSecondToken) / 100;
   }
 
   removeLiquidity() {
 
+    var value =new BigNumber ((this.totalPoolToken *this.percentage ) / 100 ).multipliedBy(new BigNumber(1e18))
+    .toFixed();
+
+    var params = [environment.smartConractAdressRouter, value];
+    var abiHex = this.web3Service.getApprove(params);
+    console.log('abiHex => ' + abiHex);
+    
+    this.kanbanService
+      .send(this.pairId.toString(), abiHex)
+      .then((data) => {
+        console.log('https://test.exchangily.com/explorer/tx-detail/' + data)
+        this.apiService.getTransactionStatus(data).subscribe((res: any) =>{
+          //TODO here there will be if condition with status of tx
+          this.removeLiquidityFun(value);
+        })  
+      });
   }
 
- 
-   
-  
+  removeLiquidityFun(value: any) {
 
+    var amountAMin = new BigNumber( this.yourPoolShare * this.percentage * this.pooledFirstToken).multipliedBy(new BigNumber(1e18))
+    .toFixed();
+    var amountBMin = new BigNumber( this.yourPoolShare * this.percentage * this.pooledSecondToken).multipliedBy(new BigNumber(1e18))
+    .toFixed();
+    var to = this.utilService.fabToExgAddress(this.walletService.account);
+    var timestamp = new TimestampModel(
+      this.deadline,
+      0,
+      0,
+      0 // here need to set for future timestamp
+    );
+    var deadline = this.utilService.getTimestamp(timestamp);
+
+
+    var params = [this.firstToken, this.secondToken, value ,amountAMin, amountBMin, to, deadline];
+
+
+    var abiHex = this.web3Service.removeLiquidity(params);
+    console.log('abiHex => ' + abiHex);
+    this.kanbanService
+    .send( environment.smartConractAdressRouter, abiHex)
+    .then((data) => {
+      console.log('https://test.exchangily.com/explorer/tx-detail/' + data)
+    });
+  }
 }

@@ -10,6 +10,7 @@ import { Web3Service } from 'src/app/services/web3.service';
 import { AddLiquidityComponent } from './addLiquidity/addLiquidity.component';
 import { RemoveLiquidityComponent } from './removeLiquidity/removeLiquidity.component';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { HextoDecimalPipe } from './hextodecimal.pipe';
 
 @NgModule({
   imports: [
@@ -22,6 +23,6 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
     NgxUiLoaderModule.forRoot({})
   ],
   providers:[KanbanService, Web3Service],
-  declarations: [PoolComponent, AddLiquidityComponent, RemoveLiquidityComponent]
+  declarations: [PoolComponent, AddLiquidityComponent, RemoveLiquidityComponent, HextoDecimalPipe]
 })
 export class PoolModule { }

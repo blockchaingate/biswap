@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import BigNumber from 'bignumber.js';
 import { ErrorMessagesComponent } from 'src/app/components/errorMessages/errorMessages.component';
 import { Coin } from 'src/app/models/coin';
@@ -47,21 +48,19 @@ export class AddLiquidityComponent implements OnInit {
   pairAddress: string;
 
   constructor(
-    private apiService: ApiService,
     private kanbanMiddlewareService: KanbanMiddlewareService,
     private utilService: UtilsService,
-    private storageService: StorageService,
     private web3Service: Web3Service,
     private dataService: DataService,
     public dialog: MatDialog,
     private kanbanService: KanbanService,
-    private walletService: WalletService
+    private walletService: WalletService,
+    private currentRoute: ActivatedRoute,
+    private router: Router,
+    private apiService: ApiService,
   ) {}
 
   ngOnInit() {
-    this.dataService.GettokenList.subscribe((x) => {
-      this.tokenList = x;
-    });
     this.account = this.walletService.account;
     if(!this.account){
       this.walletService.accountSubject.subscribe(
@@ -70,6 +69,31 @@ export class AddLiquidityComponent implements OnInit {
         }
       );
     }
+    this.dataService.GettokenList.subscribe((x) => {
+      this.tokenList = x;
+    });
+    this.checkUrlToken();
+  }
+
+  checkUrlToken(){
+    this.currentRoute.params.subscribe((x) =>{
+      var type = this.router.url.split("/")
+      if (type[3] == "token") {
+        let params: any = x;
+        this.apiService.getTokenInfoFromId(params.tokenid).subscribe((res: any) =>{
+          let first = res["name"];
+          this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
+})  
+      } else {
+        let params: any = x;
+         this.apiService.getTokensInfoFromPair(params.tokenid).subscribe((res: any) =>{
+              let first = res["token0Name"];
+              let sescond = res["token1Name"];
+              this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
+              this.secondToken = this.tokenList.find(x => x.tickerName == sescond) || new Coin();
+    })
+      }
+  });
   }
 
   async onKey(value: number, isFistToken: boolean) {

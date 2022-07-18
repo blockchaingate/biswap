@@ -71,13 +71,13 @@
       </mat-card-actions>
     </mat-card>
 
-    <mat-expansion-panel *ngIf="totalPoolToken != null && isWalletConnect"
+    <mat-expansion-panel *ngFor="let item of existedLiquidityList; let index = index"
       class="exist-liquddity"
       (opened)="panelOpenState = true"
       (closed)="panelOpenState = false"
     >
       <mat-expansion-panel-header>
-        <mat-panel-title> FAB/EXG </mat-panel-title>
+        <mat-panel-title> {{item.pair.token0.id | hextodecimal}} / {{item.pair.token1.id | hextodecimal}} </mat-panel-title>
         <mat-panel-description>
           Manage
           <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
@@ -85,33 +85,47 @@
       </mat-expansion-panel-header>
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <p>Your total pool tokens:</p>
-        <p>{{ totalPoolToken }}</p>
+        <p>{{ item.liquidityTokenBalance }}</p>
       </div>
       <div fxLayout="row" fxLayoutAlign="space-between center">
-        <p>Pooled FAB:</p>
-        <p>{{firstTokeninPair}}</p>
+        <p>Pooled {{item.pair.token0.id | hextodecimal}}:</p>
+        <p>{{item.pair.reserve0}}</p>
       </div>
       <div fxLayout="row" fxLayoutAlign="space-between center">
-        <p>Pooled EXG:</p>
-        <p>{{secondTokeninPair}}</p>
+        <p>Pooled {{item.pair.token1.id | hextodecimal}}:</p>
+        <p>{{item.pair.reserve1}}</p>
       </div>
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <p>Your pool share:</p>
-        <p> < {{ yourPoolShare }} %</p>
+        <p> < {{ item.share }} %</p>
       </div>
       <div fxLayout="row" fxLayoutAlign="center center">
 
           <button class="action-buttons"
             mat-raised-button
             color="primary"
-            (click)="removeLiquidity()"
+            (click)="removeLiquidity(index)"
           >
             Remove
           </button>
         
       </div>
     </mat-expansion-panel>
+  
+<div fxLayout="row" fxLayoutAlign="center center" class="mt-3">
+        
+<button *ngIf="existedLiquidityList.length > 0"
+mat-raised-button
+color="primary"
+(click)="getExistLiquidity()"
+>
+load more
+</button>
   </div>
+
 </div>
+</div>
+
+
 
 <ngx-ui-loader></ngx-ui-loader>

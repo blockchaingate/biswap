@@ -32,12 +32,25 @@ sendUserPair(data: any){
   return this.http.post(url, data);
 }
 
-getUserExistPair(walletAddress: string) {
-  const url = environment.endpoints.kanban + 'biswap/getUserLiquidityPairs/' + walletAddress;
+getUserExistPair(walletAddress: string, page: number = 0 ) {
+  const url = environment.endpoints.explorerapi + '/kanban/biswap/liquidityposition/user/' + walletAddress + "/10/" + page.toString();
   return this.http.get(url);
 }
 
+getTransactionStatus(transactionId : string) {
+  const url = 'https://kanbantest.fabcoinapi.com/kanban/gettransactionreceipt/' + transactionId;
+  return this.http.get(url);
+}
 
+getTokensInfoFromPair(pairId : string) {
+  const url = 'https://fabtest.info/api/kanban/biswap/pair/' + pairId;
+  return this.http.get(url);
+}
+
+getTokenInfoFromId(tokenId : string) {
+  const url = 'https://fabtest.info/api/kanban/biswap/token/' + tokenId;
+  return this.http.get(url);
+}
 
 }
 
