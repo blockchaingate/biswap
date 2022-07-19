@@ -4,6 +4,12 @@
 
 .dash-mat-card {
   padding: 0 !important;
+  background-color: #222f3e;
+  &:hover {
+    border-bottom: 2px solid #222f3e;
+    color: #222f3e;
+    background-color: #efefef;
+ }
 }
 
 .card-h2 {

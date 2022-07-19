@@ -1,10 +1,11 @@
 .header-tab-items span{
     width: 10rem;
     border: 1px solid gray;
-    padding: 3px;
+    padding: 1px;
     border-radius: 5px;
     display: flex;
     justify-content: center;
+    margin-top: 1em;
     cursor: pointer;
     &:hover {
         border-bottom: 2px solid white;
@@ -14,7 +15,8 @@
 }
 
 .mat-toolbar {
-    color: #fff;
+    color: black;
+    background-color: #fff;
 }
 
 ::ng-deep .mat-menu-panel {
