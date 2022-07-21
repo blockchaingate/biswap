@@ -7,41 +7,41 @@ export const environment = {
   production: true,
 
 
-  smartConractAdressRouter:  "",
-  smartConractAdressProxy:   "0xfd5ba9e06b3cdc2da3f4094619f838217b88f519",
-  smartConractAdressFactory: "0x9dfc45bbed0626c6c2d0a125e50148ba706b681e",
+  smartConractAdressRouter:  "0xd99bfcbfad77f57b5ed20286c24ad71785d73993",
+  smartConractAdressProxy:   "0xe4d478abfc9592188a3c71468d3e837628922121",
+  smartConractAdressFactory: "0x8aa15747311e39f31d89bd3082d20e1463a311c8",
   smartConractStaking: '',
                             //  "0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc",
   
   endpoints: {
     // blockchaingate: 'http://localhost:3002/v2/',
-    blockchaingate: 'https://test.blockchaingate.com/v2/',
+    blockchaingate: 'https://prod.blockchaingate.com/v2/',
     coingecko: 'https://api.coingecko.com/',
-    kanban: 'https://kanbantest.fabcoinapi.com/',
+    kanban: 'https://kanbanprod.fabcoinapi.com/',
     explorerapi: 'https://fabexplorer.com/api',
     BTC: {
-      exchangily: 'https://btctest.fabcoinapi.com/',
+      exchangily: 'https://btcprod.fabcoinapi.com/',
     },
     FAB: {
-      exchangily: 'https://fabtest.fabcoinapi.com/',
+      exchangily: 'https://fabprod.fabcoinapi.com/',
     },
     ETH: {
-      exchangily: 'https://ethtest.fabcoinapi.com/',
+      exchangily: 'https://ethprod.fabcoinapi.com/',
       // etherscan: 'https://api-ropsten.etherscan.io/'
     },
     BCH: {
-      exchangily: 'https://bchtest.fabcoinapi.com/',
+      exchangily: 'https://bchprod.fabcoinapi.com/',
     },
     DOGE: {
-      exchangily: 'https://dogetest.fabcoinapi.com/',
+      exchangily: 'https://dogeprod.fabcoinapi.com/',
     },
     LTC: {
-      exchangily: 'https://ltctest.fabcoinapi.com/',
+      exchangily: 'https://ltcprod.fabcoinapi.com/',
     },
 
     // pricehistory: 'http://18.223.17.4:3002/klinedata/'
   },
-  url: 'https://kanbantest.fabcoinapi.com/',
+  url: 'https://kanbanprod.fabcoinapi.com/',
   CoinType: {
     BTC: 1,
     ETH: 60,
