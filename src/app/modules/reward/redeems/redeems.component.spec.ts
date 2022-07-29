@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AirdropComponent } from './airdrop.component';
+import { RedeemsComponent } from './redeems.component';
 
-describe('AirdropComponent', () => {
-  let component: AirdropComponent;
-  let fixture: ComponentFixture<AirdropComponent>;
+describe('RedeemsComponent', () => {
+  let component: RedeemsComponent;
+  let fixture: ComponentFixture<RedeemsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AirdropComponent ]
+      declarations: [ RedeemsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AirdropComponent);
+    fixture = TestBed.createComponent(RedeemsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

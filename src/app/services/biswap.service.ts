@@ -85,17 +85,29 @@ import BigNumber from 'bignumber.js';
       return this.http.get(url);      
     }
 
-    getAirdropPlans() {
+    getRewardPlans() {
       const pageSize = 100;
       const pageNum = 0;
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/airdropplan/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/rewardplan/' + pageSize + '/' + pageNum;
       return this.http.get(url);  
     }
 
-    getAirdrops() {
+    getRewards() {
       const pageSize = 100;
       const pageNum = 0;
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/airdrop/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/reward/' + pageSize + '/' + pageNum;
+      return this.http.get(url);  
+    }
+
+    getRewardRedeems() {
+      const pageSize = 100;
+      const pageNum = 0;
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/reward/redeem/' + pageSize + '/' + pageNum;
+      return this.http.get(url);  
+    }
+
+    redeem(address: string, tokenName: string) {
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/reward/redeem/' + address + '/' + tokenName;
       return this.http.get(url);  
     }
 

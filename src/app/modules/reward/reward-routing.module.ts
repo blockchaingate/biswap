@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { AirdropComponent } from './airdrop.component';
+import { RewardComponent } from './reward.component';
 const routes: Routes = [
   {
     path: '',
-    component: AirdropComponent
+    component: RewardComponent
   }
 ];
 
@@ -16,4 +16,4 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ]
 })
-export class AirdropRoutingModule { }
+export class RewardRoutingModule { }

@@ -1,0 +1,33 @@
+<div class="rounded-card">
+    <div class="container">
+        <div class="row py-2">
+            <div class="col col-4">
+                <b>Address</b>
+            </div>
+            <div class="col col-3">
+                <b>Token</b>
+            </div>
+            <div class="col col-3">
+                <b>Amount</b>
+            </div>
+            <div class="col col-2">
+                Txid
+            </div>
+        </div>
+
+        <div class="row table-data py-2" *ngFor="let item of redeems;let i = index">
+            <div class="col col-4">
+                {{item.address}}
+            </div>
+            <div class="col col-3">
+                {{item.tokenName}}
+            </div>
+            <div class="col col-3">
+                {{item.amount}}
+            </div>
+            <div class="col col-2">
+                {{item.txid}}
+            </div>
+        </div>
+    </div>
+</div>

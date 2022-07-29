@@ -3,20 +3,21 @@ import { BiswapService } from 'src/app/services/biswap.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
-  selector: 'app-airdrop-details',
-  templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss']
+  selector: 'app-reward-redeems',
+  templateUrl: './redeems.component.html',
+  styleUrls: ['./redeems.component.scss']
 })
-export class DetailsComponent implements OnInit {
-  airdrops: any;
+export class RedeemsComponent implements OnInit {
+
+  redeems: any;
   constructor(
     private utilServ: UtilsService,
     private biswapServ: BiswapService) { }
 
   ngOnInit(): void {
-    this.biswapServ.getAirdrops().subscribe(
+    this.biswapServ.getRewardRedeems().subscribe(
       (ret: any) => {
-        this.airdrops = ret;
+        this.redeems = ret;
       }
     );
   }
