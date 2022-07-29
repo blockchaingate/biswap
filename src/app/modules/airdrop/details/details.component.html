@@ -1,0 +1,27 @@
+<div class="rounded-card">
+    <div class="container">
+        <div class="row py-2">
+            <div class="col col-4">
+                <b>Address</b>
+            </div>
+            <div class="col col-4">
+                <b>Token</b>
+            </div>
+            <div class="col col-4">
+                <b>Amount</b>
+            </div>
+        </div>
+
+        <div class="row table-data py-2" *ngFor="let item of airdrops;let i = index">
+            <div class="col col-4">
+                {{item.userId}}
+            </div>
+            <div class="col col-4">
+                {{item.tokenId}}
+            </div>
+            <div class="col col-4">
+                {{item.amount}}
+            </div>
+        </div>
+    </div>
+</div>

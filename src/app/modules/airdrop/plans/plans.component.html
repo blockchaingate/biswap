@@ -1,0 +1,45 @@
+<div class="rounded-card">
+    <div class="container">
+        <div class="row py-2">
+            <div class="col col-2">
+                <b>Pair</b>
+            </div>
+            <div class="col col-2">
+                <b>Token</b>
+            </div>
+            <div class="col col-2">
+                <b>Interval</b>
+            </div>
+            <div class="col col-2">
+                <b>Amount</b>
+            </div>
+            <div class="col col-2">
+                <b>Block Start</b>
+            </div>
+            <div class="col col-2">
+                <b>Block End</b>
+            </div>
+        </div>
+
+        <div class="row table-data py-2" *ngFor="let item of plans;let i = index">
+            <div class="col col-2">
+                {{item.pairName}}
+            </div>
+            <div class="col col-2">
+                {{item.tokenName}}
+            </div>
+            <div class="col col-2">
+                {{item.interval}}
+            </div>
+            <div class="col col-2">
+                {{item.amount}}
+            </div>
+            <div class="col col-2">
+                {{item.blockstart}}
+            </div>
+            <div class="col col-2">
+                {{item.blockend}}
+            </div>
+        </div>
+    </div>
+</div>

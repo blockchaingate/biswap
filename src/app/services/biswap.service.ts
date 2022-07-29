@@ -85,6 +85,20 @@ import BigNumber from 'bignumber.js';
       return this.http.get(url);      
     }
 
+    getAirdropPlans() {
+      const pageSize = 100;
+      const pageNum = 0;
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/airdropplan/' + pageSize + '/' + pageNum;
+      return this.http.get(url);  
+    }
+
+    getAirdrops() {
+      const pageSize = 100;
+      const pageNum = 0;
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/airdrop/' + pageSize + '/' + pageNum;
+      return this.http.get(url);  
+    }
+
     getTokenDayDatas(pairIdentity: string) {
       const pageSize = 100;
       const pageNum = 0;

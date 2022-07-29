@@ -15,6 +15,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/info/info.module').then(x => x.InfoModule)
   },
   {
+    path: 'airdrop',
+    loadChildren: () => import('./modules/airdrop/airdrop.module').then(x => x.AirdropModule)
+  },
+  {
     path: 'pool',
     loadChildren: () => import('./modules/pool/pool.module').then(x => x.PoolModule)
   },

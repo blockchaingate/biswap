@@ -15,7 +15,7 @@ import { BiswapService } from './services/biswap.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
