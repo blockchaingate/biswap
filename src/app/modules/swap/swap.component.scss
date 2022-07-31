@@ -13,13 +13,15 @@
 
 ::ng-deep .mat-card {
   border-radius: 25px !important;
+  background-color: #093362;
 }
 
 .coins-input-body {
   // border: 1px solid gray;
   border-radius: 15px;
   justify-content: center;
-  background-color: #636363;
+  background-color: #c3c9e0;
+  color: black;
   padding-left: 10px;
   padding-right: 10px;
 }
