@@ -4,11 +4,29 @@
 
 // }
 
+::-webkit-input-placeholder{
+  color:black
+}
 
+input {
+  --placeHolder-color: black;
+}
+
+input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: black;
+}
+
+input:-moz-placeholder {
+  color: black;
+}
+
+input::-moz-placeholder {
+  color: black;
+}
 
 .swapBody {
   margin-top: 100px;
-  background-color: white;
+  background-color: #eaebec;
 }
 
 ::ng-deep .mat-card {
