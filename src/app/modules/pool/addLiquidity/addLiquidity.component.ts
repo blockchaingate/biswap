@@ -276,8 +276,8 @@ export class AddLiquidityComponent implements OnInit {
     var tokenA = this.firstToken.type;
     var tokenB = this.secondToken.type;
 
-    var amountADesireda = new BigNumber(amountADesired);
-    var amountBDesireda = new BigNumber(amountBDesired);
+    //var amountADesireda = '0x' + new BigNumber(amountADesired).toString(16);
+    //var amountBDesireda = '0x' + new BigNumber(amountBDesired).toString(16);
 
     var amountAMin = '0x' + new BigNumber(this.firstCoinAmount)
     .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slipery))).multipliedBy(new BigNumber(1e18))
@@ -297,8 +297,8 @@ export class AddLiquidityComponent implements OnInit {
     const params = [
       tokenA,
       tokenB,
-      amountADesireda,
-      amountBDesireda,
+      amountADesired,
+      amountBDesired,
       amountAMin,
       amountBMin,
       to,

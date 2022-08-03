@@ -23,6 +23,7 @@ export class Web3Service {
     console.log('paramsArray==', paramsArray);
     console.log('func', func);
     const abiHex = web3.eth.abi.encodeFunctionCall(func, paramsArray);
+    console.log('abiHex=', abiHex);
     return abiHex;
   }
 
