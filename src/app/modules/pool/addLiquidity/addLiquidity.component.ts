@@ -87,6 +87,7 @@ export class AddLiquidityComponent implements OnInit {
       } else {
         let params: any = x;
          this.apiService.getTokensInfoFromPair(params.tokenid).subscribe((res: any) =>{
+          alert('s--' + JSON.stringify(res))
               let first = res["token0Name"];
               let sescond = res["token1Name"];
               this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
