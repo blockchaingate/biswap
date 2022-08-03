@@ -311,22 +311,22 @@ export class SwapComponent implements OnInit {
     let abiHex = '';
     if(this.isFistToken) {
       var path = [this.firstToken.type, this.secondToken.type];
-      const amountIn = new BigNumber(this.firstCoinAmount)
+      const amountIn = '0x' + new BigNumber(this.firstCoinAmount)
       .multipliedBy(new BigNumber(1e18))
-      .toFixed();
-      const amountOutMin = new BigNumber(this.secondCoinAmount).multipliedBy(new BigNumber(1-this.slippage * 0.01))
+      .toString(16);
+      const amountOutMin = '0x' + new BigNumber(this.secondCoinAmount).multipliedBy(new BigNumber(1-this.slippage * 0.01))
       .multipliedBy(new BigNumber(1e18))
-      .toFixed();
+      .toString(16);
       const params = [amountIn, amountOutMin, path, to, deadline];
       abiHex = this.web3Service.swapExactTokensForTokens(params);
     } else {
       var path = [this.firstToken.type, this.secondToken.type];
-      const amountOut = new BigNumber(this.secondCoinAmount)
+      const amountOut = '0x' + new BigNumber(this.secondCoinAmount)
       .multipliedBy(new BigNumber(1e18))
-      .toFixed();
-      const amountInMax = new BigNumber(this.firstCoinAmount).multipliedBy(new BigNumber(1+this.slippage * 0.01))
+      .toString(16);
+      const amountInMax = '0x' + new BigNumber(this.firstCoinAmount).multipliedBy(new BigNumber(1+this.slippage * 0.01))
       .multipliedBy(new BigNumber(1e18))
-      .toFixed();
+      .toString(16);
       const params = [amountOut, amountInMax, path, to, deadline];
       abiHex = this.web3Service.swapTokensForExactTokens(params);
     }
