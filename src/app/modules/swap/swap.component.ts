@@ -105,10 +105,12 @@ export class SwapComponent implements OnInit {
       } else {
         let params: any = x;
          this.apiService.getTokensInfoFromPair(params.tokenid).subscribe((res: any) =>{
-              let first = res["token0Name"];
-              let sescond = res["token1Name"];
-              this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
-              this.secondToken = this.tokenList.find(x => x.tickerName == sescond) || new Coin();
+          if(res) {
+            let first = res["token0Name"];
+            let sescond = res["token1Name"];
+            this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
+            this.secondToken = this.tokenList.find(x => x.tickerName == sescond) || new Coin();
+          }
     })
       }
   });
@@ -313,20 +315,20 @@ export class SwapComponent implements OnInit {
       var path = [this.firstToken.type, this.secondToken.type];
       const amountIn = '0x' + new BigNumber(this.firstCoinAmount)
       .multipliedBy(new BigNumber(1e18))
-      .toString(16);
+      .toString(16).split('.')[0];
       const amountOutMin = '0x' + new BigNumber(this.secondCoinAmount).multipliedBy(new BigNumber(1-this.slippage * 0.01))
       .multipliedBy(new BigNumber(1e18))
-      .toString(16);
+      .toString(16).split('.')[0];
       const params = [amountIn, amountOutMin, path, to, deadline];
       abiHex = this.web3Service.swapExactTokensForTokens(params);
     } else {
       var path = [this.firstToken.type, this.secondToken.type];
       const amountOut = '0x' + new BigNumber(this.secondCoinAmount)
       .multipliedBy(new BigNumber(1e18))
-      .toString(16);
+      .toString(16).split('.')[0];
       const amountInMax = '0x' + new BigNumber(this.firstCoinAmount).multipliedBy(new BigNumber(1+this.slippage * 0.01))
       .multipliedBy(new BigNumber(1e18))
-      .toString(16);
+      .toString(16).split('.')[0];
       const params = [amountOut, amountInMax, path, to, deadline];
       abiHex = this.web3Service.swapTokensForExactTokens(params);
     }

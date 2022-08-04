@@ -119,12 +119,14 @@ export class Web3Service {
   }
   
   swapExactTokensForTokens(params: any) {
+    console.log('swapExactTokensForTokens start');
     var func = this.smartContractService.swapExactTokensForTokensFunc();
     const abiHex = this.getGeneralFunctionABI(func, params);
     return abiHex;
   }
 
   swapTokensForExactTokens(params: any) {
+    console.log('swapTokensForExactTokens start');
     var func = this.smartContractService.swapTokensForExactTokensFunc();
     const abiHex = this.getGeneralFunctionABI(func, params);
     return abiHex;

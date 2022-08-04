@@ -269,10 +269,10 @@ export class AddLiquidityComponent implements OnInit {
 */
     let amountADesired = '0x' + new BigNumber(this.firstCoinAmount)
       .multipliedBy(new BigNumber(1e18))
-      .toString(16);
+      .toString(16).split('.')[0];
     let amountBDesired = '0x' + new BigNumber(this.secondCoinAmount)
       .multipliedBy(new BigNumber(1e18))
-      .toString(16);
+      .toString(16).split('.')[0];
 
     var tokenA = this.firstToken.type;
     var tokenB = this.secondToken.type;
@@ -282,16 +282,16 @@ export class AddLiquidityComponent implements OnInit {
 
     var amountAMin = '0x' + new BigNumber(this.firstCoinAmount)
     .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slipery))).multipliedBy(new BigNumber(1e18))
-    .toString(16);
+    .toString(16).split('.')[0];
     var amountBMin = '0x' + new BigNumber(this.secondCoinAmount)
     .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slipery))).multipliedBy(new BigNumber(1e18))
-    .toString(16);
+    .toString(16).split('.')[0];
     var to = this.utilService.fabToExgAddress(this.account);
     var timestamp = new TimestampModel(
       0,
       5,
       0,
-      1 // here need to set for future timestamp
+      0 // here need to set for future timestamp
     );
     var deadline = this.utilService.getTimestamp(timestamp);
 

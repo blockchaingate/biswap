@@ -37,8 +37,8 @@ export class WalletService {
     const client = await SignClient.init({
       projectId: "3acbabd1deb4672edfd4ca48226cfc0f",
       metadata: {
-        name: "Example Dapp",
-        description: "Example Dapp",
+        name: "Biswap Dapp",
+        description: "Automated FAB-based crypto exchange",
         url: "#",
         icons: ["https://walletconnect.com/walletconnect-logo.png"],
       }
