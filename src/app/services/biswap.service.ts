@@ -41,9 +41,19 @@ import BigNumber from 'bignumber.js';
       return this.http.get(url);
     }
 
+    getCountTokens() {
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/token/totalCount';
+      return this.http.get(url);   
+    }
+
     getPairs(pageSize: number, pageNum: number) {
       const url = environment.endpoints.explorerapi + '/kanban/biswap/pair/' + pageSize + '/' + pageNum;
       return this.http.get(url);
+    }
+
+    getCountPairs() {
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/pair/totalCount';
+      return this.http.get(url);   
     }
 
     getTransactions(pageSize: number, pageNum: number) {
