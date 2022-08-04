@@ -51,6 +51,11 @@ import BigNumber from 'bignumber.js';
       return this.http.get(url);
     }
 
+    getCountTransactions() {
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/totalCount';
+      return this.http.get(url);   
+    }
+
     getPair(pairIdentity: string) {
       const url = environment.endpoints.explorerapi + '/kanban/biswap/pair/' + pairIdentity;
       return this.http.get(url);      

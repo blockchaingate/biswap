@@ -11,6 +11,10 @@ export class OverviewComponent implements OnInit {
   transactions: any;
   pairs: any;
   items: any;
+  pageSizeTransaction = 10;
+  pageNumTransaction = 0;
+  countTransaction = 0;
+  totalPage = 0;
   constructor(private biswapServ: BiswapService) { }
 
   ngOnInit(): void {
@@ -26,7 +30,27 @@ export class OverviewComponent implements OnInit {
       this.pairs = pairs;
     });
 
-    this.biswapServ.getTransactions(10, 0).subscribe((transactions: any) => {
+    this.biswapServ.getTransactions(this.pageSizeTransaction, this.pageNumTransaction).subscribe((transactions: any) => {
+      this.transactions = transactions;
+    });
+    this.biswapServ.getCountTransactions().subscribe(
+      (ret: any) => {
+        console.log('ret===', ret);
+        const totalCount = ret.totalCount;
+        this.totalPage = Math.floor(totalCount / this.pageSizeTransaction);
+      }
+    );
+  }
+
+  changePageNumTransaction(pageNum: number) {
+    if(pageNum < 0) {
+      pageNum = 0;
+    }
+    if(pageNum > this.totalPage) {
+      pageNum = this.totalPage;
+    }
+    this.pageNumTransaction = pageNum;
+    this.biswapServ.getTransactions(this.pageSizeTransaction, this.pageNumTransaction).subscribe((transactions: any) => {
       this.transactions = transactions;
     });
   }
