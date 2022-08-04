@@ -1,89 +1,86 @@
-
-
 // @media only screen and (max-width: 600px) {
-
 // }
-
-::-webkit-input-placeholder{
-  color:black
+::-webkit-input-placeholder {
+    color: black
 }
 
 input {
-  --placeHolder-color: black;
+    --placeHolder-color: black;
 }
 
-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: black;
+input:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: black;
 }
 
 input:-moz-placeholder {
-  color: black;
+    color: black;
 }
 
 input::-moz-placeholder {
-  color: black;
+    color: black;
 }
 
 .swapBody {
-  margin-top: 100px;
-  background-color: #eaebec;
+    margin-top: 100px;
+    // background-color: #eaebec;
 }
 
 ::ng-deep .mat-card {
-  border-radius: 25px !important;
-  background-color: #093362;
+    border-radius: 25px !important;
+    background-color: #093362;
 }
 
 .coins-input-body {
-  // border: 1px solid gray;
-  border-radius: 15px;
-  justify-content: center;
-  background-color: #c3c9e0;
-  color: black;
-  padding-left: 10px;
-  padding-right: 10px;
+    // border: 1px solid gray;
+    border-radius: 15px;
+    justify-content: center;
+    background-color: #c3c9e0;
+    color: black;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 ::ng-deep .mat-form-field-underline {
-  display: none;
+    display: none;
 }
 
 .submitButton {
-  margin-left: 12rem;
-  margin-bottom: 0;
+    margin-left: 12rem;
+    margin-bottom: 0;
 }
 
 ::ng-deep .mat-form-field {
-  width: 100%;
-  label {
-    font-size: 40px;
-  }
+    width: 100%;
+    label {
+        font-size: 40px;
+    }
 }
 
 .sparater {
-  margin: 10px -20px 10px;
-  border: 0;
-  border-top: 1px solid #c9c7c7;
-  opacity: 0.2;
+    margin: 10px -20px 10px;
+    border: 0;
+    border-top: 1px solid #c9c7c7;
+    opacity: 0.2;
 }
 
 .mat-card-action {
-  padding: 10px 10px;
-  button {
-    width: 100%;
-    padding: 5px 5px;
-    border-radius: 20px;
-  }
+    padding: 10px 10px;
+    button {
+        width: 100%;
+        padding: 5px 5px;
+        border-radius: 20px;
+    }
 }
 
 .tokenSelectButton {
-  cursor: pointer;
-  font-size: larger;
-  font-weight: bold;
-  color: white;
+    cursor: pointer;
+    font-size: larger;
+    font-weight: bold;
+    color: white;
 }
 
 .tokenwithIcon {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }

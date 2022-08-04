@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PrivacyComponent } from './components/privacy.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,9 @@ const routes: Routes = [
   {
     path: 'charts',
     loadChildren: () => import('./modules/charts/charts.module').then(x => x.ChartsModule)
+  },
+  {
+    path: 'privacy', component: PrivacyComponent
   }
 ];
 
