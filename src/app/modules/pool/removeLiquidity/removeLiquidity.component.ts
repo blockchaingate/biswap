@@ -107,13 +107,13 @@ export class RemoveLiquidityComponent implements OnInit {
     .multipliedBy(new BigNumber(this.pooledFirstToken))
     .dividedBy(new BigNumber(10000))
     .shiftedBy(18)
-    .toString(16);
+    .toString(16).split('.')[0];
     var amountBMin = '0x' + new BigNumber( this.yourPoolShare)
     .multipliedBy(new BigNumber(this.percentage))
     .multipliedBy(new BigNumber(this.pooledSecondToken))
     .dividedBy(new BigNumber(10000))
     .shiftedBy(18)
-    .toString(16);
+    .toString(16).split('.')[0];
     var to = this.utilService.fabToExgAddress(this.walletService.account);
     var timestamp = new TimestampModel(
       this.deadline,
