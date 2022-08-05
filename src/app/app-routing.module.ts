@@ -33,7 +33,8 @@ const routes: Routes = [
   },
   {
     path: 'charts',
-    loadChildren: () => import('./modules/charts/charts.module').then(x => x.ChartsModule)
+    loadChildren: () => import('./modules/info/info.module').then(x => x.InfoModule)
+//    loadChildren: () => import('./modules/charts/charts.module').then(x => x.ChartsModule)
   },
   {
     path: 'privacy', component: PrivacyComponent
