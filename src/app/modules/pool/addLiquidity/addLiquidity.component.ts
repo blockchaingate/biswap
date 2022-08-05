@@ -14,6 +14,7 @@ import { WalletService } from 'src/app/services/wallet.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { environment } from 'src/environments/environment';
 import { TokenListComponent } from '../../shared/tokenList/tokenList.component';
+import { SettingsComponent } from '../../settings/settings.component';
 
 @Component({
   selector: 'app-addLiquidity',
@@ -21,7 +22,8 @@ import { TokenListComponent } from '../../shared/tokenList/tokenList.component';
   styleUrls: ['./addLiquidity.component.scss'],
 })
 export class AddLiquidityComponent implements OnInit {
-  slipery = 0.05;
+  slippage = 1;
+  deadline = 20;
   firstToken: Coin = new Coin();
   secondToken: Coin = new Coin();
   tokenList: Coin[];
@@ -72,6 +74,21 @@ export class AddLiquidityComponent implements OnInit {
       this.tokenList = x;
     });
     this.checkUrlToken();
+  }
+
+  openSettings() {
+    const dialogRef = this.dialog.open(SettingsComponent, {
+      width: '250px',
+      data: {slippage: this.slippage, deadline: this.deadline},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.slippage = result.slippage;
+        this.deadline = result.deadline;
+      }
+
+    });
   }
 
   checkUrlToken(){
@@ -280,15 +297,15 @@ export class AddLiquidityComponent implements OnInit {
     //var amountBDesireda = '0x' + new BigNumber(amountBDesired).toString(16);
 
     var amountAMin = '0x' + new BigNumber(this.firstCoinAmount)
-    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slipery))).multipliedBy(new BigNumber(1e18))
+    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01))).multipliedBy(new BigNumber(1e18))
     .toString(16).split('.')[0];
     var amountBMin = '0x' + new BigNumber(this.secondCoinAmount)
-    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slipery))).multipliedBy(new BigNumber(1e18))
+    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01))).multipliedBy(new BigNumber(1e18))
     .toString(16).split('.')[0];
     var to = this.utilService.fabToExgAddress(this.account);
     var timestamp = new TimestampModel(
+      this.deadline,
       0,
-      5,
       0,
       0 // here need to set for future timestamp
     );

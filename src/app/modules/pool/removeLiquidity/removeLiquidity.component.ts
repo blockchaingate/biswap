@@ -9,6 +9,8 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { WalletService } from 'src/app/services/wallet.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { environment } from 'src/environments/environment';
+import { SettingsComponent } from '../../settings/settings.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-removeLiquidity',
@@ -16,6 +18,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./removeLiquidity.component.scss']
 })
 export class RemoveLiquidityComponent implements OnInit {
+  slippage = 1;
+  deadline = 20;
 
    firstToken: String;
    secondToken: String;
@@ -31,7 +35,6 @@ export class RemoveLiquidityComponent implements OnInit {
    pairId: String;
 
   percentage= 0;
-  deadline = 200;
 
   constructor(
     private router: Router,
@@ -39,6 +42,7 @@ export class RemoveLiquidityComponent implements OnInit {
     private kanbanService: KanbanService,
     private apiService: ApiService,
     private utilService: UtilsService,
+    public dialog: MatDialog,
     private walletService: WalletService,
   ) {
     const navigation = this.router.getCurrentNavigation();
@@ -63,6 +67,21 @@ export class RemoveLiquidityComponent implements OnInit {
 
   }
 
+  openSettings() {
+    const dialogRef = this.dialog.open(SettingsComponent, {
+      width: '250px',
+      data: {slippage: this.slippage, deadline: this.deadline},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.slippage = result.slippage;
+        this.deadline = result.deadline;
+      }
+
+    });
+  }
+
   goBack(){
     this.router.navigate(['/pool']);
   }
@@ -82,8 +101,11 @@ export class RemoveLiquidityComponent implements OnInit {
 
   removeLiquidity() {
 
-    var value =new BigNumber ((this.totalPoolToken *this.percentage ) / 100 ).multipliedBy(new BigNumber(1e18))
-    .toFixed();
+    var value = '0x' + new BigNumber (this.totalPoolToken)
+    .multipliedBy(new BigNumber(this.percentage))
+    .dividedBy(new BigNumber(100))
+    .shiftedBy(18)
+    .toString(16).split('.')[0];
 
     var params = [environment.smartConractAdressRouter, value];
     var abiHex = this.web3Service.getApprove(params);
@@ -106,12 +128,14 @@ export class RemoveLiquidityComponent implements OnInit {
     .multipliedBy(new BigNumber(this.percentage))
     .multipliedBy(new BigNumber(this.pooledFirstToken))
     .dividedBy(new BigNumber(10000))
+    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01)))
     .shiftedBy(18)
     .toString(16).split('.')[0];
     var amountBMin = '0x' + new BigNumber( this.yourPoolShare)
     .multipliedBy(new BigNumber(this.percentage))
     .multipliedBy(new BigNumber(this.pooledSecondToken))
     .dividedBy(new BigNumber(10000))
+    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01)))
     .shiftedBy(18)
     .toString(16).split('.')[0];
     var to = this.utilService.fabToExgAddress(this.walletService.account);

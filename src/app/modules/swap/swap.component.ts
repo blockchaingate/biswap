@@ -15,7 +15,7 @@ import { WalletService } from 'src/app/services/wallet.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { environment } from 'src/environments/environment';
 import { TokenListComponent } from '../shared/tokenList/tokenList.component';
-import { SettingsComponent } from './settings/settings.component';
+import { SettingsComponent } from '../settings/settings.component';
 @Component({
   selector: 'app-swap',
   templateUrl: './swap.component.html',
