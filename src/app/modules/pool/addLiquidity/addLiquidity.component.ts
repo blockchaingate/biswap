@@ -24,8 +24,10 @@ import { SettingsComponent } from '../../settings/settings.component';
 export class AddLiquidityComponent implements OnInit {
   slippage = 1;
   deadline = 20;
+  error: string;
   _firstToken: Coin;
   _secondToken: Coin;
+  item: any;
 
   public get firstToken(): Coin {
     return this._firstToken;
@@ -65,7 +67,32 @@ export class AddLiquidityComponent implements OnInit {
 
   firstCoinAmount: number;
   secondCoinAmount: number;
-  account: string;
+  _account: string;
+
+  public get account(): string {
+    return this._account;
+  }
+
+  public set account(newAccount: string) {
+    this._account = newAccount;
+    if(newAccount) {
+      if(this.firstToken && this.firstToken.type) {
+        this.kanbanService.getTokenBalance(newAccount, this.firstToken.type).subscribe(
+          (balance: any) => {
+            this.firstCoinBalance = balance;
+          }
+        );
+      }
+
+      if(this.secondToken && this.secondToken.type) {
+        this.kanbanService.getTokenBalance(newAccount, this.secondToken.type).subscribe(
+          (balance: any) => {
+            this.secondCoinBalance = balance;
+          }
+        );
+      }
+    }
+  }
 
   perAmount: string;
   perAmountLabel: string = '';
@@ -100,7 +127,7 @@ export class AddLiquidityComponent implements OnInit {
   ngOnInit() {
     this.firstToken = new Coin();
     this.secondToken = new Coin();
-    
+
     this.secondCoinBalance = -1;
     this.firstCoinBalance = -1;
 
@@ -328,6 +355,15 @@ export class AddLiquidityComponent implements OnInit {
     
     this.walletAddress = addressArray[addressArray.length - 1];
 */
+    if(!this.firstCoinAmount ||
+      !this.secondCoinAmount ||
+      !this.firstCoinBalance || 
+      !this.secondCoinBalance ||
+      (this.firstCoinAmount < this.firstCoinBalance) ||
+      (this.secondCoinAmount < this.secondCoinBalance)) {
+        this.error = 'Not enough balance';
+        return;
+      }
     let amountADesired = '0x' + new BigNumber(this.firstCoinAmount)
       .multipliedBy(new BigNumber(1e18))
       .toString(16).split('.')[0];

@@ -22,6 +22,7 @@ import { SettingsComponent } from '../settings/settings.component';
   styleUrls: ['./swap.component.scss'],
 })
 export class SwapComponent implements OnInit {
+  error: string;
   @ViewChild('token1') token1Element: ElementRef;
   @ViewChild('token2') token2Element: ElementRef;
   isFistToken: boolean;
@@ -66,7 +67,33 @@ export class SwapComponent implements OnInit {
 
   walletSession: any;
 
-  account: string;
+  _account: string;
+
+  public get account(): string {
+    return this._account;
+  }
+
+  public set account(newAccount: string) {
+    this._account = newAccount;
+    if(newAccount) {
+      if(this.firstToken && this.firstToken.type) {
+        this.kanbanService.getTokenBalance(newAccount, this.firstToken.type).subscribe(
+          (balance: any) => {
+            this.firstCoinBalance = balance;
+          }
+        );
+      }
+
+      if(this.secondToken && this.secondToken.type) {
+        this.kanbanService.getTokenBalance(newAccount, this.secondToken.type).subscribe(
+          (balance: any) => {
+            this.secondCoinBalance = balance;
+          }
+        );
+      }
+    }
+  }
+  
   tokenId: string;
 
   firstCoinAmount: number;
@@ -331,7 +358,15 @@ export class SwapComponent implements OnInit {
   }
 
   async swapFunction() {
-
+    if(!this.firstCoinAmount ||
+      !this.secondCoinAmount ||
+      !this.firstCoinBalance || 
+      !this.secondCoinBalance ||
+      (this.firstCoinAmount < this.firstCoinBalance) ||
+      (this.secondCoinAmount < this.secondCoinBalance)) {
+        this.error = 'Not enough balance';
+        return;
+      }
     var to = this.utilService.fabToExgAddress(this.account);
     var timestamp = new TimestampModel(
       this.deadline,
