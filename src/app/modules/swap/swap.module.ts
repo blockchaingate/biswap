@@ -7,7 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { KanbanService } from 'src/app/services/kanban.service';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
-import { SettingsComponent } from './settings/settings.component';
+import { SettingsComponent } from '../settings/settings.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 

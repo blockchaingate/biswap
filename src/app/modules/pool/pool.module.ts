@@ -23,6 +23,11 @@ import { HextoDecimalPipe } from './hextodecimal.pipe';
     NgxUiLoaderModule.forRoot({})
   ],
   providers:[KanbanService, Web3Service],
-  declarations: [PoolComponent, AddLiquidityComponent, RemoveLiquidityComponent, HextoDecimalPipe]
+  declarations: [
+    PoolComponent, 
+    AddLiquidityComponent, 
+    RemoveLiquidityComponent, 
+    HextoDecimalPipe
+  ]
 })
 export class PoolModule { }
