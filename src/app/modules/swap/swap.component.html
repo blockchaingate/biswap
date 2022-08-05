@@ -39,11 +39,15 @@
           >
             <span class="tokenwithIcon" *ngIf="firstToken.tickerName != null; else select">
               {{ firstToken.tickerName }} <mat-icon>expand_more</mat-icon>
+              <span *ngIf="firstCoinBalance >= 0">({{firstCoinBalance}})</span>
             </span>
+            
+            <ng-template #select>
+               <span class="tokenwithIcon">
+                Select Token <mat-icon>expand_more</mat-icon>
+              </span>  
+            </ng-template>
 
-            <ng-template #select> <span class="tokenwithIcon">
-              Select Token <mat-icon>expand_more</mat-icon>
-            </span>  </ng-template>
           </div>
         <div
           class="coins-input-body"
@@ -81,6 +85,7 @@
       >
         <span class="tokenwithIcon" *ngIf="secondToken.tickerName != null; else selecta">
           {{ secondToken.tickerName }} <mat-icon>expand_more</mat-icon>
+          <span *ngIf="secondCoinBalance >= 0">({{secondCoinBalance}})</span>
         </span>
 
         <ng-template #selecta> <span class="tokenwithIcon">
@@ -105,7 +110,7 @@
               placeholder="0.0"
             />
           </mat-form-field>
-
+          
          
         </div>
 

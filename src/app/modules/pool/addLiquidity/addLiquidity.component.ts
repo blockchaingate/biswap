@@ -24,8 +24,41 @@ import { SettingsComponent } from '../../settings/settings.component';
 export class AddLiquidityComponent implements OnInit {
   slippage = 1;
   deadline = 20;
-  firstToken: Coin = new Coin();
-  secondToken: Coin = new Coin();
+  _firstToken: Coin;
+  _secondToken: Coin;
+
+  public get firstToken(): Coin {
+    return this._firstToken;
+  }
+  public set firstToken(coin: Coin) {
+    this._firstToken = coin;
+    const coinType = coin.type;
+    if(this.account && coinType) {
+      this.kanbanService.getTokenBalance(this.account, coinType).subscribe(
+        (balance: any) => {
+          this.firstCoinBalance = balance;
+        }
+      );
+    }
+    
+
+  }
+ 
+  public get secondToken(): Coin {
+    return this._secondToken;
+  }
+  public set secondToken(coin: Coin) {
+    this._secondToken = coin;
+    const coinType = coin.type;
+    if(this.account && coinType) {
+      this.kanbanService.getTokenBalance(this.account, coinType).subscribe(
+        (balance: any) => {
+          this.secondCoinBalance = balance;
+        }
+      );
+    }
+
+  }
   tokenList: Coin[];
 
   isWalletConnect: boolean = true;
@@ -45,6 +78,9 @@ export class AddLiquidityComponent implements OnInit {
   firstTokenReserve: BigNumber = new BigNumber(0);
   secondTokenReserve: BigNumber = new BigNumber(0);
 
+  secondCoinBalance: number;
+  firstCoinBalance: number;
+
   //walletAddress:string;
   pairAddress: string;
 
@@ -62,6 +98,12 @@ export class AddLiquidityComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.firstToken = new Coin();
+    this.secondToken = new Coin();
+    
+    this.secondCoinBalance = -1;
+    this.firstCoinBalance = -1;
+
     this.account = this.walletService.account;
     if(!this.account){
       this.walletService.accountSubject.subscribe(

@@ -25,8 +25,43 @@ export class SwapComponent implements OnInit {
   @ViewChild('token1') token1Element: ElementRef;
   @ViewChild('token2') token2Element: ElementRef;
   isFistToken: boolean;
-  firstToken: Coin = new Coin();
-  secondToken: Coin = new Coin();
+
+  _firstToken: Coin;
+  _secondToken: Coin;
+
+  public get firstToken(): Coin {
+    return this._firstToken;
+  }
+  public set firstToken(coin: Coin) {
+    this._firstToken = coin;
+    const coinType = coin.type;
+    if(this.account && coinType) {
+      this.kanbanService.getTokenBalance(this.account, coinType).subscribe(
+        (balance: any) => {
+          this.firstCoinBalance = balance;
+        }
+      );
+    }
+    
+
+  }
+ 
+  public get secondToken(): Coin {
+    return this._secondToken;
+  }
+  public set secondToken(coin: Coin) {
+    this._secondToken = coin;
+    const coinType = coin.type;
+    if(this.account && coinType) {
+      this.kanbanService.getTokenBalance(this.account, coinType).subscribe(
+        (balance: any) => {
+          this.secondCoinBalance = balance;
+        }
+      );
+    }
+
+  }
+
   tokenList: Coin[];
 
   walletSession: any;
@@ -40,6 +75,8 @@ export class SwapComponent implements OnInit {
   perAmount: string;
   perAmountLabel: string = '';
 
+  secondCoinBalance: number;
+  firstCoinBalance: number;
   txHash: string;
 
   //isNewPair: boolean = false;
@@ -78,6 +115,11 @@ export class SwapComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.firstToken = new Coin();
+    this.secondToken = new Coin();
+    this.secondCoinBalance = -1;
+    this.firstCoinBalance = -1;
+
     this.account = this.walletService.account;
     if(!this.account){
       this.walletService.accountSubject.subscribe(
@@ -289,15 +331,6 @@ export class SwapComponent implements OnInit {
   }
 
   async swapFunction() {
-
-
-      /*
-    const addressArray = this.storageService
-      .getWalletSession()
-      .state.accounts[0].split(':');
-      */
-
-    
 
     var to = this.utilService.fabToExgAddress(this.account);
     var timestamp = new TimestampModel(

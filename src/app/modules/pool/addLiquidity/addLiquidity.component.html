@@ -38,6 +38,7 @@
             *ngIf="firstToken.tickerName != null; else select"
           >
             {{ firstToken.tickerName }} <mat-icon>expand_more</mat-icon>
+            <span *ngIf="firstCoinBalance >= 0">({{firstCoinBalance}})</span>
           </span>
 
           <ng-template #select>
@@ -76,6 +77,7 @@
             *ngIf="secondToken.tickerName != null; else selecta"
           >
             {{ secondToken.tickerName }} <mat-icon>expand_more</mat-icon>
+            <span *ngIf="secondCoinBalance >= 0">({{secondCoinBalance}})</span>
           </span>
 
           <ng-template #selecta>

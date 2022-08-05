@@ -8,6 +8,9 @@ import { DataService } from './data.service';
 import { BaseResponseModel } from '../models/baseResponseModel';
 import { Web3Service } from './web3.service';
 import { WalletService } from './wallet.service';
+import { Observable } from 'rxjs';
+import { UtilsService } from './utils.service';
+import BigNumber from 'bignumber.js';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +25,7 @@ export class KanbanService {
     private web3Service: Web3Service,
     private dataService: DataService,
     private storageService: StorageService,
+    private utilServ: UtilsService,
     private walletService: WalletService,
     private http: HttpClient
   ) {
@@ -61,6 +65,29 @@ export class KanbanService {
       });
     this.dataService.settokenList(tempTokenList);
   }
+
+  getTokenBalance(address: string, coinType: number) {
+    const obs = new Observable((observer) => {
+      if(address.indexOf('0x') < 0) {
+        address = this.utilServ.fabToExgAddress(address);
+      }
+      const url = `${this.url}exchangily/getBalances/${address}`;
+      this.http
+      .get<BaseResponseModel>(url)
+      .subscribe((x: any) => {
+        console.log('x===', x);
+        const filtered = x.filter((item: any) => item.coinType == coinType);
+        let balance = 0;
+        if(filtered && (filtered.length > 0) ) {
+          balance = new BigNumber(filtered[0].unlockedAmount).shiftedBy(-18).toNumber();
+        }
+        observer.next(balance);
+      });
+    });
+    return obs;
+  }
+
+  //https://kanbantest.fabcoinapi.com/exchangily/getBalances/0xdcd0f23125f74ef621dfa3310625f8af0dcd971b
 
   getKanbanStatus() {
     return this.get('status');
