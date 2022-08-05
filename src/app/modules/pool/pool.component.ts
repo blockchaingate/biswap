@@ -61,10 +61,9 @@ export class PoolComponent implements OnInit {
     }
   }
 
-
   getExistLiquidity(){
     this.apiService.getUserExistPair(this.account, this.page).subscribe((res: any) =>{
-
+      console.log('res in getExisting liquidity=', res);
       if(res.length > 0){
         this.existedLiquidityList = [...this.existedLiquidityList,...res] ;
         this.page ++;

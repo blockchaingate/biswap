@@ -77,7 +77,7 @@
       (closed)="panelOpenState = false"
     >
       <mat-expansion-panel-header>
-        <mat-panel-title> {{item.pair.token0.id | hextodecimal}} / {{item.pair.token1.id | hextodecimal}} </mat-panel-title>
+        <mat-panel-title> {{item.token0Name}} / {{item.token1Name}} </mat-panel-title>
         <mat-panel-description>
           Manage
           <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
@@ -88,16 +88,16 @@
         <p>{{ item.liquidityTokenBalance }}</p>
       </div>
       <div fxLayout="row" fxLayoutAlign="space-between center">
-        <p>Pooled {{item.pair.token0.id | hextodecimal}}:</p>
+        <p>Pooled {{item.token0Name}}:</p>
         <p>{{item.pair.reserve0}}</p>
       </div>
       <div fxLayout="row" fxLayoutAlign="space-between center">
-        <p>Pooled {{item.pair.token1.id | hextodecimal}}:</p>
+        <p>Pooled {{item.token1Name}}:</p>
         <p>{{item.pair.reserve1}}</p>
       </div>
       <div fxLayout="row" fxLayoutAlign="space-between center">
         <p>Your pool share:</p>
-        <p> < {{ item.share }} %</p>
+        <p> {{ item.share }} %</p>
       </div>
       <div fxLayout="row" fxLayoutAlign="center center">
 

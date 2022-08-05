@@ -102,10 +102,18 @@ export class RemoveLiquidityComponent implements OnInit {
 
   removeLiquidityFun(value: any) {
 
-    var amountAMin = new BigNumber( this.yourPoolShare * this.percentage * this.pooledFirstToken).multipliedBy(new BigNumber(1e18))
-    .toFixed();
-    var amountBMin = new BigNumber( this.yourPoolShare * this.percentage * this.pooledSecondToken).multipliedBy(new BigNumber(1e18))
-    .toFixed();
+    var amountAMin = '0x' + new BigNumber( this.yourPoolShare)
+    .multipliedBy(new BigNumber(this.percentage))
+    .multipliedBy(new BigNumber(this.pooledFirstToken))
+    .dividedBy(new BigNumber(10000))
+    .shiftedBy(18)
+    .toString(16);
+    var amountBMin = '0x' + new BigNumber( this.yourPoolShare)
+    .multipliedBy(new BigNumber(this.percentage))
+    .multipliedBy(new BigNumber(this.pooledSecondToken))
+    .dividedBy(new BigNumber(10000))
+    .shiftedBy(18)
+    .toString(16);
     var to = this.utilService.fabToExgAddress(this.walletService.account);
     var timestamp = new TimestampModel(
       this.deadline,
