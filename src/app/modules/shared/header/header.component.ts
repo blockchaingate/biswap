@@ -52,6 +52,7 @@ export class HeaderComponent implements OnInit {
   }
 
   disConnectWallet() {
-
+    console.log('go for disconnect');
+    this.walletService.disconnect();
   }
 }

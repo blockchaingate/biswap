@@ -13,6 +13,7 @@ export class WalletService {
   session: any;
   client: any;
   account: string;
+  topic: any;
   chainId: string;
   accountSubject = new Subject<string>();
 
@@ -25,6 +26,22 @@ export class WalletService {
   ) {}
 
 
+  disconnect() {
+    console.log('disconnectinggggg');
+    const address = '';
+    this.account = address;
+    this.accountSubject.next(address);
+    this.client.disconnect({
+      topic: this.topic,
+      projectId: "3acbabd1deb4672edfd4ca48226cfc0f",
+      metadata: {
+        name: "Biswap Dapp",
+        description: "Automated FAB-based crypto exchange",
+        url: "#",
+        icons: ["https://walletconnect.com/walletconnect-logo.png"],
+      }
+    });
+  }
   async connectWalletNew() {
     console.log('connecting');
     /*
@@ -33,7 +50,6 @@ export class WalletService {
     }
     */
     
-    console.log('lengthhhhh===', SignClient.length);
     const client = await SignClient.init({
       projectId: "3acbabd1deb4672edfd4ca48226cfc0f",
       metadata: {
@@ -44,13 +60,13 @@ export class WalletService {
       }
     });
 
-    console.log('client====', client);
     this.client = client;
 
     client.on("session_event", (args) => {
          const id = args.id;
          const ddd = args.params;
          const topic = args.topic;
+         this.topic = topic;
          console.log('id===', id);
         // Handle session events, such as "chainChanged", "accountsChanged", etc.
         
