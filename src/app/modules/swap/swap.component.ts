@@ -362,8 +362,8 @@ export class SwapComponent implements OnInit {
       !this.secondCoinAmount ||
       !this.firstCoinBalance || 
       !this.secondCoinBalance ||
-      (this.firstCoinAmount < this.firstCoinBalance) ||
-      (this.secondCoinAmount < this.secondCoinBalance)) {
+      (this.firstCoinAmount > this.firstCoinBalance) ||
+      (this.secondCoinAmount > this.secondCoinBalance)) {
         this.error = 'Not enough balance';
         return;
       }

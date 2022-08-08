@@ -99,6 +99,11 @@ import BigNumber from 'bignumber.js';
       return this.http.get(url);      
     }
 
+    getLiquidity(account: string, pairAddress: string) {
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/liquidityposition/user/' + account + "/pair/" + pairAddress;
+      return this.http.get(url);    
+    }
+
     getRewardPlans() {
       const pageSize = 100;
       const pageNum = 0;

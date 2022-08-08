@@ -32,6 +32,7 @@ sendUserPair(data: any){
   return this.http.post(url, data);
 }
 
+
 getUserExistPair(walletAddress: string, page: number = 0 ) {
   const url = environment.endpoints.explorerapi + '/kanban/biswap/liquidityposition/user/' + walletAddress + "/10/" + page.toString();
   return this.http.get(url);

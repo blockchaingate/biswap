@@ -15,6 +15,7 @@ import { Web3Service } from 'src/app/services/web3.service';
 import { environment } from 'src/environments/environment';
 import { TokenListComponent } from '../../shared/tokenList/tokenList.component';
 import { SettingsComponent } from '../../settings/settings.component';
+import { BiswapService } from 'src/app/services/biswap.service';
 
 @Component({
   selector: 'app-addLiquidity',
@@ -92,6 +93,7 @@ export class AddLiquidityComponent implements OnInit {
         );
       }
     }
+    this.checkLiquidity();
   }
 
   perAmount: string;
@@ -109,7 +111,16 @@ export class AddLiquidityComponent implements OnInit {
   firstCoinBalance: number;
 
   //walletAddress:string;
-  pairAddress: string;
+  _pairAddress: string;
+
+  get pairAddress(): string {
+    return this._pairAddress;
+  }
+
+  set pairAddress(_pairAddress: string) {
+    this._pairAddress = _pairAddress;
+    this.checkLiquidity();
+  } 
 
   constructor(
     private kanbanMiddlewareService: KanbanMiddlewareService,
@@ -117,6 +128,7 @@ export class AddLiquidityComponent implements OnInit {
     private web3Service: Web3Service,
     private dataService: DataService,
     public dialog: MatDialog,
+    private biswapServ: BiswapService,
     private kanbanService: KanbanService,
     private walletService: WalletService,
     private currentRoute: ActivatedRoute,
@@ -145,6 +157,16 @@ export class AddLiquidityComponent implements OnInit {
     this.checkUrlToken();
   }
 
+  checkLiquidity() {
+    if(!this.account || !this.pairAddress) {
+      return;
+    }
+    this.biswapServ.getLiquidity(this.account, this.pairAddress).subscribe(
+      (item: any) => {
+        this.item = item;
+      }
+    );
+  }
   openSettings() {
     const dialogRef = this.dialog.open(SettingsComponent, {
       width: '250px',
@@ -347,28 +369,29 @@ export class AddLiquidityComponent implements OnInit {
       });
   }
 
-  addLiqudity() {
-    /*
-    const addressArray = this.storageService
-      .getWalletSession()
-      .state.accounts[0].split(':');
+  refresh() {
+    console.log('refreshing');
+    this.account = this.account;
     
-    this.walletAddress = addressArray[addressArray.length - 1];
-*/
+  }
+
+  addLiqudity() {
+
     if(!this.firstCoinAmount ||
       !this.secondCoinAmount ||
       !this.firstCoinBalance || 
       !this.secondCoinBalance ||
-      (this.firstCoinAmount < this.firstCoinBalance) ||
-      (this.secondCoinAmount < this.secondCoinBalance)) {
+      (Number(this.firstCoinAmount) > Number(this.firstCoinBalance)) ||
+      (Number(this.secondCoinAmount) > Number(this.secondCoinBalance))) {
         this.error = 'Not enough balance';
         return;
       }
+    console.log('go for addLiquidity');
     let amountADesired = '0x' + new BigNumber(this.firstCoinAmount)
-      .multipliedBy(new BigNumber(1e18))
+      .shiftedBy(18)
       .toString(16).split('.')[0];
     let amountBDesired = '0x' + new BigNumber(this.secondCoinAmount)
-      .multipliedBy(new BigNumber(1e18))
+      .shiftedBy(18)
       .toString(16).split('.')[0];
 
     var tokenA = this.firstToken.type;
@@ -378,10 +401,10 @@ export class AddLiquidityComponent implements OnInit {
     //var amountBDesireda = '0x' + new BigNumber(amountBDesired).toString(16);
 
     var amountAMin = '0x' + new BigNumber(this.firstCoinAmount)
-    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01))).multipliedBy(new BigNumber(1e18))
+    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01))).shiftedBy(18)
     .toString(16).split('.')[0];
     var amountBMin = '0x' + new BigNumber(this.secondCoinAmount)
-    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01))).multipliedBy(new BigNumber(1e18))
+    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01))).shiftedBy(18)
     .toString(16).split('.')[0];
     var to = this.utilService.fabToExgAddress(this.account);
     var timestamp = new TimestampModel(
@@ -403,13 +426,16 @@ export class AddLiquidityComponent implements OnInit {
       deadline,
     ];
 
-    console.log('params====', params);
     var abiHex = this.web3Service.addLiquidity(params);
-    console.log('abiHex====', abiHex);
+    console.log('abiHex===', abiHex);
+    console.log('smartConractAdressRouter===', environment.smartConractAdressRouter);
     this.kanbanService
       .send(environment.smartConractAdressRouter, abiHex)
-      .then((data) => {
-        this.txHash = 'https://test.exchangily.com/explorer/tx-detail/' + data;
+      .then((data) => { 
+        const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
+        this.txHash = baseUrl + '/explorer/tx-detail/' + data;
+
+        setTimeout(this.refresh, 10000);
         /*
         const param = {
           userAddress: this.account,
