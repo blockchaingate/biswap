@@ -35,7 +35,7 @@
       </li>
 
       <li class="page-item" >
-        <a class="page-link" *ngIf="pageNumTransaction < 1" (click)="changePageNumTransaction(pageNumTransaction + 2)">
+        <a class="page-link" *ngIf="(pageNumTransaction < 1) && (pageNumTransaction <= totalPage - 2)" (click)="changePageNumTransaction(pageNumTransaction + 2)">
             {{pageNumTransaction + 3}}
         </a>
       </li>

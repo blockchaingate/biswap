@@ -86,9 +86,8 @@ import BigNumber from 'bignumber.js';
       return this.http.get(url);  
     }
 
-    getTransactionsByPair(pairIdentity: string) {
-      const pageSize = 10;
-      const pageNum = 0;
+    getTransactionsByPair(pairIdentity: string, pageSize: number, pageNum: number) {
+
       const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/pair/' + pairIdentity + '/' + pageSize + '/' + pageNum;
       return this.http.get(url);
     }

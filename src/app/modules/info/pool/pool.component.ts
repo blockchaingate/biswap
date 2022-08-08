@@ -18,6 +18,11 @@ export class PoolComponent implements OnInit, AfterContentInit {
   currentTime: any;
   items: any;
   chartObj: any;
+
+  pageNum = 0;
+  pageSize = 10;
+  totalPage = 0;
+
   @ViewChild('chart') chart: ElementRef;
 
   constructor(
@@ -34,7 +39,7 @@ export class PoolComponent implements OnInit, AfterContentInit {
         }
       );
 
-      this.biswapServ.getTransactionsByPair(identity).subscribe(
+      this.biswapServ.getTransactionsByPair(identity, this.pageSize, this.pageNum).subscribe(
         (transactions: any) => {
           this.transactions = transactions;
         }

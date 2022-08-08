@@ -23,7 +23,7 @@
       </li>
 
       <li class="page-item" >
-        <a class="page-link" *ngIf="pageNum < 1" (click)="changePageNum(pageNum + 2)">
+        <a class="page-link" *ngIf="(pageNum < 1) && (pageNum <= totalPage - 2)" (click)="changePageNum(pageNum + 2)">
             {{pageNum + 3}}
         </a>
       </li>
