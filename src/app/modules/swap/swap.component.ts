@@ -421,7 +421,7 @@ export class SwapComponent implements OnInit {
       .then((data) => {
         const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
         this.txHash = baseUrl + '/explorer/tx-detail/' + data;
-        setTimeout(() => {this.refresh()}, 8000);
+        setTimeout(() => {this.refresh()}, 6000);
       });
   }
 }

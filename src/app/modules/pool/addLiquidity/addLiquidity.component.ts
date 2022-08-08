@@ -446,7 +446,7 @@ export class AddLiquidityComponent implements OnInit {
 
         setTimeout(() => {
           this.refresh()
-        }, 8000);
+        }, 6000);
         /*
         const param = {
           userAddress: this.account,
