@@ -371,8 +371,19 @@ export class AddLiquidityComponent implements OnInit {
 
   refresh() {
     console.log('refreshing');
-    this.account = this.account;
+    this.kanbanService.getTokenBalance(this.account, this.firstToken.type).subscribe(
+      (balance: any) => {
+        this.firstCoinBalance = balance;
+      }
+    );
+
+    this.kanbanService.getTokenBalance(this.account, this.secondToken.type).subscribe(
+      (balance: any) => {
+        this.secondCoinBalance = balance;
+      }
+    );
     
+    this.checkLiquidity();
   }
 
   addLiqudity() {
@@ -427,15 +438,15 @@ export class AddLiquidityComponent implements OnInit {
     ];
 
     var abiHex = this.web3Service.addLiquidity(params);
-    console.log('abiHex===', abiHex);
-    console.log('smartConractAdressRouter===', environment.smartConractAdressRouter);
     this.kanbanService
       .send(environment.smartConractAdressRouter, abiHex)
       .then((data) => { 
         const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
         this.txHash = baseUrl + '/explorer/tx-detail/' + data;
 
-        setTimeout(this.refresh, 10000);
+        setTimeout(() => {
+          this.refresh()
+        }, 8000);
         /*
         const param = {
           userAddress: this.account,

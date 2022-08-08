@@ -357,6 +357,21 @@ export class SwapComponent implements OnInit {
     this.walletService.connectWalletNew();
   }
 
+  refresh() {
+    console.log('refreshing');
+    this.kanbanService.getTokenBalance(this.account, this.firstToken.type).subscribe(
+      (balance: any) => {
+        this.firstCoinBalance = balance;
+      }
+    );
+
+    this.kanbanService.getTokenBalance(this.account, this.secondToken.type).subscribe(
+      (balance: any) => {
+        this.secondCoinBalance = balance;
+      }
+    );
+  }
+
   async swapFunction() {
     if(!this.firstCoinAmount ||
       !this.secondCoinAmount ||
@@ -404,7 +419,9 @@ export class SwapComponent implements OnInit {
     this.kanbanService
       .send(environment.smartConractAdressRouter, abiHex)
       .then((data) => {
-        this.txHash = 'https://test.exchangily.com/explorer/tx-detail/' + data;
+        const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
+        this.txHash = baseUrl + '/explorer/tx-detail/' + data;
+        setTimeout(() => {this.refresh()}, 8000);
       });
   }
 }
