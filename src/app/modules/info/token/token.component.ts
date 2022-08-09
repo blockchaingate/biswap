@@ -82,7 +82,7 @@ export class TokenComponent implements OnInit, AfterContentInit {
     const histogramDatas = this.items.map((item: any) => {
       console.log('item==', item);
       const date = new Date(item.date * 1000);
-      const timeString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+      const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
       const lineData = {
         time: timeString,
         value: item.dailyVolumeUSD
@@ -126,7 +126,7 @@ createTVLChart() {
     const histogramDatas = this.items.map((item: any) => {
       console.log('item==', item);
       const date = new Date(item.date * 1000);
-      const timeString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+      const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
       const lineData = {
         time: timeString,
         value: item.reserveUSD
@@ -169,7 +169,7 @@ createFeesChart() {
     const histogramDatas = this.items.map((item: any) => {
       console.log('item==', item);
       const date = new Date(item.date * 1000);
-      const timeString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+      const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
       const lineData = {
         time: timeString,
         value: new BigNumber(item.dailyVolumeUSD).multipliedBy(new BigNumber(0.003)).toNumber()

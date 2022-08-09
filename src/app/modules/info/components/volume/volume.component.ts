@@ -24,7 +24,6 @@ export class VolumeComponent implements OnInit {
   }
 
   createChart(items: any) {
-    console.log('items on volume=', items);
     const chart = createChart(this.volume["nativeElement"], { width: 400, height: 300 });
     //const lineSeries = chart.addLineSeries();
     const histogramSeries = chart.addHistogramSeries({ color: '#26a69a' });
@@ -32,7 +31,7 @@ export class VolumeComponent implements OnInit {
 
     const histogramDatas = items.map((item: any) => {
       const date = new Date(item.date * 1000);
-      const timeString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+      const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
       const lineData = {
         time: timeString,
         value: item.dailyVolumeUSD

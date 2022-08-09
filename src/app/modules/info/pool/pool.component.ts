@@ -85,7 +85,7 @@ export class PoolComponent implements OnInit, AfterContentInit {
         const histogramDatas = this.items.map((item: any) => {
           console.log('item==', item);
           const date = new Date(item.date * 1000);
-          const timeString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+          const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
           const lineData = {
             time: timeString,
             value: item.dailyVolumeUSD
@@ -129,7 +129,7 @@ export class PoolComponent implements OnInit, AfterContentInit {
         const histogramDatas = this.items.map((item: any) => {
           console.log('item==', item);
           const date = new Date(item.date * 1000);
-          const timeString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+          const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
           const lineData = {
             time: timeString,
             value: item.reserveUSD
@@ -172,7 +172,7 @@ export class PoolComponent implements OnInit, AfterContentInit {
         const histogramDatas = this.items.map((item: any) => {
           console.log('item==', item);
           const date = new Date(item.date * 1000);
-          const timeString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+          const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
           const lineData = {
             time: timeString,
             value: new BigNumber(item.dailyVolumeUSD).multipliedBy(new BigNumber(0.003)).toNumber()

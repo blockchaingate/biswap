@@ -20,21 +20,22 @@ export class LiquidityComponent implements OnInit {
 
   ngOnChanges(changes: any){
     const items = changes && changes.items && changes.items.currentValue;
+
     if(items && items.length > 0) {
+      console.log('items for createChart==', items);
       this.createChart(items);
     }
   }
 
   createChart(items: any) {
 
-    console.log('this.currentLiquidity===', this.currentLiquidity);
     const chart = createChart(this.liquidity["nativeElement"], { width: 400, height: 300 });
     const lineSeries = chart.addLineSeries(
       { color: 'rgb(118, 69, 217)', baseLineColor: 'rgb(118, 69, 217)', priceLineColor: 'rgb(118, 69, 217)' }
     );
     const lineDatas = items.map((item: any) => {
       const date = new Date(item.date * 1000);
-      const timeString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+      const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
       console.log('timeString===', timeString);
       const lineData = {
         time: timeString,
