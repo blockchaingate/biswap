@@ -22,6 +22,12 @@ import { SettingsComponent } from '../settings/settings.component';
   styleUrls: ['./swap.component.scss'],
 })
 export class SwapComponent implements OnInit {
+  minimumReceived: number;
+  maximumSold: number;
+  priceImpact: string;
+  liquidityPrividerFee: number;
+  liquidityPrividerFeeCoin: string;
+  route: any;
   error: string;
   @ViewChild('token1') token1Element: ElementRef;
   @ViewChild('token2') token2Element: ElementRef;
@@ -298,40 +304,49 @@ export class SwapComponent implements OnInit {
             var amount: number = this.firstCoinAmount;
             var reserve1: BigNumber = this.firstTokenReserve;
             var reserve2: BigNumber = this.secondTokenReserve;
-            let value = new BigNumber(amount)
-              .multipliedBy(new BigNumber(1e18))
-              .toFixed();
+            let value = '0x' + new BigNumber(amount)
+              .shiftedBy(18)
+              .toString(16);
             value = value.split('.')[0];
       
             this.secondCoinAmount = this.biswapServ.getAmountOut(amount, reserve1, reserve2);
 
+            this.liquidityPrividerFee = new BigNumber(amount).multipliedBy(new BigNumber(0.003)).toNumber();
+            this.liquidityPrividerFeeCoin = this.firstToken.tickerName;
+            this.maximumSold = 0;
+            this.minimumReceived = new BigNumber(this.secondCoinAmount).multipliedBy(new BigNumber(1-this.slippage * 0.01)).toNumber();            
           } else {
             var amount: number = this.secondCoinAmount;
             var reserve1: BigNumber = this.firstTokenReserve;
             var reserve2: BigNumber = this.secondTokenReserve;
             let value = new BigNumber(amount)
-              .multipliedBy(new BigNumber(1e18))
-              .toFixed();
+              .shiftedBy(18)
+              .toString(16);
             value = value.split('.')[0];
             const params = [value, reserve2, reserve1];
             var path = [this.firstToken.type, this.secondToken.type];
             console.log('path===', path);
             this.firstCoinAmount = this.biswapServ.getAmountIn(amount, reserve1, reserve2);
-      
+            this.liquidityPrividerFee = new BigNumber(amount).multipliedBy(new BigNumber(0.003)).toNumber();
+            this.liquidityPrividerFeeCoin = this.secondToken.tickerName;
+            this.minimumReceived = 0;
+            this.maximumSold = new BigNumber(this.firstCoinAmount).multipliedBy(new BigNumber(1+this.slippage * 0.01)).toNumber();
           }
       
-          var perAmount = (this.firstCoinAmount / this.secondCoinAmount).toString();
+          var perAmount = (this.firstCoinAmount / this.secondCoinAmount);
       
           this.perAmountLabel =
             this.firstToken.tickerName +
             ' per ' +
             this.secondToken.tickerName;
       
-          this.perAmount = perAmount;   
+          this.perAmount = perAmount.toString();   
 
+          const currentPerAmount = this.firstTokenReserve.dividedBy(this.secondTokenReserve).toNumber();
+          const diff = perAmount > currentPerAmount ? (perAmount - currentPerAmount) : (currentPerAmount - perAmount);
+          this.priceImpact = (diff / perAmount * 100).toFixed(2);
 
-
-
+          this.route = [this.firstToken.tickerName, this.secondToken.tickerName];
         });
         
       });

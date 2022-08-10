@@ -121,6 +121,13 @@
           </span>
         </div>
 
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <span> {{'Slippage Tolerance'}} </span>
+          <span>
+            {{ slippage }}%
+          </span>
+        </div>
+
       </div>
 
       <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
@@ -134,6 +141,59 @@
       </mat-card-actions>
     
     </mat-card>
+
+    <div class="paddingTop20 your-position mb-3" *ngIf="liquidityPrividerFee">
+      <mat-card id="position-mat-card" >
+  
+        <div>
+  
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5" *ngIf="minimumReceived">
+            <span> Minimum received: </span>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <span>{{minimumReceived}}</span>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5" *ngIf="maximumSold">
+            <span> Maximum sold: </span>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <span>{{maximumSold}}</span>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
+            <span> Price impact: </span>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              
+          
+              <span>{{priceImpact}}%</span>
+            </div>
+          </div>
+  
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
+            <span> Liquidity Provider Fee :</span>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              
+              <span>{{liquidityPrividerFee}} {{liquidityPrividerFeeCoin}}</span>
+     
+            </div>
+          </div>
+  
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
+            <span> Route: </span>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              
+              
+              <span *ngFor="let item of route; let i = index">
+                {{item}}
+                <span *ngIf="i != route.length - 1"> >&nbsp;</span>
+              </span>
+            </div>
+          </div>
+        
+        </div>
+      </mat-card>
+    </div>
 
 
     <div *ngIf="txHash">
