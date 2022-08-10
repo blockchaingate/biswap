@@ -88,15 +88,15 @@ export class RemoveLiquidityComponent implements OnInit {
 
   setAmount(percentage: number) {
     this.percentage = percentage;
-    this.selectedFirstTokenAmount = (percentage * this.pooledFirstToken) / 100;
-    this.selectedSecondTokenAmount = (percentage* this.pooledSecondToken) / 100;
+    this.selectedFirstTokenAmount = new BigNumber(percentage).multipliedBy(new BigNumber(this.pooledFirstToken)).dividedBy(new BigNumber(100)).toNumber();
+    this.selectedSecondTokenAmount = new BigNumber(percentage).multipliedBy(new BigNumber(this.pooledSecondToken)).dividedBy( new BigNumber(100)).toNumber();
   }
 
 
   onInputChange(event: MatSliderChange) {
     this.percentage = event.value!;
-    this.selectedFirstTokenAmount = (this.percentage * this.pooledFirstToken) / 100;
-    this.selectedSecondTokenAmount = (this.percentage* this.pooledSecondToken) / 100;
+    this.selectedFirstTokenAmount = new BigNumber(this.percentage).multipliedBy(new BigNumber(this.pooledFirstToken)).dividedBy(new BigNumber(100)).toNumber();
+    this.selectedSecondTokenAmount = new BigNumber(this.percentage).multipliedBy(new BigNumber(this.pooledSecondToken)).dividedBy( new BigNumber(100)).toNumber();
   }
 
   removeLiquidity() {

@@ -135,24 +135,54 @@
       </mat-card-actions>
     </mat-card>
 
-    <div *ngIf="item" class="py-3">
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <p>Your total pool tokens:</p>
-        <p>{{ item.liquidityTokenBalance }}</p>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <p>Pooled {{item.token0Name}}:</p>
-        <p>{{item.pair.reserve0}}</p>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <p>Pooled {{item.token1Name}}:</p>
-        <p>{{item.pair.reserve1}}</p>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <p>Your pool share:</p>
-        <p> {{ item.share }} %</p>
-      </div>
+    <div class="paddingTop20 your-position mb-3" *ngIf="item">
+      <mat-card id="position-mat-card" >
+  
+        <div>
+  
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
+            <span> Your total pool tokens: </span>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              
+          
+              <span> {{item.liquidityTokenBalance}}</span>
+            </div>
+          </div>
+  
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
+            <span> Pooled {{item.token0Name}}: </span>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              
+          
+              <span> {{item.pair.reserve0}}</span>
+            </div>
+          </div>
+  
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
+            <span> Pooled {{item.token1Name}}:</span>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              
+              <span> {{item.pair.reserve1}} </span>
+     
+            </div>
+          </div>
+  
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
+            <span> Your pool share: </span>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              
+              
+              <span> {{ item.share }} % </span>
+            </div>
+          </div>
+        
+        </div>
+      </mat-card>
     </div>
+
+
+
+
     <div *ngIf="txHash">
       <a [href]="txHash" target="_blank" [textContent]="txHash"> </a> 
     </div>
