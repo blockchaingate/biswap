@@ -44,9 +44,29 @@ export class PoolComponent implements OnInit, AfterContentInit {
           this.transactions = transactions;
         }
       );
+
+      this.biswapServ.getCountTransactionsByPair(identity).subscribe(
+        (ret: any) => {
+          const totalCount = ret.totalCount;
+          this.totalPage = Math.floor(totalCount / this.pageSize);
+        }
+      );
     });
 
     
+  }
+
+  changePageNum(pageNum: number) {
+    if(pageNum < 0) {
+      pageNum = 0;
+    }
+    if(pageNum > this.totalPage) {
+      pageNum = this.totalPage;
+    }
+    this.pageNum = pageNum;
+    this.biswapServ.getTransactionsByPair(this.identity, this.pageSize, this.pageNum).subscribe((transactions: any) => {
+      this.transactions = transactions;
+    });
   }
 
   ngAfterContentInit() {

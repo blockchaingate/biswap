@@ -81,9 +81,14 @@ import BigNumber from 'bignumber.js';
       return this.http.get(url);  
     }
 
-    getTransactionsByToken(tokenIdentity: string) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/token/' + tokenIdentity + '/10/0';
+    getTransactionsByToken(tokenIdentity: string, pageSize: number, pageNum: number) {
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/token/' + tokenIdentity + '/' + pageSize + '/' + pageNum;
       return this.http.get(url);  
+    }
+
+    getCountTransactionsByToken(tokenIdentity: string) {
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/token/' + tokenIdentity + '/totalCount';
+      return this.http.get(url);
     }
 
     getTransactionsByPair(pairIdentity: string, pageSize: number, pageNum: number) {
@@ -92,6 +97,11 @@ import BigNumber from 'bignumber.js';
       return this.http.get(url);
     }
 
+    getCountTransactionsByPair(pairIdentity: string) {
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/pair/' + pairIdentity + '/totalCount';
+      return this.http.get(url);
+    }
+    
     getPairDayDatas(pairIdentity: string) {
       const pageSize = 100;
       const pageNum = 0;

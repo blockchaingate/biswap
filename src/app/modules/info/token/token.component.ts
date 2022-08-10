@@ -20,8 +20,25 @@ export class TokenComponent implements OnInit, AfterContentInit {
   transactions: any;
   items: any;
 
+  pageNum = 0;
+  pageSize = 10;
+  totalPage = 0;
+
   @ViewChild('chart') chart: ElementRef;
   constructor(private biswapServ: BiswapService, private activatedRoute: ActivatedRoute) { }
+
+  changePageNum(pageNum: number) {
+    if(pageNum < 0) {
+      pageNum = 0;
+    }
+    if(pageNum > this.totalPage) {
+      pageNum = this.totalPage;
+    }
+    this.pageNum = pageNum;
+    this.biswapServ.getTransactionsByToken(this.identity, this.pageSize, this.pageNum).subscribe((transactions: any) => {
+      this.transactions = transactions;
+    });
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(paramsId => {
@@ -39,11 +56,19 @@ export class TokenComponent implements OnInit, AfterContentInit {
         }
       );
 
-      this.biswapServ.getTransactionsByToken(identity).subscribe(
+      this.biswapServ.getTransactionsByToken(identity, this.pageSize, this.pageNum).subscribe(
         (transactions: any) => {
           this.transactions = transactions;
         }
       );
+
+      this.biswapServ.getCountTransactionsByToken(identity).subscribe(
+        (ret: any) => {
+          const totalCount = ret.totalCount;
+          this.totalPage = Math.floor(totalCount / this.pageSize);
+        }
+      );
+
     });
   }
 
