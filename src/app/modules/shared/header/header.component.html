@@ -1,48 +1,48 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+  <div>
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
       <img class="header-logo" src="../../../../assets/images/biswap-256.png" width="200" alt="image">
-  </button>
+    </button>
+  </div>
 
-    <div class="header-tab-items" fxLayout="row" fxLayoutGap="20px">
-        <span routerLink="/swap">Swap</span>
-        <span routerLink="/pool">Liquidity</span>
-        <span routerLink="/staking">Staking</span>
-        <span routerLink="/reward">Rewards</span>
-        <span routerLink="/charts">Info</span>
-        <!--
+  <div class="header-tab-items" fxLayout="row" fxLayoutGap="20px">
+    <span routerLink="/swap">Swap</span>
+    <span routerLink="/pool">Liquidity</span>
     <span routerLink="/staking">Staking</span>
-    -->
-    </div>
-    <!-- <span class="example-spacer"></span> -->
+    <span routerLink="/reward">Rewards</span>
+    <span routerLink="/charts">Info</span>
+  </div>
+  <!-- <span class="example-spacer"></span> -->
 
-    <div fxLayoutGap="20px">
-        <button mat-raised-button color="primary" *ngIf="!account" (click)="connectWallet()">
+  <div fxLayoutGap="20px">
+    <button mat-raised-button color="primary" *ngIf="!account" (click)="connectWallet()">
       {{ 'Connect Wallet' }}
     </button>
-        <button mat-raised-button color="primary" *ngIf="account" (click)="disConnectWallet()">
+    <button mat-raised-button color="primary" *ngIf="account" (click)="disConnectWallet()">
       {{ 'Disconnect' }}
     </button>
-        <button mat-icon-button class="example-icon" [matMenuTriggerFor]="menu" aria-label="Example icon-button with share icon">
+    <button mat-icon-button class="example-icon" [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with share icon">
       <mat-icon>more_horiz</mat-icon>
     </button>
 
-        <mat-menu class="matMenu" #menu="matMenu">
-            <button mat-menu-item>
+    <mat-menu class="matMenu" #menu="matMenu">
+      <button mat-menu-item>
         <mat-icon>language</mat-icon>
         <span>Languages</span>
       </button>
-            <button mat-menu-item disabled>
+      <button mat-menu-item disabled>
         <mat-icon>voicemail</mat-icon>
         <span>Check voice mail</span>
       </button>
-            <button mat-menu-item>
+      <button mat-menu-item>
         <mat-icon>notifications_off</mat-icon>
         <span>Disable alerts</span>
       </button>
-            <button mat-menu-item routerLink="/info">
+      <button mat-menu-item routerLink="/info">
         <mat-icon>info</mat-icon>
         <span>Info</span>
       </button>
-        </mat-menu>
-    </div>
+    </mat-menu>
+  </div>
 </mat-toolbar>
