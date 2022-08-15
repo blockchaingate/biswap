@@ -6,6 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './modules/material-module';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { SharedModule } from './modules/shared/shared.module';
 import { KanbanService } from './services/kanban.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -24,6 +26,8 @@ import { BiswapService } from './services/biswap.service';
     FormsModule,
     FlexLayoutModule,
     MaterialModule,
+    MatSidenavModule,
+    MatToolbarModule,
     SharedModule,
     HttpClientModule
   ],
