@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DataService } from 'src/app/services/data.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -10,6 +10,8 @@ import { WalletService } from 'src/app/services/wallet.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  @Output() public sidenavToggle = new EventEmitter();
+
   walletSession: any;
   walletLabel: string;
   account: string;
@@ -44,6 +46,10 @@ export class HeaderComponent implements OnInit {
         }
       );
     }
+  }
+
+  onToggleSidenav() {
+    this.sidenavToggle.emit();
   }
 
   connectWallet() {

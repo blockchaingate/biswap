@@ -1,4 +1,4 @@
-.header-tab-items span{
+.header-tab-items span {
     width: 10rem;
     border: 1px solid gray;
     padding: 1px;
@@ -23,22 +23,30 @@
     margin-top: 30px;
 }
 
-.hedaer-logo {
-    height: 40px;
+.header-logo {
+    width: 160px;
 }
 
-
-@media only screen and (max-width: 600px) {
-    .hedaer-logo {
-        height: 0px;
+@media only screen and (max-width: 2800px) {
+    .header-logo {
+        width: 180px;
+        height: auto;
     }
-    .header-tab-items {
-        display: none !important; 
-    }
-  }
+}
 
 @media only screen and (max-width: 1275px) {
-    .hedaer-logo {
-        height: 0px;
+    .header-logo {
+        width: 120px;
+        height: auto;
     }
-  }
+}
+
+@media only screen and (max-width: 600px) {
+    .header-logo {
+        width: 112px;
+        height: auto;
+    }
+    .header-tab-items {
+        display: none !important;
+    }
+}

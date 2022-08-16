@@ -9,6 +9,13 @@ import { GenerateUrlPipe } from './pipes/generate.url.pipe';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { TokenListComponent } from './tokenList/tokenList.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
 
 
 @NgModule({
@@ -18,6 +25,12 @@ import { TokenListComponent } from './tokenList/tokenList.component';
     FormsModule,
     FlexLayoutModule,
     AppRoutingModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
   ],
   exports:[
     HeaderComponent,
@@ -25,6 +38,7 @@ import { TokenListComponent } from './tokenList/tokenList.component';
     WalletComponent,
     GenerateUrlPipe,
     TokenListComponent,
+    SidenavListComponent
   ],
   declarations: [
     HeaderComponent,
@@ -32,6 +46,7 @@ import { TokenListComponent } from './tokenList/tokenList.component';
     WalletComponent,
     GenerateUrlPipe,
     TokenListComponent,
+    SidenavListComponent,
   ]
 })
 export class SharedModule {}

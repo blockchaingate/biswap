@@ -1,21 +1,30 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <img class="header-logo" src="../../../../assets/images/biswap-256.png" width="200" alt="image">
-  </button>
+    <div>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <span routerLink="/">
+        <img class="header-logo" src="/assets/images/biswap-256.png" width="120px" alt="image">
+      </span>
+    </button>
+    </div>
 
-    <div class="header-tab-items" fxLayout="row" fxLayoutGap="20px">
+    <div fxHide.md fxHide.lt-md class="header-tab-items" fxLayout="row" fxLayoutGap="20px">
         <span routerLink="/swap">Swap</span>
         <span routerLink="/pool">Liquidity</span>
         <span routerLink="/staking">Staking</span>
         <span routerLink="/reward">Rewards</span>
         <span routerLink="/charts">Info</span>
-        <!--
-    <span routerLink="/staking">Staking</span>
-    -->
     </div>
     <!-- <span class="example-spacer"></span> -->
 
-    <div fxLayoutGap="20px">
+
+
+    <div fxLayoutGap="12px" fxLayout="row">
+        <div fxHide.gt-md layout-align="end center">
+            <button mat-icon-button (click)="onToggleSidenav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+        </div>
+
         <button mat-raised-button color="primary" *ngIf="!account" (click)="connectWallet()">
       {{ 'Connect Wallet' }}
     </button>
@@ -39,10 +48,12 @@
         <mat-icon>notifications_off</mat-icon>
         <span>Disable alerts</span>
       </button>
+            <!--
             <button mat-menu-item routerLink="/info">
         <mat-icon>info</mat-icon>
         <span>Info</span>
       </button>
+    -->
         </mat-menu>
     </div>
 </mat-toolbar>
