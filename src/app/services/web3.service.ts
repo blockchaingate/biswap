@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import Web3 from 'web3';
-import Common from 'ethereumjs-common';
-import * as Eth from 'ethereumjs-tx';
+import Common from '@ethereumjs/common';
+import * as Eth from '@ethereumjs/tx';
 import { SmartContractServices } from './smartcontract.service';
 
 @Injectable({

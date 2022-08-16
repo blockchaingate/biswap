@@ -10,11 +10,11 @@ import { interval } from 'rxjs';
   styleUrls: ['./staking.component.scss']
 })
 export class StakingComponent implements OnInit {
-  account: string;
-  reward: number;
-  amount: number;
+  account: string = '';
+  reward!: number;
+  amount!: number;
   walletSession: any;
-  totalStaking: number;
+  totalStaking!: number;
 
   intervalId: any;
 

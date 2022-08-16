@@ -8,9 +8,9 @@ import { createChart, MouseEventParams } from 'lightweight-charts';
 })
 export class VolumeComponent implements OnInit {
   @Input() items: any;
-  currentVolume: number | Object;
-  currentTime: string;
-  @ViewChild('volume') volume: ElementRef;
+  currentVolume!: number | Object;
+  currentTime: string = '';
+  @ViewChild('volume') volume!: ElementRef;
   constructor(private renderer: Renderer2) { }
 
   ngOnInit(): void {

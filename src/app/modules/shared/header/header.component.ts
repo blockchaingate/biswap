@@ -13,8 +13,8 @@ export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
 
   walletSession: any;
-  walletLabel: string;
-  account: string;
+  walletLabel: string = '';
+  account: string = '';
 
   constructor(
     public dataService: DataService,

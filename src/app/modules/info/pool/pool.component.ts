@@ -12,9 +12,9 @@ import BigNumber from 'bignumber.js';
 export class PoolComponent implements OnInit, AfterContentInit {
   pair: any;
   transactions: any;
-  title: string;
+  title: string = '';
   value: any;
-  identity: string;
+  identity: string ='';
   currentTime: any;
   items: any;
   chartObj: any;
@@ -23,7 +23,7 @@ export class PoolComponent implements OnInit, AfterContentInit {
   pageSize = 10;
   totalPage = 0;
 
-  @ViewChild('chart') chart: ElementRef;
+  @ViewChild('chart') chart!: ElementRef;
 
   constructor(
     private biswapServ: BiswapService, 

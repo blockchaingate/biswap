@@ -25,9 +25,9 @@ import { BiswapService } from 'src/app/services/biswap.service';
 export class AddLiquidityComponent implements OnInit {
   slippage = 1;
   deadline = 20;
-  error: string;
-  _firstToken: Coin;
-  _secondToken: Coin;
+  error: string = '';
+  _firstToken!: Coin;
+  _secondToken!: Coin;
   item: any;
 
   public get firstToken(): Coin {
@@ -62,13 +62,13 @@ export class AddLiquidityComponent implements OnInit {
     }
 
   }
-  tokenList: Coin[];
+  tokenList: Coin[] = [];
 
   isWalletConnect: boolean = true;
 
-  firstCoinAmount: number;
-  secondCoinAmount: number;
-  _account: string;
+  firstCoinAmount!: number;
+  secondCoinAmount!: number;
+  _account: string ='';
 
   public get account(): string {
     return this._account;
@@ -96,22 +96,22 @@ export class AddLiquidityComponent implements OnInit {
     this.checkLiquidity();
   }
 
-  perAmount: string;
+  perAmount: string = '';
   perAmountLabel: string = '';
 
-  txHash: String;
-  newPair: String;
+  txHash: String = '';
+  newPair: String ='';
 
   isNewPair: boolean = false;
 
   firstTokenReserve: BigNumber = new BigNumber(0);
   secondTokenReserve: BigNumber = new BigNumber(0);
 
-  secondCoinBalance: number;
-  firstCoinBalance: number;
+  secondCoinBalance!: number;
+  firstCoinBalance!: number;
 
   //walletAddress:string;
-  _pairAddress: string;
+  _pairAddress: string = '';
 
   get pairAddress(): string {
     return this._pairAddress;

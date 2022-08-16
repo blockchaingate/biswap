@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "biSwap": {
+        "biswap": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -41,8 +41,8 @@
                         "production": {
                             "budgets": [{
                                     "type": "initial",
-                                    "maximumWarning": "500kb",
-                                    "maximumError": "5mb"
+                                    "maximumWarning": "800kb",
+                                    "maximumError": "6mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",
@@ -71,10 +71,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "biSwap:build:production"
+                            "browserTarget": "biswap:build:production"
                         },
                         "development": {
-                            "browserTarget": "biSwap:build:development"
+                            "browserTarget": "biswap:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -82,7 +82,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "biSwap:build"
+                        "browserTarget": "biswap:build"
                     }
                 },
                 "test": {
@@ -106,6 +106,5 @@
                 }
             }
         }
-    },
-    "defaultProject": "biSwap"
+    }
 }

@@ -11,8 +11,8 @@ import BigNumber from 'bignumber.js';
 })
 export class TokenComponent implements OnInit, AfterContentInit {
   token: any;
-  identity: string;
-  title: string;
+  identity: string ='';
+  title: string = '';
   value: any;
   currentTime: any;
   chartObj: any;
@@ -24,7 +24,7 @@ export class TokenComponent implements OnInit, AfterContentInit {
   pageSize = 10;
   totalPage = 0;
 
-  @ViewChild('chart') chart: ElementRef;
+  @ViewChild('chart') chart!: ElementRef;
   constructor(private biswapServ: BiswapService, private activatedRoute: ActivatedRoute) { }
 
   changePageNum(pageNum: number) {

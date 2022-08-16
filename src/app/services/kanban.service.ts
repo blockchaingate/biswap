@@ -18,7 +18,7 @@ import BigNumber from 'bignumber.js';
 export class KanbanService {
   endpoint = environment.endpoints.kanban;
   private url: string = environment.url;
-  coins: Coin[];
+  coins: Coin[] = [];
   walletModel: WalletModel = new WalletModel();
 
   constructor(

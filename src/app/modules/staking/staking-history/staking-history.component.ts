@@ -14,9 +14,9 @@ export class StakingHistoryComponent implements OnInit {
 
   pageNum = 0;
   totalCount = 100;
-  account: string;
+  account: string = '';
   displayedColumns: string[] = ['position', 'event', 'amount', 'status', 'timestamp'];
-  dataSource: StakesDataSource;
+  dataSource!: StakesDataSource;
   constructor(
     private walletService: WalletService,
     private stakeServ: StakeService) { }

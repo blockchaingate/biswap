@@ -22,19 +22,21 @@ import { SettingsComponent } from '../settings/settings.component';
   styleUrls: ['./swap.component.scss'],
 })
 export class SwapComponent implements OnInit {
-  minimumReceived: number;
-  maximumSold: number;
-  priceImpact: string;
-  liquidityPrividerFee: number;
-  liquidityPrividerFeeCoin: string;
+  minimumReceived!: number;
+  maximumSold!: number;
+  priceImpact: string = '';
+  liquidityPrividerFee!: number;
+  liquidityPrividerFeeCoin: string = '';
   route: any;
-  error: string;
-  @ViewChild('token1') token1Element: ElementRef;
-  @ViewChild('token2') token2Element: ElementRef;
-  isFistToken: boolean;
+  error: string = '';
+  @ViewChild('token1')
+  token1Element!: ElementRef;
+  @ViewChild('token2')
+  token2Element!: ElementRef;
+  isFistToken!: boolean;
 
-  _firstToken: Coin;
-  _secondToken: Coin;
+  _firstToken!: Coin;
+  _secondToken!: Coin;
 
   public get firstToken(): Coin {
     return this._firstToken;
@@ -69,11 +71,11 @@ export class SwapComponent implements OnInit {
 
   }
 
-  tokenList: Coin[];
+  tokenList!: Coin[];
 
   walletSession: any;
 
-  _account: string;
+  _account!: string;
 
   public get account(): string {
     return this._account;
@@ -100,17 +102,17 @@ export class SwapComponent implements OnInit {
     }
   }
   
-  tokenId: string;
+  tokenId!: string;
 
-  firstCoinAmount: number;
-  secondCoinAmount: number;
+  firstCoinAmount!: number;
+  secondCoinAmount!: number;
 
-  perAmount: string;
+  perAmount!: string;
   perAmountLabel: string = '';
 
-  secondCoinBalance: number;
-  firstCoinBalance: number;
-  txHash: string;
+  secondCoinBalance!: number;
+  firstCoinBalance!: number;
+  txHash!: string;
 
   //isNewPair: boolean = false;
 

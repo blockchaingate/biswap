@@ -9,18 +9,18 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./wallet.component.scss'],
 })
 export class WalletComponent implements OnInit {
-  chainId: number;
-  account: string;
-  to: string;
-  toExample: string;
-  dataExample: string;
-  value: number;
-  data: string;
+  chainId!: number;
+  account: string = '';
+  to: string = '';
+  toExample: string = '';
+  dataExample: string = '';
+  value!: number;
+  data: string = '';
   session: any;
-  txid: string;
+  txid: string = '';
   result: any;
   client: any;
-  uri: string;
+  uri: string = '';
 
   constructor(public storageService: StorageService) {}
 
