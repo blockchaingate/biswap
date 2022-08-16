@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { DataService } from './data.service';
-import { StorageService } from './storage.service';
-import SignClient from "../walletconnect/sign-client";
-import { WalletModel } from '../models/wallet.model';
+import SignClient from "@walletconnect/sign-client";
 import QRCodeModal from '@walletconnect/qrcode-modal';
 import { Subject } from 'rxjs';
 @Injectable({
@@ -17,12 +13,7 @@ export class WalletService {
   chainId: string;
   accountSubject = new Subject<string>();
 
-  walletModel: WalletModel = new WalletModel();
-
   constructor(
-    public dataService: DataService,
-    public storageService: StorageService,
-    public dialog: MatDialog
   ) {}
 
 
