@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { MatListModule } from '@angular/material/list';
     WalletComponent,
     GenerateUrlPipe,
     TokenListComponent,
+    SidenavListComponent
   ],
   declarations: [
     HeaderComponent,
@@ -44,6 +46,7 @@ import { MatListModule } from '@angular/material/list';
     WalletComponent,
     GenerateUrlPipe,
     TokenListComponent,
+    SidenavListComponent,
   ]
 })
 export class SharedModule {}
