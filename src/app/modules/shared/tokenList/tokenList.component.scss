@@ -1,10 +1,13 @@
 ::ng-deep .cdk-overlay-pane {
     width: 320px;
-    border-radius: 10px;
+    border-radius: 8px;
+    // border: 1px solid red;
 }
 
 ::ng-deep .mat-dialog-container {
     border-radius: 8px;
+    overflow: hidden !important;
+    background-color: #8c86af;
 }
 
 ::ng-deep .mat-dialog-content {
@@ -17,7 +20,7 @@
 
 mat-form-field mat-label {
     font-size: small;
-    color: white;
+    color: blue;
 }
 
 .sparater {
@@ -28,21 +31,24 @@ mat-form-field mat-label {
 }
 
 .search-token-input {
-    width: 90%;
+    width: 93%;
+    height: 56px;
     border-radius: 8px;
-    margin-bottom: 8px;
-    background-color: #6c6666;
-    font-size: small;
+    margin-bottom: 16px;
+    background-color: #dbd7d7;
+    color: black;
+    font-size: medium;
 }
 
 ::ng-deep .mat-form-field-flex {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 ::ng-deep .mat-input-element {
     caret-color: white;
-    font-size: small;
+    font-size: medium;
+    height: 32px;
 }
 
 .list-button {
@@ -50,13 +56,15 @@ mat-form-field mat-label {
     width: 100%;
     // line-height: 40px;
     cursor: pointer;
-    background-color: #424242;
+    background-color: #e2e1e1;
+    border: 0;
+    border-radius: 5px;
      :hover {
         height: 30px;
         line-height: 40px;
-        background-color: #494949;
+        background-color: #868585;
     }
     span {
-        color: white;
+        color: black;
     }
 }

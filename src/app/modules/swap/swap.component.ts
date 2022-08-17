@@ -41,6 +41,7 @@ export class SwapComponent implements OnInit {
   public get firstToken(): Coin {
     return this._firstToken;
   }
+
   public set firstToken(coin: Coin) {
     this._firstToken = coin;
     const coinType = coin.type;
@@ -51,13 +52,13 @@ export class SwapComponent implements OnInit {
         }
       );
     }
-    
 
   }
  
   public get secondToken(): Coin {
     return this._secondToken;
   }
+
   public set secondToken(coin: Coin) {
     this._secondToken = coin;
     const coinType = coin.type;
@@ -165,6 +166,7 @@ export class SwapComponent implements OnInit {
     }
     this.dataService.GettokenList.subscribe((x) => {
       this.tokenList = x;
+      // this._firstToken = this.tokenList.find(t => t.coinType == 131072) || new Coin();
     });
     this.checkUrlToken();
   }

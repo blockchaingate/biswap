@@ -1,4 +1,4 @@
-<div class="container2">
+<div class="container">
     <div mat-dialog-title>
         <div fxLayout="row" fxLayoutAlign="space-between center" align-center="center">
             <h2>Select a Token</h2>
@@ -9,9 +9,12 @@
         <hr class="sparater" />
     </div>
 
+    <div>
+        Search
+    </div>
     <div fxLayout="row">
         <mat-form-field class="search-token-input">
-            <mat-label>Enter token name</mat-label>
+            <!-- <mat-label>Enter token name</mat-label> -->
             <input matInput name="searchTokenLabel" type="text" [(ngModel)]="searchTokenLabel" (ngModelChange)="searchToken($event)" />
         </mat-form-field>
     </div>
@@ -20,6 +23,7 @@
         <div *ngFor="let token of filteredTokens">
             <button (click)="selectToken(token)" class="list-button">
         <div fxLayout="row" justify-start class="token-list-line" fxLayoutGap="20px">
+            <span>token.</span>
           <span>
             {{ token.tickerName }}
           </span>

@@ -5,9 +5,10 @@
                 <mat-card-title>Swap</mat-card-title>
 
                 <div>
-                    <button (click)="openSettings()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-            <mat-icon>settings</mat-icon>
-          </button>
+                    <button (click)="openSettings()" mat-icon-button class="example-icon"
+                        aria-label="Example icon-button with share icon">
+                        <mat-icon>settings</mat-icon>
+                    </button>
                     <!--
           <button
             mat-icon-button
@@ -30,45 +31,48 @@
 
                 <div class="tokenSelectButton" (click)="openFirstTokenListDialog()">
                     <span class="tokenwithIcon" *ngIf="firstToken.tickerName != null; else select">
-            {{ firstToken.tickerName }} <mat-icon>expand_more</mat-icon>
-            <span *ngIf="firstCoinBalance >= 0">({{firstCoinBalance}})</span>
+                        {{ firstToken.tickerName }} <mat-icon>expand_more</mat-icon>
+                        <span *ngIf="firstCoinBalance >= 0">({{firstCoinBalance}})</span>
                     </span>
 
                     <ng-template #select>
                         <span class="tokenwithIcon">
-              Select Token <mat-icon>expand_more</mat-icon>
-            </span>
+                            Select Token <mat-icon>expand_more</mat-icon>
+                        </span>
                     </ng-template>
 
                 </div>
                 <div class="coins-input-body" fxLayout="row" fxLayoutAlign="space-between center">
                     <mat-form-field>
                         <mat-label></mat-label>
-                        <input (keyup)="onKey(firstCoinAmount, true)" #token1 matInput name="firstCoinAmount" type="number" [(ngModel)]="firstCoinAmount" placeholder="0.0" />
+                        <input (keyup)="onKey(firstCoinAmount, true)" #token1 matInput name="firstCoinAmount"
+                            type="number" [(ngModel)]="firstCoinAmount" placeholder="0.0" />
                     </mat-form-field>
                 </div>
 
                 <div fxLayout="row" fxLayoutAlign="center center">
-                    <button (click)="changeTokens()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-            <mat-icon>swap_vert</mat-icon>
-          </button>
+                    <button (click)="changeTokens()" mat-icon-button class="example-icon"
+                        aria-label="Example icon-button with share icon">
+                        <mat-icon>swap_vert</mat-icon>
+                    </button>
                 </div>
 
                 <div class="tokenSelectButton" (click)="openSecondTokenListDialog()">
                     <span class="tokenwithIcon" *ngIf="secondToken.tickerName != null; else selecta">
-            {{ secondToken.tickerName }} <mat-icon>expand_more</mat-icon>
-            <span *ngIf="secondCoinBalance >= 0">({{secondCoinBalance}})</span>
+                        {{ secondToken.tickerName }} <mat-icon>expand_more</mat-icon>
+                        <span *ngIf="secondCoinBalance >= 0">({{secondCoinBalance}})</span>
                     </span>
 
                     <ng-template #selecta> <span class="tokenwithIcon">
-              Select Token <mat-icon>expand_more</mat-icon>
-            </span> </ng-template>
+                            Select Token <mat-icon>expand_more</mat-icon>
+                        </span> </ng-template>
                 </div>
 
                 <div class="coins-input-body" fxLayout="row" fxLayoutAlign="space-between center">
                     <mat-form-field>
                         <mat-label></mat-label>
-                        <input (keyup)="onKey(secondCoinAmount, false)" #token2 matInput name="secondCointAmount" type="number" [(ngModel)]="secondCoinAmount" placeholder="0.0" />
+                        <input (keyup)="onKey(secondCoinAmount, false)" #token2 matInput name="secondCointAmount"
+                            type="number" [(ngModel)]="secondCoinAmount" placeholder="0.0" />
                     </mat-form-field>
 
 
@@ -77,15 +81,15 @@
                 <div fxLayout="row" fxLayoutAlign="space-between">
                     <span> {{perAmountLabel}} </span>
                     <span>
-            {{ perAmount }}
-          </span>
+                        {{ perAmount }}
+                    </span>
                 </div>
 
                 <div fxLayout="row" fxLayoutAlign="space-between">
                     <span> {{'Slippage Tolerance'}} </span>
                     <span>
-            {{ slippage }}%
-          </span>
+                        {{ slippage }}%
+                    </span>
                 </div>
 
             </div>
@@ -93,7 +97,7 @@
             <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
             <mat-card-actions fxLayout="row" fxLayoutAlign="center center" class="mat-card-action">
                 <button mat-raised-button color="primary" (click)="connectWallet()" *ngIf="!account; else asd">Connect a
-          wallet</button>
+                    wallet</button>
 
                 <ng-template #asd>
                     <button mat-raised-button color="primary" (click)="swapFunction()">Swap</button>
@@ -146,8 +150,8 @@
 
 
                             <span *ngFor="let item of route; let i = index">
-                {{item}}
-                <span *ngIf="i != route.length - 1"> >&nbsp;</span>
+                                {{item}}
+                                <span *ngIf="i != route.length - 1"> >&nbsp;</span>
                             </span>
                         </div>
                     </div>
