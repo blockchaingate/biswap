@@ -7,7 +7,7 @@ import { TimestampModel } from '../models/temistampModel';
   providedIn: 'root',
 })
 export class UtilsService {
-  constructor() {}
+  constructor() { }
 
   fabToExgAddress(address: string) {
     try {
@@ -17,61 +17,62 @@ export class UtilsService {
         return '';
       }
       return '0x' + addressInWallet.substring(2, 42);
-    } catch (e) {}
+    } catch (e) { }
     return '';
   }
 
 
-  stripHexPrefix(str:any) {
-    if(!str) {
-        return '';
+  stripHexPrefix(str: any) {
+    if (!str) {
+      return '';
     }
     if (str && (str.length > 2) && (str[0] === '0') && (str[1] === 'x')) {
-        return str.slice(2);
+      return str.slice(2);
     }
     return str;
-}
-
-toBigNumber(amount:any, decimal: number) {
-  if (amount === 0 || amount === '0') {
-      return '0';
   }
 
-  if (amount.toString().indexOf('e-') > 0) {
+  toBigNumber(amount: any, decimal: number) {
+    if (amount === 0 || amount === '0') {
+      return '0';
+    }
+
+    if (amount.toString().indexOf('e-') > 0) {
       const amountArrr = amount.toString().split('e');
       return new BigNumber(amountArrr[0] + 'e' + (Number(amountArrr[1]) + decimal)).toFixed();
-  }
-  const amountStr = amount.toString();
-  const amountArr = amountStr.split('.');
-  const amountPart1 = amountArr[0];
-  const numPart1 = Number(amountPart1);
-  let amountPart2 = '';
-  if (amountArr[1]) {
+    }
+    const amountStr = amount.toString();
+    const amountArr = amountStr.split('.');
+    const amountPart1 = amountArr[0];
+    const numPart1 = Number(amountPart1);
+    let amountPart2 = '';
+    if (amountArr[1]) {
       amountPart2 = amountArr[1].substring(0, decimal);
-  }
+    }
 
-  const amountPart2Length = amountPart2.length;
-  if (decimal > amountPart2Length) {
+    const amountPart2Length = amountPart2.length;
+    if (decimal > amountPart2Length) {
       for (let i = 0; i < decimal - amountPart2Length; i++) {
-          amountPart2 += '0';
+        amountPart2 += '0';
       }
+    }
+
+    let amountStrFull = (numPart1 ? amountPart1 : '') + amountPart2;
+    amountStrFull = amountStrFull.replace(/^0+/, '');
+    return amountStrFull;
   }
 
-  let amountStrFull = (numPart1 ? amountPart1 : '') + amountPart2;
-  amountStrFull = amountStrFull.replace(/^0+/, '');
-  return amountStrFull;
-}
+  getTimestamp(value: TimestampModel) {
+    var d = new Date();
+    d.setFullYear(d.getUTCFullYear() + value.year);
+    d.setDate(d.getUTCDate() + value.day!);
+    d.setHours(d.getUTCHours() + value.hour!)
+    d.setMinutes(d.getUTCMinutes() + value.minute!);
+    return d.getTime();
+  }
 
-getTimestamp(value: TimestampModel){
-var d = new Date();
-d.setFullYear(d.getUTCFullYear() + value.year);
-d.setDate(d.getUTCDate() + value.day!);
-d.setHours(d.getUTCHours() + value.hour!)
-d.setMinutes(d.getUTCMinutes() + value.minute!);
- return d.getTime();
-}
+  toFixedNumber(param: number) {
+    return Number(param.toFixed(4));
+  }
 
-toFixedNumber(param: number){
-  return Number(param.toFixed(4));
-}
 }

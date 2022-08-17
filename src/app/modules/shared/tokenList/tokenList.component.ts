@@ -24,9 +24,20 @@ export class TokenListComponent implements OnInit {
   ngOnInit() {
     this.tokenList = this.data.tokens;
     this.filteredTokens = this.tokenList;
+    this.filteredTokens.sort(this.compare);
     this.filteredTokens.forEach((ele) => {
       ele.logoUrl = 'https://exchangily.com/assets/coins/' + ele.tickerName.toLocaleLowerCase() + '.png';
     }); 
+  }
+
+  compare(a: Coin, b: Coin ) {
+    if ( a.tickerName < b.tickerName ){
+      return -1;
+    }
+    if ( a.tickerName > b.tickerName ){
+      return 1;
+    }
+    return 0;
   }
 
   selectToken(token: Coin) {
