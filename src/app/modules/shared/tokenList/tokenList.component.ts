@@ -11,7 +11,7 @@ import { SwapComponent } from '../../swap/swap.component';
   styleUrls: ['./tokenList.component.scss']
 })
 export class TokenListComponent implements OnInit {
-  searchTokenLabel = 'Search name or paste address';
+  searchTokenLabel = '';
   tokenList: any;
   filteredTokens: Coin [] = [];
 

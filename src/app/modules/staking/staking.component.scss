@@ -1,11 +1,10 @@
 .swapBody {
     min-width: 25%;
     margin-top: 100px;
-    background-color: white;
 }
 
 ::ng-deep .mat-card {
-    border-radius: 25px !important; 
+    border-radius: 25px !important;
 }
 
 .coins-input-body {
@@ -27,9 +26,9 @@
 
 ::ng-deep .mat-form-field label {
     font-size: 40px;
-  }
+}
 
-  .sparater {
+.sparater {
     margin: 10px -20px 10px;
     border: 0;
     border-top: 1px solid #c9c7c7;
@@ -57,7 +56,7 @@
 }
 
 ::ng-deep .mat-expansion-panel-header-description {
-    flex-grow: 0 !important; 
+    flex-grow: 0 !important;
 }
 
 .action-buttons {

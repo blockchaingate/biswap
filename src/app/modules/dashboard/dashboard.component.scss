@@ -1,24 +1,24 @@
 .dashboard-body {
-  height: 50vh;
+    height: 50vh;
 }
 
 .dash-mat-card {
-  padding: 0 !important;
-  background-color: #222f3e;
-  &:hover {
-    border-bottom: 2px solid #222f3e;
-    color: #222f3e;
-    background-color: #efefef;
- }
+    padding: 0 !important;
+    background-color: #0044aa;
+    &:hover {
+        border-bottom: 2px solid #222f3e;
+        color: black;
+        background-color: #7f7fff;
+    }
 }
 
 .card-h2 {
-  padding-top: 20px;
-  padding-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .instructions {
-  display: block;
-  justify-content: center;
-  text-align: center;
+    display: block;
+    justify-content: center;
+    text-align: center;
 }

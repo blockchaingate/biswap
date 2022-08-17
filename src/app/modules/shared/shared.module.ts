@@ -15,8 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
-
 
 @NgModule({
   imports: [
@@ -31,6 +31,7 @@ import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatSelectModule
   ],
   exports:[
     HeaderComponent,
@@ -38,7 +39,7 @@ import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
     WalletComponent,
     GenerateUrlPipe,
     TokenListComponent,
-    SidenavListComponent
+    SidenavListComponent,
   ],
   declarations: [
     HeaderComponent,
