@@ -1,3 +1,21 @@
+.container {
+    background-color: white;
+    color: black;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
 table {
+    background-color: white;
     width: 100%;
+}
+
+th, td {
+    color: black;
+    border: 1px solid lightgray;
+}
+
+mat-paginator {
+    background-color: silver;
+    color: black
 }

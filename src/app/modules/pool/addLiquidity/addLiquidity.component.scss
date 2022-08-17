@@ -1,18 +1,17 @@
 .swapBody {
-    min-width: 25%;
     margin-top: 100px;
-    background-color: white;
 }
 
 ::ng-deep .mat-card {
-    border-radius: 25px !important; 
+    border-radius: 12px !important;
+    background-color: #0044aa;
 }
 
 .coins-input-body {
     // border: 1px solid gray;
     border-radius: 15px;
     justify-content: center;
-    background-color: #636363;
+    background-color: #c3c9e0;
     padding-left: 10px;
     padding-right: 10px;
 }
