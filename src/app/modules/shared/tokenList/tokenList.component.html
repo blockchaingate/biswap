@@ -23,10 +23,10 @@
         <div *ngFor="let token of filteredTokens">
             <button (click)="selectToken(token)" class="list-button">
         <div fxLayout="row" justify-start class="token-list-line" fxLayoutGap="20px">
-            <span>token.</span>
-          <span>
-            {{ token.tickerName }}
-          </span>
+            <span> <img src='{{token.logoUrl}}' width="20px"></span>
+            <span>
+                {{ token.tickerName }}
+            </span>
         </div>
       </button>
         </div>

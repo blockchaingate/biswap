@@ -24,6 +24,9 @@ export class TokenListComponent implements OnInit {
   ngOnInit() {
     this.tokenList = this.data.tokens;
     this.filteredTokens = this.tokenList;
+    this.filteredTokens.forEach((ele) => {
+      ele.logoUrl = 'https://exchangily.com/assets/coins/' + ele.tickerName.toLocaleLowerCase() + '.png';
+    }); 
   }
 
   selectToken(token: Coin) {

@@ -23,6 +23,7 @@ export class Coin {
     protocol?: string; // ERC20, TRC20, FRC20 etc.
     contractAddress?: string; // If it is a contract token
     trimPrefix?: boolean;
+    logoUrl? :string;
 
     issueTime?: string;
     totalsupply?: number;
