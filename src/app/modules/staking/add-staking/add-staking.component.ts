@@ -12,8 +12,8 @@ import { WalletService } from 'src/app/services/wallet.service';
   styleUrls: ['./add-staking.component.scss']
 })
 export class AddStakingComponent implements OnInit {
-  account: string;
-  coinAmount: number;
+  account: string = '';
+  coinAmount!: number;
   constructor(
     private _snackBar: MatSnackBar,
     private web3Service: Web3Service,

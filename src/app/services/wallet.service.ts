@@ -8,9 +8,9 @@ import { Subject } from 'rxjs';
 export class WalletService {
   session: any;
   client: any;
-  account: string;
+  account: string = '';
   topic: any;
-  chainId: string;
+  chainId: string = '';
   accountSubject = new Subject<string>();
 
   constructor(

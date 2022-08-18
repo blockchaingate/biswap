@@ -11,8 +11,8 @@ import BigNumber from 'bignumber.js';
   styleUrls: ['./withdraw-staking.component.scss']
 })
 export class WithdrawStakingComponent implements OnInit {
+  coinAmount!: number;
 
-  coinAmount: number;
   constructor(
     private _snackBar: MatSnackBar,
     private web3Service: Web3Service,

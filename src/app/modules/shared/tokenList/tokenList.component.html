@@ -1,57 +1,40 @@
 <div class="container">
-  <div mat-dialog-title>
-    <div
-      fxLayout="row"
-      fxLayoutAlign="space-between center"
-      align-center="center"
-    >
-      <h1>Select a Token</h1>
-      <button
-        mat-dialog-close
-        mat-icon-button
-        class="example-icon"
-        aria-label="Example icon-button with menu icon"
-      >
+    <div mat-dialog-title>
+        <div fxLayout="row" fxLayoutAlign="space-between center" align-center="center">
+            <h2>Select a Token</h2>
+            <button mat-dialog-close mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
         <mat-icon>close</mat-icon>
       </button>
+        </div>
+        <hr class="sparater" />
     </div>
-    <hr class="sparater" />
-  </div>
 
-  <div fxLayout="row">
-    <mat-form-field class="search-token-input">
-      <input
-        matInput
-        name="searchTokenLabel"
-        type="text"
-        [(ngModel)]="searchTokenLabel"
-        (ngModelChange)="searchToken($event)"
-      />
-    </mat-form-field>
-  </div>
+    <div>
+        Search
+    </div>
+    <div fxLayout="row">
+        <mat-form-field class="search-token-input">
+            <!-- <mat-label>Enter token name</mat-label> -->
+            <input matInput name="searchTokenLabel" type="text" [(ngModel)]="searchTokenLabel" (ngModelChange)="searchToken($event)" />
+        </mat-form-field>
+    </div>
 
-  <div mat-dialog-content fxLayout="column" fxLayoutGap="5px" >
-    <div *ngFor="let token of filteredTokens">
-      <button (click)="selectToken(token)" class="list-button">
-        <div
-          fxLayout="row"
-          justify-start
-          class="token-list-line"
-          fxLayoutGap="20px"
-        >
-          <span>
-            {{ token.tickerName }}
-          </span>
+    <div class="tokenlist" mat-dialog-content fxLayout="column" fxLayoutGap="5px">
+        <div *ngFor="let token of filteredTokens">
+            <button (click)="selectToken(token)" class="list-button">
+        <div fxLayout="row" justify-start class="token-list-line" fxLayoutGap="20px">
+            <span> <img src='{{token.logoUrl}}' width="20px"></span>
+            <span>
+                {{ token.tickerName }}
+            </span>
         </div>
       </button>
+        </div>
     </div>
 
-    
-  </div>
-
-  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="center center">
-    <div mat-dialog-actions>
-      <button mat-button mat-dialog-close>Close</button>
-    </div>   
-  </div>
+    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="center center">
+        <div mat-dialog-actions>
+            <button mat-button mat-dialog-close>Close</button>
+        </div>
+    </div>
 </div>

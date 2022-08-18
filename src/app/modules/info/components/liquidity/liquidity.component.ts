@@ -8,9 +8,10 @@ import { createChart, MouseEventParams } from 'lightweight-charts';
 })
 export class LiquidityComponent implements OnInit {
   @Input() items: any;
-  currentLiquidity: number | Object;
-  currentTime: string;
-  @ViewChild('liquidity') liquidity: ElementRef;
+  currentLiquidity!: number | Object;
+  currentTime!: string;
+  @ViewChild('liquidity')
+  liquidity!: ElementRef;
   constructor(private renderer: Renderer2) { }
 
   ngOnInit(): void {

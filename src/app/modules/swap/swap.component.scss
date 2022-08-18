@@ -23,17 +23,16 @@ input::-moz-placeholder {
 
 .swapBody {
     margin-top: 100px;
-    // background-color: #eaebec;
 }
 
 ::ng-deep .mat-card {
-    border-radius: 25px !important;
-    background-color: #093362;
+    border-radius: 12px !important;
+    background-color: #0044aa;
 }
 
 .coins-input-body {
     // border: 1px solid gray;
-    border-radius: 15px;
+    border-radius: 8px;
     justify-content: center;
     background-color: #c3c9e0;
     color: black;

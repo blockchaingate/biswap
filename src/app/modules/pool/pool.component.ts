@@ -18,8 +18,8 @@ export class PoolComponent implements OnInit {
   addLiquidityActive: boolean = false;
   walletSession: any;
 
-  usersProportionOfLiquidityToWhole: number;
-  account: string;
+  usersProportionOfLiquidityToWhole!: number;
+  account: string = '';
   panelOpenState = false;
 
   fisrtToken: Coin = new Coin();
@@ -29,13 +29,13 @@ export class PoolComponent implements OnInit {
   fisrtTokenName: number=0;
   secondTokenName: number=0;
 
-  firstTokeninPair: number;
-  secondTokeninPair: number;
-  totalPoolToken: number;
-  totalSupply: number;
-  yourPoolShare: number;
+  firstTokeninPair!: number;
+  secondTokeninPair!: number;
+  totalPoolToken!: number;
+  totalSupply!: number;
+  yourPoolShare!: number;
 
-  walletAddress: string;
+  walletAddress: string = '';
 
 
   existedLiquidityList: any[] = [];
