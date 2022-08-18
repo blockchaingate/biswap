@@ -24,6 +24,7 @@ import { SettingsComponent } from '../settings/settings.component';
 export class SwapComponent implements OnInit {
   minimumReceived!: number;
   maximumSold!: number;
+  autorefresh: any;
   priceImpact: string = '';
   liquidityPrividerFee!: number;
   liquidityPrividerFeeCoin: string = '';
@@ -171,7 +172,7 @@ export class SwapComponent implements OnInit {
     });
     this.checkUrlToken();
 
-    setInterval(() => {this.refresh()}, 1000);
+    this.autorefresh = setInterval(() => {this.refresh()}, 1000);
   }
  
  
@@ -287,6 +288,11 @@ export class SwapComponent implements OnInit {
       });
   }
 
+  ngOnDestroy() {
+    if(this.autorefresh) {
+      clearInterval(this.autorefresh);
+    }
+  }
 
   async setInputValues(isFirst: boolean) {
     if(!this.tokenId || (this.tokenId == '0x0000000000000000000000000000000000000000')) {
