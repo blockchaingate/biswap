@@ -75,7 +75,6 @@ export class KanbanService {
       this.http
       .get<BaseResponseModel>(url)
       .subscribe((x: any) => {
-        console.log('x===', x);
         const filtered = x.filter((item: any) => item.coinType == coinType);
         let balance = 0;
         if(filtered && (filtered.length > 0) ) {

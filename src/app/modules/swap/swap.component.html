@@ -100,7 +100,8 @@
                     wallet</button>
 
                 <ng-template #asd>
-                    <button mat-raised-button color="primary" (click)="swapFunction()">Swap</button>
+                    <button mat-raised-button color="primary" (click)="swapFunction()" *ngIf="!insufficientFund">Swap{{(priceImpact > 5) ? ' Anyway' : ''}}</button>
+                    <button mat-raised-button color="primary" disabled *ngIf="insufficientFund">Insufficent {{isFistToken ? firstToken.tickerName : secondToken.tickerName}} balance</button>
                 </ng-template>
 
             </mat-card-actions>
@@ -131,7 +132,7 @@
                         <div fxLayout="row" fxLayoutAlign="center center">
 
 
-                            <span>{{priceImpact}}%</span>
+                            <span [ngClass]="(priceImpact > 5) ? 'text-danger' : ''">{{priceImpact}}%</span>
                         </div>
                     </div>
 

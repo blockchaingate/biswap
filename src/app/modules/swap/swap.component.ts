@@ -24,8 +24,9 @@ import { SettingsComponent } from '../settings/settings.component';
 export class SwapComponent implements OnInit {
   minimumReceived!: number;
   maximumSold!: number;
+  insufficientFund: boolean = false;
   autorefresh: any;
-  priceImpact: string = '';
+  priceImpact: number = 0;
   liquidityPrividerFee!: number;
   liquidityPrividerFeeCoin: string = '';
   route: any;
@@ -318,8 +319,8 @@ export class SwapComponent implements OnInit {
 
 
           if (isFirst && this.firstCoinAmount) {
-            console.log('go here');
             var amount: number = this.firstCoinAmount;
+            this.insufficientFund = (Number(amount) > Number(this.firstCoinBalance));
             var reserve1: BigNumber = this.firstTokenReserve;
             var reserve2: BigNumber = this.secondTokenReserve;
             let value = '0x' + new BigNumber(amount)
@@ -336,8 +337,8 @@ export class SwapComponent implements OnInit {
           } else 
           if(!isFirst && this.secondCoinAmount)
           {
-            console.log('go there');
             var amount: number = this.secondCoinAmount;
+            this.insufficientFund = (Number(amount) > Number(this.secondCoinBalance));
             var reserve1: BigNumber = this.firstTokenReserve;
             var reserve2: BigNumber = this.secondTokenReserve;
             let value = new BigNumber(amount)
@@ -346,7 +347,6 @@ export class SwapComponent implements OnInit {
             value = value.split('.')[0];
             const params = [value, reserve2, reserve1];
             var path = [this.firstToken.type, this.secondToken.type];
-            console.log('path===', path);
             this.firstCoinAmount = this.biswapServ.getAmountIn(amount, reserve1, reserve2);
             this.liquidityPrividerFee = new BigNumber(amount).multipliedBy(new BigNumber(0.003)).toNumber();
             this.liquidityPrividerFeeCoin = this.secondToken.tickerName;
@@ -366,7 +366,7 @@ export class SwapComponent implements OnInit {
   
             const currentPerAmount = this.firstTokenReserve.dividedBy(this.secondTokenReserve).toNumber();
             const diff = perAmount > currentPerAmount ? (perAmount - currentPerAmount) : (currentPerAmount - perAmount);
-            this.priceImpact = (diff / perAmount * 100).toFixed(2);
+            this.priceImpact = Number((diff / perAmount * 100).toFixed(2));
   
             this.route = [this.firstToken.tickerName, this.secondToken.tickerName];
           }

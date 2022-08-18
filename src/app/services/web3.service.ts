@@ -20,10 +20,7 @@ export class Web3Service {
 
   getGeneralFunctionABI(func: any, paramsArray: string[]) {
     const web3 = this.getWeb3Provider();
-    console.log('paramsArray==', paramsArray);
-    console.log('func', func);
     const abiHex = web3.eth.abi.encodeFunctionCall(func, paramsArray);
-    console.log('abiHex=', abiHex);
     return abiHex;
   }
 
