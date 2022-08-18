@@ -271,8 +271,7 @@ export class AddLiquidityComponent implements OnInit {
     console.log('abiHex => ' + abiHex);
     this.kanbanService
       .kanbanCall(environment.smartConractAdressFactory, abiHex)
-      .then((data) => {
-        data.subscribe((data1) => {
+      .subscribe((data1) => {
           let res: any = data1;
           var addeess = this.web3Service.decodeabiHex(res.data, 'address');
           console.log('address=', addeess);
@@ -283,8 +282,7 @@ export class AddLiquidityComponent implements OnInit {
             var abiHexa = this.web3Service.getReserves();
             this.kanbanService
               .kanbanCall(addeess.toString(), abiHexa)
-              .then((data2) => {
-                data2.subscribe((data3) => {
+              .subscribe((data3) => {
                   var param = ['uint112', 'uint112', 'uint32'];
                   let res: any = data3;
                   console.log('res.data');
@@ -306,7 +304,6 @@ export class AddLiquidityComponent implements OnInit {
                     this.secondToken.tickerName;
 
                   this.perAmount = perAmount;
-                });
               });
             this.isNewPair = false;
             this.newPair = '';
@@ -314,11 +311,7 @@ export class AddLiquidityComponent implements OnInit {
             this.newPair = 'You are adding liquidity to new pair';
             this.isNewPair = true;
           }
-        });
       })
-      .catch((error) => {
-        this.openDialog(error);
-      });
   }
 
   openFirstTokenListDialog() {
@@ -370,7 +363,6 @@ export class AddLiquidityComponent implements OnInit {
   }
 
   refresh() {
-    console.log('refreshing');
     this.kanbanService.getTokenBalance(this.account, this.firstToken.type).subscribe(
       (balance: any) => {
         this.firstCoinBalance = balance;

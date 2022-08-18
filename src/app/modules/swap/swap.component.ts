@@ -24,6 +24,7 @@ import { SettingsComponent } from '../settings/settings.component';
 export class SwapComponent implements OnInit {
   minimumReceived!: number;
   maximumSold!: number;
+  autorefresh: any;
   priceImpact: string = '';
   liquidityPrividerFee!: number;
   liquidityPrividerFeeCoin: string = '';
@@ -84,6 +85,7 @@ export class SwapComponent implements OnInit {
 
   public set account(newAccount: string) {
     this._account = newAccount;
+    
     if(newAccount) {
       if(this.firstToken && this.firstToken.type) {
         this.kanbanService.getTokenBalance(newAccount, this.firstToken.type).subscribe(
@@ -169,6 +171,8 @@ export class SwapComponent implements OnInit {
       // this._firstToken = this.tokenList.find(t => t.coinType == 131072) || new Coin();
     });
     this.checkUrlToken();
+
+    this.autorefresh = setInterval(() => {this.refresh()}, 1000);
   }
  
  
@@ -222,15 +226,21 @@ export class SwapComponent implements OnInit {
   getPair() {
     var params = [this.firstToken.type, this.secondToken.type];
     var abiHex = this.web3Service.getPair(params);
-    console.log('abiHex => ' + abiHex);
+    console.log('abiHex  for getPair=> ' + abiHex);
     this.kanbanService
       .kanbanCall(environment.smartConractAdressFactory, abiHex)
-      .then((data) => {
+      .subscribe((data: any) => {
+        console.log('data=====', data);
+        /*
         data.subscribe((data1) => {
           let res: any = data1;
-          var addeess = this.web3Service.decodeabiHex(res.data, 'address');
-          this.tokenId = addeess.toString();
+
         })
+        */
+        var address = this.web3Service.decodeabiHex(data.data, 'address');
+        console.log('address===', address);
+        this.tokenId = address.toString();
+        console.log('this.tokenId===', this.tokenId);
       });
   }
 
@@ -278,17 +288,20 @@ export class SwapComponent implements OnInit {
       });
   }
 
+  ngOnDestroy() {
+    if(this.autorefresh) {
+      clearInterval(this.autorefresh);
+    }
+  }
 
   async setInputValues(isFirst: boolean) {
-    if(this.tokenId == '0x0000000000000000000000000000000000000000') {
+    if(!this.tokenId || (this.tokenId == '0x0000000000000000000000000000000000000000')) {
       return;
     }
     var abiHexa = this.web3Service.getReserves();
     this.kanbanService
       .kanbanCall(this.tokenId, abiHexa)
-      .then((data2) => {
-        data2.subscribe((data1) => {
-          console.log('data1===', data1);
+      .subscribe((data1) => {
 
           var param = ['uint112', 'uint112', 'uint32'];
           let res: any = data1;
@@ -304,7 +317,8 @@ export class SwapComponent implements OnInit {
           }
 
 
-          if (isFirst) {
+          if (isFirst && this.firstCoinAmount) {
+            console.log('go here');
             var amount: number = this.firstCoinAmount;
             var reserve1: BigNumber = this.firstTokenReserve;
             var reserve2: BigNumber = this.secondTokenReserve;
@@ -319,7 +333,10 @@ export class SwapComponent implements OnInit {
             this.liquidityPrividerFeeCoin = this.firstToken.tickerName;
             this.maximumSold = 0;
             this.minimumReceived = new BigNumber(this.secondCoinAmount).multipliedBy(new BigNumber(1-this.slippage * 0.01)).toNumber();            
-          } else {
+          } else 
+          if(!isFirst && this.secondCoinAmount)
+          {
+            console.log('go there');
             var amount: number = this.secondCoinAmount;
             var reserve1: BigNumber = this.firstTokenReserve;
             var reserve2: BigNumber = this.secondTokenReserve;
@@ -337,22 +354,23 @@ export class SwapComponent implements OnInit {
             this.maximumSold = new BigNumber(this.firstCoinAmount).multipliedBy(new BigNumber(1+this.slippage * 0.01)).toNumber();
           }
       
-          var perAmount = (this.firstCoinAmount / this.secondCoinAmount);
+          if((isFirst && this.firstCoinAmount) || (!isFirst && this.secondCoinAmount)) {
+            var perAmount = (this.firstCoinAmount / this.secondCoinAmount);
       
-          this.perAmountLabel =
-            this.firstToken.tickerName +
-            ' per ' +
-            this.secondToken.tickerName;
-      
-          this.perAmount = perAmount.toString();   
-
-          const currentPerAmount = this.firstTokenReserve.dividedBy(this.secondTokenReserve).toNumber();
-          const diff = perAmount > currentPerAmount ? (perAmount - currentPerAmount) : (currentPerAmount - perAmount);
-          this.priceImpact = (diff / perAmount * 100).toFixed(2);
-
-          this.route = [this.firstToken.tickerName, this.secondToken.tickerName];
-        });
+            this.perAmountLabel =
+              this.firstToken.tickerName +
+              ' per ' +
+              this.secondToken.tickerName;
         
+            this.perAmount = perAmount.toString();   
+  
+            const currentPerAmount = this.firstTokenReserve.dividedBy(this.secondTokenReserve).toNumber();
+            const diff = perAmount > currentPerAmount ? (perAmount - currentPerAmount) : (currentPerAmount - perAmount);
+            this.priceImpact = (diff / perAmount * 100).toFixed(2);
+  
+            this.route = [this.firstToken.tickerName, this.secondToken.tickerName];
+          }
+
       });
 
   }
@@ -377,18 +395,25 @@ export class SwapComponent implements OnInit {
   }
 
   refresh() {
-    console.log('refreshing');
-    this.kanbanService.getTokenBalance(this.account, this.firstToken.type).subscribe(
-      (balance: any) => {
-        this.firstCoinBalance = balance;
+    if(this.account) {
+      if(this.firstToken && this.firstToken.type) {
+        this.kanbanService.getTokenBalance(this.account, this.firstToken.type).subscribe(
+          (balance: any) => {
+            this.firstCoinBalance = balance;
+          }
+        );
       }
-    );
+  
+      if(this.secondToken && this.secondToken.type) {
+        this.kanbanService.getTokenBalance(this.account, this.secondToken.type).subscribe(
+          (balance: any) => {
+            this.secondCoinBalance = balance;
+          }
+        );
+      }
+    }
 
-    this.kanbanService.getTokenBalance(this.account, this.secondToken.type).subscribe(
-      (balance: any) => {
-        this.secondCoinBalance = balance;
-      }
-    );
+    this.setInputValues(this.isFistToken);
   }
 
   async swapFunction() {
@@ -440,7 +465,7 @@ export class SwapComponent implements OnInit {
       .then((data) => {
         const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
         this.txHash = baseUrl + '/explorer/tx-detail/' + data;
-        setTimeout(() => {this.refresh()}, 6000);
+        
       });
   }
 }
