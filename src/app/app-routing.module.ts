@@ -4,6 +4,10 @@ import { PrivacyComponent } from './components/privacy.component';
 
 const routes: Routes = [
   {
+    path: 'home',
+    loadChildren: () => import('./modules/home/home.module').then(x => x.HomeModule)
+  },
+  {
     path: '',
     loadChildren: () => import('./modules/dashboard/dashboard.module').then(x => x.DashboardModule)
   },

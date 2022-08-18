@@ -16,6 +16,8 @@ import { StakeService } from './services/stake.service';
 import { BiswapService } from './services/biswap.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HomeModule } from './modules/home/home.module';
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -27,6 +29,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HomeModule,
     BrowserAnimationsModule,
     FormsModule,
     FlexLayoutModule,
