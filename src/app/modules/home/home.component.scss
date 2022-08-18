@@ -11,31 +11,33 @@
     border: 1px solid red;
 }
 
+.showcard {
+    width: 134px;
+    height: 72px;
+    border-radius: 5px;
+}
+
+.showcard:hover {
+    border: 3px solid orange;
+}
+
 .swapcard {
-    width: 600px;
-    height: 320px;
-    border-radius: 20px;
     background: url("/assets/images/swap.jpg");
 }
 
-.swapcard:hover {
-    border: 3px solid orange;
-}
-
 .lpcard {
-    width: 600px;
-    height: 320px;
-    border-radius: 20px;
     background: url("/assets/images/liquidity.jpg");
 }
 
-.lpcard:hover {
-    border: 3px solid orange;
+.swaptxt {
+    text-shadow: 5px 5px black;
+    border: 1px solid gray;
 }
 
-.swaptxt {
-    text-shadow: 5px 5px orange;
-    border: 1px solid gray;
+.contentbox {
+    max-width: 1280px;
+    text-align: left;
+    padding: 1em;
 }
 
 h1 {
@@ -43,12 +45,18 @@ h1 {
     font-weight: 500;
 }
 
-.mt-title {
-    margin-top: 32px;
+h2 {
+    font-size: 12px;
+    font-weight: 300;
 }
 
-.mt-title2 {
-    margin-top: 200px;
+h3 {
+    font-size: 8px;
+    font-weight: 20;
+}
+
+.mt-title {
+    margin-top: 32px;
 }
 
 @media(min-width: 400px) //if more than 400 px
@@ -57,9 +65,23 @@ h1 {
     font-size:28px
   }
 
+  h2{
+    font-size:20px
+  }
+
   .mt-title {
     margin-top: 40px;
   }
+
+  .showcard {
+    width: 134px;
+    height: 72px;
+    border-radius: 5px;
+    }
+
+    .contentbox {
+        width: 392px;
+     }
 }
 
 @media(min-width: 600px) //if more than 400 px
@@ -67,9 +89,25 @@ h1 {
     h1{
     font-size:40px
   }
+  h2{
+    font-size:20px
+}
+
+h3 {
+    font-size: 12px;
+}
+
   .mt-title {
     margin-top: 64px;
   }
+  .showcard {
+    width: 200px;
+    height: 108px;
+    border-radius: 7px;
+  }
+  .contentbox {
+    width: 580px;
+ }
 }
 
 @media(min-width: 960px) //if more than 400 px
@@ -77,10 +115,26 @@ h1 {
     h1{
     font-size:64px
   }
+  h2{
+    font-size:32px
+}
+
+h3 {
+    font-size: 18px;
+}
 
   .mt-title {
     margin-top: 100px;
   }
+
+  .showcard {
+    width: 300px;
+    height: 160px;
+    border-radius: 10px;
+  }
+  .contentbox {
+    width: 800px;
+ }
 }
 
 @media(min-width: 1280px) //if more than 400 px
@@ -88,21 +142,54 @@ h1 {
     h1{
     font-size:86px
   }
+  h2{
+    font-size:42px
+}
+
+h3 {
+    font-size: 24px;
+}
 
   .mt-title {
     margin-top: 130px;
   }
+
+  .showcard {
+    width: 400px;
+    height: 214px;
+    border-radius: 14px;
+ }
+ .contentbox {
+    width: 920px;
+ }
 
 }
 
 @media(min-width: 1920px)
 {
     h1{
-    font-size:128px
-  }
+        font-size:128px
+    }
+
+    h2{
+        font-size:64px
+    }
+
+    h3 {
+        font-size: 36px;
+    }
 
   .mt-title {
     margin-top: 200px;
-}
+ }
 
+ .showcard {
+    width: 600px;
+    height: 320px;
+    border-radius: 20px;
+ }
+
+ .contentbox {
+    width: 1280px;
+ }
 }
