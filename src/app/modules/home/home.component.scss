@@ -11,6 +11,33 @@
     border: 1px solid red;
 }
 
+.swapcard {
+    width: 600px;
+    height: 320px;
+    border-radius: 20px;
+    background: url("/assets/images/swap.jpg");
+}
+
+.swapcard:hover {
+    border: 3px solid orange;
+}
+
+.lpcard {
+    width: 600px;
+    height: 320px;
+    border-radius: 20px;
+    background: url("/assets/images/liquidity.jpg");
+}
+
+.lpcard:hover {
+    border: 3px solid orange;
+}
+
+.swaptxt {
+    text-shadow: 5px 5px orange;
+    border: 1px solid gray;
+}
+
 h1 {
     font-size: 16px;
     font-weight: 500;
@@ -20,8 +47,8 @@ h1 {
     margin-top: 32px;
 }
 
-.row mt-title2 {
-    margin-top: 20px;
+.mt-title2 {
+    margin-top: 200px;
 }
 
 @media(min-width: 400px) //if more than 400 px
