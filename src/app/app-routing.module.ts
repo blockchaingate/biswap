@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PrivacyComponent } from './components/privacy.component';
-
+import { VersionComponent } from './components/version/version.component';
 const routes: Routes = [
   {
     path: '',
@@ -46,6 +46,10 @@ const routes: Routes = [
   },
   {
     path: 'privacy', component: PrivacyComponent
+  }
+  ,
+  {
+    path: 'version', component: VersionComponent
   }
 ];
 
