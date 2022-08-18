@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { version } from '../../../../environments/version';
+import { version } from '../../../environments/version';
 @Component({
   selector: 'app-version',
   templateUrl: './version.component.html',
