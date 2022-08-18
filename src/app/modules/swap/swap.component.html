@@ -95,9 +95,10 @@
             </div>
 
             <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
-            <mat-card-actions fxLayout="row" fxLayoutAlign="center center" class="mat-card-action">
-                <button mat-raised-button color="primary" (click)="connectWallet()" *ngIf="!account; else asd">Connect a
-                    wallet</button>
+            <mat-card-actions fxLayout="row" fxLayoutAlign="center center" class="mat-card-action" *ngIf="tokenId && (tokenId!='0x0000000000000000000000000000000000000000')">
+                <button mat-raised-button color="primary" (click)="connectWallet()" *ngIf="!account; else asd">
+                    Connect a wallet
+                </button>
 
                 <ng-template #asd>
                     <button mat-raised-button color="primary" (click)="swapFunction()" *ngIf="!insufficientFund">Swap{{(priceImpact > 5) ? ' Anyway' : ''}}</button>
