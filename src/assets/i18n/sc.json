@@ -1,3 +1,16 @@
 {
-    "Home": "首页"
+    "Home": "首页",
+    "SelLan": "选择语言",
+    "Swap": "交易",
+    "SWAP": "交易",
+    "POOL": "流动池",
+    "Liquidity": "流动性",
+    "Staking": "质押",
+    "Rewards": "奖励",
+    "Info": "信息",
+    "Connect Wallet": "连接钱包",
+    "Disconnect": "断开连接",
+    "EXPLORER NEW SPACE": "探索未来金融新天地",
+    "BISWAP PROTOCOL": "币旺(Biswap)创新协议",
+    "BiswapProtcl": "全球唯一将去中心化创新金融协议与实体经济应用相结合的未来金融应用，通过币旺(Biswap)网络，用户不仅可以匿名的方式自由进行实行交易，还可以通过注入流动性而赚取交易收入，而更重要的是，通过币旺系统，用户可以深刻融入面向未来的金融革命，获取高额回报，甚至建立自己的商业金融帝国。"
 }

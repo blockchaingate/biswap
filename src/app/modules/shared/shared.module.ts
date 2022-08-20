@@ -19,7 +19,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
-import { LanSelectComponent } from './lan-select/lan-select.component';
 
 @NgModule({
   imports: [
@@ -45,7 +44,6 @@ import { LanSelectComponent } from './lan-select/lan-select.component';
     GenerateUrlPipe,
     TokenListComponent,
     SidenavListComponent,
-    LanSelectComponent,
   ],
   declarations: [
     HeaderComponent,
@@ -54,7 +52,6 @@ import { LanSelectComponent } from './lan-select/lan-select.component';
     GenerateUrlPipe,
     TokenListComponent,
     SidenavListComponent,
-    LanSelectComponent,
   ]
 })
 export class SharedModule {}

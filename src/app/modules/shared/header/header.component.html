@@ -8,11 +8,11 @@
   </div>
 
   <div fxHide.md fxHide.lt-md class="header-tab-items" fxLayout="row" fxLayoutGap="12px">
-    <span routerLink="/swap">Swap</span>
-    <span routerLink="/pool">Liquidity</span>
-    <span routerLink="/staking">Staking</span>
-    <span routerLink="/reward">Rewards</span>
-    <span routerLink="/charts">Info</span>
+    <span routerLink="/swap">{{'Swap'|translate}}</span>
+    <span routerLink="/pool">{{'Liquidity'|translate}}</span>
+    <span routerLink="/staking">{{'Staking'|translate}}</span>
+    <span routerLink="/reward">{{'Rewards'|translate}}</span>
+    <span routerLink="/charts">{{'Info'|translate}}</span>
   </div>
   <!-- <span class="example-spacer"></span> -->
 
@@ -24,11 +24,31 @@
     </div>
 
     <button mat-raised-button color="primary" *ngIf="!account" (click)="connectWallet()">
-      {{ 'Connect Wallet' }}
+      {{ 'Connect Wallet'| translate }}
     </button>
     <button mat-raised-button color="primary" *ngIf="account" (click)="disConnectWallet()">
-      {{ 'Disconnect' }}
+      {{ 'Disconnect'|translate }}
     </button>
+
+    <button mat-icon-button class="example-icon" [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with share icon">
+      {{selectedLan.viewValue}}
+    </button>
+
+    <mat-menu class="matMenu" #menu="matMenu">
+      <div class="selLan" id="selLan">
+        <h3>{{'SelLan' | translate}}</h3>
+      </div>
+      <hr style="color:white">
+      <div class="content">
+        <div class="lanitem handcursor" *ngFor="let lan of LANGUAGES" (click)="openClose(lan)">
+          {{lan.viewValue}}
+        </div>
+    
+      </div>
+    </mat-menu>
+
+<!--
     <button mat-icon-button class="example-icon" [matMenuTriggerFor]="menu"
       aria-label="Example icon-button with share icon">
       <mat-icon>more_horiz</mat-icon>
@@ -48,5 +68,6 @@
         <span>Disable alerts</span>
       </button>
     </mat-menu>
+  -->
   </div>
 </mat-toolbar>

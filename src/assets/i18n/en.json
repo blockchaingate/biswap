@@ -1,3 +1,16 @@
 {
-    "Home": "Home"
+    "Home": "Home",
+    "SelLan": "Select language",
+    "Swap": "Swap",
+    "SWAP": "SWAP",
+    "POOL": "POOL",
+    "Liquidity": "Liquidity",
+    "Staking": "Staking",
+    "Rewards": "Rewards",
+    "Info": "Info",
+    "Connect Wallet": "Connect Wallet",
+    "Disconnect": "Disconnect",
+    "EXPLORER NEW SPACE": "EXPLORER NEW SPACE",
+    "BISWAP PROTOCOL": "BISWAP PROTOCOL",
+    "BiswapProtcl": "The world's only defi network that links to real business. At Biswap, you can trade, earn, and build your business system to get rewards which would must likely be rising in value."
 }

@@ -19,6 +19,33 @@
     background-color: #fff;
 }
 
+.lanbtn {
+    font-size: medium;
+}
+
+.content {
+    color: white;;
+    font-size: small;
+    min-width: 200px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.selLan {
+    padding-left: 4px;
+    padding-right: 4px;
+    color: white;
+}
+
+.lanitem {
+    width: 60px;
+}
+
+.lanitem:hover {
+    background-color: lightgray;
+    color: black;
+}
+
 ::ng-deep .mat-menu-panel {
     margin-top: 30px;
 }
