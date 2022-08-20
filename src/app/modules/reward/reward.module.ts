@@ -6,6 +6,8 @@ import { PlansComponent } from './plans/plans.component';
 import { DetailsComponent } from './details/details.component';
 import {MatButtonModule} from '@angular/material/button';
 import { RedeemsComponent } from './redeems/redeems.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+
 @NgModule({
   declarations: [
     RewardComponent,
@@ -16,7 +18,8 @@ import { RedeemsComponent } from './redeems/redeems.component';
   imports: [
     CommonModule,
     RewardRoutingModule,
-    MatButtonModule
+    MatButtonModule,
+    TranslateModule
   ]
 })
 export class RewardModule { }

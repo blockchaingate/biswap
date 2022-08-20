@@ -1,18 +1,18 @@
-<h1 mat-dialog-title>Settings</h1>
+<h1 mat-dialog-title>{{"Settings"|translate}}</h1>
 <div mat-dialog-content>
-  <p>Slippage tolerance(%)</p>
-  <mat-form-field appearance="fill">
-    <mat-label></mat-label>
-    <input matInput [(ngModel)]="data.slippage">
-  </mat-form-field>
+    <p>{{"Slippage tolerance"|translate}}(%)</p>
+    <mat-form-field appearance="fill">
+        <mat-label></mat-label>
+        <input matInput [(ngModel)]="data.slippage">
+    </mat-form-field>
 
-  <p>Transaction deadline(minutes)</p>
-  <mat-form-field appearance="fill">
-    <mat-label></mat-label>
-    <input matInput [(ngModel)]="data.deadline">
-  </mat-form-field>
+    <p>{{"Transaction deadline(minutes)"|translate}}</p>
+    <mat-form-field appearance="fill">
+        <mat-label></mat-label>
+        <input matInput [(ngModel)]="data.deadline">
+    </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+    <button mat-button (click)="onNoClick()">{{"Cancel"|translate}}</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>{{"Save"|translate}}</button>
 </div>

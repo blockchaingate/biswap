@@ -2,13 +2,13 @@
     <div class="container">
         <div class="row py-2">
             <div class="col col-4">
-                <b>Address</b>
+                <b>{{"Address"|translate}}</b>
             </div>
             <div class="col col-3">
-                <b>Token</b>
+                <b>{{"Token"|translate}}</b>
             </div>
             <div class="col col-3">
-                <b>Amount</b>
+                <b>{{"Amount"|translate}}</b>
             </div>
             <div class="col col-2">
 
@@ -23,13 +23,13 @@
                 {{item.tokenName}}
             </div>
             <div class="col col-3">
-                <div>Active: {{item.amount}}</div>
-                <div>Pending: {{item.pendingAmount}}</div>
-                <div>Redeem: {{item.redeemAmount}}</div>
+                <div>{{"Active"|translate}}: {{item.amount}}</div>
+                <div>{{"Pending"|translate}}: {{item.pendingAmount}}</div>
+                <div>{{"Redeem"|translate}}: {{item.redeemAmount}}</div>
             </div>
             <div class="col col-2">
                 <button mat-raised-button color="primary" (click)="redeem(item.address, item.tokenName)">
-                    {{ 'Redeem' }}
+                    {{ 'Redeem' |translate }}
                 </button>
             </div>
         </div>

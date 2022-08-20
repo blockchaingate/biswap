@@ -4,7 +4,6 @@ import { Coin } from 'src/app/models/coin';
 import { DataService } from 'src/app/services/data.service';
 import { SwapComponent } from '../../swap/swap.component';
 
-
 @Component({
   selector: 'app-tokenList',
   templateUrl: './tokenList.component.html',

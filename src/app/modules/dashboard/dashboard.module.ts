@@ -5,6 +5,7 @@ import { DashboardRoutingModule } from './deshboard.routing.module';
 import { MaterialModule } from '../material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
     DashboardRoutingModule,
     MaterialModule,
     FlexLayoutModule,
+    TranslateModule,
     NgxUiLoaderModule.forRoot({})
   ],
   declarations: [DashboardComponent]
