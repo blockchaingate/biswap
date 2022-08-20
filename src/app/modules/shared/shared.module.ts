@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material-module';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HeaderComponent } from './header/header.component';
@@ -18,13 +19,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
-import { LanSelectDialog } from './lan-select/lan-select.component';
+import { LanSelectComponent } from './lan-select/lan-select.component';
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule,
     FormsModule,
+    TranslateModule,
     MatFormFieldModule,
     FlexLayoutModule,
     AppRoutingModule,
@@ -43,7 +45,7 @@ import { LanSelectDialog } from './lan-select/lan-select.component';
     GenerateUrlPipe,
     TokenListComponent,
     SidenavListComponent,
-    LanSelectDialog,
+    LanSelectComponent,
   ],
   declarations: [
     HeaderComponent,
@@ -52,7 +54,7 @@ import { LanSelectDialog } from './lan-select/lan-select.component';
     GenerateUrlPipe,
     TokenListComponent,
     SidenavListComponent,
-    LanSelectDialog,
+    LanSelectComponent,
   ]
 })
 export class SharedModule {}

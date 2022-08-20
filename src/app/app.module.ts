@@ -13,7 +13,7 @@ import { SharedModule } from './modules/shared/shared.module';
 import { KanbanService } from './services/kanban.service';
 import { Web3Service } from './services/web3.service';
 import { StakeService } from './services/stake.service';
-import { BiswapService } from './services/biswap.service';
+import { BiswapService } from './services/biswap.service'; 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HomeModule } from './modules/home/home.module';

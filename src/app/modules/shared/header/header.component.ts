@@ -49,6 +49,7 @@ export class HeaderComponent implements OnInit {
       this.walletLabel = data;
     });
     */
+   localStorage.setItem('_lan', 'sc');
    this.setLan();
     this.account = this.walletService.account;
     if(!this.account) {
@@ -72,7 +73,7 @@ export class HeaderComponent implements OnInit {
       }
     } else {
       let userLang = navigator.language;
-      userLang = userLang.substr(0, 2);
+      userLang = userLang.substring(0, 2);
       if (userLang === 'CN' || userLang === 'cn' || userLang === 'zh') {
         this.selectedLan = this.languages[1];
         localStorage.setItem('_lan', 'sc');
@@ -80,6 +81,14 @@ export class HeaderComponent implements OnInit {
       }
     }
     this.tranServ.use(this.selectedLan.value);
+  }
+
+  onSelectLan(lan: Language) {
+    this.selectedLan = lan;
+    this.tranServ.use(lan.value);
+
+    localStorage.setItem('_lan', lan.value);
+    this._localSt.setItem('_lan', lan.value);
   }
 
   onToggleSidenav() {
