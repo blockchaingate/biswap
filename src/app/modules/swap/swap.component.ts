@@ -338,7 +338,7 @@ export class SwapComponent implements OnInit {
           if(!isFirst && this.secondCoinAmount)
           {
             var amount: number = this.secondCoinAmount;
-            this.insufficientFund = (Number(amount) > Number(this.secondCoinBalance));
+            this.insufficientFund = (Number(this.firstCoinAmount) > Number(this.firstCoinBalance));
             var reserve1: BigNumber = this.firstTokenReserve;
             var reserve2: BigNumber = this.secondTokenReserve;
             let value = new BigNumber(amount)
@@ -417,12 +417,9 @@ export class SwapComponent implements OnInit {
   }
 
   async swapFunction() {
-    if(!this.firstCoinAmount ||
-      !this.secondCoinAmount ||
-      !this.firstCoinBalance || 
-      !this.secondCoinBalance ||
-      (this.firstCoinAmount > this.firstCoinBalance) ||
-      (this.secondCoinAmount > this.secondCoinBalance)) {
+    if(
+      (this.isFistToken && !this.firstCoinAmount && !this.firstCoinBalance && (this.firstCoinAmount > this.firstCoinBalance)) ||
+      (!this.isFistToken && !this.secondCoinAmount && !this.secondCoinBalance && (this.secondCoinAmount > this.secondCoinBalance))) {
         this.error = 'Not enough balance';
         return;
       }
