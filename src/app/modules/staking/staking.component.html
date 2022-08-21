@@ -1,93 +1,66 @@
 <div fxLayout="row" fxLayoutAlign="center center" class="swapBody">
     <div fxFlex="25" fxFlex.sm="50" fxFlex.xs="70" fxFlex.md="40">
-      <mat-card>
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <mat-card-title fxLayout="column">
-            <span class="paddingTop5"> Your Stakings </span>
-            <h5 class="paddingTop5">Redeem your stakings to receive tokens back</h5>
-          </mat-card-title>
+        <mat-card>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <mat-card-title fxLayout="column">
+                    <span class="paddingTop5"> {{"Your Stakings"|translate}} </span>
+                    <h5 class="paddingTop5">{{"Redeem your stakings to receive tokens back"|translate}}</h5>
+                </mat-card-title>
 
-          <div class="paddingBottom20">
+                <div class="paddingBottom20">
 
-            <button
-              mat-icon-button
-              class="example-icon"
-              aria-label="Example icon-button with share icon"
-              (click)="showStakings()"
-            >
+                    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="showStakings()">
               <mat-icon>more_horiz</mat-icon>
             </button>
-          </div>
-        </div>
-
-        <mat-card-content>
-            <div class="emty-liquidity" *ngIf="!account; else other">
-              <span> Connect to a wallet to view your stakings. </span>
-            </div>
-    
-            <ng-template #other>
-              <div
-                class="emty-liquidity"
-                fxLayout="column"
-                fxLayoutAlign="center center"
-              >
-                <div *ngIf="!amount">No staking found. </div>
-                <div *ngIf="amount">
-                  <div fxLayout="row" fxLayoutAlign="space-between center">
-                    <div fxFlex.md="40">
-                      Amount:
-                    </div>
-                    <div fxFlex.md="60">
-                      {{amount}}
-                    </div>                   
-                  </div>
-
-                  <div fxLayout="row" fxLayoutAlign="space-between center">
-                    <div fxFlex.md="40">
-                      Reward:
-                    </div>
-                    <div fxFlex.md="60">
-                      {{reward}}
-                    </div>                   
-                  </div>
                 </div>
-              </div>
-            </ng-template>
-          </mat-card-content>
+            </div>
 
-          <mat-card-actions
-          fxLayout="column"
-          fxLayoutAlign="center center"
-          class="mat-card-action"
-        >
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="connectWallet()"
-            *ngIf="!account; else asd"
-          >
-            Connect a wallet
+            <mat-card-content>
+                <div class="emty-liquidity" *ngIf="!account; else other">
+                    <span> {{"Connect to a wallet to view your stakings."|translate}} </span>
+                </div>
+
+                <ng-template #other>
+                    <div class="emty-liquidity" fxLayout="column" fxLayoutAlign="center center">
+                        <div *ngIf="!amount">{{"No staking found"|translate}}. </div>
+                        <div *ngIf="amount">
+                            <div fxLayout="row" fxLayoutAlign="space-between center">
+                                <div fxFlex.md="40">
+                                    {{"Amount"|translate}}:
+                                </div>
+                                <div fxFlex.md="60">
+                                    {{amount}}
+                                </div>
+                            </div>
+
+                            <div fxLayout="row" fxLayoutAlign="space-between center">
+                                <div fxFlex.md="40">
+                                    {{"Reward"|translate}}:
+                                </div>
+                                <div fxFlex.md="60">
+                                    {{reward}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </mat-card-content>
+
+            <mat-card-actions fxLayout="column" fxLayoutAlign="center center" class="mat-card-action">
+                <button mat-raised-button color="primary" (click)="connectWallet()" *ngIf="!account; else asd">
+            {{"Connect to wallet"|translate}}
           </button>
-  
-          <ng-template #asd>
-              <button
-              mat-raised-button
-              color="primary"
-              (click)="addStaking()"
-            >
-              + Add Staking
+
+                <ng-template #asd>
+                    <button mat-raised-button color="primary" (click)="addStaking()">
+              + {{"Add Staking"|translate}}
             </button>
-              <button
-              *ngIf="amount"
-              mat-raised-button
-              color="basic"
-              (click)="withdrawStaking()"
-            >
-              + Withdraw Staking
+                    <button *ngIf="amount" mat-raised-button color="basic" (click)="withdrawStaking()">
+              + {{"Withdraw Staking"|translate}}
             </button>
 
-          </ng-template>
-        </mat-card-actions>          
-      </mat-card>
+                </ng-template>
+            </mat-card-actions>
+        </mat-card>
     </div>
 </div>

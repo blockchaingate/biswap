@@ -1,134 +1,97 @@
 <div fxLayout="column" fxLayoutAlign="start center" class="swapBody">
-  <div class="title1">
-    <h1>TO BE AN OWNER</h1>
-  </div>
+    <div class="title1">
+        <h1>{{"EARN & GET AIRDROP"|translate}}</h1>
+    </div>
 
-  <div>
+    <div>
 
-    <mat-card class="card">
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <mat-card-title fxLayout="column">
-          <span class="paddingTop5"> Your Liquidity </span>
-          <h5 class="paddingTop5">Remove liquidity to receive tokens back</h5>
-        </mat-card-title>
+        <mat-card class="card">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <mat-card-title fxLayout="column">
+                    <span class="paddingTop5">{{"Your Liquidity"|translate}} </span>
+                    <h5 class="paddingTop5">{{"Remove liquidity to receive tokens back"|translate}}</h5>
+                </mat-card-title>
 
-        <div class="paddingBottom20">
-          <button
-            mat-icon-button
-            class="example-icon"
-            aria-label="Example icon-button with share icon"
-          >
+                <div class="paddingBottom20">
+                    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
             <mat-icon>settings</mat-icon>
           </button>
-          <button
-            mat-icon-button
-            class="example-icon"
-            aria-label="Example icon-button with share icon"
-          >
+                    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
             <mat-icon>more_horiz</mat-icon>
           </button>
-        </div>
-      </div>
+                </div>
+            </div>
 
-      <mat-card-content>
-        <div class="emty-liquidity" *ngIf="isWalletConnect != true; else other">
-          <span> Connect to a wallet to view your liquidity. </span>
-        </div>
+            <mat-card-content>
+                <div class="emty-liquidity" *ngIf="isWalletConnect != true; else other">
+                    <span> {{"Connect to a wallet to view your liquidity"|translate}}. </span>
+                </div>
 
-        <ng-template #other>
-          <div
-            class="emty-liquidity"
-            fxLayout="column"
-            fxLayoutAlign="center center"
-          >
-            <span *ngIf="totalPoolToken == null">No liquidity found. </span>
-            <span *ngIf="totalPoolToken == null" class="marginTop20">Don't see a pool you joined? </span>
+                <ng-template #other>
+                    <div class="emty-liquidity" fxLayout="column" fxLayoutAlign="center center">
+                        <span *ngIf="totalPoolToken == null">{{"No liquidity found"|translate}}. </span>
+                        <span *ngIf="totalPoolToken == null" class="marginTop20">{{"Don't see a pool you joined"|translate}} ? </span>
 
-            <span *ngIf="totalPoolToken != null && isWalletConnect"> Liquidity providers earn a 0.3% fee on all trades proportional to their share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.</span>
-          </div>
-        </ng-template>
-      </mat-card-content>
+                        <span *ngIf="totalPoolToken != null && isWalletConnect"> {{"LiquidityDetail"|translate}}</span>
+                    </div>
+                </ng-template>
+            </mat-card-content>
 
-      <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
-      <mat-card-actions
-        fxLayout="row"
-        fxLayoutAlign="center center"
-        class="mat-card-action"
-      >
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="connectWallet()"
-          *ngIf="!account; else asd"
-        >
-          Connect a wallet
+            <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
+            <mat-card-actions fxLayout="row" fxLayoutAlign="center center" class="mat-card-action">
+                <button mat-raised-button color="primary" (click)="connectWallet()" *ngIf="!account; else asd">
+          {{"Connect to wallet"|translate}}
         </button>
 
-        <ng-template #asd>
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="addLiquidityFunction()"
-          >
-            + Add Liquidity
+                <ng-template #asd>
+                    <button mat-raised-button color="primary" (click)="addLiquidityFunction()">
+            + {{"Add Liquidity"|translate}}
           </button>
-        </ng-template>
-      </mat-card-actions>
-    </mat-card>
+                </ng-template>
+            </mat-card-actions>
+        </mat-card>
 
-    <mat-expansion-panel *ngFor="let item of existedLiquidityList; let index = index"
-      class="exist-liquddity"
-      (opened)="panelOpenState = true"
-      (closed)="panelOpenState = false"
-    >
-      <mat-expansion-panel-header>
-        <mat-panel-title> {{item.token0Name}} / {{item.token1Name}} </mat-panel-title>
-        <mat-panel-description>
-          Manage
-          <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <p>Your total pool tokens:</p>
-        <p>{{ item.liquidityTokenBalance }}</p>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <p>Pooled {{item.token0Name}}:</p>
-        <p>{{item.pair.reserve0}}</p>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <p>Pooled {{item.token1Name}}:</p>
-        <p>{{item.pair.reserve1}}</p>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <p>Your pool share:</p>
-        <p> {{ item.share }} %</p>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="center center">
+        <mat-expansion-panel *ngFor="let item of existedLiquidityList; let index = index" class="exist-liquddity" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title> {{item.token0Name}} / {{item.token1Name}} </mat-panel-title>
+                <mat-panel-description>
+                    {{"Manage"|translate}}
+                    <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <p>{{"Your total pool tokens"|translate}}:</p>
+                <p>{{ item.liquidityTokenBalance }}</p>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <p>{{"Pooled"|translate}} {{item.token0Name}}:</p>
+                <p>{{item.pair.reserve0}}</p>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <p>{{"Pooled"|translate}} {{item.token1Name}}:</p>
+                <p>{{item.pair.reserve1}}</p>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <p>{{"Your pool share"|translate}}:</p>
+                <p> {{ item.share }} %</p>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center center">
 
-          <button class="action-buttons"
-            mat-raised-button
-            color="primary"
-            (click)="removeLiquidity(index)"
-          >
-            Remove
+                <button class="action-buttons" mat-raised-button color="primary" (click)="removeLiquidity(index)">
+            {{"Remove"|translate}}
           </button>
-        
-      </div>
-    </mat-expansion-panel>
-  
-<div fxLayout="row" fxLayoutAlign="center center" class="mt-3">
-        
-<button *ngIf="existedLiquidityList.length > 0"
-mat-raised-button
-color="primary"
-(click)="getExistLiquidity()"
->
-load more
+
+            </div>
+        </mat-expansion-panel>
+
+        <div fxLayout="row" fxLayoutAlign="center center" class="mt-3">
+
+            <button *ngIf="existedLiquidityList.length > 0" mat-raised-button color="primary" (click)="getExistLiquidity()">
+{{"load more"|translate}}
 </button>
-  </div>
+        </div>
 
-</div>
+    </div>
 </div>
 
 

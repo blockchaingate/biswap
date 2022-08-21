@@ -8,8 +8,9 @@ import { FormsModule } from '@angular/forms';
 import { KanbanService } from 'src/app/services/kanban.service';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { SettingsComponent } from '../settings/settings.component';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -19,11 +20,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatInputModule,
     MatFormFieldModule,
     FlexLayoutModule,
+    TranslateModule,
     FormsModule,
     NgxUiLoaderModule.forRoot({}),
   ],
   bootstrap: [SettingsComponent],
-  providers:[KanbanService],
+  providers: [KanbanService],
   declarations: [SwapComponent, SettingsComponent]
 })
 export class SwapModule { }

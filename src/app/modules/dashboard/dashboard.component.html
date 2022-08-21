@@ -1,39 +1,36 @@
 <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center" class="dashboard-body">
-  <div  fxFlex="15" fxFlex.sm="30" fxFlex.xs="40" fxFlex.md="18">
-    <mat-card class="dash-mat-card handcursor">
-     <div fxFlex="row" fxLayoutAlign="center center" routerLink="/swap">
-       <h2 class="margin0 card-h2">Go to Swap</h2>
-     </div>
-    </mat-card>
-     </div>
-  <div fxFlex="15" fxFlex.sm="30" fxFlex.xs="40" fxFlex.md="18">
-    <mat-card class="dash-mat-card handcursor">
-     <div fxFlex="row" fxLayoutAlign="center center" routerLink="/pool">
-       <h2 class="margin0 card-h2" >Go to Liquidity</h2>
-     </div>
-    </mat-card>
-     </div>
+    <div fxFlex="15" fxFlex.sm="30" fxFlex.xs="40" fxFlex.md="18">
+        <mat-card class="dash-mat-card handcursor">
+            <div fxFlex="row" fxLayoutAlign="center center" routerLink="/swap">
+                <h2 class="margin0 card-h2">{{"Go to Swap"|translate}}</h2>
+            </div>
+        </mat-card>
+    </div>
+    <div fxFlex="15" fxFlex.sm="30" fxFlex.xs="40" fxFlex.md="18">
+        <mat-card class="dash-mat-card handcursor">
+            <div fxFlex="row" fxLayoutAlign="center center" routerLink="/pool">
+                <h2 class="margin0 card-h2">{{"Go to Liquidity"|translate}}</h2>
+            </div>
+        </mat-card>
+    </div>
 </div>
 
 <ngx-ui-loader></ngx-ui-loader>
 
 
-  <div class="instructions">
+<div class="instructions">
 
-    <h1>Biswap web app instruction</h1>
+    <h1>{{"Biswap web app instruction"|translate}}</h1>
 
-    <p>Right-top button (Connect Wallet) => it will display qr code, copy to clipboard and paste into (https://exchangily.com/ex/walletconnect)</p>
-    
-    <h2>Liquidity</h2>
-    
-    <p>First page of liquidity is liquidity history here we need a API to display our history </p>
+    <p>{{"Instru1"|translate}} (https://exchangily.com/ex/walletconnect)</p>
 
-    <p>Second page of liquidity is action page, when user selets both token it creates pair and control reserves then user can enter
-      amount then user clicks (Add Liquidity) button then user should go to (https://exchangily.com/ex/walletconnect) page and Approve the request  </p>
-    
-    <h2>Swap</h2>
-    
-    <p>Technically it has similar progress user should select bith token and it will check reserves then just send it then user should go to (https://exchangily.com/ex/walletconnect) page and Approve the request  </p>
-  </div>
+    <h2>{{"Liquidity"|translate}}</h2>
 
+    <p>{{"Instru2"|translate}}</p>
 
+    <p>{{"Instru31"|translate}} (https://exchangily.com/ex/walletconnect) {{"Instru32"|translate}}</p>
+
+    <h2>{{"Swap"|translate}}</h2>
+
+    <p>{{"Instru41"|translate}} (https://exchangily.com/ex/walletconnect) {{"Instru32"|translate}}</p>
+</div>

@@ -20,6 +20,8 @@ import { TokensComponent } from './components/tokens/tokens.component';
 import { InfoComponent } from './info.component';
 import { PoolComponent } from './pool/pool.component';
 import { TokenComponent } from './token/token.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+
 @NgModule({
   declarations: [
     OverviewComponent,
@@ -44,6 +46,7 @@ import { TokenComponent } from './token/token.component';
     InfoRoutingModule,
     MatButtonToggleModule,
     RouterModule,
+    TranslateModule,
     FormsModule
   ]
 })

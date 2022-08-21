@@ -2,22 +2,22 @@
     <div class="container">
         <div class="row py-2">
             <div class="col col-2">
-                <b>ACTION</b>
+                <b>{{"ACTION"|translate}}</b>
             </div>
             <div class="col col-2">
-                <b>TOTAL VALUE</b>
+                <b>{{"TOTAL VALUE"|translate}}</b>
             </div>
             <div class="col col-2">
-                <b>TOKEN AMOUNT</b>
+                <b>{{"TOKEN"|translate}}1 {{"AMOUNT"|translate}}</b>
             </div>
             <div class="col col-2">
-                <b>TOKEN AMOUNT</b>
+                <b>{{"TOKEN"|translate}}2 {{"AMOUNT"|translate}}</b>
             </div>
             <div class="col col-2">
-                <b>ACCOUNT</b>
+                <b>{{"ACCOUNT"|translate}}</b>
             </div>
             <div class="col col-2">
-                <b>TIME</b>
+                <b>{{"TIME"|translate}}</b>
             </div>
         </div>
 
@@ -35,7 +35,7 @@
                 {{transaction.amount1}}
             </div>
             <div class="col col-2">
-                {{toIdentityString(transaction.sender ? transaction.sender  : transaction.account)}}
+                {{toIdentityString(transaction.sender ? transaction.sender : transaction.account)}}
             </div>
             <div class="col col-2">
                 {{transaction.time}}

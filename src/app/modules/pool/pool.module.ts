@@ -11,12 +11,14 @@ import { AddLiquidityComponent } from './addLiquidity/addLiquidity.component';
 import { RemoveLiquidityComponent } from './removeLiquidity/removeLiquidity.component';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { HextoDecimalPipe } from './hextodecimal.pipe';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
+    TranslateModule,
     MaterialModule,
     FormsModule,
     PoolRoutingModule,

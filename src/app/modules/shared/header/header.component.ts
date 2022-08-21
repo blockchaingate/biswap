@@ -14,16 +14,17 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
 })
 export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
-  languages: Language[] = [
+  walletSession: any;
+  walletLabel: string = '';
+  account: string = '';
+
+  LANGUAGES: Language[] = [
     { value: 'en', viewValue: 'English' },
     { value: 'sc', viewValue: '简体中文' },
     { value: 'tc', viewValue: '繁體中文' }
   ];
 
-  selectedLan = this.languages[0];
-  walletSession: any;
-  walletLabel: string = '';
-  account: string = '';
+  selectedLan: Language = { value: 'en', viewValue: 'English' };
 
   constructor(
     public dataService: DataService,
@@ -35,21 +36,6 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    /*
-    this.walletSession = this.storageService.getWalletSession();
-    if (this.walletSession != null) {
-      this.dataService.sendWalletLabel('Disconnect Wallet');
-      this.dataService.setIsWalletConnect(true);
-    }
-    else{
-      this.dataService.sendWalletLabel('Connect Wallet');
-      this.dataService.setIsWalletConnect(false);
-    }
-    this.dataService.GetWaletLabel.subscribe((data) => {
-      this.walletLabel = data;
-    });
-    */
-   this.setLan();
     this.account = this.walletService.account;
     if(!this.account) {
       this.walletService.accountSubject.subscribe(
@@ -58,28 +44,38 @@ export class HeaderComponent implements OnInit {
         }
       );
     }
+
+    this.setLan();
   }
 
   setLan() {
     const storedLan = localStorage.getItem('_lan');
     if (storedLan) {
       if (storedLan === 'en') {
-        this.selectedLan = this.languages[0];
+        this.selectedLan = this.LANGUAGES[0];
       } else if (storedLan === 'sc') {
-        this.selectedLan = this.languages[1];
+        this.selectedLan = this.LANGUAGES[1];
       } else if (storedLan === 'tc') {
-        this.selectedLan = this.languages[2];
+        this.selectedLan = this.LANGUAGES[2];
       }
     } else {
       let userLang = navigator.language;
-      userLang = userLang.substr(0, 2);
+      userLang = userLang.substring(0, 2);
       if (userLang === 'CN' || userLang === 'cn' || userLang === 'zh') {
-        this.selectedLan = this.languages[1];
+        this.selectedLan = this.LANGUAGES[1];
         localStorage.setItem('_lan', 'sc');
         this._localSt.setItem('_lan', 'sc');
       }
     }
     this.tranServ.use(this.selectedLan.value);
+  }
+
+  openClose(lan: Language) {
+    this.selectedLan = lan;
+    this.tranServ.use(lan.value);
+
+    localStorage.setItem('_lan', lan.value);
+    this._localSt.setItem('_lan', lan.value);
   }
 
   onToggleSidenav() {
