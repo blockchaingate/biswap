@@ -122,7 +122,7 @@ import BigNumber from 'bignumber.js';
     }
 
     getRewards() {
-      const pageSize = 100;
+      const pageSize = 10000;
       const pageNum = 0;
       const url = environment.endpoints.explorerapi + '/kanban/biswap/reward/' + pageSize + '/' + pageNum;
       return this.http.get(url);  
