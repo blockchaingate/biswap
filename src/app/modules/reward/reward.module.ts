@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { RewardComponent } from './reward.component';
 import { RewardRoutingModule } from './reward-routing.module';
 import { PlansComponent } from './plans/plans.component';
@@ -19,7 +20,8 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
     CommonModule,
     RewardRoutingModule,
     MatButtonModule,
-    TranslateModule
+    TranslateModule,
+    MatSnackBarModule
   ]
 })
 export class RewardModule { }

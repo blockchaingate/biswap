@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BiswapService } from 'src/app/services/biswap.service';
 import { WalletService } from 'src/app/services/wallet.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-reward-details',
@@ -15,6 +16,7 @@ export class DetailsComponent implements OnInit {
   account: string = '';
 
   constructor(
+    private _snackBar: MatSnackBar,
     private walletService: WalletService,
     private biswapServ: BiswapService) { }
 
@@ -47,6 +49,11 @@ export class DetailsComponent implements OnInit {
     this.biswapServ.redeem(address, tokenName).subscribe(
       (ret: any) => {
         console.log('ret===', ret);
+        if(ret && ret._id) {
+          this._snackBar.open('Your redeem request is pending');
+        } else {
+          this._snackBar.open('You can only redeem once per day');
+        }
       }
     );
     
