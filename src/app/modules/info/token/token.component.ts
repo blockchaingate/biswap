@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterContentInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BiswapService } from 'src/app/services/biswap.service';
 import { createChart, MouseEventParams } from 'lightweight-charts';
@@ -9,7 +9,7 @@ import BigNumber from 'bignumber.js';
   templateUrl: './token.component.html',
   styleUrls: ['./token.component.scss']
 })
-export class TokenComponent implements OnInit, AfterContentInit {
+export class TokenComponent implements OnInit, AfterViewInit {
   token: any;
   identity: string ='';
   title: string = '';
@@ -72,7 +72,7 @@ export class TokenComponent implements OnInit, AfterContentInit {
     });
   }
 
-  ngAfterContentInit() {
+  ngAfterViewInit() {
     
     this.biswapServ.getTokenDayDatas(this.identity).subscribe(
       (items: any) => {

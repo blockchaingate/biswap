@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BiswapService } from 'src/app/services/biswap.service';
 import { createChart, MouseEventParams } from 'lightweight-charts';
@@ -9,7 +9,7 @@ import BigNumber from 'bignumber.js';
   templateUrl: './pool.component.html',
   styleUrls: ['./pool.component.scss']
 })
-export class PoolComponent implements OnInit, AfterContentInit {
+export class PoolComponent implements OnInit, AfterViewInit {
   pair: any;
   transactions: any;
   title: string = '';
@@ -69,7 +69,7 @@ export class PoolComponent implements OnInit, AfterContentInit {
     });
   }
 
-  ngAfterContentInit() {
+  ngAfterViewInit() {
     
     this.biswapServ.getPairDayDatas(this.identity).subscribe(
       (items: any) => {
