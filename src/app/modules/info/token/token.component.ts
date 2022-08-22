@@ -105,7 +105,6 @@ export class TokenComponent implements OnInit, AfterViewInit {
 
 
     const histogramDatas = this.items.map((item: any) => {
-      console.log('item==', item);
       const date = new Date(item.date * 1000);
       const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
       const lineData = {
@@ -149,7 +148,6 @@ createTVLChart() {
 
 
     const histogramDatas = this.items.map((item: any) => {
-      console.log('item==', item);
       const date = new Date(item.date * 1000);
       const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
       const lineData = {
@@ -192,7 +190,6 @@ createFeesChart() {
 
 
     const histogramDatas = this.items.map((item: any) => {
-      console.log('item==', item);
       const date = new Date(item.date * 1000);
       const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
       const lineData = {

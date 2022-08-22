@@ -103,7 +103,6 @@ export class PoolComponent implements OnInit, AfterViewInit {
     
     
         const histogramDatas = this.items.map((item: any) => {
-          console.log('item==', item);
           const date = new Date(item.date * 1000);
           const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
           const lineData = {
@@ -147,7 +146,6 @@ export class PoolComponent implements OnInit, AfterViewInit {
     
     
         const histogramDatas = this.items.map((item: any) => {
-          console.log('item==', item);
           const date = new Date(item.date * 1000);
           const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
           const lineData = {
@@ -190,7 +188,6 @@ export class PoolComponent implements OnInit, AfterViewInit {
     
     
         const histogramDatas = this.items.map((item: any) => {
-          console.log('item==', item);
           const date = new Date(item.date * 1000);
           const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
           const lineData = {
