@@ -40,6 +40,12 @@ export class TransactionsComponent implements OnInit {
     this.biswapServ.getTransactionsByAccount(this.account, this.pageSizeTransaction, this.pageNumTransaction).subscribe((transactions: any) => {
       this.transactions = transactions;
     });
+    this.biswapServ.getTransactionCountByAccount(this.account).subscribe(
+      (ret: any) => {
+        const totalCount = ret.totalCount;
+        this.totalPage = Math.floor(totalCount / this.pageSizeTransaction);
+      }
+    );
   }
 
   changePageNumTransaction(pageNum: number) {
