@@ -11,7 +11,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class DetailsComponent implements OnInit {
   rewards: any;
   pageNum = 0;
-  pageSize = 10;
+  pageSize = 1000;
   totalPage = 0;
   account: string = '';
 

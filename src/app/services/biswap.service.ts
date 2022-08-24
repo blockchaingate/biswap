@@ -81,6 +81,11 @@ import BigNumber from 'bignumber.js';
       return this.http.get(url);  
     }
 
+    getTransactionsByAccount(account: string, pageSize: number, pageNum: number ) {
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/from/' + account + '/' + pageSize + '/' + pageNum;
+      return this.http.get(url);  
+    }
+
     getTransactionsByToken(tokenIdentity: string, pageSize: number, pageNum: number) {
       const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/token/' + tokenIdentity + '/' + pageSize + '/' + pageNum;
       return this.http.get(url);  

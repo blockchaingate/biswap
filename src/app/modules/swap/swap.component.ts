@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import BigNumber from 'bignumber.js';
@@ -16,6 +15,9 @@ import { Web3Service } from 'src/app/services/web3.service';
 import { environment } from 'src/environments/environment';
 import { TokenListComponent } from '../shared/tokenList/tokenList.component';
 import { SettingsComponent } from '../settings/settings.component';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { AlertComponent } from '../shared/alert/alert.component';
+
 @Component({
   selector: 'app-swap',
   templateUrl: './swap.component.html',
@@ -457,12 +459,17 @@ export class SwapComponent implements OnInit {
       abiHex = this.web3Service.swapTokensForExactTokens(params);
     }
 
+    const alertDialogRef = this.dialog.open(AlertComponent, {
+      width: '250px',
+      data: {text: 'Please approve your request in your wallet'},
+    });
+
     this.kanbanService
       .send(environment.smartConractAdressRouter, abiHex)
       .then((data) => {
+        alertDialogRef.close();
         const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
         this.txHash = baseUrl + '/explorer/tx-detail/' + data;
-        
       });
   }
 }

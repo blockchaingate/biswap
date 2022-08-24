@@ -16,6 +16,7 @@ import { environment } from 'src/environments/environment';
 import { TokenListComponent } from '../../shared/tokenList/tokenList.component';
 import { SettingsComponent } from '../../settings/settings.component';
 import { BiswapService } from 'src/app/services/biswap.service';
+import { AlertComponent } from '../../shared/alert/alert.component';
 
 @Component({
   selector: 'app-addLiquidity',
@@ -28,6 +29,7 @@ export class AddLiquidityComponent implements OnInit {
   error: string = '';
   _firstToken!: Coin;
   _secondToken!: Coin;
+  insufficientFund: boolean = false;
   item: any;
 
   public get firstToken(): Coin {
@@ -229,6 +231,19 @@ export class AddLiquidityComponent implements OnInit {
         this.firstCoinAmount = value;
       }
     }
+
+    /*
+    if(!this.firstCoinAmount ||
+      !this.secondCoinAmount ||
+      !this.firstCoinBalance || 
+      !this.secondCoinBalance ||
+      (Number(this.firstCoinAmount) > Number(this.firstCoinBalance)) ||
+      (Number(this.secondCoinAmount) > Number(this.secondCoinBalance))) {
+        this.insufficientFund = true;
+      } else {
+        this.insufficientFund = false;
+      }
+    */
   }
 
   async setInputValues(isFirst: boolean) {
@@ -380,15 +395,7 @@ export class AddLiquidityComponent implements OnInit {
 
   addLiqudity() {
 
-    if(!this.firstCoinAmount ||
-      !this.secondCoinAmount ||
-      !this.firstCoinBalance || 
-      !this.secondCoinBalance ||
-      (Number(this.firstCoinAmount) > Number(this.firstCoinBalance)) ||
-      (Number(this.secondCoinAmount) > Number(this.secondCoinBalance))) {
-        this.error = 'Not enough balance';
-        return;
-      }
+
     console.log('go for addLiquidity');
     let amountADesired = '0x' + new BigNumber(this.firstCoinAmount)
       .shiftedBy(18)
@@ -430,9 +437,14 @@ export class AddLiquidityComponent implements OnInit {
     ];
 
     var abiHex = this.web3Service.addLiquidity(params);
+    const alertDialogRef = this.dialog.open(AlertComponent, {
+      width: '250px',
+      data: {text: 'Please approve your request in your wallet'},
+    });
     this.kanbanService
       .send(environment.smartConractAdressRouter, abiHex)
       .then((data) => { 
+        alertDialogRef.close();
         const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
         this.txHash = baseUrl + '/explorer/tx-detail/' + data;
 

@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
     GenerateUrlPipe,
     TokenListComponent,
     SidenavListComponent,
+    AlertComponent
   ],
   declarations: [
     HeaderComponent,
@@ -52,6 +54,7 @@ import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
     GenerateUrlPipe,
     TokenListComponent,
     SidenavListComponent,
+    AlertComponent
   ]
 })
 export class SharedModule {}

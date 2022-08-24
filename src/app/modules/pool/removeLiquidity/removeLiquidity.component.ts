@@ -11,6 +11,7 @@ import { Web3Service } from 'src/app/services/web3.service';
 import { environment } from 'src/environments/environment';
 import { SettingsComponent } from '../../settings/settings.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AlertComponent } from '../../shared/alert/alert.component';
 
 @Component({
   selector: 'app-removeLiquidity',
@@ -23,6 +24,7 @@ export class RemoveLiquidityComponent implements OnInit {
 
    firstToken: String;
    secondToken: String;
+   txHash: string = '';
 
    yourPoolShare: number;
    pooledFirstToken:number;
@@ -152,11 +154,18 @@ export class RemoveLiquidityComponent implements OnInit {
 
 
     var abiHex = this.web3Service.removeLiquidity(params);
-    console.log('abiHex => ' + abiHex);
+
+    const alertDialogRef = this.dialog.open(AlertComponent, {
+      width: '250px',
+      data: {text: 'Please approve your request in your wallet'},
+    });
+
     this.kanbanService
     .send( environment.smartConractAdressRouter, abiHex)
     .then((data) => {
-      console.log('https://test.exchangily.com/explorer/tx-detail/' + data)
+      alertDialogRef.close();
+      const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
+      this.txHash = baseUrl + '/explorer/tx-detail/' + data;
     });
   }
 }

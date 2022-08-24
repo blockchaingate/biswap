@@ -81,13 +81,21 @@
 
             <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
             <mat-card-actions fxLayout="row" fxLayoutAlign="center center" class="mat-card-action">
-                <button mat-raised-button color="primary" *ngIf="account" (click)="addLiqudity()">
-          {{"Add Liquidity"|translate}}
-        </button>
+                <button mat-raised-button color="primary" *ngIf="account && !((firstCoinAmount > firstCoinBalance) || 
+                    (secondCoinAmount > secondCoinBalance))" (click)="addLiqudity()">
+                    {{"Add Liquidity"|translate}}
+                </button>
 
                 <button mat-raised-button color="primary" *ngIf="!account" (click)="connectWallet()">
-        {{"Connect to wallet"|translate}}
-      </button>
+                    {{"Connect to wallet"|translate}}
+                </button>
+
+                <button mat-raised-button color="primary" disabled *ngIf="
+                account && ((firstCoinAmount > firstCoinBalance) || 
+                (secondCoinAmount > secondCoinBalance))
+                ">Insufficent
+                    {{(firstCoinAmount > firstCoinBalance) ? firstToken.tickerName : secondToken.tickerName}} balance
+                </button>
             </mat-card-actions>
         </mat-card>
 
