@@ -165,7 +165,9 @@ export class AddLiquidityComponent implements OnInit {
     }
     this.biswapServ.getLiquidity(this.account, this.pairAddress).subscribe(
       (item: any) => {
-        this.item = item;
+        if(item && !item.error) {
+          this.item = item;
+        }
       }
     );
   }
