@@ -136,6 +136,11 @@ import BigNumber from 'bignumber.js';
       return this.http.get(url);  
     }
 
+    getRewardsWithMine(userId: string, pageSize: number, pageNum: number) {
+      const url = environment.endpoints.explorerapi + '/kanban/biswap/reward/' + pageSize + '/' + pageNum + '?userId=' + userId;
+      return this.http.get(url);  
+    }
+
     getCountRewards() {
       const url = environment.endpoints.explorerapi + '/kanban/biswap/reward/totalCount';
       return this.http.get(url);  

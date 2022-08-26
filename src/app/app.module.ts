@@ -18,6 +18,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HomeModule } from './modules/home/home.module';
 import { VersionComponent } from './components/version/version.component';
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -50,7 +51,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     ),
 
   ],
-  providers: [KanbanService, Web3Service, StakeService, BiswapService],
+  providers: [
+    KanbanService, 
+    Web3Service, 
+    StakeService, 
+    BiswapService,
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

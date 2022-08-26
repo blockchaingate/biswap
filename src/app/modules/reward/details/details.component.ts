@@ -38,7 +38,21 @@ export class DetailsComponent implements OnInit {
     if(!this.account){
       this.walletService.accountSubject.subscribe(
         account => {
-          this.account = account;
+          if(account) {
+            this.account = account;
+            this.biswapServ.getRewardsWithMine(this.account, this.pageSize, this.pageNum).subscribe(
+              (ret: any) => {
+                this.rewards = ret;
+              }
+            );
+          }
+          
+        }
+      );
+    } else {
+      this.biswapServ.getRewardsWithMine(this.account, this.pageSize, this.pageNum).subscribe(
+        (ret: any) => {
+          this.rewards = ret;
         }
       );
     }
@@ -67,11 +81,20 @@ export class DetailsComponent implements OnInit {
       pageNum = this.totalPage;
     }
     this.pageNum = pageNum;
-    this.biswapServ.getRewards(this.pageSize, this.pageNum).subscribe(
-      (ret: any) => {
-        this.rewards = ret;
-      }
-    );
+    if(this.account) {
+      this.biswapServ.getRewardsWithMine(this.account, this.pageSize, this.pageNum).subscribe(
+        (ret: any) => {
+          this.rewards = ret;
+        }
+      );
+    } else {
+      this.biswapServ.getRewards(this.pageSize, this.pageNum).subscribe(
+        (ret: any) => {
+          this.rewards = ret;
+        }
+      );
+    }
+
   }
 
 }
