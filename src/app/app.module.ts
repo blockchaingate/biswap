@@ -13,12 +13,13 @@ import { SharedModule } from './modules/shared/shared.module';
 import { KanbanService } from './services/kanban.service';
 import { Web3Service } from './services/web3.service';
 import { StakeService } from './services/stake.service';
-import { BiswapService } from './services/biswap.service'; 
+import { BiswapService } from './services/biswap.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HomeModule } from './modules/home/home.module';
+import { PrivacyComponent } from './components/privacy.component';
 import { VersionComponent } from './components/version/version.component';
-import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -26,6 +27,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
+    PrivacyComponent,
     VersionComponent
   ],
   imports: [
@@ -52,11 +54,11 @@ export function HttpLoaderFactory(http: HttpClient) {
 
   ],
   providers: [
-    KanbanService, 
-    Web3Service, 
-    StakeService, 
+    KanbanService,
+    Web3Service,
+    StakeService,
     BiswapService,
-    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } }
   ],
   bootstrap: [AppComponent]
 })
