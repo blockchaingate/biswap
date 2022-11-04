@@ -1,22 +1,27 @@
+
+
 .header-tab-items span {
-    width: 8rem;
-    border: 1px solid gray;
-    padding: 1px;
-    border-radius: 5px;
+    // width: 2rem;
+    padding: 0px 10px;
     display: flex;
     justify-content: center;
     margin-top: 0.6em;
+    font-weight: 300;
+    font-size: 16px;
     cursor: pointer;
     &:hover {
-        border-bottom: 2px solid white;
+        // border-bottom: 2px solid white;
         color: white;
-        background-color: #222f3e;
+        font-weight: 500;
     }
 }
 
 .mat-toolbar {
-    color: black;
-    background-color: #fff;
+    // color: black;
+    // background-color: #fff;
+    color: #eee;
+    background-color: #0b0e1c;
+    padding: 0px 50px;
 }
 
 .lanbtn {
@@ -52,6 +57,10 @@
 
 .header-logo {
     width: 160px;
+}
+
+.connectBtn{
+    background: linear-gradient(90deg, #0b2dd5 0%, #6827e1 100%);
 }
 
 @media only screen and (max-width: 2800px) {

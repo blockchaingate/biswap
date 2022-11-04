@@ -1,73 +1,133 @@
 .container-fluid {
-    padding: 0;
+  padding: 0;
 }
 
 .banner {
-    padding: 0;
-     background: url("/assets/images/biswap-home.jpg");
-     background-size: cover;
-     background-repeat: no-repeat;
-    height: 100vh;
+  padding: 0;
+  background: url("/assets/images/wave1.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: -263px 200px;
+  // height: 100vh;
+}
+
+.reward {
+  // background: url("/assets/images/3d-motion-flow2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-align: center;
+  background-color: #1d0250;
+
+  h2{
+    font-weight: 800;
+    font-size: 70px;
+    line-height: 80px;
+  }
+}
+
+.textRow{
+  padding: 80px 0;
+
+  h2{
+    text-transform: capitalize;
+  }
+}
+
+.contentRow {
+  padding: 150px 0;
+
+  .bannerTxt,
+  .bannerImg {
+    //content vertical align middle
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    padding: 0 10px;
+    flex-direction: column;
+  }
+
+  .bannerTxt {
+    .btns {
+      margin-top: 20px;
+      a {
+        background: linear-gradient(90deg, #0b2dd5 0%, #6827e1 100%);
+      }
+    }
+
+    p {
+      font-size: 17px;
+      line-height: 30px;
+      font-weight: 100;
+    }
+  }
+
+  .bannerImg {
+    //horizontal align image middle
+    align-items: center;
+    img {
+      width: 80%;
+    }
+  }
 }
 
 .showcard {
-    width: 134px;
-    height: 72px;
-    border-radius: 5px;
+  width: 134px;
+  height: 72px;
+  border-radius: 5px;
 }
 
 .showcard:hover {
-    border: 3px solid orange;
-    // box-shadow: 6px 8px gray;
+  border: 3px solid orange;
+  // box-shadow: 6px 8px gray;
 }
 
 .swapcard {
-    background: url("/assets/images/swap.jpg");
+  background: url("/assets/images/swap.jpg");
 }
 
 .lpcard {
-    background: url("/assets/images/liquidity.jpg");
+  background: url("/assets/images/liquidity.jpg");
 }
 
 .swaptxt {
-    text-shadow: 3px 3px black;
-    border: 1px solid gray;
+  text-shadow: 3px 3px black;
+  border: 1px solid gray;
 }
 
 .contentbox {
-    max-width: 1280px;
-    text-align: left;
-    padding: 1em;
-    font-size: medium;
+  max-width: 1280px;
+  text-align: left;
+  padding: 1em;
+  font-size: medium;
 }
 
 h1 {
-    font-size: 16px;
-    font-weight: 500;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: normal;
 }
 
 h2 {
-    font-size: 12px;
-    font-weight: 300;
+  font-size: 12px;
+  font-weight: 300;
 }
 
 h3 {
-    font-size: 8px;
-    font-weight: 20;
+  font-size: 8px;
+  font-weight: 20;
 }
 
 .mt-title {
-    margin-top: 32px;
+  margin-top: 32px;
 }
 
-@media(min-width: 400px) //if more than 400 px
-{
-    h1{
-    font-size:28px
+@media (min-width: 400px) {
+  h1 {
+    font-size: 28px;
   }
 
-  h2{
-    font-size:20px
+  h2 {
+    font-size: 20px;
   }
 
   .mt-title {
@@ -78,25 +138,24 @@ h3 {
     width: 134px;
     height: 72px;
     border-radius: 5px;
-    }
-
-    .contentbox {
-        width: 392px;
-     }
-}
-
-@media(min-width: 600px) //if more than 400 px
-{
-    h1{
-    font-size:40px
   }
-  h2{
-    font-size:20px
+
+  .contentbox {
+    width: 392px;
+  }
 }
 
-h3 {
+@media (min-width: 600px) {
+  h1 {
+    font-size: 40px;
+  }
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
     font-size: 12px;
-}
+  }
 
   .mt-title {
     margin-top: 64px;
@@ -108,21 +167,20 @@ h3 {
   }
   .contentbox {
     width: 580px;
- }
-}
-
-@media(min-width: 960px) //if more than 400 px
-{
-    h1{
-    font-size:64px
   }
-  h2{
-    font-size:32px
 }
 
-h3 {
+@media (min-width: 960px) {
+  h1 {
+    font-size: 64px;
+  }
+  h2 {
+    font-size: 32px;
+  }
+
+  h3 {
     font-size: 18px;
-}
+  }
 
   .mt-title {
     margin-top: 100px;
@@ -135,21 +193,20 @@ h3 {
   }
   .contentbox {
     width: 800px;
- }
-}
-
-@media(min-width: 1280px) //if more than 400 px
-{
-    h1{
-    font-size:86px
   }
-  h2{
-    font-size:42px
 }
 
-h3 {
+@media (min-width: 1280px) {
+  h1 {
+    font-size: 76px;
+  }
+  h2 {
+    font-size: 42px;
+  }
+
+  h3 {
     font-size: 24px;
-}
+  }
 
   .mt-title {
     margin-top: 130px;
@@ -159,38 +216,36 @@ h3 {
     width: 400px;
     height: 214px;
     border-radius: 14px;
- }
- .contentbox {
+  }
+  .contentbox {
     width: 920px;
- }
-
+  }
 }
 
-@media(min-width: 1920px)
-{
-    h1{
-        font-size:128px
-    }
+@media (min-width: 1920px) {
+  h1 {
+    font-size: 128px;
+  }
 
-    h2{
-        font-size:64px
-    }
+  h2 {
+    font-size: 64px;
+  }
 
-    h3 {
-        font-size: 36px;
-    }
+  h3 {
+    font-size: 36px;
+  }
 
   .mt-title {
     margin-top: 200px;
- }
+  }
 
- .showcard {
+  .showcard {
     width: 600px;
     height: 320px;
     border-radius: 20px;
- }
+  }
 
- .contentbox {
+  .contentbox {
     width: 1280px;
- }
+  }
 }

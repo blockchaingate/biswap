@@ -2,7 +2,7 @@
   <div>
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
       <span routerLink="/">
-        <img class="header-logo" src="/assets/images/biswap-256.png" width="120px" alt="image">
+        <img class="header-logo" src="/assets/images/biswap-256w.png" width="120px" alt="image">
       </span>
     </button>
   </div>
@@ -24,7 +24,7 @@
       </button>
     </div>
 
-    <button mat-raised-button color="primary" *ngIf="!account" (click)="connectWallet()">
+    <button mat-raised-button class="connectBtn" *ngIf="!account" (click)="connectWallet()">
       {{ 'Connect Wallet'| translate }}
     </button>
     <button mat-raised-button color="primary" *ngIf="account" (click)="disConnectWallet()">
