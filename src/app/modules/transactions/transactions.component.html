@@ -6,15 +6,18 @@
 
 
 <div *ngIf="account" >
+    <div class="container">
+        <div class="row transRow">
+            <div class="col col-12">
+                <h1 class="text-center">
+                    {{"Transections"|translate}}
+                </h1>
+            </div>
+        </div>
+    </div>
     <div class="rounded-card container">
         <div class="container">
-            <div class="row">
-                <div class="col col-12">
-                    <h3 class="text-center">
-                        {{"Transections"|translate}}
-                    </h3>
-                </div>
-            </div>
+            
             <div class="row py-2">
                 <div class="col col-2">
                     <b>{{"ACTION"|translate}}</b>
@@ -33,7 +36,7 @@
                 </div>
             </div>
     
-            <div class="row table-data py-2" *ngFor="let transaction of transactions;let i = index">
+            <div class="row  py-2" *ngFor="let transaction of transactions;let i = index">
                 <div class="col col-2">
                     {{transaction.name}}
                 </div>

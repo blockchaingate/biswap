@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Renderer2, Input } from '@angular/core';
-import { createChart, MouseEventParams } from 'lightweight-charts';
+import { createChart, IChartApi, MouseEventParams } from 'lightweight-charts';
 
 @Component({
   selector: 'app-volume',
