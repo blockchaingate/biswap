@@ -2,10 +2,10 @@
     min-width: 25%;
 
     padding: 0;
-    background: url("/assets/images/gradient2-back.jpg");
+    // background: url("/assets/images/gradient2-back.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    height: 100vh;
+    // height: 100vh;
 
     // background-color: #eaebec;
 }
@@ -14,6 +14,10 @@
     border-radius: 12px !important;
     background-image: linear-gradient(37deg, #bb91f9, #3f5ac5);
     min-width: 380px;
+}
+
+.cardContent{
+    padding-bottom: 100px;
 }
 
 .coins-input-body {
@@ -76,8 +80,7 @@
 
 .title1 {
     max-width: 1280px;
-    margin-top: 300px;
-    margin-bottom: 120px;
+    margin:50px 0;
     text-shadow: 3px 3px gray;
 }
 
@@ -141,7 +144,7 @@ h3 {
 @media(min-width: 1280px) //if more than 400 px
 {
     h1{
-    font-size:86px
+    font-size:50px
   }
   h2{
     font-size:42px
@@ -151,8 +154,7 @@ h3 {
     font-size: 24px;
 }
 .title1 {
-    margin-top: 136px;
-    margin-bottom: 105px;
+    margin:50px 0;
 }
 .mat-card {
     width: 500px;
