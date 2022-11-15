@@ -3,7 +3,25 @@
 }
 
 .rounded-card {
-    border: 1px solid rgb(231, 227, 235);;
+    border: 1px solid rgb(3 42 62);
     border-radius: 5px;
     padding: 20px;
+    background-color: #090130;
+    color:#f3f3f3;
+}
+
+.rounded-card .row{
+    //ease-in-out
+    transition: all 0.5s;
+    background-color: #250365;
+    margin:5px 0;
+    border-radius: 5px;
+
+}
+
+
+.rounded-card .row:hover{
+    background-color: #5508a3;
+    //scale(1.1);
+    transform: scale(1.01);
 }
