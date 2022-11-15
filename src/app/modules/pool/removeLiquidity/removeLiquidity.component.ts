@@ -106,7 +106,6 @@ export class RemoveLiquidityComponent implements OnInit {
     var value = '0x' + new BigNumber (this.totalPoolToken)
     .multipliedBy(new BigNumber(this.percentage))
     .dividedBy(new BigNumber(100))
-    .shiftedBy(18)
     .toString(16).split('.')[0];
 
     var params = [environment.smartConractAdressRouter, value];
