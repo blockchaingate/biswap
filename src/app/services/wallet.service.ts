@@ -24,7 +24,8 @@ export class WalletService {
     this.accountSubject.next(address);
     this.client.disconnect({
       topic: this.topic,
-      projectId: "3acbabd1deb4672edfd4ca48226cfc0f",
+      //projectId: "3acbabd1deb4672edfd4ca48226cfc0f",
+      relayUrl: 'wss://api.biswap.com',
       metadata: {
         name: "Biswap Dapp",
         description: "Automated FAB-based crypto exchange",
@@ -42,7 +43,8 @@ export class WalletService {
     */
     
     const client = await SignClient.init({
-      projectId: "3acbabd1deb4672edfd4ca48226cfc0f",
+      //projectId: "3acbabd1deb4672edfd4ca48226cfc0f",
+      relayUrl: 'wss://api.biswap.com',
       metadata: {
         name: "Biswap Dapp",
         description: "Automated FAB-based crypto exchange",

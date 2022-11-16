@@ -8,6 +8,12 @@
 0000000000000000000000000000000000000000000000000000000000030001
 000000000000000000000000000000000000000000000000000000000002001b
 
+    var value = '0x' + new BigNumber (this.totalPoolToken)
+    .shiftBy(18)
+    .multipliedBy(new BigNumber(this.percentage))
+    .dividedBy(new BigNumber(100))
+    .toString(16).split('.')[0];
+    
 
         {
           "internalType": "uint32",
