@@ -23,7 +23,7 @@
                 {{item.tokenName}}
             </div>
             <div class="col col-3">
-                <div>{{"Active"|translate}}: {{item.amount}}</div>
+                <div>{{"Active"|translate}}: {{item.amount > 0 ? item.amount : 0}}</div>
                 <div>{{"Pending"|translate}}: {{item.pendingAmount}}</div>
                 <div>{{"Redeem"|translate}}: {{item.redeemAmount}}</div>
             </div>
