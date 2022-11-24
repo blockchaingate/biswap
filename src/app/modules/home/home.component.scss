@@ -19,17 +19,17 @@
   background-color: #1d0250;
   background-position-y: -40px;
 
-  h2{
+  h2 {
     font-weight: 800;
     font-size: 70px;
     line-height: 80px;
   }
 }
 
-.textRow{
+.textRow {
   padding: 80px 0;
 
-  h2{
+  h2 {
     text-transform: capitalize;
   }
 }
@@ -248,5 +248,15 @@ h3 {
 
   .contentbox {
     width: 1280px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .contentRow {
+    .bannerTxt {
+      text-align: center;
+      margin: 0 auto;
+      padding: 20px 0;
+    }
   }
 }
