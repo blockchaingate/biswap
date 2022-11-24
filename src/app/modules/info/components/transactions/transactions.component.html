@@ -1,43 +1,43 @@
 <div class="rounded-card">
     <div class="container">
         <div class="row py-2">
-            <div class="col col-2">
+            <div class="titiCol col-md-2">
                 <b>{{"ACTION"|translate}}</b>
             </div>
-            <div class="col col-2">
+            <div class="titiCol col-md-2">
                 <b>{{"TOTAL VALUE"|translate}}</b>
             </div>
-            <div class="col col-2">
+            <div class="titiCol col-md-2">
                 <b>{{"TOKEN"|translate}}1 {{"AMOUNT"|translate}}</b>
             </div>
-            <div class="col col-2">
+            <div class="titiCol col-md-2">
                 <b>{{"TOKEN"|translate}}2 {{"AMOUNT"|translate}}</b>
             </div>
-            <div class="col col-2">
+            <div class="titiCol col-md-2">
                 <b>{{"ACCOUNT"|translate}}</b>
             </div>
-            <div class="col col-2">
+            <div class="titiCol col-md-2">
                 <b>{{"TIME"|translate}}</b>
             </div>
         </div>
 
         <div class="row py-2" *ngFor="let transaction of transactions;let i = index">
-            <div class="col col-2">
+            <div class="titiCol col-md-2">
                 {{transaction.name}}
             </div>
-            <div class="col col-2">
+            <div class="titiCol col-md-2">
                 {{transaction.amountUSD}}
             </div>
-            <div class="col col-2">
+            <div class="titiCol col-md-2">
                 {{transaction.amount0}}
             </div>
-            <div class="col col-2">
+            <div class="titiCol col-md-2">
                 {{transaction.amount1}}
             </div>
-            <div class="col col-2">
+            <div class="titiCol col-md-2">
                 {{toIdentityString(transaction.sender ? transaction.sender : transaction.account)}}
             </div>
-            <div class="col col-2">
+            <div class="titiCol col-md-2">
                 {{transaction.time}}
             </div>
         </div>

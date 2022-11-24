@@ -8,7 +8,7 @@
 <div *ngIf="account" >
     <div class="container">
         <div class="row transRow">
-            <div class="col col-12">
+            <div class="titiCol col-md-12">
                 <h1 class="text-center">
                     {{"Transections"|translate}}
                 </h1>
@@ -19,37 +19,37 @@
         <div class="container">
             
             <div class="row py-2">
-                <div class="col col-2">
+                <div class="titiCol col-md-2">
                     <b>{{"ACTION"|translate}}</b>
                 </div>
-                <div class="col col-2">
+                <div class="titiCol col-md-2">
                     <b>{{"TOTAL VALUE"|translate}}</b>
                 </div>
-                <div class="col col-3">
+                <div class="titiCol col-md-3">
                     <b>{{"TOKEN"|translate}}1 {{"AMOUNT"|translate}}</b>
                 </div>
-                <div class="col col-3">
+                <div class="titiCol col-md-3">
                     <b>{{"TOKEN"|translate}}2 {{"AMOUNT"|translate}}</b>
                 </div>
-                <div class="col col-2">
+                <div class="titiCol col-md-2">
                     <b>{{"TIME"|translate}}</b>
                 </div>
             </div>
     
             <div class="row  py-2" *ngFor="let transaction of transactions;let i = index">
-                <div class="col col-2">
+                <div class="titiCol col-md-2">
                     {{transaction.name}}
                 </div>
-                <div class="col col-2">
+                <div class="titiCol col-md-2">
                     {{transaction.amountUSD}}
                 </div>
-                <div class="col col-3">
+                <div class="titiCol col-md-3">
                     {{transaction.amount0}}
                 </div>
-                <div class="col col-3">
+                <div class="titiCol col-md-3">
                     {{transaction.amount1}}
                 </div>
-                <div class="col col-2">
+                <div class="titiCol col-md-2">
                     {{transaction.time}}
                 </div>
             </div>
