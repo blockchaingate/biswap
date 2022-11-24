@@ -1,7 +1,9 @@
 <h1>{{"Biswap Info & Analytics"|translate}}</h1>
-<div class="d-flex justify-content-between">
-    <app-all-liquidity class="overviewitem" [items]="items"></app-all-liquidity>
-    <app-all-volume class="overviewitem" [items]="items"></app-all-volume>
+<div class="container">
+    <div class="infoAna row">
+        <app-all-liquidity class="overviewitem col-md-6" [items]="items"></app-all-liquidity>
+        <app-all-volume class="overviewitem col-md-6" [items]="items"></app-all-volume>
+    </div>
 </div>
 
 

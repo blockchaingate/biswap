@@ -1,4 +1,4 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="topBar">
   <div>
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
       <span routerLink="/">
@@ -17,7 +17,7 @@
   </div>
   <!-- <span class="example-spacer"></span> -->
 
-  <div fxLayoutGap="12px" fxLayout="row">
+  <div fxLayoutGap="12px" fxLayout="row" class="menuRight">
     <div fxHide.gt-md layout-align="end center">
       <button mat-icon-button (click)="onToggleSidenav()">
         <mat-icon>menu</mat-icon>
