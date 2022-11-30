@@ -12,7 +12,7 @@
     "Disconnect": "断开连接",
     "EXPLORER NEW SPACE": "探索未来金融新天地",
     "BISWAP PROTOCOL": "币旺(Biswap)创新协议",
-    "BiswapProtcl": "全球唯一将去中心化创新金融协议与实体经济紧密结合的高效率、低成本、高收益金融应用，通过币旺(Biswap)去中心化网络，用户不仅可以匿名的方式自由进行实时交易，还可以通过注入流动性而赚取交易收入、免费获取空投，从而进一步免费获得一系列绝佳收益项目的权益。更重要的是，通过币旺系统，用户可以直接迈向未来，深刻融入新一代金融生态，长久获取高额回报，甚至建立自己的商业金融帝国。",
+    "BiswapProtcl": "世界上唯一鏈接到真實業務的 defi 網絡。在 Biswap，您可以交易、賺取和構建您的業務系統以獲得可能會升值的獎勵。",
     "THE BEST CHOICE": "最佳投资策略是",
     "IS TO PROVIDE LIQUIDITY": "向流动池注入流动性",
     "Trade tokens in an instant": "进行即时交易",
@@ -121,6 +121,7 @@
     "privacycontent": "币旺(Biswap)是一款开源去中心化应用，用户可以自由地创建钱包并直接使用，无需注册或登录，用户创建钱包时的密码仅用于在用户设备中对助记词或私钥加密，本软件不收集任何用户信息。",
     "Info & Analytics": "信息与分析",
     "Info Analytics Detial": "查看实时数据一切资讯尽在掌握之中.",
-    "EARN GET AIRDROP Detial": "现在加入马上享受免费空投带来的收入和未来币价潜在的升值机会。",
-    "PROVIDE LIQUIDITY Detial": "提供流动性并赚取 BISWAP 奖励！"
+    "EARN GET AIRDROP Detial": "现在加入即可享受免费空投的红利收入和未来币价上涨的潜在机会。",
+    "PROVIDE LIQUIDITY Detial": "提供流动性并赚取 BISWAP 奖励！",
+    "Get Started": "立即开始"
 }
