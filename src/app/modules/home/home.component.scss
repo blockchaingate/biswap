@@ -26,12 +26,20 @@
   }
 }
 
+.headline{
+  text-align: center;
+}
+
 .textRow {
   padding: 80px 0;
 
   h2 {
     text-transform: capitalize;
   }
+}
+
+.textRow2 {
+  padding-top: 60px;
 }
 
 .contentRow {
@@ -102,10 +110,11 @@
   font-size: medium;
 }
 
-h1 {
+h1, .headline .subtitle {
   font-size: 16px;
   font-weight: 800;
   line-height: normal;
+  text-transform: uppercase;
 }
 
 h2 {
@@ -125,6 +134,10 @@ h3 {
 @media (min-width: 400px) {
   h1 {
     font-size: 28px;
+  }
+
+  .headline .subtitle {
+    font-size: 22px;
   }
 
   h2 {
@@ -147,9 +160,14 @@ h3 {
 }
 
 @media (min-width: 600px) {
-  h1 {
+  h1{
     font-size: 40px;
   }
+
+  .headline .subtitle {
+    font-size: 32px;
+  }
+
   h2 {
     font-size: 20px;
   }
@@ -175,6 +193,11 @@ h3 {
   h1 {
     font-size: 64px;
   }
+
+  .headline .subtitle {
+    font-size: 54px;
+  }
+
   h2 {
     font-size: 32px;
   }
@@ -198,9 +221,14 @@ h3 {
 }
 
 @media (min-width: 1280px) {
-  h1 {
+  h1{
     font-size: 76px;
   }
+
+  .headline .subtitle {
+    font-size: 64px;
+  }
+
   h2 {
     font-size: 42px;
   }
@@ -224,8 +252,12 @@ h3 {
 }
 
 @media (min-width: 1920px) {
-  h1 {
+  h1{
     font-size: 128px;
+  }
+
+  .headline .subtitle {
+    font-size: 106px;
   }
 
   h2 {
@@ -258,5 +290,18 @@ h3 {
       margin: 0 auto;
       padding: 20px 0;
     }
+  }
+}
+
+
+.appBtns {
+  display: flex;
+  //justify-content: space-between;
+  //margin-right: 20px;
+  .btns{
+    margin-right: 20px;
+  }
+  a {
+    background: linear-gradient(90deg, #0b2dd5 0%, #6827e1 100%);
   }
 }
