@@ -38,7 +38,7 @@
                     <span *ngIf="selectedFirstTokenAmount == 0"> - </span>
                     <div fxLayout="row" fxLayoutAlign="start center">
 
-                        <span> {{firstToken}} </span>
+                        <span> {{firstTokenName}} </span>
                     </div>
                 </div>
 
@@ -47,7 +47,7 @@
                     <span *ngIf="selectedSecondTokenAmount == 0"> - </span>
                     <div fxLayout="row" fxLayoutAlign="start center">
 
-                        <span> {{secondToken}} </span>
+                        <span> {{secondTokenName}} </span>
                     </div>
                 </div>
             </div>
@@ -116,12 +116,12 @@
                         <div fxLayout="row" fxLayoutAlign="center center">
 
 
-                            <span> {{yourPoolShare}}</span>
+                            <span> {{yourPoolShare}} %</span>
                         </div>
                     </div>
 
                     <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
-                        <span> {{firstToken}}: </span>
+                        <span> {{firstTokenName}}: </span>
                         <div fxLayout="row" fxLayoutAlign="center center">
 
                             <span> {{pooledFirstToken}} </span>
@@ -130,7 +130,7 @@
                     </div>
 
                     <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
-                        <span> {{secondToken}}: </span>
+                        <span> {{secondTokenName}}: </span>
                         <div fxLayout="row" fxLayoutAlign="center center">
 
 

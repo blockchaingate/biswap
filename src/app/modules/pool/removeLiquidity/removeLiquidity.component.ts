@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { SettingsComponent } from '../../settings/settings.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertComponent } from '../../shared/alert/alert.component';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-removeLiquidity',
@@ -25,6 +26,8 @@ export class RemoveLiquidityComponent implements OnInit {
    firstToken: String;
    secondToken: String;
    txHash: string = '';
+   firstTokenName: string = '';
+   secondTokenName: string = '';
 
    yourPoolShare: number;
    pooledFirstToken:number;
@@ -46,6 +49,7 @@ export class RemoveLiquidityComponent implements OnInit {
     private utilService: UtilsService,
     public dialog: MatDialog,
     private walletService: WalletService,
+    private dataService: DataService,
   ) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation!.extras.state as {
@@ -59,14 +63,27 @@ export class RemoveLiquidityComponent implements OnInit {
     this.firstToken = state.firstToken;
     this.secondToken = state.secondToken;
     this.yourPoolShare = state.yourPoolShare;
-    this.pooledFirstToken = state.pooledFirstToken;
-    this.pooledSecondToken = state.pooledSecondToken;
+    this.pooledFirstToken = (state.pooledFirstToken * state.yourPoolShare) / 100;
+    this.pooledSecondToken = (state.pooledSecondToken * state.yourPoolShare) / 100;
     this.totalPoolToken = state.totalPoolToken;
     this.pairId = state.pairId;
    }
 
   ngOnInit() {
 
+    this.dataService.GettokenList.subscribe((x) => {
+      let a = x.find(o => o.type === Number(this.firstToken));
+      if (a != undefined) {
+        this.firstTokenName = a.tickerName;  
+      }
+      let b = x.find(o => o.type === Number(this.secondToken));
+      if (b != undefined) {
+        this.secondTokenName = b.tickerName;  
+      }
+      if (this.totalPoolToken > 10000000) {
+        this.totalPoolToken = this.totalPoolToken / 1e18;
+      }
+    });
   }
 
   openSettings() {
@@ -102,7 +119,6 @@ export class RemoveLiquidityComponent implements OnInit {
   }
 
   removeLiquidity() {
-
     var value = '0x' + new BigNumber (this.totalPoolToken)
     .multipliedBy(new BigNumber(this.percentage))
     .dividedBy(new BigNumber(100))
