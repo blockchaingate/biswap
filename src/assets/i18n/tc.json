@@ -57,7 +57,7 @@
     "Don't see a pool you joined": "沒看到加入的池子",
     "LiquidityDetail": "流動性提供者根據所其所提供流動性佔池子的比重分享交易費收入(交易費為0.3%)。所賺費用直接實際加入您的池子記錄，您可以收回流動性的方式取回。",
     "Add Liquidity": "添加流動性",
-    "Your total pool tokens": "您池中代幣總數",
+    "Your LP tokens": "您LP值",
     "Pooled": "已加池",
     "Your pool share": "您在池中份額",
     "Remove": "撤回",

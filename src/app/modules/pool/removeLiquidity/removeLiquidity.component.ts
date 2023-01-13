@@ -34,8 +34,8 @@ export class RemoveLiquidityComponent implements OnInit {
    pooledSecondToken:number;
    totalPoolToken:number;
 
-   selectedFirstTokenAmount: number = 0;
-   selectedSecondTokenAmount: number = 0;
+   selectedFirstTokenAmount = 0;
+   selectedSecondTokenAmount = 0;
 
    pairId: String;
 
@@ -107,15 +107,16 @@ export class RemoveLiquidityComponent implements OnInit {
 
   setAmount(percentage: number) {
     this.percentage = percentage;
-    this.selectedFirstTokenAmount = new BigNumber(percentage).multipliedBy(new BigNumber(this.pooledFirstToken)).dividedBy(new BigNumber(100)).toNumber();
-    this.selectedSecondTokenAmount = new BigNumber(percentage).multipliedBy(new BigNumber(this.pooledSecondToken)).dividedBy( new BigNumber(100)).toNumber();
+    this.selectedFirstTokenAmount = Number((percentage * this.pooledFirstToken/100).toFixed(18));
+    this.selectedSecondTokenAmount = Number((percentage * this.pooledSecondToken/100).toFixed(18));
   }
 
 
   onInputChange(event: MatSliderChange) {
     this.percentage = event.value!;
-    this.selectedFirstTokenAmount = new BigNumber(this.percentage).multipliedBy(new BigNumber(this.pooledFirstToken)).dividedBy(new BigNumber(100)).toNumber();
-    this.selectedSecondTokenAmount = new BigNumber(this.percentage).multipliedBy(new BigNumber(this.pooledSecondToken)).dividedBy( new BigNumber(100)).toNumber();
+    this.setAmount(this.percentage);
+    // this.selectedFirstTokenAmount = new BigNumber(this.percentage).multipliedBy(new BigNumber(this.pooledFirstToken)).dividedBy(new BigNumber(100)).toNumber();
+    // this.selectedSecondTokenAmount = new BigNumber(this.percentage).multipliedBy(new BigNumber(this.pooledSecondToken)).dividedBy( new BigNumber(100)).toNumber();
   }
 
   removeLiquidity() {
