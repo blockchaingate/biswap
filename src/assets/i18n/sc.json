@@ -58,7 +58,7 @@
     "LiquidityDetail": "流动性提供者根据所其所提供流动性占池子的比重分享交易费收入(交易费为0.3%)。所赚费用直接实际加入您的池子记录，您可以收回流动性的方式取回。",
     "Add Liquidity": "添加流动性",
     "Your LP tokens": "您的LP值",
-    "Pooled": "已加池",
+    "Pooled": "总加池",
     "Your pool share": "您在池中份额",
     "Remove": "撤回",
     "load more": "加载更多",
@@ -124,7 +124,8 @@
     "EARN GET AIRDROP Detial": "现在加入即可享受免费空投的红利收入和未来币价上涨的潜在机会。",
     "PROVIDE LIQUIDITY Detial": "提供流动性并赚取 BISWAP 奖励！",
     "Get Started": "立即开始",
-    "subtitle":"最简单易用的发送和接收加密支付的方式。",
-    "download":"下载币旺移动应用程序",
-    "downloadcontent":"币旺是一个开源的去中心化应用，用户可以在自己的本地设备上生成自己的钱包、用于加密助记词的密码或私钥来自由使用，不收集任何用户数据。"
+    "You pooled": "您池中",
+    "subtitle": "最简单易用的发送和接收加密支付的方式。",
+    "download": "下载币旺移动应用程序",
+    "downloadcontent": "币旺是一个开源的去中心化应用，用户可以在自己的本地设备上生成自己的钱包、用于加密助记词的密码或私钥来自由使用，不收集任何用户数据。"
 }

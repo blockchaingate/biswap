@@ -1,12 +1,10 @@
 .swapBody {
     min-width: 25%;
-
     padding: 0;
     // background: url("/assets/images/gradient2-back.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     // height: 100vh;
-
     // background-color: #eaebec;
 }
 
@@ -16,7 +14,7 @@
     min-width: 380px;
 }
 
-.cardContent{
+.cardContent {
     padding-bottom: 100px;
 }
 
@@ -56,7 +54,6 @@
 
 .mat-card-action {
     padding: 10px 10px;
-
     button {
         width: 100%;
         padding: 5px 5px;
@@ -80,98 +77,88 @@
 
 .title1 {
     max-width: 1280px;
-    margin:50px 0;
+    margin: 50px 0;
     text-shadow: 3px 3px gray;
 }
 
 h1 {
-   font-weight: 500;
+    font-weight: 500;
 }
 
 @media(min-width: 400px) //if more than 400 px
 {
-    h1{
-    font-size:28px
-  }
-
-  h2{
-    font-size:20px
-  }
-
-  .title1 {
-    margin-top: 48px;
-    margin-bottom: 38px;
- }
+    h1 {
+        font-size: 28px
+    }
+    h2 {
+        font-size: 20px
+    }
+    .title1 {
+        margin-top: 48px;
+        margin-bottom: 38px;
+    }
 }
 
 @media(min-width: 600px) //if more than 400 px
 {
-    h1{
-    font-size:40px
-  }
-  h2{
-    font-size:20px
-}
-
-h3 {
-    font-size: 12px;
-}
-.title1 {
-    margin-top: 68px;
-    margin-bottom: 56px;
-}
-
+    h1 {
+        font-size: 40px
+    }
+    h2 {
+        font-size: 20px
+    }
+    h3 {
+        font-size: 12px;
+    }
+    .title1 {
+        margin-top: 68px;
+        margin-bottom: 56px;
+    }
 }
 
 @media(min-width: 960px) //if more than 400 px
 {
-    h1{
-    font-size:64px
-  }
-  h2{
-    font-size:32px
-}
-
-h3 {
-    font-size: 18px;
-}
-.title1 {
-    margin-top: 100px;
-    margin-bottom: 80px;
-}
+    h1 {
+        font-size: 64px
+    }
+    h2 {
+        font-size: 32px
+    }
+    h3 {
+        font-size: 18px;
+    }
+    .title1 {
+        margin-top: 100px;
+        margin-bottom: 80px;
+    }
 }
 
 @media(min-width: 1280px) //if more than 400 px
 {
-    h1{
-    font-size:50px
-  }
-  h2{
-    font-size:42px
-}
-
-h3 {
-    font-size: 24px;
-}
-.title1 {
-    margin:50px 0;
-}
-.mat-card {
-    width: 500px;
-}
-
-}
-
-@media(min-width: 1920px)
-{
-    h1{
-        font-size:100px
+    h1 {
+        font-size: 50px
     }
-
-    h2{
-        font-size:64px
+    h2 {
+        font-size: 42px
     }
+    h3 {
+        font-size: 24px;
+    }
+    .title1 {
+        margin: 50px 0;
+    }
+    .mat-card {
+        width: 500px;
+    }
+}
 
+@media(min-width: 1920px) {
+    h1 {
+        font-size: 100px
+    }
+    h2 {
+        font-size: 64px
+    }
     h3 {
         font-size: 36px;
     }
@@ -179,7 +166,6 @@ h3 {
         margin-top: 200px;
         margin-bottom: 160px;
     }
-   
     .mat-card {
         width: 560px;
     }
