@@ -1,33 +1,35 @@
 <div class="rounded-card">
     <div class="container">
         <div class="row py-2">
-            <div class="col col-4">
+            <div class="titiCol col-md-4">
                 <b>{{"Address"|translate}}</b>
             </div>
-            <div class="col col-3">
+            <div class="titiCol col-md-3">
                 <b>{{"Token"|translate}}</b>
             </div>
-            <div class="col col-3">
+            <div class="titiCol col-md-3">
                 <b>{{"Amount"|translate}}</b>
             </div>
-            <div class="col col-2">
+            <div class="titiCol col-md-2">
 
             </div>
         </div>
 
         <div class="row py-2" *ngFor="let item of rewards;let i = index">
-            <div class="col col-4">
+            <div class="titiCol col-md-4">
                 {{item.address}}
             </div>
-            <div class="col col-3">
+            <div class="titiCol col-md-3">
                 {{item.tokenName}}
             </div>
-            <div class="col col-3">
-                <div>{{"Active"|translate}}: {{item.amount}}</div>
+
+            <div class="titiCol col-md-3">
+              <div>{{"Active"|translate}}: {{item.amount > 0 ? item.amount : 0}}</div>
+
                 <div>{{"Pending"|translate}}: {{item.pendingAmount}}</div>
                 <div>{{"Redeem"|translate}}: {{item.redeemAmount}}</div>
             </div>
-            <div class="col col-2">
+            <div class="titiCol col-md-2">
                 <button mat-raised-button *ngIf="account == item.address" color="primary" (click)="redeem(item.address, item.tokenName)">
                     {{ 'Redeem' |translate }}
                 </button>

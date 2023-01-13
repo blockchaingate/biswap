@@ -6,6 +6,7 @@ import { createChart, IChartApi, MouseEventParams } from 'lightweight-charts';
   templateUrl: './volume.component.html',
   styleUrls: ['./volume.component.scss']
 })
+
 export class VolumeComponent implements OnInit {
   @Input() items: any;
   currentVolume!: number | Object;

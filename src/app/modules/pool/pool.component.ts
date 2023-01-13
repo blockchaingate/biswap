@@ -63,8 +63,10 @@ export class PoolComponent implements OnInit {
 
   getExistLiquidity(){
     this.apiService.getUserExistPair(this.account, this.page).subscribe((res: any) =>{
-      console.log('res in getExisting liquidity=', res);
       if(res.length > 0){
+        for (const item of res) {
+          item.liquidityTokenBalance = item.liquidityTokenBalance / 1e18;
+        }
         this.existedLiquidityList = [...this.existedLiquidityList,...res] ;
         this.page ++;
       }
@@ -89,7 +91,7 @@ export class PoolComponent implements OnInit {
         yourPoolShare: this.existedLiquidityList[index].share,
         pooledFirstToken: this.existedLiquidityList[index].pair.reserve0,
         pooledSecondToken: this.existedLiquidityList[index].pair.reserve1,
-        totalPoolToken: this.existedLiquidityList[index].liquidityTokenBalance
+        totalPoolToken: this.existedLiquidityList[index].liquidityTokenBalance 
       },
     });
   }

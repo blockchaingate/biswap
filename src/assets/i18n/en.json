@@ -12,7 +12,7 @@
     "Disconnect": "Disconnect",
     "EXPLORER NEW SPACE": "EXPLORER NEW SPACE",
     "BISWAP PROTOCOL": "BISWAP PROTOCOL",
-    "BiswapProtcl": "The world's only defi network that links to real business. At Biswap, you can trade, earn, and build your business system to get rewards which would must likely be rising in value.",
+    "BiswapProtcl": "The world's only defi network that links to real business. At Biswap, you can trade, earn, and build your business system to get rewards which will likely rise in value.",
     "THE BEST CHOICE": "THE BEST CHOICE",
     "IS TO PROVIDE LIQUIDITY": "IS TO PROVIDE LIQUIDITY",
     "Trade tokens in an instant": "Trade tokens in an instant",
@@ -57,7 +57,7 @@
     "Don't see a pool you joined": "Don't see a pool you joined",
     "LiquidityDetail": "Liquidity providers earn a 0.3% fee on all trades proportional to their share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity",
     "Add Liquidity": "Add Liquidity",
-    "Your total pool tokens": "Your total pool tokens",
+    "Your LP tokens": "Your LP tokens",
     "Pooled": "Pooled",
     "Your pool share": "Your pool share",
     "Remove": "Remove",
@@ -121,6 +121,10 @@
     "privacycontent": "Biswap is an open source decentralized application, user can use it freely by generating his/her own wallet, no registration or signup required, password used to encrypt mnemonics or private key on user local device, no any user data collected.",
     "Info & Analytics": "Info & Analytics",
     "Info Analytics Detial": "View real-time data and have all the information at your fingertips.",
-    "EARN GET AIRDROP Detial": "Join now to enjoy the income brought by the free airdrop and the potential appreciation opportunity of the future currency price.",
-    "PROVIDE LIQUIDITY Detial": "PROVIDE LIQUIDITY AND EARN BISWAP REWARDS!"
+    "EARN GET AIRDROP Detial": "Join now to enjoy bonus income from free airdrops and the potential  opportunity of future currency price appreciation.",
+    "PROVIDE LIQUIDITY Detial": "PROVIDE LIQUIDITY AND EARN BISWAP REWARDS!",
+    "Get Started": "Get Started",
+    "subtitle":"Easiest way to send and receive crypto payments.",
+    "download":"Download Biswap Mobile App",
+    "downloadcontent":"Biswap is an open source decentralized application, user can use it freely by generating his/her own wallet, password used to encrypt mnemonics or private key on user local device, no any user data collected."
 }

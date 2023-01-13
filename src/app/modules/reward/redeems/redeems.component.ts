@@ -11,7 +11,6 @@ export class RedeemsComponent implements OnInit {
 
   redeems: any;
   constructor(
-    private utilServ: UtilsService,
     private biswapServ: BiswapService) { }
 
   ngOnInit(): void {

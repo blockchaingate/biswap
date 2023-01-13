@@ -127,34 +127,34 @@ import BigNumber from 'bignumber.js';
     getRewardPlans() {
       const pageSize = 100;
       const pageNum = 0;
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/rewardplan/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.oldexplorerapi + '/kanban/biswap/rewardplan/' + pageSize + '/' + pageNum;
       return this.http.get(url);  
     }
 
     getRewards(pageSize: number, pageNum: number) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/reward/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.oldexplorerapi + '/kanban/biswap/reward/' + pageSize + '/' + pageNum;
       return this.http.get(url);  
     }
 
     getRewardsWithMine(userId: string, pageSize: number, pageNum: number) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/reward/' + pageSize + '/' + pageNum + '?userId=' + userId;
+      const url = environment.endpoints.oldexplorerapi + '/kanban/biswap/reward/' + pageSize + '/' + pageNum + '?userId=' + userId;
       return this.http.get(url);  
     }
 
     getCountRewards() {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/reward/totalCount';
+      const url = environment.endpoints.oldexplorerapi + '/kanban/biswap/reward/totalCount';
       return this.http.get(url);  
     }
 
     getRewardRedeems() {
       const pageSize = 100;
       const pageNum = 0;
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/reward/redeem/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.oldexplorerapi + '/kanban/biswap/reward/redeem/' + pageSize + '/' + pageNum;
       return this.http.get(url);  
     }
 
     redeem(address: string, tokenName: string) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/reward/redeem/' + address + '/' + tokenName;
+      const url = environment.endpoints.oldexplorerapi + '/kanban/biswap/reward/redeem/' + address + '/' + tokenName;
       return this.http.get(url);  
     }
 

@@ -34,20 +34,20 @@
 
             <div>
                 <div fxLayout="row" fxLayoutAlign="space-between center">
-                    <span *ngIf="selectedFirstTokenAmount != 0"> {{selectedFirstTokenAmount}} </span>
+                    <span *ngIf="selectedFirstTokenAmount > 0"> {{selectedFirstTokenAmount}} </span>
                     <span *ngIf="selectedFirstTokenAmount == 0"> - </span>
                     <div fxLayout="row" fxLayoutAlign="start center">
 
-                        <span> {{firstToken}} </span>
+                        <span> {{firstTokenName}} </span>
                     </div>
                 </div>
 
                 <div fxLayout="row" fxLayoutAlign="space-between center">
-                    <span *ngIf="selectedSecondTokenAmount != 0"> {{selectedSecondTokenAmount}} </span>
+                    <span *ngIf="selectedSecondTokenAmount > 0"> {{selectedSecondTokenAmount}} </span>
                     <span *ngIf="selectedSecondTokenAmount == 0"> - </span>
                     <div fxLayout="row" fxLayoutAlign="start center">
 
-                        <span> {{secondToken}} </span>
+                        <span> {{secondTokenName}} </span>
                     </div>
                 </div>
             </div>
@@ -103,7 +103,7 @@
                 <div>
 
                     <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
-                        <span> {{"Total pool token"|translate}}: </span>
+                        <span> {{"Your LP tokens"|translate}}: </span>
                         <div fxLayout="row" fxLayoutAlign="center center">
 
 
@@ -112,16 +112,16 @@
                     </div>
 
                     <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
-                        <span> Your pool share: </span>
+                        <span> {{"Your pool share"|translate}}: </span>
                         <div fxLayout="row" fxLayoutAlign="center center">
 
 
-                            <span> {{yourPoolShare}}</span>
+                            <span> {{yourPoolShare}} %</span>
                         </div>
                     </div>
 
                     <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
-                        <span> {{firstToken}}: </span>
+                        <span> {{firstTokenName}}: </span>
                         <div fxLayout="row" fxLayoutAlign="center center">
 
                             <span> {{pooledFirstToken}} </span>
@@ -130,7 +130,7 @@
                     </div>
 
                     <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
-                        <span> {{secondToken}}: </span>
+                        <span> {{secondTokenName}}: </span>
                         <div fxLayout="row" fxLayoutAlign="center center">
 
 

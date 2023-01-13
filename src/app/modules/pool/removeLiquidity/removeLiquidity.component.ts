@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { SettingsComponent } from '../../settings/settings.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertComponent } from '../../shared/alert/alert.component';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-removeLiquidity',
@@ -25,14 +26,16 @@ export class RemoveLiquidityComponent implements OnInit {
    firstToken: String;
    secondToken: String;
    txHash: string = '';
+   firstTokenName: string = '';
+   secondTokenName: string = '';
 
    yourPoolShare: number;
    pooledFirstToken:number;
    pooledSecondToken:number;
    totalPoolToken:number;
 
-   selectedFirstTokenAmount: number = 0;
-   selectedSecondTokenAmount: number = 0;
+   selectedFirstTokenAmount = 0;
+   selectedSecondTokenAmount = 0;
 
    pairId: String;
 
@@ -46,6 +49,7 @@ export class RemoveLiquidityComponent implements OnInit {
     private utilService: UtilsService,
     public dialog: MatDialog,
     private walletService: WalletService,
+    private dataService: DataService,
   ) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation!.extras.state as {
@@ -59,14 +63,27 @@ export class RemoveLiquidityComponent implements OnInit {
     this.firstToken = state.firstToken;
     this.secondToken = state.secondToken;
     this.yourPoolShare = state.yourPoolShare;
-    this.pooledFirstToken = state.pooledFirstToken;
-    this.pooledSecondToken = state.pooledSecondToken;
+    this.pooledFirstToken = (state.pooledFirstToken * state.yourPoolShare) / 100;
+    this.pooledSecondToken = (state.pooledSecondToken * state.yourPoolShare) / 100;
     this.totalPoolToken = state.totalPoolToken;
     this.pairId = state.pairId;
    }
 
   ngOnInit() {
 
+    this.dataService.GettokenList.subscribe((x) => {
+      let a = x.find(o => o.type === Number(this.firstToken));
+      if (a != undefined) {
+        this.firstTokenName = a.tickerName;  
+      }
+      let b = x.find(o => o.type === Number(this.secondToken));
+      if (b != undefined) {
+        this.secondTokenName = b.tickerName;  
+      }
+      if (this.totalPoolToken > 10000000) {
+        this.totalPoolToken = this.totalPoolToken / 1e18;
+      }
+    });
   }
 
   openSettings() {
@@ -90,23 +107,22 @@ export class RemoveLiquidityComponent implements OnInit {
 
   setAmount(percentage: number) {
     this.percentage = percentage;
-    this.selectedFirstTokenAmount = new BigNumber(percentage).multipliedBy(new BigNumber(this.pooledFirstToken)).dividedBy(new BigNumber(100)).toNumber();
-    this.selectedSecondTokenAmount = new BigNumber(percentage).multipliedBy(new BigNumber(this.pooledSecondToken)).dividedBy( new BigNumber(100)).toNumber();
+    this.selectedFirstTokenAmount = Number((percentage * this.pooledFirstToken/100).toFixed(18));
+    this.selectedSecondTokenAmount = Number((percentage * this.pooledSecondToken/100).toFixed(18));
   }
 
 
   onInputChange(event: MatSliderChange) {
     this.percentage = event.value!;
-    this.selectedFirstTokenAmount = new BigNumber(this.percentage).multipliedBy(new BigNumber(this.pooledFirstToken)).dividedBy(new BigNumber(100)).toNumber();
-    this.selectedSecondTokenAmount = new BigNumber(this.percentage).multipliedBy(new BigNumber(this.pooledSecondToken)).dividedBy( new BigNumber(100)).toNumber();
+    this.setAmount(this.percentage);
+    // this.selectedFirstTokenAmount = new BigNumber(this.percentage).multipliedBy(new BigNumber(this.pooledFirstToken)).dividedBy(new BigNumber(100)).toNumber();
+    // this.selectedSecondTokenAmount = new BigNumber(this.percentage).multipliedBy(new BigNumber(this.pooledSecondToken)).dividedBy( new BigNumber(100)).toNumber();
   }
 
   removeLiquidity() {
-
     var value = '0x' + new BigNumber (this.totalPoolToken)
     .multipliedBy(new BigNumber(this.percentage))
     .dividedBy(new BigNumber(100))
-    .shiftedBy(18)
     .toString(16).split('.')[0];
 
     var params = [environment.smartConractAdressRouter, value];
