@@ -80,9 +80,7 @@ export class RemoveLiquidityComponent implements OnInit {
       if (b != undefined) {
         this.secondTokenName = b.tickerName;  
       }
-      if (this.totalPoolToken > 10000000) {
-        this.totalPoolToken = this.totalPoolToken / 1e18;
-      }
+
     });
   }
 
@@ -120,6 +118,7 @@ export class RemoveLiquidityComponent implements OnInit {
   }
 
   removeLiquidity() {
+    console.log('this.totalPoolToken===', this.totalPoolToken);
     var value = '0x' + new BigNumber (this.totalPoolToken)
     .multipliedBy(new BigNumber(this.percentage))
     .dividedBy(new BigNumber(100))
@@ -165,7 +164,7 @@ export class RemoveLiquidityComponent implements OnInit {
     );
     var deadline = this.utilService.getTimestamp(timestamp);
 
-
+    
     var params = [this.firstToken, this.secondToken, value ,amountAMin, amountBMin, to, deadline];
 
 

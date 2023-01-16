@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import BigNumber from 'bignumber.js';
 import { Coin } from 'src/app/models/coin';
 import { ApiService } from 'src/app/services/api.services';
 import { DataService } from 'src/app/services/data.service';
@@ -44,6 +45,7 @@ export class PoolComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private walletService: WalletService,
+    private utilServ: UtilsService,
     private router: Router,
   ) {}
 
@@ -61,13 +63,19 @@ export class PoolComponent implements OnInit {
     }
   }
 
+  showAmount(amount: any) {
+    return new BigNumber(amount).shiftedBy(-18).toNumber()
+  }
+  
   getExistLiquidity(){
     this.apiService.getUserExistPair(this.account, this.page).subscribe((res: any) =>{
       if(res.length > 0){
+        /*
         for (const item of res) {
           item.liquidityTokenBalance = item.liquidityTokenBalance / 1e18;
         }
-        this.existedLiquidityList = [...this.existedLiquidityList,...res] ;
+        */
+        this.existedLiquidityList = res ;
         this.page ++;
       }
     })
