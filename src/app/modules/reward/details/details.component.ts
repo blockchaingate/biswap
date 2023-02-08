@@ -62,7 +62,6 @@ export class DetailsComponent implements OnInit {
     
     this.biswapServ.redeem(address, tokenName).subscribe(
       (ret: any) => {
-        console.log('ret===', ret);
         if(ret && ret._id) {
           this._snackBar.open('Your redeem request is pending');
         } else {

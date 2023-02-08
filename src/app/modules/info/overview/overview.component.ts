@@ -36,7 +36,6 @@ export class OverviewComponent implements OnInit {
     });
     this.biswapServ.getCountTransactions().subscribe(
       (ret: any) => {
-        console.log('ret===', ret);
         const totalCount = ret.totalCount;
         this.totalPage = Math.floor(totalCount / this.pageSizeTransaction);
       }
