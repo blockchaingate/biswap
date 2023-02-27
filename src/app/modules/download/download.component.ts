@@ -28,7 +28,8 @@ export class DownloadComponent implements OnInit {
 
 
    getFiles() {
-    return this.http.get('/assets/version.json');
+    return this.http.get('https://biswap.com/download/version.json');
+    
    }
 
 
@@ -60,9 +61,6 @@ export class DownloadComponent implements OnInit {
   }
 
   openDialog(data: VersionModel) {
-    console.log("data");
-    console.log(data);
-    // this.childComponent.receiveData(data);
     this.dialog.open(NewFeaturesComponent, { data: data });
   }
 
