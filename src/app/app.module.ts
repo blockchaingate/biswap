@@ -20,6 +20,7 @@ import { HomeModule } from './modules/home/home.module';
 import { PrivacyComponent } from './components/privacy.component';
 import { VersionComponent } from './components/version/version.component';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { NewFeaturesComponent } from './components/newFeatures/newFeatures.component';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -28,7 +29,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     PrivacyComponent,
-    VersionComponent
+    VersionComponent,
+    NewFeaturesComponent
   ],
   imports: [
     BrowserModule,

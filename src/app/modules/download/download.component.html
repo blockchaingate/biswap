@@ -1,0 +1,56 @@
+<div>
+  <div class="title1">
+      <h1>{{"racent apk"|translate}}</h1>
+  </div>
+
+
+<div fxLayout="column" fxLayoutAlign="start center" class="downlaodBody">
+<div *ngIf="lastestApk" fxLayout="row" fxLayoutGap="20px"  class="latestApk">
+
+      <mat-card *ngIf="lastestApk">
+    <img mat-card-image src="/assets/images/apk.png" alt="{{lastestApk.version}}" (click)="openTest()">
+    <mat-card-title>{{lastestApk.version}}</mat-card-title>
+    <mat-card-actions>
+      <div fxLayout="row" fxLayoutGap="10px"  class="latestApk">
+      <button (click)="lastest()" mat-button>{{"downloadApk" | translate}}</button>
+      <button (click)="openDialog(lastestApk)" mat-button>What is new</button>
+    </div>
+    </mat-card-actions>
+  </mat-card>
+
+   <div *ngIf="clickCount>= 5 && testApk" style="width: 20px;"></div>
+
+    <mat-card *ngIf="clickCount>= 5">
+    <img mat-card-image src="/assets/images/apkTest.png" alt="{{testApk.version}}">
+    <mat-card-title>{{testApk.version}}</mat-card-title>
+    <mat-card-actions>
+      <div fxLayout="row" fxLayoutGap="10px"  class="latestApk">
+      <button (click)="test()" mat-button>{{"downloadApk" | translate}}</button>
+      <button (click)="openDialog(testApk)" mat-button>What is new</button>
+    </div>
+    </mat-card-actions>
+
+  </mat-card>
+  
+</div>
+
+<div *ngIf="items" class="title1" fxLayoutAlign="center start">
+    <h1>{{"older apk"|translate}}</h1>
+</div>
+
+<mat-grid-list *ngIf="items" [cols]="breakpoint" rowHeight="2:2">
+  <mat-grid-tile *ngFor="let item of items">
+    <mat-card >
+      <img mat-card-image src="/assets/images/apk.png" alt="{{item.version}}">
+      <mat-card-title>{{item.version}}</mat-card-title>
+      <mat-card-actions>
+        <div fxLayout="row" fxLayoutGap="10px"  class="latestApk">
+        <button (click)="version(item.version)" mat-button>{{"downloadApk" | translate}}</button>
+        <button (click)="openDialog(item)" mat-button>What is new</button>
+      </div>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+</div> 
+</div>

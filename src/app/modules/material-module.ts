@@ -29,8 +29,7 @@ import { MatSliderModule } from '@angular/material/slider';
     MatSnackBarModule,
     MatListModule,
     MatExpansionModule,
-    MatSliderModule
-  ],
+    MatSliderModule  ],
   exports: [
     MatToolbarModule,
     MatIconModule,
