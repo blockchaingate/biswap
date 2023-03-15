@@ -128,7 +128,10 @@
     "subtitle": "最简单易用的发送和接收加密支付的方式。",
     "download": "下载币旺移动应用程序",
     "downloadcontent": "币旺是一个开源的去中心化应用，用户可以在自己的本地设备上生成自己的钱包、用于加密助记词的密码或私钥来自由使用，不收集任何用户数据。",
-    "racent apk": "赛网 APK",
+    "recent apk": "最近的 APK",
     "older apk": "较旧的 APK",
-    "downloadApk": "下载"
+    "downloadApk": "下载",
+    "whatsnew": "什么是新的",
+    "realize": "意识到",
+    "candidate": "候选人"
 }

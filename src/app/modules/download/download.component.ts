@@ -29,6 +29,7 @@ export class DownloadComponent implements OnInit {
 
    getFiles() {
     return this.http.get('https://biswap.com/download/version.json');
+    // return this.http.get('/assets/version.json');
     
    }
 
@@ -38,30 +39,18 @@ export class DownloadComponent implements OnInit {
 
     this.getFiles().subscribe((data: any) => {
 
-      this.lastestApk = data.find((obj: { version: string; }) => obj.version === "latest");
-      this.testApk = data.find((obj: { version: string; }) => obj.version === "test");
-      this.items = data.filter((obj: { version: string; }) => obj.version != "test" && obj.version != "latest");
+      this.lastestApk = data.find((obj: { versionName: string; }) => obj.versionName === "Realize");
+      this.testApk = data.find((obj: { versionName: string; }) => obj.versionName === "Candidate");
+      this.items = data.filter((obj: { versionName: string; }) => obj.versionName != "Realize" && obj.versionName != "Candidate");
     });
-  }
-
-  lastest(){
-    window.open("https://biswap.com/download/latest.apk");
-  }
-
-  version(name: string){
-    window.open("https://biswap.com/download/"+name+".apk");
-  }
-
-  test(){
-    window.open("https://biswap.com/download/test.apk");
   }
 
   openTest(){
     this.clickCount ++;
   }
 
-  openDialog(data: VersionModel) {
-    this.dialog.open(NewFeaturesComponent, { data: data });
-  }
+  // openDialog(data: VersionModel) {
+  //   this.dialog.open(NewFeaturesComponent, { data: data });
+  // }
 
 }

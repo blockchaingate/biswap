@@ -128,7 +128,10 @@
     "subtitle": "Easiest way to send and receive crypto payments.",
     "download": "Download Biswap Mobile App",
     "downloadcontent": "Biswap is an open source decentralized application, user can use it freely by generating his/her own wallet, password used to encrypt mnemonics or private key on user local device, no any user data collected.",
-    "racent apk": "Recent APK",
+    "recent apk": "Recent APK",
     "older apk": "Older APK",
-    "downloadApk": "Download"
+    "downloadApk": "Download",
+    "whatsnew": "What is new",
+    "realize": "Realize",
+    "candidate": "Candidate"
 }
