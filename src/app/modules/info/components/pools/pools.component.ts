@@ -13,9 +13,9 @@ export class PoolsComponent implements OnInit {
   }
 
   getARP(pair: any) {
-    if(!pair.summary || !pair.summary.totalLiquidityUSD) {
+    if(!pair.summary || !pair.summary.reserveUSD) {
       return 0;
     }
-    return Number((pair.summary.dailyVolumeUSD * 0.003 / pair.summary.totalLiquidityUSD * 365 * 100).toFixed(2));
+    return Number((pair.summary.dailyVolumeUSD * 0.003 / pair.summary.reserveUSD * 365 * 100).toFixed(2));
   }
 }
