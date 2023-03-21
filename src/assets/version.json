@@ -1,0 +1,52 @@
+[
+{
+   "versionName":"Realize",
+   "versionNumber":"1.0.7+39",
+   "issueDate":"2023-03-08",
+   "features":[
+      "Policy languages in Chinese",
+      "Policy display",
+      "Deposit fee",
+      "Function page dark mode integration",
+      "Function page balance to Exchangily balance"
+   ]
+},
+{
+   "versionName":"Candidate",
+   "versionNumber":"1.0.7+40",
+   "issueDate":"2023-03-14",
+   "features":[
+      "Policy display",
+      "Deposit fee",
+      "Function page dark mode integration",
+      "Function page balance to Exchangily balance"
+      
+   ]
+},
+{
+   "versionName":"1.0.6+35",
+   "versionNumber":"1.0.6+35",
+   "issueDate":"2023-01-21",
+   "features":[
+      "Liquidity history ",
+      "Reward info"
+   ]
+},
+{
+   "versionName":"1.0.6+36",
+   "versionNumber":"1.0.6+363",
+   "issueDate":"2023-01-21",
+   "features":[
+      "version package added"
+   ]
+},
+{
+   "versionName":"1.0.6+34",
+   "versionNumber":"1.0.6+34",
+   "issueDate":"2023-01-21",
+   "features":[
+      "remove liquidity bug fix",
+      "remove liquidity page button has changed"
+   ]
+}
+]

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NewFeaturesComponent } from './components/newFeatures/newFeatures.component';
 import { PrivacyComponent } from './components/privacy.component';
 import { VersionComponent } from './components/version/version.component';
 const routes: Routes = [
@@ -54,7 +55,14 @@ const routes: Routes = [
   ,
   {
     path: 'version', component: VersionComponent
-  }
+  },
+  {
+    path: 'newFeatures', component: NewFeaturesComponent
+  },
+  {
+    path: 'download',
+    loadChildren: () => import('./modules/download/download.module').then(x => x.DownloadModule)
+  },
 ];
 
 @NgModule({

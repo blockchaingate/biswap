@@ -20,6 +20,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
 import { AlertComponent } from './alert/alert.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   imports: [
@@ -36,7 +38,9 @@ import { AlertComponent } from './alert/alert.component';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule,
+    MatGridListModule,
   ],
   exports:[
     HeaderComponent,
