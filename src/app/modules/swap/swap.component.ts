@@ -124,7 +124,7 @@ export class SwapComponent implements OnInit {
 
   firstTokenReserve: BigNumber = new BigNumber(0);
   secondTokenReserve: BigNumber = new BigNumber(0);
-  slippage = 1;
+  slippage = 15;
   deadline = 20;
   constructor(
     private utilService: UtilsService,
