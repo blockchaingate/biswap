@@ -184,20 +184,26 @@ export class SwapComponent implements OnInit {
       var type = this.router.url.split("/")
       if (type[2] == "token") {
         let params: any = x;
-        this.apiService.getTokenInfoFromId(params.tokenid).subscribe((res: any) =>{
-          let first = res["name"];
-          this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
-})  
+        if(params.tokenid) {
+          this.apiService.getTokenInfoFromId(params.tokenid).subscribe((res: any) =>{
+            let first = res["name"];
+            this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
+          }) 
+        }
+ 
       } else {
         let params: any = x;
-         this.apiService.getTokensInfoFromPair(params.tokenid).subscribe((res: any) =>{
-          if(res) {
-            let first = res["token0Name"];
-            let sescond = res["token1Name"];
-            this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
-            this.secondToken = this.tokenList.find(x => x.tickerName == sescond) || new Coin();
-          }
-    })
+        if(params.tokenid) {
+          this.apiService.getTokensInfoFromPair(params.tokenid).subscribe((res: any) =>{
+            if(res) {
+              let first = res["token0Name"];
+              let sescond = res["token1Name"];
+              this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
+              this.secondToken = this.tokenList.find(x => x.tickerName == sescond) || new Coin();
+            }
+          })
+        }
+
       }
   });
   }
@@ -425,7 +431,7 @@ export class SwapComponent implements OnInit {
         this.error = 'Not enough balance';
         return;
       }
-    var to = this.utilService.fabToExgAddress(this.account);
+    var to = this.account;
     var timestamp = new TimestampModel(
       this.deadline,
       0,
@@ -440,22 +446,24 @@ export class SwapComponent implements OnInit {
     if(this.isFistToken) {
       var path = [this.firstToken.type, this.secondToken.type];
       const amountIn = '0x' + new BigNumber(this.firstCoinAmount)
-      .multipliedBy(new BigNumber(1e18))
+      .shiftedBy(18)
       .toString(16).split('.')[0];
       const amountOutMin = '0x' + new BigNumber(this.secondCoinAmount).multipliedBy(new BigNumber(1-this.slippage * 0.01))
-      .multipliedBy(new BigNumber(1e18))
+      .shiftedBy(18)
       .toString(16).split('.')[0];
       const params = [amountIn, amountOutMin, path, to, deadline];
+      console.log('params is1:', params);
       abiHex = this.web3Service.swapExactTokensForTokens(params);
     } else {
       var path = [this.firstToken.type, this.secondToken.type];
       const amountOut = '0x' + new BigNumber(this.secondCoinAmount)
-      .multipliedBy(new BigNumber(1e18))
+      .shiftedBy(18)
       .toString(16).split('.')[0];
       const amountInMax = '0x' + new BigNumber(this.firstCoinAmount).multipliedBy(new BigNumber(1+this.slippage * 0.01))
-      .multipliedBy(new BigNumber(1e18))
+      .shiftedBy(18)
       .toString(16).split('.')[0];
       const params = [amountOut, amountInMax, path, to, deadline];
+      console.log('params is2:', params);
       abiHex = this.web3Service.swapTokensForExactTokens(params);
     }
 

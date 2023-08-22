@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PairingTypes } from '@walletconnect/types';
-import QRCodeModal from '@walletconnect/qrcode-modal';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({

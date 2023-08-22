@@ -155,7 +155,7 @@ export class RemoveLiquidityComponent implements OnInit {
     .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01)))
     .shiftedBy(18)
     .toString(16).split('.')[0];
-    var to = this.utilService.fabToExgAddress(this.walletService.account);
+    var to = this.walletService.account;
     var timestamp = new TimestampModel(
       this.deadline,
       0,

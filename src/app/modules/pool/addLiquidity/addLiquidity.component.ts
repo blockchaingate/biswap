@@ -418,7 +418,7 @@ export class AddLiquidityComponent implements OnInit {
     var amountBMin = '0x' + new BigNumber(this.secondCoinAmount)
     .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01))).shiftedBy(18)
     .toString(16).split('.')[0];
-    var to = this.utilService.fabToExgAddress(this.account);
+    var to = this.account;
     var timestamp = new TimestampModel(
       this.deadline,
       0,

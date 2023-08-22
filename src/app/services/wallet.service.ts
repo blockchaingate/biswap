@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import SignClient from "@walletconnect/sign-client";
-import QRCodeModal from '@walletconnect/qrcode-modal';
+import { WalletConnectModal } from '@walletconnect/modal'
+const projectId = "3acbabd1deb4672edfd4ca48226cfc0f";
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+const chainId = environment.production ? 211 : 212;
 @Injectable({
   providedIn: 'root',
 })
@@ -11,6 +14,7 @@ export class WalletService {
   account: string = '';
   topic: any;
   chainId: string = '';
+  walletConnectModal: any;
   accountSubject = new Subject<string>();
 
   constructor(
@@ -18,7 +22,6 @@ export class WalletService {
 
 
   disconnect() {
-    console.log('disconnectinggggg');
     const address = '';
     this.account = address;
     this.accountSubject.next(address);
@@ -42,54 +45,58 @@ export class WalletService {
     }
     */
     
-    const client = await SignClient.init({
-      //projectId: "3acbabd1deb4672edfd4ca48226cfc0f",
-      relayUrl: 'wss://api.biswap.com',
+    SignClient.init({
+      projectId,
+      //relayUrl: 'wss://api.biswap.com',
       metadata: {
         name: "Biswap Dapp",
         description: "Automated FAB-based crypto exchange",
         url: "#",
-        icons: ["https://walletconnect.com/walletconnect-logo.png"],
+        icons: ["https://biswap.com/assets/images/biswap-256w.png"],
       }
-    });
+    }).then(
+      client => {
+        this.client = client;
 
-    this.client = client;
+        client.on("session_event", (args) => {
+             const id = args.id;
+             const ddd = args.params;
+             const topic = args.topic;
+             this.topic = topic;
+             console.log('id===', id);
+            // Handle session events, such as "chainChanged", "accountsChanged", etc.
+            
+        });
+          
+        client.on("session_update", ({ topic, params }) => {
+          console.log('topic===', topic);
+            const { namespaces } = params;
+            const _session = client.session.get(topic);
+            // Overwrite the `namespaces` of the existing session with the incoming one.
+            const updatedSession = { ..._session, namespaces };
+            // Integrate the updated session state into your dapp state.
+            this.onSessionUpdate(updatedSession);
+        });
+          
+        client.on("session_delete", () => {
+            // Session was deleted -> reset the dapp state, clean up from user session, etc.
+        });  
+        this.showQrcode();
+      }
+    )
 
-    client.on("session_event", (args) => {
-         const id = args.id;
-         const ddd = args.params;
-         const topic = args.topic;
-         this.topic = topic;
-         console.log('id===', id);
-        // Handle session events, such as "chainChanged", "accountsChanged", etc.
-        
-    });
+  
       
-    client.on("session_update", ({ topic, params }) => {
-      console.log('topic===', topic);
-        const { namespaces } = params;
-        const _session = client.session.get(topic);
-        // Overwrite the `namespaces` of the existing session with the incoming one.
-        const updatedSession = { ..._session, namespaces };
-        // Integrate the updated session state into your dapp state.
-        this.onSessionUpdate(updatedSession);
-    });
-      
-    client.on("session_delete", () => {
-        // Session was deleted -> reset the dapp state, clean up from user session, etc.
-    });    
-      
-
-    await this.showQrcode();
   }
 
   onSessionUpdate(updatedSession: any) {
     console.log('updatedSession===', updatedSession);
   }
 
-  async showQrcode() {
-    try {
-      const { uri, approval } = await this.client.connect({
+  showQrcode() {
+      console.log('showing');
+      console.log('chainId===', chainId);
+      this.client.connect({
 
         // Provide the namespaces and chains (e.g. `eip155` for EVM-based chains) we want to use in this session.
         requiredNamespaces: {
@@ -97,36 +104,54 @@ export class WalletService {
             methods: [
               "kanban_sendTransaction"
             ],
-            chains: ["eip155:fab"],
+            chains: ["eip155:" + chainId],
             events: [],
           },
         },
-      });
-    
-      // Open QRCode modal if a URI was returned (i.e. we're not connecting an existing pairing).
-      if (uri) {
+      }).then( (connected: any) => {
+        console.log('connect in then');
+        const { uri, approval } = connected;
+        console.log('uri===', uri);
+        // Open QRCode modal if a URI was returned (i.e. we're not connecting an existing pairing).
+        if (uri) {
+  
+          const walletConnectModal = new WalletConnectModal({
+            projectId
+          });
+  
+          this.walletConnectModal = walletConnectModal;
+          walletConnectModal.openModal({ uri });
+        }
+        approval().then(
+          (session: any) => {
+            this.onSessionConnected(session);
+          }
+        );
+      },
+      (error: any) => {
+        this.walletConnectModal.closeModal();
+      }
+      );
+
+
+        /*
         QRCodeModal.open(uri, () => {
           console.log("EVENT", "QR Code Modal closed");
         });
-      }
-    
+        */
+
       // Await session approval from the wallet.
-      const session = await approval();
+      //const session = await approval();
       // Handle the returned session (e.g. update UI to "connected" state).
-      await this.onSessionConnected(session);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      // Close the QRCode modal in case it was open.
-      QRCodeModal.close();
-    }
+
   }
 
 
   onSessionConnected(session: any) {
     this.session = session;
     console.log('session===', session);
-    QRCodeModal.close();
+    //QRCodeModal.close();
+    this.walletConnectModal.closeModal();
     const accounts = session.namespaces.eip155.accounts;
     console.log('accounts=',accounts);
     if(accounts && (accounts.length > 0)) {
@@ -134,20 +159,14 @@ export class WalletService {
       const [namespace, reference, address] = account.split(":");
       this.chainId = namespace + ':' + reference;
       this.account = address;
+      console.log('this.account=', this.account);
       this.accountSubject.next(address);
     }
   }
-  /*
-  onSessionConnectedNew(session: any) {
-    this.session = session;
-    QRCodeModal.close();
-    const accounts = session.state.accounts;
-    if(accounts && (accounts.length > 0)) {
-      const account = accounts[0];
-      const address = account.split(':')[2];
-      this.account = address;
-      this.accountSubject.next(address);
-    }
-  }
-  */
+
 }
+
+
+/*
+accounts= ['eip155:212:0xdcd0f23125f74ef621dfa3310625f8af0dcd971b']
+*/

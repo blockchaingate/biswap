@@ -16,7 +16,7 @@ export const environment = {
     blockchaingate: 'https://test.blockchaingate.com/v2/',
     coingecko: 'https://api.coingecko.com/',
     kanban: 'https://kanbantest.fabcoinapi.com/',
-    oldexplorerapi: 'https://fabtest.info/api',
+    oldexplorerapi: 'https://testapi.fundark.com/api',
     explorerapi: 'https://fabtest.info/api',
     BTC: {
       exchangily: 'https://btctest.fabcoinapi.com/',
