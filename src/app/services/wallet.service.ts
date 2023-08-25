@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import SignClient from "@walletconnect/sign-client";
+import SignClient from "../../packages/wallet-connect/sign-client";
 import { WalletConnectModal } from '@walletconnect/modal'
 const projectId = "3acbabd1deb4672edfd4ca48226cfc0f";
 import { Subject } from 'rxjs';
@@ -27,8 +27,8 @@ export class WalletService {
     this.accountSubject.next(address);
     this.client.disconnect({
       topic: this.topic,
-      //projectId: "3acbabd1deb4672edfd4ca48226cfc0f",
-      relayUrl: 'wss://api.biswap.com',
+      projectId: "3acbabd1deb4672edfd4ca48226cfc0f",
+      //relayUrl: 'wss://api.biswap.com',
       metadata: {
         name: "Biswap Dapp",
         description: "Automated FAB-based crypto exchange",
@@ -111,7 +111,6 @@ export class WalletService {
       }).then( (connected: any) => {
         console.log('connect in then');
         const { uri, approval } = connected;
-        console.log('uri===', uri);
         // Open QRCode modal if a URI was returned (i.e. we're not connecting an existing pairing).
         if (uri) {
   
