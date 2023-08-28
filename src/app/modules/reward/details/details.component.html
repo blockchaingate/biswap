@@ -30,7 +30,7 @@
                 <div>{{"Redeem"|translate}}: {{item.redeemAmount}}</div>
             </div>
             <div class="titiCol col-md-2">
-                <button mat-raised-button *ngIf="(account == item.address) && (item.tokenName != 'GET')" color="primary" (click)="redeem(item.address, item.tokenName)">
+                <button mat-raised-button *ngIf="redeemable(item)" color="primary" (click)="redeem(item.address, item.tokenName)">
                     {{ 'Redeem' |translate }}
                 </button>
             </div>

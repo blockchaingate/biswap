@@ -1,0 +1,10 @@
+core/controllers/relayer.ts
+
+line 149
+          if (subscription.topic === topic) {
+            console.log('got the same topic');
+            resolve();
+          } else {
+            topic = subscription.topic;
+            resolve();
+          }

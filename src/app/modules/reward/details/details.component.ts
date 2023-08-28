@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BiswapService } from 'src/app/services/biswap.service';
 import { WalletService } from 'src/app/services/wallet.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-reward-details',
@@ -17,9 +18,24 @@ export class DetailsComponent implements OnInit {
 
   constructor(
     private _snackBar: MatSnackBar,
+    private utilServ: UtilsService,
     private walletService: WalletService,
     private biswapServ: BiswapService) { }
 
+  redeemable(item) {
+    if(item.tokenName == 'GET') {
+      return false;
+    }
+    if(!item.amount) {
+      return false;
+    }
+    const exgAddress = this.utilServ.fabToExgAddress(item.address);
+    return exgAddress.toLowerCase() == this.account.toLowerCase();
+  }
+  toExgAddress(address: string) {
+    return this.utilServ.fabToExgAddress(address);
+  }
+  
   ngOnInit(): void {
     this.biswapServ.getRewards(this.pageSize, this.pageNum).subscribe(
       (ret: any) => {

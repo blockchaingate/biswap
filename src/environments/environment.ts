@@ -17,7 +17,7 @@ export const environment = {
     coingecko: 'https://api.coingecko.com/',
     kanban: 'https://kanbantest.fabcoinapi.com/',
     oldexplorerapi: 'https://testapi.fundark.com/api',
-    explorerapi: 'https://fabtest.info/api',
+    explorerapi: 'https://testapi.fundark.com/api',
     BTC: {
       exchangily: 'https://btctest.fabcoinapi.com/',
     },
