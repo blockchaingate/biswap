@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import SignClient from "../../packages/wallet-connect/sign-client";
+import SignClient from "@walletconnect/sign-client";
 import { WalletConnectModal } from '@walletconnect/modal'
 const projectId = "3acbabd1deb4672edfd4ca48226cfc0f";
 import { Subject } from 'rxjs';
@@ -27,7 +27,7 @@ export class WalletService {
     this.accountSubject.next(address);
     this.client.disconnect({
       topic: this.topic,
-      projectId: "3acbabd1deb4672edfd4ca48226cfc0f",
+      projectId,
       //relayUrl: 'wss://api.biswap.com',
       metadata: {
         name: "Biswap Dapp",
