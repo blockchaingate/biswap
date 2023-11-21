@@ -478,7 +478,13 @@ export class SwapComponent implements OnInit {
         alertDialogRef.close();
         const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
         this.txHash = baseUrl + '/explorer/tx-detail/' + data;
-      });
+      }).catch(
+        (error: any) => {
+          alertDialogRef.close();
+          console.log('error===', error);
+          this._snackBar.open(error, 'Ok');
+        }
+      );;
   }
 }
 

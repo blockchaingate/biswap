@@ -10,7 +10,8 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { SettingsComponent } from '../settings/settings.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
     MatFormFieldModule,
     FlexLayoutModule,
     TranslateModule,
+    MatSnackBarModule,
     FormsModule,
     NgxUiLoaderModule.forRoot({}),
   ],

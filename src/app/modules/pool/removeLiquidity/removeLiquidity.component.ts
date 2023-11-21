@@ -13,6 +13,9 @@ import { SettingsComponent } from '../../settings/settings.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertComponent } from '../../shared/alert/alert.component';
 import { DataService } from 'src/app/services/data.service';
+import {
+  MatSnackBar
+} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-removeLiquidity',
@@ -50,6 +53,7 @@ export class RemoveLiquidityComponent implements OnInit {
     public dialog: MatDialog,
     private walletService: WalletService,
     private dataService: DataService,
+    private _snackBar: MatSnackBar,
   ) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation!.extras.state as {
@@ -128,15 +132,27 @@ export class RemoveLiquidityComponent implements OnInit {
     var abiHex = this.web3Service.getApprove(params);
     console.log('abiHex => ' + abiHex);
     
+    const alertDialogRef = this.dialog.open(AlertComponent, {
+      width: '250px',
+      data: {text: 'Please approve your request in your wallet'},
+    });
+
     this.kanbanService
       .send(this.pairId.toString(), abiHex)
       .then((data) => {
         console.log('https://test.exchangily.com/explorer/tx-detail/' + data)
         this.apiService.getTransactionStatus(data).subscribe((res: any) =>{
           //TODO here there will be if condition with status of tx
+          alertDialogRef.close();
           this.removeLiquidityFun(value);
         })  
-      });
+      }).catch(
+        (error: any) => {
+          console.log('error===', error);
+          alertDialogRef.close();
+          this._snackBar.open(error, 'Ok');
+        }
+      );;
   }
 
   removeLiquidityFun(value: any) {
@@ -181,6 +197,12 @@ export class RemoveLiquidityComponent implements OnInit {
       alertDialogRef.close();
       const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
       this.txHash = baseUrl + '/explorer/tx-detail/' + data;
-    });
+    }).catch(
+      (error: any) => {
+        console.log('error===', error);
+        alertDialogRef.close();
+        this._snackBar.open(error, 'Ok');
+      }
+    );
   }
 }

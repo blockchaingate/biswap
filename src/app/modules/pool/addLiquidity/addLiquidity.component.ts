@@ -17,6 +17,9 @@ import { TokenListComponent } from '../../shared/tokenList/tokenList.component';
 import { SettingsComponent } from '../../settings/settings.component';
 import { BiswapService } from 'src/app/services/biswap.service';
 import { AlertComponent } from '../../shared/alert/alert.component';
+import {
+  MatSnackBar
+} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-addLiquidity',
@@ -135,6 +138,7 @@ export class AddLiquidityComponent implements OnInit {
     private walletService: WalletService,
     private currentRoute: ActivatedRoute,
     private router: Router,
+    private _snackBar: MatSnackBar,
     private apiService: ApiService,
   ) {}
 
@@ -453,16 +457,13 @@ export class AddLiquidityComponent implements OnInit {
         setTimeout(() => {
           this.refresh()
         }, 6000);
-        /*
-        const param = {
-          userAddress: this.account,
-          pairAddress: this.pairAddress,
-        };
-        this.apiService.sendUserPair(param).subscribe((res: any) => {
-          console.log(res);
-          console.log(res.data);
-        })
-        */
-      });
+
+      }).catch(
+        (error: any) => {
+          alertDialogRef.close();
+          console.log('error===', error);
+          this._snackBar.open(error, 'Ok');
+        }
+      );
   }
 }

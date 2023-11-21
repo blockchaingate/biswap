@@ -134,7 +134,7 @@ export class KanbanService {
     return res.toPromise();
   }
 
-  async send(to: string, data: string) {
+  send(to: string, data: string) {
     const client = this.walletService.client;
 
     const session = this.walletService.session;
@@ -154,8 +154,7 @@ export class KanbanService {
       },
     };
 
-    const result = await client.request(requestBody);
-    console.log(result);
+    const result = client.request(requestBody);
 
     return result;
   }

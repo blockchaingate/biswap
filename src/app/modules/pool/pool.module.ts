@@ -12,6 +12,7 @@ import { RemoveLiquidityComponent } from './removeLiquidity/removeLiquidity.comp
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { HextoDecimalPipe } from './hextodecimal.pipe';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
     TranslateModule,
     MaterialModule,
     FormsModule,
+    MatSnackBarModule,
     PoolRoutingModule,
     NgxUiLoaderModule.forRoot({})
   ],

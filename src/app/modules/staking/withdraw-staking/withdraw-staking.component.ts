@@ -33,6 +33,11 @@ export class WithdrawStakingComponent implements OnInit {
     .then((data) => {
       console.log('data for withdraw===', data);
       this._snackBar.open(data);
-    });
+    }).catch(
+      (error: any) => {
+        console.log('error===', error);
+        this._snackBar.open(error, 'Ok');
+      }
+    );;
   }
 }
