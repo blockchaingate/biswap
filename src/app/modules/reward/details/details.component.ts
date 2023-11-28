@@ -23,9 +23,7 @@ export class DetailsComponent implements OnInit {
     private biswapServ: BiswapService) { }
 
   redeemable(item) {
-    if(item.tokenName == 'GET') {
-      return false;
-    }
+
     if(!item.amount) {
       return false;
     }
