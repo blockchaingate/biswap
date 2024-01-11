@@ -1,0 +1,49 @@
+<h1>{{"Biswap Info & Analytics"|translate}}</h1>
+<div class="container">
+    <div class="infoAna row">
+        <app-all-liquidity class="overviewitem col-md-6" [items]="items"></app-all-liquidity>
+        <app-all-volume class="overviewitem col-md-6" [items]="items"></app-all-volume>
+    </div>
+</div>
+
+<h1 class="mt-3">{{"Top tokens"|translate}}</h1>
+<app-top-tokens [tokens]="tokens"></app-top-tokens>
+<h1 class="mt-3">{{"Top pools"|translate}}</h1>
+<app-top-pools [pairs]="pairs"></app-top-pools>
+
+<h1 class="mt-3">{{"Transactions"|translate}}</h1>
+<app-all-transactions [transactions]="transactions"></app-all-transactions>
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <li class="page-item handcursor">
+            <a class="page-link" aria-label="Previous" (click)="changePageNumTransaction(pageNumTransaction - 1)">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="page-item handcursor">
+            <a class="page-link" *ngIf="pageNumTransaction >= 1" (click)="changePageNumTransaction(pageNumTransaction - 1)">
+            {{pageNumTransaction}}</a>
+        </li>
+        <li class="page-item handcursor active">
+            <a class="page-link" (click)="changePageNumTransaction(pageNumTransaction)">
+            {{pageNumTransaction + 1}}
+        </a>
+        </li>
+        <li class="page-item handcursor">
+            <a class="page-link" *ngIf="pageNumTransaction <= totalPage - 1" (click)="changePageNumTransaction(pageNumTransaction + 1)">
+            {{pageNumTransaction + 2}}
+        </a>
+        </li>
+
+        <li class="page-item handcursor">
+            <a class="page-link" *ngIf="(pageNumTransaction < 1) && (pageNumTransaction <= totalPage - 2)" (click)="changePageNumTransaction(pageNumTransaction + 2)">
+            {{pageNumTransaction + 3}}
+        </a>
+        </li>
+        <li class="page-item handcursor">
+            <a class="page-link" aria-label="Next" (click)="changePageNumTransaction(pageNumTransaction + 1)">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

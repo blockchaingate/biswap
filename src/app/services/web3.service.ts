@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import Web3 from 'web3';
-import Common from 'ethereumjs-common';
-import * as Eth from 'ethereumjs-tx';
+import Common from '@ethereumjs/common';
+import * as Eth from '@ethereumjs/tx';
 import { SmartContractServices } from './smartcontract.service';
 
 @Injectable({
@@ -20,8 +20,6 @@ export class Web3Service {
 
   getGeneralFunctionABI(func: any, paramsArray: string[]) {
     const web3 = this.getWeb3Provider();
-    console.log('paramsArray==', paramsArray);
-    console.log('func', func);
     const abiHex = web3.eth.abi.encodeFunctionCall(func, paramsArray);
     return abiHex;
   }
@@ -56,6 +54,12 @@ export class Web3Service {
     return abiHex;
   }
 
+  getApprove(params: any) {
+    var func = this.smartContractService.getApproveFunc();
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }
+
   swap(params: any) {
     var func = this.smartContractService.swapFunc();
     const abiHex = this.getGeneralFunctionABI(func, params);
@@ -66,6 +70,18 @@ export class Web3Service {
     var func = this.smartContractService.addLiquidityFunc();
     const abiHex = this.getGeneralFunctionABI(func, params);
     return abiHex;
+  }
+
+  deposit(params: any) {
+    const func = this.smartContractService.depositFunc();
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex; 
+  }
+  
+  withdraw(params: any) {
+    const func = this.smartContractService.withdrawFunc();
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex; 
   }
 
   removeLiquidity(params: any) {
@@ -100,7 +116,15 @@ export class Web3Service {
   }
   
   swapExactTokensForTokens(params: any) {
+    console.log('swapExactTokensForTokens start');
     var func = this.smartContractService.swapExactTokensForTokensFunc();
+    const abiHex = this.getGeneralFunctionABI(func, params);
+    return abiHex;
+  }
+
+  swapTokensForExactTokens(params: any) {
+    console.log('swapTokensForExactTokens start');
+    var func = this.smartContractService.swapTokensForExactTokensFunc();
     const abiHex = this.getGeneralFunctionABI(func, params);
     return abiHex;
   }

@@ -1,18 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import BigNumber from 'bignumber.js';
-import { ErrorMessagesComponent } from 'src/app/components/dialogMessages/dialogMessages.component';
+import { ErrorMessagesComponent } from 'src/app/components/errorMessages/errorMessages.component';
 import { Coin } from 'src/app/models/coin';
 import { TimestampModel } from 'src/app/models/temistampModel';
 import { ApiService } from 'src/app/services/api.services';
 import { DataService } from 'src/app/services/data.service';
 import { KanbanMiddlewareService } from 'src/app/services/kanban.middleware.service';
 import { KanbanService } from 'src/app/services/kanban.service';
-import { StorageService } from 'src/app/services/storage.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { WalletService } from 'src/app/services/wallet.service';
 import { Web3Service } from 'src/app/services/web3.service';
 import { environment } from 'src/environments/environment';
 import { TokenListComponent } from '../../shared/tokenList/tokenList.component';
+import { SettingsComponent } from '../../settings/settings.component';
+import { BiswapService } from 'src/app/services/biswap.service';
+import { AlertComponent } from '../../shared/alert/alert.component';
+import {
+  MatSnackBar
+} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-addLiquidity',
@@ -20,45 +27,192 @@ import { TokenListComponent } from '../../shared/tokenList/tokenList.component';
   styleUrls: ['./addLiquidity.component.scss'],
 })
 export class AddLiquidityComponent implements OnInit {
-  firstToken: Coin = new Coin();
-  secondToken: Coin = new Coin();
-  tokenList: Coin[];
+  slippage = 1;
+  deadline = 20;
+  error: string = '';
+  _firstToken!: Coin;
+  _secondToken!: Coin;
+  insufficientFund: boolean = false;
+  item: any;
+
+  public get firstToken(): Coin {
+    return this._firstToken;
+  }
+  public set firstToken(coin: Coin) {
+    this._firstToken = coin;
+    const coinType = coin.type;
+    if(this.account && coinType) {
+      this.kanbanService.getTokenBalance(this.account, coinType).subscribe(
+        (balance: any) => {
+          this.firstCoinBalance = balance;
+        }
+      );
+    }
+    
+
+  }
+ 
+  public get secondToken(): Coin {
+    return this._secondToken;
+  }
+  public set secondToken(coin: Coin) {
+    this._secondToken = coin;
+    const coinType = coin.type;
+    if(this.account && coinType) {
+      this.kanbanService.getTokenBalance(this.account, coinType).subscribe(
+        (balance: any) => {
+          this.secondCoinBalance = balance;
+        }
+      );
+    }
+
+  }
+  tokenList: Coin[] = [];
 
   isWalletConnect: boolean = true;
 
-  firstCoinAmount: number;
-  secondCoinAmount: number;
+  firstCoinAmount!: number;
+  secondCoinAmount!: number;
+  _account: string ='';
 
-  perAmount: string;
+  public get account(): string {
+    return this._account;
+  }
+
+  public set account(newAccount: string) {
+    this._account = newAccount;
+    if(newAccount) {
+      if(this.firstToken && this.firstToken.type) {
+        this.kanbanService.getTokenBalance(newAccount, this.firstToken.type).subscribe(
+          (balance: any) => {
+            this.firstCoinBalance = balance;
+          }
+        );
+      }
+
+      if(this.secondToken && this.secondToken.type) {
+        this.kanbanService.getTokenBalance(newAccount, this.secondToken.type).subscribe(
+          (balance: any) => {
+            this.secondCoinBalance = balance;
+          }
+        );
+      }
+    }
+    this.checkLiquidity();
+  }
+
+  perAmount: string = '';
   perAmountLabel: string = '';
 
-  txHash: string;
-  newPair: string;
+  txHash: String = '';
+  newPair: String ='';
 
   isNewPair: boolean = false;
 
   firstTokenReserve: BigNumber = new BigNumber(0);
   secondTokenReserve: BigNumber = new BigNumber(0);
 
-  walletAddress: string;
-  pairAddress: string;
+  secondCoinBalance!: number;
+  firstCoinBalance!: number;
+
+  //walletAddress:string;
+  _pairAddress: string = '';
+
+  get pairAddress(): string {
+    return this._pairAddress;
+  }
+
+  set pairAddress(_pairAddress: string) {
+    this._pairAddress = _pairAddress;
+    this.checkLiquidity();
+  } 
 
   constructor(
-    // private ngxService: NgxUiLoaderService,
-    private apiService: ApiService,
     private kanbanMiddlewareService: KanbanMiddlewareService,
     private utilService: UtilsService,
-    private storageService: StorageService,
     private web3Service: Web3Service,
     private dataService: DataService,
     public dialog: MatDialog,
-    private kanbanService: KanbanService
+    private biswapServ: BiswapService,
+    private kanbanService: KanbanService,
+    private walletService: WalletService,
+    private currentRoute: ActivatedRoute,
+    private router: Router,
+    private _snackBar: MatSnackBar,
+    private apiService: ApiService,
   ) {}
 
   ngOnInit() {
+    this.firstToken = new Coin();
+    this.secondToken = new Coin();
+
+    this.secondCoinBalance = -1;
+    this.firstCoinBalance = -1;
+
+    this.account = this.walletService.account;
+    if(!this.account){
+      this.walletService.accountSubject.subscribe(
+        account => {
+          this.account = account;
+        }
+      );
+    }
     this.dataService.GettokenList.subscribe((x) => {
       this.tokenList = x;
     });
+    this.checkUrlToken();
+  }
+
+  checkLiquidity() {
+    if(!this.account || !this.pairAddress) {
+      return;
+    }
+    this.biswapServ.getLiquidity(this.account, this.pairAddress).subscribe(
+      (item: any) => {
+        if(item && !item.error) {
+          this.item = item;
+        }
+      }
+    );
+  }
+  openSettings() {
+    const dialogRef = this.dialog.open(SettingsComponent, {
+      width: '250px',
+      data: {slippage: this.slippage, deadline: this.deadline},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.slippage = result.slippage;
+        this.deadline = result.deadline;
+      }
+
+    });
+  }
+
+  checkUrlToken(){
+    this.currentRoute.params.subscribe((x) =>{
+      var type = this.router.url.split("/")
+      if (type[3] == "token") {
+        let params: any = x;
+        this.apiService.getTokenInfoFromId(params.tokenid).subscribe((res: any) =>{
+          if(res) {
+            let first = res["name"];
+            this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
+          }
+})  
+      } else {
+        let params: any = x;
+         this.apiService.getTokensInfoFromPair(params.tokenid).subscribe((res: any) =>{
+          if(res) {
+            let first = res["token0Name"];
+            let sescond = res["token1Name"];
+            this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
+            this.secondToken = this.tokenList.find(x => x.tickerName == sescond) || new Coin();
+          }
+    })
+      }
+  });
   }
 
   async onKey(value: number, isFistToken: boolean) {
@@ -67,7 +221,6 @@ export class AddLiquidityComponent implements OnInit {
       this.secondToken.tickerName != null &&
       value != null &&
       value != undefined &&
-      value != 0 &&
       !this.isNewPair
     ) {
       await this.setInputValues(isFistToken);
@@ -84,6 +237,19 @@ export class AddLiquidityComponent implements OnInit {
         this.firstCoinAmount = value;
       }
     }
+
+    /*
+    if(!this.firstCoinAmount ||
+      !this.secondCoinAmount ||
+      !this.firstCoinBalance || 
+      !this.secondCoinBalance ||
+      (Number(this.firstCoinAmount) > Number(this.firstCoinBalance)) ||
+      (Number(this.secondCoinAmount) > Number(this.secondCoinBalance))) {
+        this.insufficientFund = true;
+      } else {
+        this.insufficientFund = false;
+      }
+    */
   }
 
   async setInputValues(isFirst: boolean) {
@@ -116,13 +282,8 @@ export class AddLiquidityComponent implements OnInit {
     }
   }
 
-  openDialog(dilaogTitle: string, dilaogMessage: string) {
-    this.dialog.open(ErrorMessagesComponent, {
-      data: {
-        dilaogTitle,
-        dilaogMessage,
-      },
-    });
+  openDialog(errorMessage: String) {
+    this.dialog.open(ErrorMessagesComponent, { data: errorMessage });
   }
 
   kanbanCallMethod() {
@@ -131,11 +292,10 @@ export class AddLiquidityComponent implements OnInit {
     console.log('abiHex => ' + abiHex);
     this.kanbanService
       .kanbanCall(environment.smartConractAdressFactory, abiHex)
-      .then((data) => {
-        data.subscribe((data1) => {
+      .subscribe((data1) => {
           let res: any = data1;
           var addeess = this.web3Service.decodeabiHex(res.data, 'address');
-
+          console.log('address=', addeess);
           if (
             addeess.toString() != '0x0000000000000000000000000000000000000000'
           ) {
@@ -143,8 +303,7 @@ export class AddLiquidityComponent implements OnInit {
             var abiHexa = this.web3Service.getReserves();
             this.kanbanService
               .kanbanCall(addeess.toString(), abiHexa)
-              .then((data2) => {
-                data2.subscribe((data3) => {
+              .subscribe((data3) => {
                   var param = ['uint112', 'uint112', 'uint32'];
                   let res: any = data3;
                   console.log('res.data');
@@ -166,7 +325,6 @@ export class AddLiquidityComponent implements OnInit {
                     this.secondToken.tickerName;
 
                   this.perAmount = perAmount;
-                });
               });
             this.isNewPair = false;
             this.newPair = '';
@@ -174,11 +332,7 @@ export class AddLiquidityComponent implements OnInit {
             this.newPair = 'You are adding liquidity to new pair';
             this.isNewPair = true;
           }
-        });
       })
-      .catch((error) => {
-        this.openDialog('', error);
-      });
   }
 
   openFirstTokenListDialog() {
@@ -203,6 +357,10 @@ export class AddLiquidityComponent implements OnInit {
       });
   }
 
+  connectWallet() {
+    this.walletService.connectWalletNew();
+  }
+
   openSecondTokenListDialog() {
     this.dialog
       .open(TokenListComponent, {
@@ -225,33 +383,49 @@ export class AddLiquidityComponent implements OnInit {
       });
   }
 
+  refresh() {
+    this.kanbanService.getTokenBalance(this.account, this.firstToken.type).subscribe(
+      (balance: any) => {
+        this.firstCoinBalance = balance;
+      }
+    );
+
+    this.kanbanService.getTokenBalance(this.account, this.secondToken.type).subscribe(
+      (balance: any) => {
+        this.secondCoinBalance = balance;
+      }
+    );
+    
+    this.checkLiquidity();
+  }
+
   addLiqudity() {
-    // this.ngxService.start();
 
-    const addressArray = this.storageService
-      .getWalletSession()
-      .state.accounts[0].split(':');
-    this.walletAddress = addressArray[addressArray.length - 1];
 
-    let amountADesired = new BigNumber(this.firstCoinAmount)
-      .multipliedBy(new BigNumber(1e18))
-      .toFixed();
-    let amountBDesired = new BigNumber(this.secondCoinAmount)
-      .multipliedBy(new BigNumber(1e18))
-      .toFixed();
+    console.log('go for addLiquidity');
+    let amountADesired = '0x' + new BigNumber(this.firstCoinAmount)
+      .shiftedBy(18)
+      .toString(16).split('.')[0];
+    let amountBDesired = '0x' + new BigNumber(this.secondCoinAmount)
+      .shiftedBy(18)
+      .toString(16).split('.')[0];
 
     var tokenA = this.firstToken.type;
     var tokenB = this.secondToken.type;
 
-    var amountADesireda = new BigNumber(amountADesired);
-    var amountBDesireda = new BigNumber(amountBDesired);
+    //var amountADesireda = '0x' + new BigNumber(amountADesired).toString(16);
+    //var amountBDesireda = '0x' + new BigNumber(amountBDesired).toString(16);
 
-    var amountAMin = new BigNumber(Number(amountADesired) - 1000);
-    var amountBMin = new BigNumber(Number(amountBDesired) - 1000);
-    var to = this.utilService.fabToExgAddress(this.walletAddress);
+    var amountAMin = '0x' + new BigNumber(this.firstCoinAmount)
+    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01))).shiftedBy(18)
+    .toString(16).split('.')[0];
+    var amountBMin = '0x' + new BigNumber(this.secondCoinAmount)
+    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01))).shiftedBy(18)
+    .toString(16).split('.')[0];
+    var to = this.account;
     var timestamp = new TimestampModel(
+      this.deadline,
       0,
-      2,
       0,
       0 // here need to set for future timestamp
     );
@@ -260,8 +434,8 @@ export class AddLiquidityComponent implements OnInit {
     const params = [
       tokenA,
       tokenB,
-      amountADesireda,
-      amountBDesireda,
+      amountADesired,
+      amountBDesired,
       amountAMin,
       amountBMin,
       to,
@@ -269,61 +443,27 @@ export class AddLiquidityComponent implements OnInit {
     ];
 
     var abiHex = this.web3Service.addLiquidity(params);
-
+    const alertDialogRef = this.dialog.open(AlertComponent, {
+      width: '250px',
+      data: {text: 'Please approve your request in your wallet'},
+    });
     this.kanbanService
       .send(environment.smartConractAdressRouter, abiHex)
-      .then((data) => {
-        this.txHash = data;
-
-        // /kanban/gettransactionreceipt/
-        // status ox1 confirm ox0 failed
+      .then((data) => { 
+        alertDialogRef.close();
+        const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
+        this.txHash = baseUrl + '/explorer/tx-detail/' + data;
 
         setTimeout(() => {
-          var params = [this.firstToken.type, this.secondToken.type];
-          var abiHex = this.web3Service.getPair(params);
-          console.log('abiHex => ' + abiHex);
-          this.kanbanService
-            .kanbanCall(environment.smartConractAdressFactory, abiHex)
-            .then((data) => {
-              data.subscribe((data1) => {
-                let res: any = data1;
-                var addeess = this.web3Service.decodeabiHex(
-                  res.data,
-                  'address'
-                );
+          this.refresh()
+        }, 6000);
 
-                this.apiService
-                  .gettransactionreceipt(this.txHash)
-                  .subscribe((res: any) => {
-                    if (res.transactionReceipt.status == '0x1') {
-                      const param = {
-                        userAddress: this.walletAddress,
-                        pairName:
-                          this.firstToken.tickerName +
-                          ' / ' +
-                          this.secondToken.tickerName,
-                        pairAddress: addeess,
-                        tokenAName: this.firstToken.tickerName,
-                        tokenBName: this.secondToken.tickerName,
-                      };
-                      this.apiService
-                        .sendUserPair(param)
-                        .subscribe((res: any) => {
-                          this.openDialog(
-                            'Tx confirmed',
-                            'Congratulations, your transaction was successful.'
-                          );
-                        });
-                    } else {
-                      this.openDialog(
-                        'Tx failed',
-                        'Congratulations, your transaction was unsuccessful'
-                      );
-                    }
-                  });
-              });
-            });
-        }, 5000);
-      });
+      }).catch(
+        (error: any) => {
+          alertDialogRef.close();
+          console.log('error===', error);
+          this._snackBar.open(error, 'Ok');
+        }
+      );
   }
 }

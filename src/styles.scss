@@ -1,62 +1,105 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
 
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: #0b0e1c;
+}
+
+.handcursor {
+    cursor: pointer;
+}
 
 /* Chrome, Safari, Edge, Opera */
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    margin: 0;
 }
+
 
 /* Firefox */
+
 input[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
 
-.padding5{
-  padding: 5px;
+.padding5 {
+    padding: 5px;
 }
 
-.paddingBottom5{
-  padding-bottom: 5px;
+.paddingBottom5 {
+    padding-bottom: 5px;
 }
 
-.paddingBottom10{
-  padding-bottom: 10px;
+.paddingBottom10 {
+    padding-bottom: 10px;
 }
 
-.paddingRight20{
-  padding-right: 20px;
+.paddingRight20 {
+    padding-right: 20px;
 }
 
-.paddingTop5{
-  padding-top: 5px;
+.paddingTop5 {
+    padding-top: 5px;
 }
 
-.paddingTop20{
-  padding-top: 20px;
+.paddingTop20 {
+    padding-top: 20px;
 }
 
-.paddingTop10{
-  padding-top: 10px;
+.paddingTop10 {
+    padding-top: 10px;
 }
 
 .marginTop3 {
-  margin-top: 3px;
+    margin-top: 3px;
 }
 
 .marginTop20 {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 .marginBottom3 {
-  margin-bottom: 3px;
+    margin-bottom: 3px;
 }
 
-.margin0{
-  margin: 0px !important;
+.margin0 {
+    margin: 0px !important;
 }
 
+.warn {
+    color: orange;
+}
+
+.black {
+    color: black;
+}
+
+input {
+    font-size: small;
+}
+
+.titiCol.col-md-2 {
+    min-width: 150px;
+    overflow: hidden;
+    padding: 0 20px;
+    text-overflow: ellipsis;
+}
+
+.rounded-card .container {
+    overflow-x: scroll;
+}
+
+@media screen and (max-width: 600px) {
+    .col.col-2 {
+        min-width: 100px;
+    }
+}
+    

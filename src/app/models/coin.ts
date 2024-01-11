@@ -1,19 +1,19 @@
 import { Blockchain } from './blockchain';
 export class Coin {
 
-    tickerName: string;
-    type: number;
-    decimal: number;
-    contract: string;
-    minWithdraw: string;
-    feeWithdraw: string;
+    tickerName: string = '';
+    type: number = 0;
+    decimal: number = 0;
+    contract: string = '';
+    minWithdraw: string = '';
+    feeWithdraw: string = '';
 
     _id?: string;
-    name: string;
-    symbol: string;
-    decimals: number;
-    coinType: number; // Bip44 cointype
-    blockchain: Blockchain;
+    name: string = '';
+    symbol: string ='';
+    decimals: number = 0;
+    coinType: number = 0; // Bip44 cointype
+    blockchain!: Blockchain;
 
     internalOnly?: boolean;  // This coin only for Exchangily use, not exposure to external.
     needsStripping?: boolean;
@@ -23,6 +23,7 @@ export class Coin {
     protocol?: string; // ERC20, TRC20, FRC20 etc.
     contractAddress?: string; // If it is a contract token
     trimPrefix?: boolean;
+    logoUrl? :string;
 
     issueTime?: string;
     totalsupply?: number;

@@ -1,69 +1,190 @@
-
-
 // @media only screen and (max-width: 600px) {
-
 // }
+::-webkit-input-placeholder {
+    color: black
+}
 
+input {
+    --placeHolder-color: black;
+}
 
+input:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: black;
+}
+
+input:-moz-placeholder {
+    color: black;
+}
+
+input::-moz-placeholder {
+    color: black;
+}
 
 .swapBody {
-  margin-top: 100px;
-  background-color: white;
+    // background: url("/assets/images/gredient-back.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    // height: 100vh;
+    padding-bottom: 100px;
 }
 
 ::ng-deep .mat-card {
-  border-radius: 25px !important;
+    border-radius: 12px !important;
+    background-image: linear-gradient(#5b51cc, #3f5ac5);
+    border: 1px solid lightblue;
+    width: 360px;
 }
 
 .coins-input-body {
-  // border: 1px solid gray;
-  border-radius: 15px;
-  justify-content: center;
-  background-color: #636363;
-  padding-left: 10px;
-  padding-right: 10px;
+    // border: 1px solid gray;
+    border-radius: 8px;
+    justify-content: center;
+    background-color: #c3c9e0;
+    color: black;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 ::ng-deep .mat-form-field-underline {
-  display: none;
+    display: none;
 }
 
 .submitButton {
-  margin-left: 12rem;
-  margin-bottom: 0;
+    margin-left: 12rem;
+    margin-bottom: 0;
 }
 
 ::ng-deep .mat-form-field {
-  width: 100%;
-  label {
-    font-size: 40px;
-  }
+    width: 100%;
+    label {
+        font-size: 40px;
+    }
 }
 
 .sparater {
-  margin: 10px -20px 10px;
-  border: 0;
-  border-top: 1px solid #c9c7c7;
-  opacity: 0.2;
+    margin: 10px -20px 10px;
+    border: 0;
+    border-top: 1px solid #c9c7c7;
+    opacity: 0.2;
 }
 
 .mat-card-action {
-  padding: 10px 10px;
-  button {
-    width: 100%;
-    padding: 5px 5px;
-    border-radius: 20px;
-  }
+    padding: 10px 10px;
+    button {
+        width: 100%;
+        padding: 5px 5px;
+        border-radius: 20px;
+    }
+}
+
+.nopair {
+    font-size: large;
+    color: orange;
 }
 
 .tokenSelectButton {
-  cursor: pointer;
-  font-size: larger;
-  font-weight: bold;
-  color: white;
+    cursor: pointer;
+    font-size: larger;
+    font-weight: bold;
+    color: white;
 }
 
 .tokenwithIcon {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
+}
+
+.title1 {
+    max-width: 1280px;
+    margin-top: 100px;
+}
+
+.title2 {
+    margin-bottom: 60px;
+}
+
+h1 {
+    font-weight: 500;
+}
+
+@media(min-width: 400px) //if more than 400 px
+{
+    h1 {
+        font-size: 28px
+    }
+    h2 {
+        font-size: 20px
+    }
+    .title2 {
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+}
+
+@media(min-width: 600px) //if more than 400 px
+{
+    h1 {
+        font-size: 40px
+    }
+    h2 {
+        font-size: 20px
+    }
+    h3 {
+        font-size: 12px;
+    }
+    .title2 {
+        margin-top: 28px;
+        margin-bottom: 38px;
+    }
+}
+
+@media(min-width: 960px) //if more than 400 px
+{
+    h1 {
+        font-size: 64px
+    }
+    h2 {
+        font-size: 32px
+    }
+    h3 {
+        font-size: 18px;
+    }
+    .title2 {
+        margin-top: 40px;
+        margin-bottom: 50px;
+    }
+}
+
+@media(min-width: 1280px) //if more than 400 px
+{
+    h1 {
+        font-size: 50px
+    }
+    h2 {
+        font-size: 42px
+    }
+    h3 {
+        font-size: 24px;
+    }
+    .title2 {
+        margin-top: 52px;
+        margin-bottom: 60px;
+    }
+}
+
+@media(min-width: 1920px) {
+    h1 {
+        font-size: 100px
+    }
+    h2 {
+        font-size: 64px
+    }
+    h3 {
+        font-size: 36px;
+    }
+    .title2 {
+        margin-top: 80px;
+        margin-bottom: 80px;
+    }
 }

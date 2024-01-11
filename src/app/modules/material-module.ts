@@ -14,8 +14,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSliderModule } from '@angular/material/slider';
 
-
-
 @NgModule({
   imports: [
     MatToolbarModule,
@@ -31,8 +29,7 @@ import { MatSliderModule } from '@angular/material/slider';
     MatSnackBarModule,
     MatListModule,
     MatExpansionModule,
-    MatSliderModule
-  ],
+    MatSliderModule  ],
   exports: [
     MatToolbarModule,
     MatIconModule,

@@ -1,0 +1,74 @@
+.title1{
+    text-align: center;
+    padding: 50px 0;
+    
+    h1{
+        font-size: 50px;
+    }
+}
+.swapBody {
+    min-width: 25%;
+    padding-bottom: 100px;
+}
+
+::ng-deep .mat-card {
+    border-radius: 12px !important;
+    background-color: #0044aa;
+}
+
+.coins-input-body {
+    border: 1px solid gray;
+    border-radius: 5px;
+    justify-content: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+::ng-deep .mat-form-field-underline {
+    display: none;
+}
+
+.submitButton {
+    margin-left: 12rem;
+    margin-bottom: 0;
+}
+
+::ng-deep .mat-form-field label {
+    font-size: 40px;
+}
+
+.sparater {
+    margin: 10px -20px 10px;
+    border: 0;
+    border-top: 1px solid #c9c7c7;
+    opacity: 0.2;
+}
+
+.emty-liquidity {
+    background-color: black;
+    padding: 30px;
+    margin: 10px -16px 10px;
+}
+
+.mat-card-action {
+    padding: 10px 10px;
+    button {
+        width: 100%;
+        padding: 5px 5px;
+        border-radius: 20px;
+    }
+}
+
+.exist-liquddity {
+    margin-top: 15px;
+    border-radius: 20px;
+}
+
+::ng-deep .mat-expansion-panel-header-description {
+    flex-grow: 0 !important;
+}
+
+.action-buttons {
+    width: 125px;
+    border-radius: 10px;
+}

@@ -1,0 +1,33 @@
+<div class="rounded-card">
+    <div class="container">
+        <div class="row py-2">
+            <div class="titiCol col-md-4">
+                <b>{{"Address"|translate}}</b>
+            </div>
+            <div class="titiCol col-md-3">
+                <b>{{"Token"|translate}}</b>
+            </div>
+            <div class="titiCol col-md-3">
+                <b>{{"Amount"|translate}}</b>
+            </div>
+            <div class="titiCol col-md-2">
+                {{"Txid"|translate}}
+            </div>
+        </div>
+
+        <div class="row table-data py-2" *ngFor="let item of redeems;let i = index">
+            <div class="titiCol col-md-4">
+                {{item.address}}
+            </div>
+            <div class="titiCol col-md-3">
+                {{item.tokenName}}
+            </div>
+            <div class="titiCol col-md-3">
+                {{item.amount}}
+            </div>
+            <div class="titiCol col-md-2">
+                {{item.txid}}
+            </div>
+        </div>
+    </div>
+</div>

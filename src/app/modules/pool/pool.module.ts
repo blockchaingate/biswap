@@ -10,19 +10,28 @@ import { Web3Service } from 'src/app/services/web3.service';
 import { AddLiquidityComponent } from './addLiquidity/addLiquidity.component';
 import { RemoveLiquidityComponent } from './removeLiquidity/removeLiquidity.component';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { HextoDecimalPipe } from './hextodecimal.pipe';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
+    TranslateModule,
     MaterialModule,
-    FlexLayoutModule,
     FormsModule,
+    MatSnackBarModule,
     PoolRoutingModule,
     NgxUiLoaderModule.forRoot({})
   ],
   providers:[KanbanService, Web3Service],
-  declarations: [PoolComponent, AddLiquidityComponent, RemoveLiquidityComponent]
+  declarations: [
+    PoolComponent, 
+    AddLiquidityComponent, 
+    RemoveLiquidityComponent, 
+    HextoDecimalPipe
+  ]
 })
 export class PoolModule { }

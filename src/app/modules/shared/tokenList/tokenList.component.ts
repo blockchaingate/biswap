@@ -4,16 +4,15 @@ import { Coin } from 'src/app/models/coin';
 import { DataService } from 'src/app/services/data.service';
 import { SwapComponent } from '../../swap/swap.component';
 
-
 @Component({
   selector: 'app-tokenList',
   templateUrl: './tokenList.component.html',
   styleUrls: ['./tokenList.component.scss']
 })
 export class TokenListComponent implements OnInit {
-  searchTokenLabel: 'Search name or paste address'
-  tokenList: any
-  filteredTokens: Coin []
+  searchTokenLabel = '';
+  tokenList: any;
+  filteredTokens: Coin [] = [];
 
   constructor(
     private dataService: DataService,
@@ -24,6 +23,20 @@ export class TokenListComponent implements OnInit {
   ngOnInit() {
     this.tokenList = this.data.tokens;
     this.filteredTokens = this.tokenList;
+    this.filteredTokens.sort(this.compare);
+    this.filteredTokens.forEach((ele) => {
+      ele.logoUrl = 'https://exchangily.com/assets/coins/' + ele.tickerName.toLocaleLowerCase() + '.png';
+    }); 
+  }
+
+  compare(a: Coin, b: Coin ) {
+    if ( a.tickerName < b.tickerName ){
+      return -1;
+    }
+    if ( a.tickerName > b.tickerName ){
+      return 1;
+    }
+    return 0;
   }
 
   selectToken(token: Coin) {

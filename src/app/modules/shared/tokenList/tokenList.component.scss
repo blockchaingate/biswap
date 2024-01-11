@@ -1,57 +1,70 @@
 ::ng-deep .cdk-overlay-pane {
-  width: 25%;
-  border-radius: 20px;
+    width: 320px;
+    border-radius: 8px;
+    // border: 1px solid red;
 }
 
 ::ng-deep .mat-dialog-container {
-  border-radius: 20px;
+    border-radius: 8px;
+    overflow: hidden !important;
+    background-color: #8c86af;
 }
 
 ::ng-deep .mat-dialog-content {
-  padding: 15px 24px;
+    font-size: small;
+}
+
+.tokenlist {
+    height: 380px;
+}
+
+mat-form-field mat-label {
+    font-size: small;
+    color: blue;
 }
 
 .sparater {
-  margin: 10px -30px 10px;
-  border: 0;
-  border-top: 1px solid #c9c7c7;
-  opacity: 0.2;
+    margin: 10px -30px 10px;
+    border: 0;
+    border-top: 1px solid #c9c7c7;
+    opacity: 0.2;
 }
 
 .search-token-input {
-  width: 100%;
-  border-radius: 20px;
-  background-color: #6c6666;
-  height: 50px;
-  input {
-    display: flex;
-    align-items: center;
-    place-self: center;
-  }
+    width: 93%;
+    height: 56px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    background-color: #dbd7d7;
+    color: black;
+    font-size: medium;
 }
 
 ::ng-deep .mat-form-field-flex {
-  padding-left: 15px;
-  padding-right: 15px;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
-::ng-deep .mat-input-element{
+::ng-deep .mat-input-element {
     caret-color: white;
-    font-size: larger;
+    font-size: medium;
+    height: 32px;
 }
 
 .list-button {
-  height: 40px;
-  width: 100%;
-  line-height: 40px;
-  cursor: pointer;
-  background-color: #424242;
-  :hover{
-    height: 30px;
-    line-height: 40px;
-    background-color: #494949;
-  }
-  span {
-    color: white;
-  }
+    height: 40px;
+    width: 100%;
+    // line-height: 40px;
+    cursor: pointer;
+    background-color: #e2e1e1;
+    border: 0;
+    border-radius: 5px;
+     :hover {
+        height: 30px;
+        line-height: 40px;
+        background-color: #868585;
+    }
+    span {
+        color: black;
+    }
 }

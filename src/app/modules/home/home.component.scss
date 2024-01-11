@@ -1,0 +1,307 @@
+.container-fluid {
+  padding: 0;
+}
+
+.banner {
+  padding: 0;
+  background: url("/assets/images/wave1.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: -263px 200px;
+  // height: 100vh;
+}
+
+.reward {
+  background: url("/assets/images/dk.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-align: center;
+  background-color: #1d0250;
+  background-position-y: -40px;
+
+  h2 {
+    font-weight: 800;
+    font-size: 70px;
+    line-height: 80px;
+  }
+}
+
+.headline{
+  text-align: center;
+}
+
+.textRow {
+  padding: 80px 0;
+
+  h2 {
+    text-transform: capitalize;
+  }
+}
+
+.textRow2 {
+  padding-top: 60px;
+}
+
+.contentRow {
+  padding: 150px 0;
+
+  .bannerTxt,
+  .bannerImg {
+    //content vertical align middle
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    padding: 0 10px;
+    flex-direction: column;
+  }
+
+  .bannerTxt {
+    .btns {
+      margin-top: 20px;
+      a {
+        background: linear-gradient(90deg, #0b2dd5 0%, #6827e1 100%);
+      }
+    }
+
+    p {
+      font-size: 17px;
+      line-height: 30px;
+      font-weight: 100;
+    }
+  }
+
+  .bannerImg {
+    //horizontal align image middle
+    align-items: center;
+    img {
+      width: 80%;
+    }
+  }
+}
+
+.showcard {
+  width: 134px;
+  height: 72px;
+  border-radius: 5px;
+}
+
+.showcard:hover {
+  border: 3px solid orange;
+  // box-shadow: 6px 8px gray;
+}
+
+.swapcard {
+  background: url("/assets/images/swap.jpg");
+}
+
+.lpcard {
+  background: url("/assets/images/liquidity.jpg");
+}
+
+.swaptxt {
+  text-shadow: 3px 3px black;
+  border: 1px solid gray;
+}
+
+.contentbox {
+  max-width: 1280px;
+  text-align: left;
+  padding: 1em;
+  font-size: medium;
+}
+
+h1, .headline .subtitle {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 12px;
+  font-weight: 300;
+}
+
+h3 {
+  font-size: 8px;
+  font-weight: 20;
+}
+
+.mt-title {
+  margin-top: 32px;
+}
+
+@media (min-width: 400px) {
+  h1 {
+    font-size: 28px;
+  }
+
+  .headline .subtitle {
+    font-size: 22px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .mt-title {
+    margin-top: 40px;
+  }
+
+  .showcard {
+    width: 134px;
+    height: 72px;
+    border-radius: 5px;
+  }
+
+  .contentbox {
+    width: 392px;
+  }
+}
+
+@media (min-width: 600px) {
+  h1{
+    font-size: 40px;
+  }
+
+  .headline .subtitle {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 12px;
+  }
+
+  .mt-title {
+    margin-top: 64px;
+  }
+  .showcard {
+    width: 200px;
+    height: 108px;
+    border-radius: 7px;
+  }
+  .contentbox {
+    width: 580px;
+  }
+}
+
+@media (min-width: 960px) {
+  h1 {
+    font-size: 64px;
+  }
+
+  .headline .subtitle {
+    font-size: 54px;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  .mt-title {
+    margin-top: 100px;
+  }
+
+  .showcard {
+    width: 300px;
+    height: 160px;
+    border-radius: 10px;
+  }
+  .contentbox {
+    width: 800px;
+  }
+}
+
+@media (min-width: 1280px) {
+  h1{
+    font-size: 76px;
+  }
+
+  .headline .subtitle {
+    font-size: 64px;
+  }
+
+  h2 {
+    font-size: 42px;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+
+  .mt-title {
+    margin-top: 130px;
+  }
+
+  .showcard {
+    width: 400px;
+    height: 214px;
+    border-radius: 14px;
+  }
+  .contentbox {
+    width: 920px;
+  }
+}
+
+@media (min-width: 1920px) {
+  h1{
+    font-size: 128px;
+  }
+
+  .headline .subtitle {
+    font-size: 106px;
+  }
+
+  h2 {
+    font-size: 64px;
+  }
+
+  h3 {
+    font-size: 36px;
+  }
+
+  .mt-title {
+    margin-top: 200px;
+  }
+
+  .showcard {
+    width: 600px;
+    height: 320px;
+    border-radius: 20px;
+  }
+
+  .contentbox {
+    width: 1280px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .contentRow {
+    .bannerTxt {
+      text-align: center;
+      margin: 0 auto;
+      padding: 20px 0;
+    }
+  }
+}
+
+
+.appBtns {
+  display: flex;
+  //justify-content: space-between;
+  //margin-right: 20px;
+  .btns{
+    margin-right: 20px;
+  }
+  a {
+    background: linear-gradient(90deg, #0b2dd5 0%, #6827e1 100%);
+  }
+}

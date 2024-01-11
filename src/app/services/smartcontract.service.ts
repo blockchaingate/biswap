@@ -183,6 +183,8 @@ export class SmartContractServices {
     return func;
   }
 
+
+
   getAmountOutFunc() {
     const func = {
       inputs: [
@@ -216,6 +218,41 @@ export class SmartContractServices {
 
     return func;
   }
+
+  getApproveFunc() {
+    const func = {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "approve",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };
+
+    return func;
+  }
+
+
+
+
   balanceOfProxyFunc() {
     const func = {
       "constant": true,
@@ -281,6 +318,50 @@ export class SmartContractServices {
     return func;
   }
 
+  swapTokensForExactTokensFunc() {
+    const func =  {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amountOut",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amountInMax",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint32[]",
+          "name": "path",
+          "type": "uint32[]"
+        },
+        {
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "deadline",
+          "type": "uint256"
+        }
+      ],
+      "name": "swapTokensForExactTokens",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "amounts",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };
+  
+      return func;    
+  }
+  
   swapExactTokensForTokensFunc() {
     const func =  {
     "inputs": [
@@ -453,4 +534,41 @@ export class SmartContractServices {
     return func;
   }
 
+  depositFunc() {
+    const func = {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "deposit",
+      "outputs": [
+        
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };
+    return func;
+  }
+
+  withdrawFunc() {
+    const func = {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [
+        
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    };
+    return func;
+  }
 }

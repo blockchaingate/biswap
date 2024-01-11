@@ -1,42 +1,106 @@
-.header-tab-items span{
-    width: 10rem;
-    border: 1px solid gray;
-    padding: 3px;
-    border-radius: 5px;
+
+
+.header-tab-items span {
+    // width: 2rem;
+    padding: 0px 10px;
     display: flex;
     justify-content: center;
+    margin-top: 0.6em;
+    font-weight: 300;
+    font-size: 16px;
     cursor: pointer;
     &:hover {
-        border-bottom: 2px solid white;
+        // border-bottom: 2px solid white;
         color: white;
-        background-color: #222f3e;
+        font-weight: 500;
     }
 }
 
 .mat-toolbar {
-    color: #fff;
+    // color: black;
+    // background-color: #fff;
+    color: #eee;
+    background-color: #0b0e1c;
+    padding: 0px 50px;
+}
+
+.lanbtn {
+    font-size: medium;
+}
+
+.content {
+    color: white;;
+    font-size: small;
+    min-width: 200px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.selLan {
+    padding-left: 4px;
+    padding-right: 4px;
+    color: white;
+}
+
+.lanitem {
+    width: 60px;
+}
+
+.lanitem:hover {
+    background-color: lightgray;
+    color: black;
 }
 
 ::ng-deep .mat-menu-panel {
     margin-top: 30px;
 }
 
-.hedaer-logo {
-    height: 40px;
+.header-logo {
+    width: 160px;
 }
 
+.connectBtn{
+    background: linear-gradient(90deg, #0b2dd5 0%, #6827e1 100%);
+}
 
-@media only screen and (max-width: 600px) {
-    .hedaer-logo {
-        height: 0px;
+@media only screen and (max-width: 2800px) {
+    .header-logo {
+        width: 180px;
+        height: auto;
     }
-    .header-tab-items {
-        display: none !important; 
-    }
-  }
+}
 
 @media only screen and (max-width: 1275px) {
-    .hedaer-logo {
-        height: 0px;
+    .header-logo {
+        width: 120px;
+        height: auto;
     }
-  }
+}
+
+@media only screen and (max-width: 600px) {
+    .header-logo {
+        width: 112px;
+        height: auto;
+    }
+    .header-tab-items {
+        display: none !important;
+    }
+
+    .topBar {
+        flex-direction: column !important;
+    }
+
+    .mat-icon-button {
+        width: auto !important;
+        height: auto !important;
+        margin-bottom: 10px;
+    }
+
+    .mat-toolbar-single-row{
+        height: 120px !important;
+    }
+
+    // .menuRight{
+    //     margin: 100px auto 0;
+    // }
+}
