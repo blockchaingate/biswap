@@ -48,9 +48,9 @@ export class SwapComponent implements OnInit {
 
   public set firstToken(coin: Coin) {
     this._firstToken = coin;
-    const coinType = coin.type;
-    if(this.account && coinType) {
-      this.kanbanService.getTokenBalance(this.account, coinType).subscribe(
+    const id = coin.id;
+    if(this.account && id) {
+      this.kanbanService.getTokenBalance(this.account, id).subscribe(
         (balance: any) => {
           this.firstCoinBalance = balance;
         }
@@ -65,9 +65,9 @@ export class SwapComponent implements OnInit {
 
   public set secondToken(coin: Coin) {
     this._secondToken = coin;
-    const coinType = coin.type;
-    if(this.account && coinType) {
-      this.kanbanService.getTokenBalance(this.account, coinType).subscribe(
+    const id = coin.id;
+    if(this.account && id) {
+      this.kanbanService.getTokenBalance(this.account, id).subscribe(
         (balance: any) => {
           this.secondCoinBalance = balance;
         }
@@ -90,16 +90,16 @@ export class SwapComponent implements OnInit {
     this._account = newAccount;
     
     if(newAccount) {
-      if(this.firstToken && this.firstToken.type) {
-        this.kanbanService.getTokenBalance(newAccount, this.firstToken.type).subscribe(
+      if(this.firstToken && this.firstToken.id) {
+        this.kanbanService.getTokenBalance(newAccount, this.firstToken.id).subscribe(
           (balance: any) => {
             this.firstCoinBalance = balance;
           }
         );
       }
 
-      if(this.secondToken && this.secondToken.type) {
-        this.kanbanService.getTokenBalance(newAccount, this.secondToken.type).subscribe(
+      if(this.secondToken && this.secondToken.id) {
+        this.kanbanService.getTokenBalance(newAccount, this.secondToken.id).subscribe(
           (balance: any) => {
             this.secondCoinBalance = balance;
           }
@@ -404,16 +404,16 @@ export class SwapComponent implements OnInit {
 
   refresh() {
     if(this.account) {
-      if(this.firstToken && this.firstToken.type) {
-        this.kanbanService.getTokenBalance(this.account, this.firstToken.type).subscribe(
+      if(this.firstToken && this.firstToken.id) {
+        this.kanbanService.getTokenBalance(this.account, this.firstToken.id).subscribe(
           (balance: any) => {
             this.firstCoinBalance = balance;
           }
         );
       }
   
-      if(this.secondToken && this.secondToken.type) {
-        this.kanbanService.getTokenBalance(this.account, this.secondToken.type).subscribe(
+      if(this.secondToken && this.secondToken.id) {
+        this.kanbanService.getTokenBalance(this.account, this.secondToken.id).subscribe(
           (balance: any) => {
             this.secondCoinBalance = balance;
           }

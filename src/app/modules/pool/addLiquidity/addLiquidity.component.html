@@ -28,8 +28,8 @@
 
             <div fxLayout="column" fxLayoutGap="10px">
                 <div class="tokenSelectButton" (click)="openFirstTokenListDialog()">
-                    <span class="tokenwithIcon" *ngIf="firstToken.tickerName != null; else select">
-            {{ firstToken.tickerName }} <mat-icon>expand_more</mat-icon>
+                    <span class="tokenwithIcon" *ngIf="firstToken.symbol != null; else select">
+            {{ firstToken.symbol }} <mat-icon>expand_more</mat-icon>
             <span *ngIf="firstCoinBalance >= 0">({{firstCoinBalance}})</span>
                     </span>
 
@@ -52,8 +52,8 @@
                 </div>
 
                 <div class="tokenSelectButton" (click)="openSecondTokenListDialog()">
-                    <span class="tokenwithIcon" *ngIf="secondToken.tickerName != null; else selecta">
-            {{ secondToken.tickerName }} <mat-icon>expand_more</mat-icon>
+                    <span class="tokenwithIcon" *ngIf="secondToken.symbol != null; else selecta">
+            {{ secondToken.symbol }} <mat-icon>expand_more</mat-icon>
             <span *ngIf="secondCoinBalance >= 0">({{secondCoinBalance}})</span>
                     </span>
 

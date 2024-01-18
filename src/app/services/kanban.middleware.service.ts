@@ -17,19 +17,7 @@ export class KanbanMiddlewareService {
     private kanbanService: KanbanService
   ) {}
 
-  async balanceOfToken(pairAddress: string, tokenType: number) {
-    var params = [pairAddress, tokenType.toString()];
-    var abiHex = this.web3Service.getBalanceOfProxy(params);
 
-    var result = await this.kanbanService.kanbanCall1(
-      environment.smartConractAdressProxy,
-      abiHex
-    );
-    let res: any = result;
-    var value = this.web3Service.decodeabiHex(res.data, 'uint256');
-    var temp = Number(value);
-    return Number(new BigNumber(temp).dividedBy(new BigNumber(1e18)));
-  }
 
   async getTotalSupply(pairAddress: string) {
     var abiHex = this.web3Service.totalSupply();

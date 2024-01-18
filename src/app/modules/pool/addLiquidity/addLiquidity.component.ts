@@ -40,9 +40,9 @@ export class AddLiquidityComponent implements OnInit {
   }
   public set firstToken(coin: Coin) {
     this._firstToken = coin;
-    const coinType = coin.type;
-    if(this.account && coinType) {
-      this.kanbanService.getTokenBalance(this.account, coinType).subscribe(
+    const id = coin.id;
+    if(this.account && id) {
+      this.kanbanService.getTokenBalance(this.account, id).subscribe(
         (balance: any) => {
           this.firstCoinBalance = balance;
         }
@@ -57,9 +57,9 @@ export class AddLiquidityComponent implements OnInit {
   }
   public set secondToken(coin: Coin) {
     this._secondToken = coin;
-    const coinType = coin.type;
-    if(this.account && coinType) {
-      this.kanbanService.getTokenBalance(this.account, coinType).subscribe(
+    const id = coin.id;
+    if(this.account && id) {
+      this.kanbanService.getTokenBalance(this.account, id).subscribe(
         (balance: any) => {
           this.secondCoinBalance = balance;
         }
@@ -81,17 +81,18 @@ export class AddLiquidityComponent implements OnInit {
 
   public set account(newAccount: string) {
     this._account = newAccount;
+    console.log('newAccount=', newAccount);
     if(newAccount) {
-      if(this.firstToken && this.firstToken.type) {
-        this.kanbanService.getTokenBalance(newAccount, this.firstToken.type).subscribe(
+      if(this.firstToken && this.firstToken.id) {
+        this.kanbanService.getTokenBalance(newAccount, this.firstToken.id).subscribe(
           (balance: any) => {
             this.firstCoinBalance = balance;
           }
         );
       }
 
-      if(this.secondToken && this.secondToken.type) {
-        this.kanbanService.getTokenBalance(newAccount, this.secondToken.type).subscribe(
+      if(this.secondToken && this.secondToken.id) {
+        this.kanbanService.getTokenBalance(newAccount, this.secondToken.id).subscribe(
           (balance: any) => {
             this.secondCoinBalance = balance;
           }
@@ -200,8 +201,8 @@ export class AddLiquidityComponent implements OnInit {
             let first = res["name"];
             this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
           }
-})  
-      } else {
+        })  
+      } else if(x.tokenid){
         let params: any = x;
          this.apiService.getTokensInfoFromPair(params.tokenid).subscribe((res: any) =>{
           if(res) {
@@ -210,7 +211,7 @@ export class AddLiquidityComponent implements OnInit {
             this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
             this.secondToken = this.tokenList.find(x => x.tickerName == sescond) || new Coin();
           }
-    })
+        })
       }
   });
   }
@@ -287,9 +288,11 @@ export class AddLiquidityComponent implements OnInit {
   }
 
   kanbanCallMethod() {
-    var params = [this.firstToken.type, this.secondToken.type];
+    if(!this.firstToken.id || !this.secondToken.id) {
+      return;
+    }
+    var params = [this.firstToken.id, this.secondToken.id];
     var abiHex = this.web3Service.getPair(params);
-    console.log('abiHex => ' + abiHex);
     this.kanbanService
       .kanbanCall(environment.smartConractAdressFactory, abiHex)
       .subscribe((data1) => {
@@ -336,6 +339,7 @@ export class AddLiquidityComponent implements OnInit {
   }
 
   openFirstTokenListDialog() {
+
     this.dialog
       .open(TokenListComponent, {
         data: {
@@ -345,13 +349,16 @@ export class AddLiquidityComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((x) => {
+        console.log('x of afterClosed=', x);
         if (x.isFirst) {
+          console.log('go here');
           this.dataService.GetFirstToken.subscribe((data) => {
+            console.log('data of GetFirstToken');
             this.firstToken = data;
           });
         }
-
-        if (this.firstToken.type != null && this.secondToken.type != null) {
+        console.log('go threre');
+        if (this.firstToken.id != null && this.secondToken.id != null) {
           this.kanbanCallMethod();
         }
       });
@@ -371,26 +378,27 @@ export class AddLiquidityComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((x) => {
+        console.log('x of afterClosed=', x);
         if (x.isSecond) {
           this.dataService.GetSecondToken.subscribe((data) => {
             this.secondToken = data;
           });
         }
 
-        if (this.firstToken.type != null && this.secondToken.type != null) {
+        if (this.firstToken.id != null && this.secondToken.id != null) {
           this.kanbanCallMethod();
         }
       });
   }
 
   refresh() {
-    this.kanbanService.getTokenBalance(this.account, this.firstToken.type).subscribe(
+    this.kanbanService.getTokenBalance(this.account, this.firstToken.id).subscribe(
       (balance: any) => {
         this.firstCoinBalance = balance;
       }
     );
 
-    this.kanbanService.getTokenBalance(this.account, this.secondToken.type).subscribe(
+    this.kanbanService.getTokenBalance(this.account, this.secondToken.id).subscribe(
       (balance: any) => {
         this.secondCoinBalance = balance;
       }
@@ -410,8 +418,8 @@ export class AddLiquidityComponent implements OnInit {
       .shiftedBy(18)
       .toString(16).split('.')[0];
 
-    var tokenA = this.firstToken.type;
-    var tokenB = this.secondToken.type;
+    var tokenA = this.firstToken.id;
+    var tokenB = this.secondToken.id;
 
     //var amountADesireda = '0x' + new BigNumber(amountADesired).toString(16);
     //var amountBDesireda = '0x' + new BigNumber(amountBDesired).toString(16);

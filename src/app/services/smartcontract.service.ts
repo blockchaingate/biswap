@@ -136,14 +136,14 @@ export class SmartContractServices {
       constant: true,
       inputs: [
         {
-          internalType: 'uint32',
+          internalType: 'address',
           name: '',
-          type: 'uint32',
+          type: 'address',
         },
         {
-          internalType: 'uint32',
+          internalType: 'address',
           name: '',
-          type: 'uint32',
+          type: 'address',
         },
       ],
       name: 'getPair',
@@ -332,9 +332,9 @@ export class SmartContractServices {
           "type": "uint256"
         },
         {
-          "internalType": "uint32[]",
+          "internalType": "address[]",
           "name": "path",
-          "type": "uint32[]"
+          "type": "address[]"
         },
         {
           "internalType": "address",
@@ -376,9 +376,9 @@ export class SmartContractServices {
         "type": "uint256"
       },
       {
-        "internalType": "uint32[]",
+        "internalType": "address[]",
         "name": "path",
-        "type": "uint32[]"
+        "type": "address[]"
       },
       {
         "internalType": "address",
@@ -410,14 +410,14 @@ export class SmartContractServices {
     const func =   {
       "inputs": [
         {
-          "internalType": "uint32",
+          "internalType": "address",
           "name": "tokenA",
-          "type": "uint32"
+          "type": "address"
         },
         {
-          "internalType": "uint32",
+          "internalType": "address",
           "name": "tokenB",
-          "type": "uint32"
+          "type": "address"
         },
         {
           "internalType": "uint256",
@@ -479,14 +479,14 @@ export class SmartContractServices {
     const func =   {
     "inputs": [
       {
-        "internalType": "uint32",
+        "internalType": "address",
         "name": "tokenA",
-        "type": "uint32"
+        "type": "address"
       },
       {
-        "internalType": "uint32",
+        "internalType": "address",
         "name": "tokenB",
-        "type": "uint32"
+        "type": "address"
       },
       {
         "internalType": "uint256",

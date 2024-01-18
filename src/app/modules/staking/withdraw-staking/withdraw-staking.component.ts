@@ -22,6 +22,7 @@ export class WithdrawStakingComponent implements OnInit {
   }
 
   withdrawStaking() {
+    /*
     const params = [
       '0x' + new BigNumber(this.coinAmount).shiftedBy(18).toString(16)
     ];
@@ -39,5 +40,6 @@ export class WithdrawStakingComponent implements OnInit {
         this._snackBar.open(error, 'Ok');
       }
     );;
+    */
   }
 }

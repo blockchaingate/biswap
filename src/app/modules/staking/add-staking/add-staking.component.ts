@@ -36,6 +36,7 @@ export class AddStakingComponent implements OnInit {
   }
   
   addStaking() {
+    /*
     const params = [
       '0x' + new BigNumber(this.coinAmount).shiftedBy(18).toString(16)
     ];
@@ -53,5 +54,6 @@ export class AddStakingComponent implements OnInit {
         this._snackBar.open(error, 'Ok');
       }
     );;
+    */
   }
 }

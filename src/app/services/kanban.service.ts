@@ -17,7 +17,7 @@ import BigNumber from 'bignumber.js';
 })
 export class KanbanService {
   endpoint = environment.endpoints.kanban;
-  private url: string = environment.url;
+  private url: string = environment.urlV3;
   coins: Coin[] = [];
   walletModel: WalletModel = new WalletModel();
 
@@ -53,10 +53,11 @@ export class KanbanService {
     //var removeItems = [196629, 524290, 196628, 458753, 589826, 196609, 196613];
     var removeItems: any = [];
     this.http
-      .get<BaseResponseModel>(`${this.url}exchangily/getTokenList/coinpool`)
+      .get<BaseResponseModel>(`${this.url}v3/token/erc20/100/0`)
       .subscribe((x) => {
+        console.log('x===', x);
         var tokenList: Coin[] = [];
-        tokenList = x.data.tokenList;
+        tokenList = x.data;
         tokenList.forEach((element) => {
           if (removeItems.indexOf(element.type) === -1) {
             tempTokenList.push(element);
@@ -66,21 +67,24 @@ export class KanbanService {
     this.dataService.settokenList(tempTokenList);
   }
 
-  getTokenBalance(address: string, coinType: number) {
+  getTokenBalance(address: string, tokenContractAddress: string) {
     const obs = new Observable((observer) => {
       if(address.indexOf('0x') < 0) {
         address = this.utilServ.fabToExgAddress(address);
       }
-      const url = `${this.url}exchangily/getBalances/${address}`;
+      const url = `${this.url}kanban/token/balance/${tokenContractAddress}/${address}`;
       this.http
       .get<BaseResponseModel>(url)
       .subscribe((x: any) => {
-        const filtered = x.filter((item: any) => item.coinType == coinType);
-        let balance = 0;
-        if(filtered && (filtered.length > 0) ) {
-          balance = new BigNumber(filtered[0].unlockedAmount).shiftedBy(-18).toNumber();
+        if(x.success) {
+          const data = x.data;
+          let balance = 0;
+          if(data) {
+            balance = new BigNumber(data.balance).shiftedBy(-data.decimals).toNumber();
+          }
+          observer.next(balance);
         }
-        observer.next(balance);
+
       });
     });
     return obs;

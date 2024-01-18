@@ -1,6 +1,8 @@
 import { Blockchain } from './blockchain';
 export class Coin {
 
+    id: string = '';
+    
     tickerName: string = '';
     type: number = 0;
     decimal: number = 0;

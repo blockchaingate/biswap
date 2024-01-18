@@ -25,7 +25,7 @@ export class TokenListComponent implements OnInit {
     this.filteredTokens = this.tokenList;
     this.filteredTokens.sort(this.compare);
     this.filteredTokens.forEach((ele) => {
-      ele.logoUrl = 'https://exchangily.com/assets/coins/' + ele.tickerName.toLocaleLowerCase() + '.png';
+      ele.logoUrl = 'https://exchangily.com/assets/coins/' + ele.symbol.toLocaleLowerCase().substring(2) + '.png';
     }); 
   }
 

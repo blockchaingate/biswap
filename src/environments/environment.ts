@@ -5,10 +5,8 @@ import * as Btc from 'bitcoinjs-lib';
 
 export const environment = {
   production: false,
-  smartConractAdressRouter:  "0xa2370c422e2074ae2fc3d9d24f1e654c7fa3c181",
-  smartConractAdressProxy:   "0xfd5ba9e06b3cdc2da3f4094619f838217b88f519",
-  smartConractAdressFactory: "0x9dfc45bbed0626c6c2d0a125e50148ba706b681e",
-  smartConractStaking: "0x9f90d8ca16fea1879812bcf97ee2168111813282",
+  smartConractAdressRouter:  "0x956464fa0bc9acc46ef2364f582cdef7afefd51b",
+  smartConractAdressFactory: "0x6f0acd5519ee285562f56086b14fca0247f8ff79",
                             //  "0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc",
   
   endpoints: {
@@ -41,6 +39,7 @@ export const environment = {
     // pricehistory: 'http://18.223.17.4:3002/klinedata/'
   },
   url: 'https://kanbantest.fabcoinapi.com/',
+  urlV3: 'https://testapi.fundark.com/api/',
   CoinType: {
     BTC: 1,
     ETH: 60,
