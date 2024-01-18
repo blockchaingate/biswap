@@ -138,6 +138,27 @@ export class KanbanService {
     return res.toPromise();
   }
 
+  sendParams(params: any) {
+
+    console.log('params====', params);
+    const client = this.walletService.client;
+
+    const session = this.walletService.session;
+
+    const requestBody = {
+      topic: session.topic,
+      chainId: this.walletService.chainId,
+      request: {
+        method: 'kanban_sendTransaction',
+        params: params,
+      },
+    };
+
+    const result = client.request(requestBody);
+
+    return result;
+  }
+
   send(to: string, data: string) {
     const client = this.walletService.client;
 

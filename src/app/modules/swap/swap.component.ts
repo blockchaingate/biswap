@@ -187,19 +187,19 @@ export class SwapComponent implements OnInit {
         if(params.tokenid) {
           this.apiService.getTokenInfoFromId(params.tokenid).subscribe((res: any) =>{
             let first = res["name"];
-            this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
+            this.firstToken = this.tokenList.find(x => x.symbol == first) || new Coin();
           }) 
         }
  
-      } else {
+      } else if(x.tokenid){
         let params: any = x;
         if(params.tokenid) {
           this.apiService.getTokensInfoFromPair(params.tokenid).subscribe((res: any) =>{
             if(res) {
               let first = res["token0Name"];
               let sescond = res["token1Name"];
-              this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
-              this.secondToken = this.tokenList.find(x => x.tickerName == sescond) || new Coin();
+              this.firstToken = this.tokenList.find(x => x.symbol == first) || new Coin();
+              this.secondToken = this.tokenList.find(x => x.symbol == sescond) || new Coin();
             }
           })
         }
@@ -211,8 +211,8 @@ export class SwapComponent implements OnInit {
   async onKey(value: number, isFistToken: boolean) {
     this.isFistToken = isFistToken;
     if (
-      this.firstToken.tickerName != null &&
-      this.secondToken.tickerName != null &&
+      this.firstToken.symbol != null &&
+      this.secondToken.symbol != null &&
       value != null &&
       value != undefined
     ) {
@@ -233,23 +233,16 @@ export class SwapComponent implements OnInit {
   }
 
   getPair() {
-    var params = [this.firstToken.type, this.secondToken.type];
+    if(!this.firstToken.id || !this.secondToken.id) {
+      return;
+    }
+    var params = [this.firstToken.id, this.secondToken.id];
     var abiHex = this.web3Service.getPair(params);
-    console.log('abiHex  for getPair=> ' + abiHex);
     this.kanbanService
       .kanbanCall(environment.smartConractAdressFactory, abiHex)
       .subscribe((data: any) => {
-        console.log('data=====', data);
-        /*
-        data.subscribe((data1) => {
-          let res: any = data1;
-
-        })
-        */
         var address = this.web3Service.decodeabiHex(data.data, 'address');
-        console.log('address===', address);
         this.tokenId = address.toString();
-        console.log('this.tokenId===', this.tokenId);
       });
   }
 
@@ -269,7 +262,7 @@ export class SwapComponent implements OnInit {
           });
         }
 
-        if (this.firstToken.type != null && this.secondToken.type != null) {
+        if (this.firstToken.id != null && this.secondToken.id != null) {
           this.getPair();
         }
       });
@@ -291,7 +284,7 @@ export class SwapComponent implements OnInit {
           });
         }
 
-        if (this.firstToken.type != null && this.secondToken.type != null) {
+        if (this.firstToken.id != null && this.secondToken.id != null) {
           this.getPair();
         }
       });
@@ -317,7 +310,7 @@ export class SwapComponent implements OnInit {
 
           var value = this.web3Service.decodeabiHexs(res.data, param);
 
-          if (this.firstToken.type < this.secondToken.type) {
+          if (this.firstToken.id < this.secondToken.id) {
             this.firstTokenReserve = new BigNumber(value[0]);
             this.secondTokenReserve = new BigNumber(value[1]);
           } else {
@@ -339,7 +332,7 @@ export class SwapComponent implements OnInit {
             this.secondCoinAmount = this.biswapServ.getAmountOut(amount, reserve1, reserve2);
 
             this.liquidityPrividerFee = new BigNumber(amount).multipliedBy(new BigNumber(0.003)).toNumber();
-            this.liquidityPrividerFeeCoin = this.firstToken.tickerName;
+            this.liquidityPrividerFeeCoin = this.firstToken.symbol;
             this.maximumSold = 0;
             this.minimumReceived = new BigNumber(this.secondCoinAmount).multipliedBy(new BigNumber(1-this.slippage * 0.01)).toNumber();            
           } else 
@@ -354,10 +347,10 @@ export class SwapComponent implements OnInit {
               .toString(16);
             value = value.split('.')[0];
             const params = [value, reserve2, reserve1];
-            var path = [this.firstToken.type, this.secondToken.type];
+            var path = [this.firstToken.id, this.secondToken.id];
             this.firstCoinAmount = this.biswapServ.getAmountIn(amount, reserve1, reserve2);
             this.liquidityPrividerFee = new BigNumber(amount).multipliedBy(new BigNumber(0.003)).toNumber();
-            this.liquidityPrividerFeeCoin = this.secondToken.tickerName;
+            this.liquidityPrividerFeeCoin = this.secondToken.symbol;
             this.minimumReceived = 0;
             this.maximumSold = new BigNumber(this.firstCoinAmount).multipliedBy(new BigNumber(1+this.slippage * 0.01)).toNumber();
           }
@@ -366,9 +359,9 @@ export class SwapComponent implements OnInit {
             var perAmount = (this.firstCoinAmount / this.secondCoinAmount);
       
             this.perAmountLabel =
-              this.firstToken.tickerName +
+              this.firstToken.symbol +
               ' per ' +
-              this.secondToken.tickerName;
+              this.secondToken.symbol;
         
             this.perAmount = perAmount.toString();   
   
@@ -376,7 +369,7 @@ export class SwapComponent implements OnInit {
             const diff = perAmount > currentPerAmount ? (perAmount - currentPerAmount) : (currentPerAmount - perAmount);
             this.priceImpact = Number((diff / perAmount * 100).toFixed(2));
   
-            this.route = [this.firstToken.tickerName, this.secondToken.tickerName];
+            this.route = [this.firstToken.symbol, this.secondToken.symbol];
           }
 
       });
@@ -443,37 +436,50 @@ export class SwapComponent implements OnInit {
     
 
     let abiHex = '';
+    let approveAmount;
     if(this.isFistToken) {
-      var path = [this.firstToken.type, this.secondToken.type];
+      var path = [this.firstToken.id, this.secondToken.id];
       const amountIn = '0x' + new BigNumber(this.firstCoinAmount)
-      .shiftedBy(18)
+      .shiftedBy(this.firstToken.decimals)
       .toString(16).split('.')[0];
       const amountOutMin = '0x' + new BigNumber(this.secondCoinAmount).multipliedBy(new BigNumber(1-this.slippage * 0.01))
-      .shiftedBy(18)
+      .shiftedBy(this.secondToken.decimals)
       .toString(16).split('.')[0];
       const params = [amountIn, amountOutMin, path, to, deadline];
       console.log('params is1:', params);
       abiHex = this.web3Service.swapExactTokensForTokens(params);
+      approveAmount = amountIn;
     } else {
-      var path = [this.firstToken.type, this.secondToken.type];
+      var path = [this.firstToken.id, this.secondToken.id];
       const amountOut = '0x' + new BigNumber(this.secondCoinAmount)
-      .shiftedBy(18)
+      .shiftedBy(this.secondToken.decimals)
       .toString(16).split('.')[0];
       const amountInMax = '0x' + new BigNumber(this.firstCoinAmount).multipliedBy(new BigNumber(1+this.slippage * 0.01))
-      .shiftedBy(18)
+      .shiftedBy(this.firstToken.decimals)
       .toString(16).split('.')[0];
       const params = [amountOut, amountInMax, path, to, deadline];
       console.log('params is2:', params);
       abiHex = this.web3Service.swapTokensForExactTokens(params);
+      approveAmount = amountInMax;
     }
 
+    const paramsSent = [
+      {
+        to: this.firstToken.id,
+        data: this.web3Service.getApprove([environment.smartConractAdressRouter, approveAmount])
+      },
+      {
+        to: environment.smartConractAdressRouter,
+        data: abiHex
+      }
+    ];
     const alertDialogRef = this.dialog.open(AlertComponent, {
       width: '250px',
       data: {text: 'Please approve your request in your wallet'},
     });
 
     this.kanbanService
-      .send(environment.smartConractAdressRouter, abiHex)
+      .sendParams(paramsSent)
       .then((data) => {
         alertDialogRef.close();
         const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';

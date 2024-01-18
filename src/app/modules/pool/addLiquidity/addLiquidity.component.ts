@@ -409,17 +409,36 @@ export class AddLiquidityComponent implements OnInit {
 
   addLiqudity() {
 
-
+    console.log('this.firstToken===', this.firstToken);
+    console.log('this.secondToken===', this.secondToken);
     console.log('go for addLiquidity');
+
+    const paramsSent: any = [];
     let amountADesired = '0x' + new BigNumber(this.firstCoinAmount)
-      .shiftedBy(18)
+      .shiftedBy(this.firstToken.decimals)
       .toString(16).split('.')[0];
     let amountBDesired = '0x' + new BigNumber(this.secondCoinAmount)
-      .shiftedBy(18)
+      .shiftedBy(this.secondToken.decimals)
       .toString(16).split('.')[0];
 
     var tokenA = this.firstToken.id;
     var tokenB = this.secondToken.id;
+
+    let params: any = [environment.smartConractAdressRouter, amountADesired];
+    let abiHex = this.web3Service.getApprove(params);
+
+    paramsSent.push({
+      to: tokenA,
+      data: abiHex
+    });
+
+    params = [environment.smartConractAdressRouter, amountBDesired];
+    abiHex = this.web3Service.getApprove(params);
+
+    paramsSent.push({
+      to: tokenB,
+      data: abiHex
+    });
 
     //var amountADesireda = '0x' + new BigNumber(amountADesired).toString(16);
     //var amountBDesireda = '0x' + new BigNumber(amountBDesired).toString(16);
@@ -439,7 +458,7 @@ export class AddLiquidityComponent implements OnInit {
     );
     var deadline = this.utilService.getTimestamp(timestamp);
 
-    const params = [
+    params = [
       tokenA,
       tokenB,
       amountADesired,
@@ -450,13 +469,17 @@ export class AddLiquidityComponent implements OnInit {
       deadline,
     ];
 
-    var abiHex = this.web3Service.addLiquidity(params);
+    abiHex = this.web3Service.addLiquidity(params);
     const alertDialogRef = this.dialog.open(AlertComponent, {
       width: '250px',
       data: {text: 'Please approve your request in your wallet'},
     });
+    paramsSent.push({
+      to: environment.smartConractAdressRouter,
+      data: abiHex
+    });
     this.kanbanService
-      .send(environment.smartConractAdressRouter, abiHex)
+      .sendParams(paramsSent)
       .then((data) => { 
         alertDialogRef.close();
         const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
