@@ -325,11 +325,11 @@ export class SwapComponent implements OnInit {
             var reserve1: BigNumber = this.firstTokenReserve;
             var reserve2: BigNumber = this.secondTokenReserve;
             let value = '0x' + new BigNumber(amount)
-              .shiftedBy(18)
+              .shiftedBy(this.firstToken.decimals)
               .toString(16);
             value = value.split('.')[0];
       
-            this.secondCoinAmount = this.biswapServ.getAmountOut(amount, reserve1, reserve2);
+            this.secondCoinAmount = this.biswapServ.getAmountOut(amount, this.firstToken.decimals, this.secondToken.decimals, reserve1, reserve2);
 
             this.liquidityPrividerFee = new BigNumber(amount).multipliedBy(new BigNumber(0.003)).toNumber();
             this.liquidityPrividerFeeCoin = this.firstToken.symbol;
@@ -343,12 +343,12 @@ export class SwapComponent implements OnInit {
             var reserve1: BigNumber = this.firstTokenReserve;
             var reserve2: BigNumber = this.secondTokenReserve;
             let value = new BigNumber(amount)
-              .shiftedBy(18)
+              .shiftedBy(this.secondToken.decimals)
               .toString(16);
             value = value.split('.')[0];
             const params = [value, reserve2, reserve1];
             var path = [this.firstToken.id, this.secondToken.id];
-            this.firstCoinAmount = this.biswapServ.getAmountIn(amount, reserve1, reserve2);
+            this.firstCoinAmount = this.biswapServ.getAmountIn(amount, this.firstToken.decimals, this.secondToken.decimals, reserve1, reserve2);
             this.liquidityPrividerFee = new BigNumber(amount).multipliedBy(new BigNumber(0.003)).toNumber();
             this.liquidityPrividerFeeCoin = this.secondToken.symbol;
             this.minimumReceived = 0;

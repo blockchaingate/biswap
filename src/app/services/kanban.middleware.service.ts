@@ -48,7 +48,7 @@ export class KanbanMiddlewareService {
     } else return null;
   }
 
-  async getQuote(params: any) {
+  async getQuote(params: any, decimals: number) {
     var abiHex = this.web3Service.quote(params);
     console.log('abiHex => ' + abiHex);
     var result = await this.kanbanService.kanbanCall1(
@@ -59,6 +59,6 @@ export class KanbanMiddlewareService {
     let res: any = result;
     var value = this.web3Service.decodeabiHex(res.data, 'uint256');
     var temp = Number(value);
-    return Number(new BigNumber(temp).dividedBy(new BigNumber(1e18)));
+    return Number(new BigNumber(temp).shiftedBy(-decimals));
   }
 }

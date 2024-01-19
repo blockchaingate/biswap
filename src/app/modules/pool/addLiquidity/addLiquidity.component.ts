@@ -199,7 +199,7 @@ export class AddLiquidityComponent implements OnInit {
         this.apiService.getTokenInfoFromId(params.tokenid).subscribe((res: any) =>{
           if(res) {
             let first = res["name"];
-            this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
+            this.firstToken = this.tokenList.find(x => x.symbol == first) || new Coin();
           }
         })  
       } else if(x.tokenid){
@@ -208,8 +208,8 @@ export class AddLiquidityComponent implements OnInit {
           if(res) {
             let first = res["token0Name"];
             let sescond = res["token1Name"];
-            this.firstToken = this.tokenList.find(x => x.tickerName == first) || new Coin();
-            this.secondToken = this.tokenList.find(x => x.tickerName == sescond) || new Coin();
+            this.firstToken = this.tokenList.find(x => x.symbol == first) || new Coin();
+            this.secondToken = this.tokenList.find(x => x.symbol == sescond) || new Coin();
           }
         })
       }
@@ -218,8 +218,8 @@ export class AddLiquidityComponent implements OnInit {
 
   async onKey(value: number, isFistToken: boolean) {
     if (
-      this.firstToken.tickerName != null &&
-      this.secondToken.tickerName != null &&
+      this.firstToken.symbol != null &&
+      this.secondToken.symbol != null &&
       value != null &&
       value != undefined &&
       !this.isNewPair
@@ -259,26 +259,26 @@ export class AddLiquidityComponent implements OnInit {
       var reserve1: BigNumber = this.firstTokenReserve;
       var reserve2: BigNumber = this.secondTokenReserve;
       let value = new BigNumber(amount)
-        .multipliedBy(new BigNumber(1e18))
+        .shiftedBy(this.firstToken.decimals)
         .toFixed();
       value = value.split('.')[0];
       const params = [value, reserve1, reserve2];
 
       this.secondCoinAmount = await this.kanbanMiddlewareService.getQuote(
-        params
+        params, this.secondToken.decimals
       );
     } else {
       var amount: number = this.secondCoinAmount;
       var reserve1: BigNumber = this.firstTokenReserve;
       var reserve2: BigNumber = this.secondTokenReserve;
       let value = new BigNumber(amount)
-        .multipliedBy(new BigNumber(1e18))
+      .shiftedBy(this.secondToken.decimals)
         .toFixed();
       value = value.split('.')[0];
       const params = [value, reserve2, reserve1];
 
       this.firstCoinAmount = await this.kanbanMiddlewareService.getQuote(
-        params
+        params, this.firstToken.decimals
       );
     }
   }
@@ -323,9 +323,9 @@ export class AddLiquidityComponent implements OnInit {
                   var perAmount = (value[0] / value[1]).toString();
 
                   this.perAmountLabel =
-                    this.firstToken.tickerName +
+                    this.firstToken.symbol +
                     ' per ' +
-                    this.secondToken.tickerName;
+                    this.secondToken.symbol;
 
                   this.perAmount = perAmount;
               });

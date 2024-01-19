@@ -9,25 +9,25 @@ import BigNumber from 'bignumber.js';
   export class BiswapService {
     constructor(private http: HttpClient) {}
 
-    getAmountOut(amountIn: number, reserveIn: BigNumber, reserveOut: BigNumber) {
+    getAmountOut(amountIn: number, amountInDecimals: number, amountOutDecimals: number, reserveIn: BigNumber, reserveOut: BigNumber) {
       if(amountIn <= 0 || reserveIn.lte(0) || reserveOut.lte(0)) {
         return 0;
       }
-      const amountInWithFee = new BigNumber(amountIn).shiftedBy(18).multipliedBy(new BigNumber(997));
+      const amountInWithFee = new BigNumber(amountIn).shiftedBy(amountInDecimals).multipliedBy(new BigNumber(997));
       const numerator = amountInWithFee.multipliedBy(reserveOut);
       const denominator = reserveIn.multipliedBy(new BigNumber(1000)).plus(amountInWithFee);
-      const amountOut = numerator.dividedBy(denominator).shiftedBy(-18).toNumber();
+      const amountOut = numerator.dividedBy(denominator).shiftedBy(-amountOutDecimals).toNumber();
 
       return amountOut;
     }
 
-  getAmountIn(amountOut: number, reserveIn: BigNumber, reserveOut: BigNumber) {
+  getAmountIn(amountOut: number, amountInDecimals: number, amountOutDecimals: number, reserveIn: BigNumber, reserveOut: BigNumber) {
     if(amountOut <= 0 || reserveIn.lte(0) || reserveOut.lte(0)) {
       return 0;
     }
-    const numerator = reserveIn.multipliedBy(new BigNumber(amountOut).shiftedBy(18)).multipliedBy(new BigNumber(1000));
-    const denominator = reserveOut.minus(new BigNumber(amountOut).shiftedBy(18)).multipliedBy(new BigNumber(997));
-    const amountIn = (numerator.dividedBy(denominator))   .plus(new BigNumber(1)).shiftedBy(-18).toNumber();
+    const numerator = reserveIn.multipliedBy(new BigNumber(amountOut).shiftedBy(amountOutDecimals)).multipliedBy(new BigNumber(1000));
+    const denominator = reserveOut.minus(new BigNumber(amountOut).shiftedBy(amountOutDecimals)).multipliedBy(new BigNumber(997));
+    const amountIn = (numerator.dividedBy(denominator))   .plus(new BigNumber(1)).shiftedBy(-amountInDecimals).toNumber();
     return amountIn;
   }
 
