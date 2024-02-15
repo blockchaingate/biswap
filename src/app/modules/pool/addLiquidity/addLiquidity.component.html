@@ -147,8 +147,10 @@
 
 
 
-        <div *ngIf="txHash">
-            <a [href]="txHash" target="_blank" [textContent]="txHash"> </a>
+        <div *ngIf="txHashes && txHashes.length > 0">
+            <div *ngFor="let txHash of txHashes">
+                <a [href]="txHash" target="_blank" [textContent]="txHash"> </a>
+            </div>
         </div>
         <div *ngIf="error">
             <p class="text-danger">{{error}}</p>

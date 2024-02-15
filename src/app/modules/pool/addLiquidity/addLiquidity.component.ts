@@ -105,7 +105,7 @@ export class AddLiquidityComponent implements OnInit {
   perAmount: string = '';
   perAmountLabel: string = '';
 
-  txHash: String = '';
+  txHashes: any = [];
   newPair: String ='';
 
   isNewPair: boolean = false;
@@ -444,10 +444,10 @@ export class AddLiquidityComponent implements OnInit {
     //var amountBDesireda = '0x' + new BigNumber(amountBDesired).toString(16);
 
     var amountAMin = '0x' + new BigNumber(this.firstCoinAmount)
-    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01))).shiftedBy(18)
+    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01))).shiftedBy(this.firstToken.decimals)
     .toString(16).split('.')[0];
     var amountBMin = '0x' + new BigNumber(this.secondCoinAmount)
-    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01))).shiftedBy(18)
+    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01))).shiftedBy(this.secondToken.decimals)
     .toString(16).split('.')[0];
     var to = this.account;
     var timestamp = new TimestampModel(
@@ -480,10 +480,12 @@ export class AddLiquidityComponent implements OnInit {
     });
     this.kanbanService
       .sendParams(paramsSent)
-      .then((data) => { 
+      .then((txids) => { 
         alertDialogRef.close();
         const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
-        this.txHash = baseUrl + '/explorer/tx-detail/' + data;
+
+        
+        this.txHashes = txids.map((txid: string) =>  baseUrl + '/explorer/tx-detail/' + txid);
 
         setTimeout(() => {
           this.refresh()
