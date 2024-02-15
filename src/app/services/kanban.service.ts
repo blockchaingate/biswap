@@ -55,7 +55,6 @@ export class KanbanService {
     this.http
       .get<BaseResponseModel>(`${this.url}v3/token/erc20/100/0`)
       .subscribe((x) => {
-        console.log('x===', x);
         var tokenList: Coin[] = [];
         tokenList = x.data;
         tokenList.forEach((element) => {

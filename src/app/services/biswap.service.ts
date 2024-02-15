@@ -32,136 +32,136 @@ import BigNumber from 'bignumber.js';
   }
 
     getDayDatas(pageSize: number, pageNum: number) {
-        const url = environment.endpoints.explorerapi + '/kanban/biswap/daydata/' + pageSize + '/' + pageNum;
+        const url = environment.endpoints.explorerapi + '/v3/biswap/daydata/' + pageSize + '/' + pageNum;
         return this.http.get(url);
     }
 
     getTokens(pageSize: number, pageNum: number) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/token/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.explorerapi + '/v3/biswap/token/' + pageSize + '/' + pageNum;
       return this.http.get(url);
     }
 
     getCountTokens() {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/token/totalCount';
+      const url = environment.endpoints.explorerapi + '/v3/biswap/token/totalCount';
       return this.http.get(url);   
     }
 
     getPairs(pageSize: number, pageNum: number) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/pair/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.explorerapi + '/v3/biswap/pair/' + pageSize + '/' + pageNum;
       return this.http.get(url);
     }
 
     getCountPairs() {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/pair/totalCount';
+      const url = environment.endpoints.explorerapi + '/v3/biswap/pair/totalCount';
       return this.http.get(url);   
     }
 
     getTransactions(pageSize: number, pageNum: number) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.explorerapi + '/v3/biswap/transaction/' + pageSize + '/' + pageNum;
       return this.http.get(url);
     }
 
     getCountTransactions() {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/totalCount';
+      const url = environment.endpoints.explorerapi + '/v3/biswap/transaction/totalCount';
       return this.http.get(url);   
     }
 
     getPair(pairIdentity: string) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/pair/' + pairIdentity;
+      const url = environment.endpoints.explorerapi + '/v3/biswap/pair/' + pairIdentity;
       return this.http.get(url);      
     }
 
     getToken(tokenIdentity: string) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/token/' + tokenIdentity;
+      const url = environment.endpoints.explorerapi + '/v3/biswap/token/' + tokenIdentity;
       return this.http.get(url);  
     }
 
     getPairsByToken(tokenIdentity: string) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/pair/token/' + tokenIdentity + '/10/0';
+      const url = environment.endpoints.explorerapi + '/v3/biswap/pair/token/' + tokenIdentity + '/10/0';
       return this.http.get(url);  
     }
 
     getTransactionsByAccount(account: string, pageSize: number, pageNum: number ) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/from/' + account + '/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.explorerapi + '/v3/biswap/transaction/from/' + account + '/' + pageSize + '/' + pageNum;
       return this.http.get(url);  
     }
 
     getTransactionCountByAccount(account: string) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/from/' + account + '/totalCount';
+      const url = environment.endpoints.explorerapi + '/v3/biswap/transaction/from/' + account + '/totalCount';
       return this.http.get(url);  
     }
 
     getTransactionsByToken(tokenIdentity: string, pageSize: number, pageNum: number) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/token/' + tokenIdentity + '/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.explorerapi + '/v3/biswap/transaction/token/' + tokenIdentity + '/' + pageSize + '/' + pageNum;
       return this.http.get(url);  
     }
 
     getCountTransactionsByToken(tokenIdentity: string) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/token/' + tokenIdentity + '/totalCount';
+      const url = environment.endpoints.explorerapi + '/v3/biswap/transaction/token/' + tokenIdentity + '/totalCount';
       return this.http.get(url);
     }
 
     getTransactionsByPair(pairIdentity: string, pageSize: number, pageNum: number) {
 
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/pair/' + pairIdentity + '/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.explorerapi + '/v3/biswap/transaction/pair/' + pairIdentity + '/' + pageSize + '/' + pageNum;
       return this.http.get(url);
     }
 
     getCountTransactionsByPair(pairIdentity: string) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/transaction/pair/' + pairIdentity + '/totalCount';
+      const url = environment.endpoints.explorerapi + '/v3/biswap/transaction/pair/' + pairIdentity + '/totalCount';
       return this.http.get(url);
     }
     
     getPairDayDatas(pairIdentity: string) {
       const pageSize = 100;
       const pageNum = 0;
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/pairdaydata/pair/' + pairIdentity + '/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.explorerapi + '/v3/biswap/pairdaydata/pair/' + pairIdentity + '/' + pageSize + '/' + pageNum;
       return this.http.get(url);      
     }
 
     getLiquidity(account: string, pairAddress: string) {
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/liquidityposition/user/' + account + "/pair/" + pairAddress;
+      const url = environment.endpoints.explorerapi + '/v3/biswap/liquidityposition/user/' + account + "/pair/" + pairAddress;
       return this.http.get(url);    
     }
 
     getRewardPlans() {
       const pageSize = 100;
       const pageNum = 0;
-      const url = environment.endpoints.oldexplorerapi + '/kanban/biswap/rewardplan/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.oldexplorerapi + '/v3/biswap/rewardplan/' + pageSize + '/' + pageNum;
       return this.http.get(url);  
     }
 
     getRewards(pageSize: number, pageNum: number) {
-      const url = environment.endpoints.oldexplorerapi + '/kanban/biswap/reward/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.oldexplorerapi + '/v3/biswap/reward/' + pageSize + '/' + pageNum;
       return this.http.get(url);  
     }
 
     getRewardsWithMine(userId: string, pageSize: number, pageNum: number) {
-      const url = environment.endpoints.oldexplorerapi + '/kanban/biswap/reward/' + pageSize + '/' + pageNum + '?userId=' + userId;
+      const url = environment.endpoints.oldexplorerapi + '/v3/biswap/reward/' + pageSize + '/' + pageNum + '?userId=' + userId;
       return this.http.get(url);  
     }
 
     getCountRewards() {
-      const url = environment.endpoints.oldexplorerapi + '/kanban/biswap/reward/totalCount';
+      const url = environment.endpoints.oldexplorerapi + '/v3/biswap/reward/totalCount';
       return this.http.get(url);  
     }
 
     getRewardRedeems() {
       const pageSize = 100;
       const pageNum = 0;
-      const url = environment.endpoints.oldexplorerapi + '/kanban/biswap/reward/redeem/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.oldexplorerapi + '/v3/biswap/reward/redeem/' + pageSize + '/' + pageNum;
       return this.http.get(url);  
     }
 
     redeem(address: string, tokenName: string) {
-      const url = environment.endpoints.oldexplorerapi + '/kanban/biswap/reward/redeem/' + address + '/' + tokenName;
+      const url = environment.endpoints.oldexplorerapi + '/v3/biswap/reward/redeem/' + address + '/' + tokenName;
       return this.http.get(url);  
     }
 
     getTokenDayDatas(pairIdentity: string) {
       const pageSize = 100;
       const pageNum = 0;
-      const url = environment.endpoints.explorerapi + '/kanban/biswap/tokendaydata/token/' + pairIdentity + '/' + pageSize + '/' + pageNum;
+      const url = environment.endpoints.explorerapi + '/v3/biswap/tokendaydata/token/' + pairIdentity + '/' + pageSize + '/' + pageNum;
       return this.http.get(url);      
     }
   }
