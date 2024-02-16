@@ -21,6 +21,8 @@ import { InfoComponent } from './info.component';
 import { PoolComponent } from './pool/pool.component';
 import { TokenComponent } from './token/token.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { SalesComponent } from './components/sales/sales.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -39,13 +41,15 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
     TokensComponent,
     InfoComponent,
     PoolComponent,
-    TokenComponent
+    TokenComponent,
+    SalesComponent
   ],
   imports: [
     CommonModule,
     InfoRoutingModule,
     MatButtonToggleModule,
     RouterModule,
+    NgChartsModule,
     TranslateModule,
     FormsModule
   ]
