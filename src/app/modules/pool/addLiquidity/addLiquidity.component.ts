@@ -254,32 +254,45 @@ export class AddLiquidityComponent implements OnInit {
   }
 
   async setInputValues(isFirst: boolean) {
+    var reserve1 = new BigNumber(this.firstTokenReserve).shiftedBy(-this.firstToken.decimals).toNumber();
+    var reserve2 = new BigNumber(this.secondTokenReserve).shiftedBy(-this.secondToken.decimals).toNumber();
+
     if (isFirst) {
+      this.secondCoinAmount = this.kanbanMiddlewareService.getQuoteV3(
+        reserve1, reserve2, this.firstCoinAmount
+      );
+      /*
       var amount: number = this.firstCoinAmount;
-      var reserve1: BigNumber = this.firstTokenReserve;
-      var reserve2: BigNumber = this.secondTokenReserve;
+
+      console.log('reserve1===', reserve1);
+      console.log('reserve2===', reserve2);
+      console.log('amount=', amount);
       let value = new BigNumber(amount)
-        .shiftedBy(this.firstToken.decimals)
-        .toFixed();
+        .shiftedBy(this.secondToken.decimals)
+        .toFixed(); 
       value = value.split('.')[0];
       const params = [value, reserve1, reserve2];
 
       this.secondCoinAmount = await this.kanbanMiddlewareService.getQuote(
-        params, this.secondToken.decimals
+        params, this.firstToken.decimals
       );
+      */
     } else {
+      this.firstCoinAmount = this.kanbanMiddlewareService.getQuoteV3(
+        reserve2, reserve1, this.secondCoinAmount
+      );
+      /*
       var amount: number = this.secondCoinAmount;
-      var reserve1: BigNumber = this.firstTokenReserve;
-      var reserve2: BigNumber = this.secondTokenReserve;
       let value = new BigNumber(amount)
-      .shiftedBy(this.secondToken.decimals)
+      .shiftedBy(this.firstToken.decimals)
         .toFixed();
       value = value.split('.')[0];
       const params = [value, reserve2, reserve1];
 
       this.firstCoinAmount = await this.kanbanMiddlewareService.getQuote(
-        params, this.firstToken.decimals
+        params, this.secondToken.decimals
       );
+      */
     }
   }
 

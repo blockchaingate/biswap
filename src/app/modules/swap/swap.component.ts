@@ -118,7 +118,7 @@ export class SwapComponent implements OnInit {
 
   secondCoinBalance!: number;
   firstCoinBalance!: number;
-  txHash!: string;
+  txHashes: any = [];
 
   //isNewPair: boolean = false;
 
@@ -480,10 +480,12 @@ export class SwapComponent implements OnInit {
 
     this.kanbanService
       .sendParams(paramsSent)
-      .then((data) => {
+      .then((txids) => {
         alertDialogRef.close();
         const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
-        this.txHash = baseUrl + '/explorer/tx-detail/' + data;
+        //this.txHash = baseUrl + '/explorer/tx-detail/' + data;
+
+        this.txHashes = txids.map((txid: string) =>  baseUrl + '/explorer/tx-detail/' + txid);
       }).catch(
         (error: any) => {
           alertDialogRef.close();

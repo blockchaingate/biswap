@@ -18,6 +18,11 @@ export class KanbanMiddlewareService {
   ) {}
 
 
+  getQuoteV3(
+    reserve1, reserve2, amount1
+  ) {
+    return new BigNumber(reserve1).multipliedBy(reserve2).dividedBy(new BigNumber(amount1)).toNumber();
+  }
 
   async getTotalSupply(pairAddress: string) {
     var abiHex = this.web3Service.totalSupply();
@@ -58,7 +63,9 @@ export class KanbanMiddlewareService {
 
     let res: any = result;
     var value = this.web3Service.decodeabiHex(res.data, 'uint256');
+    console.log('value for quote=', value);
     var temp = Number(value);
-    return Number(new BigNumber(temp).shiftedBy(-decimals));
+    console.log('temp for quote=', temp);
+    return new BigNumber(temp).shiftedBy(-decimals).toNumber();
   }
 }
