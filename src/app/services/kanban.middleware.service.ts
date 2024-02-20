@@ -17,13 +17,13 @@ export class KanbanMiddlewareService {
     private kanbanService: KanbanService
   ) {}
 
-
+    /*
   getQuoteV3(
     reserve1, reserve2, amount1
   ) {
     return new BigNumber(reserve1).multipliedBy(reserve2).dividedBy(new BigNumber(amount1)).toNumber();
   }
-
+  */
   async getTotalSupply(pairAddress: string) {
     var abiHex = this.web3Service.totalSupply();
 

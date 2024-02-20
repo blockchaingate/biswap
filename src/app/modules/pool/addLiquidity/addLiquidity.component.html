@@ -73,9 +73,9 @@
 
                 <div fxLayout="row" fxLayoutAlign="space-between">
                     <span> {{perAmountLabel}} </span>
-                    <span>
-            {{ perAmount }}
-          </span>
+                    <span *ngIf="perAmount">
+                    {{ perAmount }}
+                    </span>
                 </div>
             </div>
 

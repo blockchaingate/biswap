@@ -102,7 +102,7 @@ export class AddLiquidityComponent implements OnInit {
     this.checkLiquidity();
   }
 
-  perAmount: string = '';
+  perAmount: number = 0;
   perAmountLabel: string = '';
 
   txHashes: any = [];
@@ -254,13 +254,14 @@ export class AddLiquidityComponent implements OnInit {
   }
 
   async setInputValues(isFirst: boolean) {
-    var reserve1 = new BigNumber(this.firstTokenReserve).shiftedBy(-this.firstToken.decimals).toNumber();
-    var reserve2 = new BigNumber(this.secondTokenReserve).shiftedBy(-this.secondToken.decimals).toNumber();
+    if(!this.perAmount) {
+      return;
+    }
+    //var reserve1 = new BigNumber(this.firstTokenReserve).shiftedBy(-this.firstToken.decimals).toNumber();
+    //var reserve2 = new BigNumber(this.secondTokenReserve).shiftedBy(-this.secondToken.decimals).toNumber();
 
     if (isFirst) {
-      this.secondCoinAmount = this.kanbanMiddlewareService.getQuoteV3(
-        reserve1, reserve2, this.firstCoinAmount
-      );
+      this.secondCoinAmount = new BigNumber(this.firstCoinAmount).dividedBy(new BigNumber(this.perAmount)).toNumber();
       /*
       var amount: number = this.firstCoinAmount;
 
@@ -278,9 +279,13 @@ export class AddLiquidityComponent implements OnInit {
       );
       */
     } else {
-      this.firstCoinAmount = this.kanbanMiddlewareService.getQuoteV3(
+      this.firstCoinAmount = new BigNumber(this.secondCoinAmount).multipliedBy(new BigNumber(this.perAmount)).toNumber();
+      /*
+      this.kanbanMiddlewareService.getQuoteV3(
         reserve2, reserve1, this.secondCoinAmount
+      
       );
+      */
       /*
       var amount: number = this.secondCoinAmount;
       let value = new BigNumber(amount)
@@ -326,14 +331,21 @@ export class AddLiquidityComponent implements OnInit {
                   console.log(res.data);
                   var value = this.web3Service.decodeabiHexs(res.data, param);
                   console.log(value);
-                  if (this.firstToken.type < this.secondToken.type) {
+                  let firstTokenDecimals = this.firstToken.decimals;
+                  let secondDecimals = this.secondToken.decimals;
+                  if (this.firstToken.id < this.secondToken.id) {
                     this.firstTokenReserve = value[0];
                     this.secondTokenReserve = value[1];
+                    //firstTokenDecimals = this.firstToken.decimals;
+                    //secondDecimals = this.secondToken.decimals;
                   } else {
                     this.firstTokenReserve = value[1];
                     this.secondTokenReserve = value[0];
+                    //value0Decimals = this.secondToken.decimals;
+                    //value1Decimals = this.firstToken.decimals;
                   }
-                  var perAmount = (value[0] / value[1]).toString();
+
+                  var perAmount = new BigNumber(this.firstTokenReserve).shiftedBy(-firstTokenDecimals).dividedBy(new BigNumber(this.secondTokenReserve).shiftedBy(-secondDecimals)).toNumber();
 
                   this.perAmountLabel =
                     this.firstToken.symbol +
