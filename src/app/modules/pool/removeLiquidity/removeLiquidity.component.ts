@@ -32,6 +32,9 @@ export class RemoveLiquidityComponent implements OnInit {
    firstTokenName: string = '';
    secondTokenName: string = '';
 
+   firstTokenDecimals: number = 18;
+   secondTokenDecimals: number = 18;
+
    yourPoolShare: number;
    pooledFirstToken:number;
    pooledSecondToken:number;
@@ -57,15 +60,23 @@ export class RemoveLiquidityComponent implements OnInit {
   ) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation!.extras.state as {
-      pairId: String, 
-      firstToken: String, 
-      secondToken: String, 
+      pairId: string, 
+      firstTokenName: string,
+      secondTokenName: string,
+      firstTokenDecimals: number,
+      secondTokenDecimals: number,
+      firstToken: string, 
+      secondToken: string, 
       yourPoolShare: number, 
       pooledFirstToken:number, 
       pooledSecondToken:number, 
       totalPoolToken:number};
     this.firstToken = state.firstToken;
     this.secondToken = state.secondToken;
+    this.firstTokenName = state.firstTokenName;
+    this.secondTokenName = state.secondTokenName;
+    this.firstTokenDecimals = state.firstTokenDecimals;
+    this.secondTokenDecimals = state.secondTokenDecimals;
     this.yourPoolShare = state.yourPoolShare;
     this.pooledFirstToken = (state.pooledFirstToken * state.yourPoolShare) / 100;
     this.pooledSecondToken = (state.pooledSecondToken * state.yourPoolShare) / 100;
@@ -75,17 +86,6 @@ export class RemoveLiquidityComponent implements OnInit {
 
   ngOnInit() {
 
-    this.dataService.GettokenList.subscribe((x) => {
-      let a = x.find(o => o.type === Number(this.firstToken));
-      if (a != undefined) {
-        this.firstTokenName = a.tickerName;  
-      }
-      let b = x.find(o => o.type === Number(this.secondToken));
-      if (b != undefined) {
-        this.secondTokenName = b.tickerName;  
-      }
-
-    });
   }
 
   openSettings() {
@@ -109,8 +109,8 @@ export class RemoveLiquidityComponent implements OnInit {
 
   setAmount(percentage: number) {
     this.percentage = percentage;
-    this.selectedFirstTokenAmount = Number((percentage * this.pooledFirstToken/100).toFixed(18));
-    this.selectedSecondTokenAmount = Number((percentage * this.pooledSecondToken/100).toFixed(18));
+    this.selectedFirstTokenAmount = Number((percentage * this.pooledFirstToken/100).toFixed(this.firstTokenDecimals));
+    this.selectedSecondTokenAmount = Number((percentage * this.pooledSecondToken/100).toFixed(this.secondTokenDecimals));
   }
 
 
@@ -162,14 +162,14 @@ export class RemoveLiquidityComponent implements OnInit {
     .multipliedBy(new BigNumber(this.pooledFirstToken))
     .dividedBy(new BigNumber(10000))
     .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01)))
-    .shiftedBy(18)
+    .shiftedBy(this.firstTokenDecimals)
     .toString(16).split('.')[0];
     var amountBMin = '0x' + new BigNumber( this.yourPoolShare)
     .multipliedBy(new BigNumber(this.percentage))
     .multipliedBy(new BigNumber(this.pooledSecondToken))
     .dividedBy(new BigNumber(10000))
     .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01)))
-    .shiftedBy(18)
+    .shiftedBy(this.secondTokenDecimals)
     .toString(16).split('.')[0];
     var to = this.walletService.account;
     var timestamp = new TimestampModel(

@@ -91,11 +91,17 @@ export class PoolComponent implements OnInit {
 
   removeLiquidity(index: number) {
 
+    const liquidity = this.existedLiquidityList[index];
+    console.log('liquidity to be remove=', liquidity);
     this.router.navigate(['/pool/remove'], {
       state: {
-        pairId: this.existedLiquidityList[index].pair.id,
-        firstToken: parseInt(this.existedLiquidityList[index].pair.token0.id, 16),
-        secondToken: parseInt(this.existedLiquidityList[index].pair.token1.id, 16),
+        pairId: liquidity.pair.id,
+        firstTokenName: liquidity.token0Name,
+        secondTokenName: liquidity.token1Name,
+        firstTokenDecimals: liquidity.token0Decimals,
+        secondTokenDecimals: liquidity.token1Decimals,
+        firstToken: liquidity.pair.token0.id,
+        secondToken: liquidity.pair.token1.id,
         yourPoolShare: this.existedLiquidityList[index].share,
         pooledFirstToken: this.existedLiquidityList[index].pair.reserve0,
         pooledSecondToken: this.existedLiquidityList[index].pair.reserve1,

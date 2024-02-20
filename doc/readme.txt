@@ -1,5 +1,7 @@
 [this.firstToken, this.secondToken, value ,amountAMin, amountBMin, to, deadline]
 
+exg:0xa4dd4f270c4cfbc59cad890605bcff02d85e4996
+dusd:0xe64cc3901d82127d6cbff405b7337c07ba0be13d
 
 0xe8e33700
 00000000000000000000000020d9cacf41b67029d3378e16fa67fbe1aec4ac3d
