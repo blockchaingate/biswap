@@ -19,8 +19,10 @@ export class OverviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.biswapServ.getDayDatas(100, 0).subscribe((items: any) => {
-      console.log('items===', this.items);
+      console.log('itemsssssss===', items);
       this.items = items.reverse();
+
+      console.log('this.items===', this.items);
     });
 
     this.biswapServ.getTokens(10, 0).subscribe((tokens: any) => {

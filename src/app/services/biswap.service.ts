@@ -33,6 +33,7 @@ import BigNumber from 'bignumber.js';
 
     getDayDatas(pageSize: number, pageNum: number) {
         const url = environment.endpoints.explorerapi + '/v3/biswap/daydata/' + pageSize + '/' + pageNum;
+        console.log('url for day data=', url);
         return this.http.get(url);
     }
 
