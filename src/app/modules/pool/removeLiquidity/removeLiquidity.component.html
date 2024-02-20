@@ -144,8 +144,10 @@
 
 
     </div>
+</div>
 
-    <div *ngIf="txHash">
+<div *ngIf="txHashes && txHashes.length > 0">
+    <div *ngFor="let txHash of txHashes">
         <a [href]="txHash" target="_blank" [textContent]="txHash"> </a>
     </div>
 </div>

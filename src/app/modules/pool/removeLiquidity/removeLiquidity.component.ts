@@ -28,7 +28,7 @@ export class RemoveLiquidityComponent implements OnInit {
 
    firstToken: String;
    secondToken: String;
-   txHash: string = '';
+   txHashes: any = [];
    firstTokenName: string = '';
    secondTokenName: string = '';
 
@@ -122,14 +122,13 @@ export class RemoveLiquidityComponent implements OnInit {
   }
 
   removeLiquidity() {
-    console.log('this.totalPoolToken===', this.totalPoolToken);
     var value = '0x' + new BigNumber (this.totalPoolToken)
     .multipliedBy(new BigNumber(this.percentage))
     .dividedBy(new BigNumber(100))
     .toString(16).split('.')[0];
 
-    var params = [environment.smartConractAdressRouter, value];
-    var abiHex = this.web3Service.getApprove(params);
+    const args1 = [environment.smartConractAdressRouter, value];
+    var abiHex = this.web3Service.getApprove(args1);
     console.log('abiHex => ' + abiHex);
     
     const alertDialogRef = this.dialog.open(AlertComponent, {
@@ -137,6 +136,73 @@ export class RemoveLiquidityComponent implements OnInit {
       data: {text: 'Please approve your request in your wallet'},
     });
 
+    const params: any = [];
+    params.push(
+      {
+        to: this.pairId.toString(),
+        data: abiHex
+      }
+    );
+
+
+
+    var amountAMin = '0x' + new BigNumber( this.yourPoolShare)
+    .multipliedBy(new BigNumber(this.percentage))
+    .multipliedBy(new BigNumber(this.pooledFirstToken))
+    .dividedBy(new BigNumber(10000))
+    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01)))
+    .shiftedBy(this.firstTokenDecimals)
+    .toString(16).split('.')[0];
+    var amountBMin = '0x' + new BigNumber( this.yourPoolShare)
+    .multipliedBy(new BigNumber(this.percentage))
+    .multipliedBy(new BigNumber(this.pooledSecondToken))
+    .dividedBy(new BigNumber(10000))
+    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01)))
+    .shiftedBy(this.secondTokenDecimals)
+    .toString(16).split('.')[0];
+    var to = this.walletService.account;
+    var timestamp = new TimestampModel(
+      this.deadline,
+      0,
+      0,
+      0 // here need to set for future timestamp
+    );
+    var deadline = this.utilService.getTimestamp(timestamp);
+
+    
+    const args2 = [this.firstToken, this.secondToken, value ,amountAMin, amountBMin, to, deadline];
+
+
+    abiHex = this.web3Service.removeLiquidity(args2);
+
+
+    params.push(
+      {
+        to: environment.smartConractAdressRouter,
+        data: abiHex
+      }
+    );
+
+
+    this.kanbanService
+    .sendParams(params)
+    .then((txids) => { 
+      alertDialogRef.close();
+      const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
+
+      
+      this.txHashes = txids.map((txid: string) =>  baseUrl + '/explorer/tx-detail/' + txid);
+
+      alertDialogRef.close();
+
+    }).catch(
+      (error: any) => {
+        alertDialogRef.close();
+        console.log('error===', error);
+        this._snackBar.open(error, 'Ok');
+      }
+    );
+    /*
     this.kanbanService
       .send(this.pairId.toString(), abiHex)
       .then((data) => {
@@ -152,9 +218,11 @@ export class RemoveLiquidityComponent implements OnInit {
           alertDialogRef.close();
           this._snackBar.open(error, 'Ok');
         }
-      );;
+      );
+    */
   }
 
+  /*
   removeLiquidityFun(value: any) {
 
     var amountAMin = '0x' + new BigNumber( this.yourPoolShare)
@@ -205,4 +273,5 @@ export class RemoveLiquidityComponent implements OnInit {
       }
     );
   }
+  */
 }
