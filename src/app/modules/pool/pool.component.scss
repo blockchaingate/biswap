@@ -6,12 +6,15 @@
     background-repeat: no-repeat;
     // height: 100vh;
     // background-color: #eaebec;
+    background: radial-gradient(circle, rgb(11, 26, 98) 0%, rgba(11, 14, 28, 1) 100%);
 }
 
 ::ng-deep .mat-card {
     border-radius: 12px !important;
-    background-image: linear-gradient(37deg, #bb91f9, #3f5ac5);
+    // background-image: linear-gradient(37deg, #bb91f9, #3f5ac5);
     min-width: 380px;
+    background-color: #0d012c;
+    color: #fff;
 }
 
 .cardContent {
@@ -145,7 +148,7 @@ h1 {
         font-size: 24px;
     }
     .title1 {
-        margin: 50px 0;
+        margin: 100px 0 50px;
     }
     .mat-card {
         width: 500px;

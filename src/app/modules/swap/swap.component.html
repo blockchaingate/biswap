@@ -1,19 +1,20 @@
 <div fxLayout="column" fxLayoutAlign="start center" class="swapBody">
     <div class="title1" fxLayoutAlign="center start">
-        <h1>{{"THE BEST CHOICE"|translate}}</h1>
+        <h1>{{t1ft}}</h1>
     </div>
     <div class="title1 title2" fxLayoutAlign="center start">
-        <h1>{{"IS TO PROVIDE LIQUIDITY"| translate}} !</h1>
+        <h1>{{t2ft}}</h1>
     </div>
-    <div class="row main">
+    <div class="row main center-cc animated-element" #animatedElement>
         <mat-card>
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <mat-card-title>{{"Swap"|translate}}</mat-card-title>
 
                 <div class="setting">
-                    <button (click)="openSettings()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-            <mat-icon>settings</mat-icon>
-          </button>
+                    <button (click)="openSettings()" mat-icon-button class="example-icon"
+                        aria-label="Example icon-button with share icon">
+                        <mat-icon>settings</mat-icon>
+                    </button>
                     <!--
           <button
             mat-icon-button
@@ -34,81 +35,88 @@
 
             <div fxLayout="column" fxLayoutGap="10px">
 
-                <div class="tokenSelectButton" (click)="openFirstTokenListDialog()">
-                    <span class="tokenwithIcon" *ngIf="firstToken.symbol != null; else select">
-            {{ firstToken.symbol }} <mat-icon>expand_more</mat-icon>
-            <span *ngIf="firstCoinBalance >= 0">({{firstCoinBalance}})</span>
-                    </span>
 
-                    <ng-template #select>
-                        <span class="tokenwithIcon">
-              {{"Select Token"|translate}} <mat-icon>expand_more</mat-icon>
-            </span>
-                    </ng-template>
-                </div>
                 <div class="coins-input-body" fxLayout="row" fxLayoutAlign="space-between center">
-                    <mat-form-field>
-                        <mat-label></mat-label>
-                        <input (keyup)="onKey(firstCoinAmount, true)" #token1 matInput name="firstCoinAmount" type="number" [(ngModel)]="firstCoinAmount" placeholder="0.0" />
-                    </mat-form-field>
+                    <!-- <mat-form-field>
+                        <mat-label></mat-label> -->
+                    <input (keyup)="onKey(firstCoinAmount, true)" #token1 matInput name="firstCoinAmount" type="number"
+                        [(ngModel)]="firstCoinAmount" placeholder="0.0" />
+                    <!-- </mat-form-field> -->
+                    <div class="tokenSelectButton" (click)="openFirstTokenListDialog()">
+                        <span class="tokenwithIcon" *ngIf="firstToken.symbol != null; else select">
+                            {{ firstToken.symbol }} <mat-icon>expand_more</mat-icon>
+                            <span *ngIf="firstCoinBalance >= 0">({{firstCoinBalance}})</span>
+                        </span>
+
+                        <ng-template #select>
+                            <span class="tokenwithIcon">
+                                {{"Select Token"|translate}} <mat-icon>expand_more</mat-icon>
+                            </span>
+                        </ng-template>
+                    </div>
                 </div>
 
                 <div fxLayout="row" fxLayoutAlign="center center">
-                    <button (click)="changeTokens()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-            <mat-icon>swap_vert</mat-icon>
-          </button>
+                    <button (click)="changeTokens()" mat-icon-button class="example-icon"
+                        aria-label="Example icon-button with share icon">
+                        <mat-icon>swap_vert</mat-icon>
+                    </button>
                 </div>
 
-                <div class="tokenSelectButton" (click)="openSecondTokenListDialog()">
-                    <span class="tokenwithIcon" *ngIf="secondToken.symbol != null; else selecta">
-            {{ secondToken.symbol }} <mat-icon>expand_more</mat-icon>
-            <span *ngIf="secondCoinBalance >= 0">({{secondCoinBalance}})</span>
-                    </span>
-
-                    <ng-template #selecta> <span class="tokenwithIcon">
-              {{"Select Token"|translate}} <mat-icon>expand_more</mat-icon>
-            </span> </ng-template>
-                </div>
 
                 <div class="coins-input-body" fxLayout="row" fxLayoutAlign="space-between center">
-                    <mat-form-field>
-                        <mat-label></mat-label>
-                        <input (keyup)="onKey(secondCoinAmount, false)" #token2 matInput name="secondCointAmount" type="number" [(ngModel)]="secondCoinAmount" placeholder="0.0" />
-                    </mat-form-field>
+                    <!-- <mat-form-field>
+                        <mat-label></mat-label> -->
+                    <input (keyup)="onKey(secondCoinAmount, false)" #token2 matInput name="secondCointAmount"
+                        type="number" [(ngModel)]="secondCoinAmount" placeholder="0.0" />
+                    <!-- </mat-form-field> -->
+                    <div class="tokenSelectButton" (click)="openSecondTokenListDialog()">
+                        <span class="tokenwithIcon" *ngIf="secondToken.symbol != null; else selecta">
+                            {{ secondToken.symbol }} <mat-icon>expand_more</mat-icon>
+                            <span *ngIf="secondCoinBalance >= 0">({{secondCoinBalance}})</span>
+                        </span>
+
+                        <ng-template #selecta> <span class="tokenwithIcon">
+                                {{"Select Token"|translate}} <mat-icon>expand_more</mat-icon>
+                            </span> </ng-template>
+                    </div>
+
                 </div>
 
                 <div fxLayout="row" fxLayoutAlign="space-between">
                     <span> {{perAmountLabel}} </span>
                     <span>
-            {{ perAmount }}
-          </span>
+                        {{ perAmount }}
+                    </span>
                 </div>
 
                 <div fxLayout="row" fxLayoutAlign="space-between">
                     <span> {{'Slippage Tolerance'|translate}} </span>
                     <span>
-            {{ slippage }}%
-          </span>
+                        {{ slippage }}%
+                    </span>
                 </div>
 
             </div>
 
             <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
-            <mat-card-actions fxLayout="row" fxLayoutAlign="center center" class="mat-card-action" *ngIf="tokenId && (tokenId!='0x0000000000000000000000000000000000000000')">
+            <mat-card-actions fxLayout="row" fxLayoutAlign="center center" class="mat-card-action"
+                *ngIf="tokenId && (tokenId!='0x0000000000000000000000000000000000000000')">
                 <button mat-raised-button color="primary" (click)="connectWallet()" *ngIf="!account; else asd">
-          {{"Connect to wallet"|translate}}
-        </button>
+                    {{"Connect to wallet"|translate}}
+                </button>
 
                 <ng-template #asd>
-                    <button mat-raised-button color="primary" (click)="swapFunction()" *ngIf="!insufficientFund">Swap{{(priceImpact > 5) ? ' Anyway' : ''}}</button>
+                    <button mat-raised-button color="primary" (click)="swapFunction()"
+                        *ngIf="!insufficientFund">Swap{{(priceImpact > 5) ? ' Anyway' : ''}}</button>
                     <button mat-raised-button color="primary" disabled *ngIf="insufficientFund">Insufficent
-            {{firstToken.tickerName}} balance</button>
+                        {{firstToken.tickerName}} balance</button>
                 </ng-template>
 
             </mat-card-actions>
         </mat-card>
 
-        <div class="paddingTop20 your-position mb-3" *ngIf="liquidityPrividerFee">
+        <div class="paddingTop20 your-position mb-3 center-cc"  *ngIf="liquidityPrividerFee">
             <mat-card id="position-mat-card">
 
                 <div>
@@ -147,8 +155,8 @@
                         <span> {{"Route"|translate}}: </span>
                         <div fxLayout="row" fxLayoutAlign="center center">
                             <span *ngFor="let item of route; let i = index">
-                {{item}}
-                <span *ngIf="i != route.length - 1"> >&nbsp;</span>
+                                {{item}}
+                                <span *ngIf="i != route.length - 1"> >&nbsp;</span>
                             </span>
                         </div>
                     </div>
@@ -165,7 +173,7 @@
         <div *ngIf="error">
             <p class="text-danger">{{error}}</p>
         </div>
-        <div class="nopair black mt-2" *ngIf="tokenId=='0x0000000000000000000000000000000000000000'">
+        <div class="nopair black mt-2 center-cc" *ngIf="tokenId=='0x0000000000000000000000000000000000000000'">
             {{"No Liquidity for this pair"|translate}}.
         </div>
     </div>
