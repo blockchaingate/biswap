@@ -6,6 +6,9 @@
 
 input {
     --placeHolder-color: black;
+    background: transparent;
+    border: none;
+    outline: none;
 }
 
 input:-ms-input-placeholder {
@@ -21,19 +24,38 @@ input::-moz-placeholder {
     color: black;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .swapBody {
     // background: url("/assets/images/gredient-back.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     // height: 100vh;
     padding-bottom: 100px;
+    background: rgb(63, 94, 251);
+    // background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(11, 14, 28, 1) 100%);
+    background: radial-gradient(circle, rgb(11, 26, 98) 0%, rgba(11, 14, 28, 1) 100%);
+    // background: linear-gradient( 225deg, rgb(11, 26, 98), rgba(11, 14, 28, 1));
+    // background: linear-gradient( 225deg, #fff, #000);
 }
 
 ::ng-deep .mat-card {
     border-radius: 12px !important;
-    background-image: linear-gradient(#5b51cc, #3f5ac5);
-    border: 1px solid lightblue;
+    // background-image: linear-gradient(#5b51cc, #3f5ac5);
+    // border: 1px solid lightblue;
     width: 360px;
+    background-color: #0d012c;
+    color: #fff;
 }
 
 .coins-input-body {
@@ -44,6 +66,7 @@ input::-moz-placeholder {
     color: black;
     padding-left: 10px;
     padding-right: 10px;
+    height: 50px;
 }
 
 ::ng-deep .mat-form-field-underline {
@@ -57,13 +80,14 @@ input::-moz-placeholder {
 
 ::ng-deep .mat-form-field {
     width: 100%;
+
     label {
         font-size: 40px;
     }
 }
 
 .sparater {
-    margin: 10px -20px 10px;
+    margin: 10px 0px 10px;
     border: 0;
     border-top: 1px solid #c9c7c7;
     opacity: 0.2;
@@ -71,6 +95,7 @@ input::-moz-placeholder {
 
 .mat-card-action {
     padding: 10px 10px;
+
     button {
         width: 100%;
         padding: 5px 5px;
@@ -88,6 +113,9 @@ input::-moz-placeholder {
     font-size: larger;
     font-weight: bold;
     color: white;
+    background-color: #0d012c;
+    border-radius: 5px;
+    padding: 5px 10px;
 }
 
 .tokenwithIcon {
@@ -108,14 +136,24 @@ h1 {
     font-weight: 500;
 }
 
+.center-cc{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
 @media(min-width: 400px) //if more than 400 px
-{
+
+    {
     h1 {
         font-size: 28px
     }
+
     h2 {
         font-size: 20px
     }
+
     .title2 {
         margin-top: 20px;
         margin-bottom: 30px;
@@ -123,16 +161,20 @@ h1 {
 }
 
 @media(min-width: 600px) //if more than 400 px
-{
+
+    {
     h1 {
         font-size: 40px
     }
+
     h2 {
         font-size: 20px
     }
+
     h3 {
         font-size: 12px;
     }
+
     .title2 {
         margin-top: 28px;
         margin-bottom: 38px;
@@ -140,16 +182,20 @@ h1 {
 }
 
 @media(min-width: 960px) //if more than 400 px
-{
+
+    {
     h1 {
-        font-size: 64px
+        font-size: 45px
     }
+
     h2 {
         font-size: 32px
     }
+
     h3 {
         font-size: 18px;
     }
+
     .title2 {
         margin-top: 40px;
         margin-bottom: 50px;
@@ -157,16 +203,20 @@ h1 {
 }
 
 @media(min-width: 1280px) //if more than 400 px
-{
+
+    {
     h1 {
         font-size: 50px
     }
+
     h2 {
         font-size: 42px
     }
+
     h3 {
         font-size: 24px;
     }
+
     .title2 {
         margin-top: 52px;
         margin-bottom: 60px;
@@ -177,14 +227,40 @@ h1 {
     h1 {
         font-size: 100px
     }
+
     h2 {
         font-size: 64px
     }
+
     h3 {
         font-size: 36px;
     }
+
     .title2 {
         margin-top: 80px;
         margin-bottom: 80px;
     }
 }
+
+@media(max-width: 599px) {
+
+
+    .title1 {
+        margin-top: 28px;
+    }
+
+    .title2 {
+        margin-top: 10px;
+        margin-bottom: 38px;
+    }
+}
+
+.animated-element {
+    opacity: 0;
+    transition: opacity 2s; /* 2-second duration */
+  }
+  
+  .animated-element.show {
+    opacity: 1;
+  }
+  
