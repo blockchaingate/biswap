@@ -16,6 +16,7 @@ export const environment = {
     kanban: 'https://kanbantest.fabcoinapi.com/',
     oldexplorerapi: 'https://testapi.fundark.com/api',
     explorerapi: 'https://testapi.fundark.com/api',
+    // explorerapi: 'https://api.pay.cool/api',
     BTC: {
       exchangily: 'https://btctest.fabcoinapi.com/',
     },
