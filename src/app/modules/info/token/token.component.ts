@@ -11,7 +11,7 @@ import BigNumber from 'bignumber.js';
 })
 export class TokenComponent implements OnInit, AfterViewInit {
   token: any;
-  identity: string ='';
+  identity: string = '';
   title: string = '';
   value: any;
   currentTime: any;
@@ -24,14 +24,24 @@ export class TokenComponent implements OnInit, AfterViewInit {
   pageSize = 10;
   totalPage = 0;
 
+  formattedDates = [];
+
+  dailyLiquidity!: Number[];
+  dailyVolume!: Number[];
+  dailyTLV!: Number[];
+  chartItems!: Number[];
+  isItemLoaded = false;
+
+
+
   @ViewChild('chart') chart!: ElementRef;
   constructor(private biswapServ: BiswapService, private activatedRoute: ActivatedRoute) { }
 
   changePageNum(pageNum: number) {
-    if(pageNum < 0) {
+    if (pageNum < 0) {
       pageNum = 0;
     }
-    if(pageNum > this.totalPage) {
+    if (pageNum > this.totalPage) {
       pageNum = this.totalPage;
     }
     this.pageNum = pageNum;
@@ -73,28 +83,59 @@ export class TokenComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    
+
     this.biswapServ.getTokenDayDatas(this.identity).subscribe(
       (items: any) => {
-
-        this.chartObj = createChart(this.chart["nativeElement"], { width: 400, height: 300 });
+        console.log("Token info: ", items);
         this.items = items;
-        this.changeTab('Volume');
+
+
+        // this.chartObj = createChart(this.chart["nativeElement"], { width: 400, height: 300 });
+        this.formattedDates = this.items.map(obj => {
+          return this.converTime(obj.date);
+        });
+
+        this.dailyVolume = this.items.map(obj => obj.dailyVolumeUSD);
+        this.dailyLiquidity = this.items.map(obj => obj.totalLiquidityFAB);
+        this.dailyTLV = this.items.map(obj => obj.reserveUSD);
+
+        console.log("Chart dailyVolume: ", this.dailyVolume);
+        console.log("Chart dailyLiquidity: ", this.dailyLiquidity);
+        console.log("Chart dailyTLV: ", this.dailyTLV);
+
+        this.chartItems = this.dailyVolume;
+        
+
+
+        this.isItemLoaded = true;
+        
+        // this.changeTab('Volume');
       });
   }
-  
+
+  UpdateChart() {
+    
+  }
+
+
   changeTab(tabName: string) {
     this.title = tabName;
-    switch(tabName) {
+    switch (tabName) {
       case 'Volume':
-        this.createVolumeChart();
+        this.isItemLoaded = false;
+        // this.createVolumeChart();
+        this.chartItems = this.dailyVolume;
         break;
       case 'TVL':
-        this.createTVLChart();
+        // this.createTVLChart();
+        this.chartItems = this.dailyTLV;
         break;
       case 'Fees':
-        this.createFeesChart();
-        break;        
+        // this.createFeesChart();
+        this.chartItems = this.dailyVolume.map((item: any) => {
+          return new BigNumber(item).multipliedBy(new BigNumber(0.003)).toNumber();
+        });
+        break;
     }
   }
 
@@ -121,29 +162,29 @@ export class TokenComponent implements OnInit, AfterViewInit {
 
 
     var that = this;
-    this.chartObj.subscribeCrosshairMove(function(param: MouseEventParams) {
+    this.chartObj.subscribeCrosshairMove(function (param: MouseEventParams) {
 
       const time: any = param.time;
       const seriesPrices = param.seriesPrices;
-      if(seriesPrices) {
+      if (seriesPrices) {
         const seriesPrice = seriesPrices.get(histogramSeries);
-        if(seriesPrice) {
+        if (seriesPrice) {
           that.value = seriesPrice.valueOf();
         }
-        
+
       }
-      if(time) {
+      if (time) {
         const year = time.year;
         const month = time.month;
         const day = time.day;
         that.currentTime = year + '-' + month + '-' + day;
-      }   
+      }
+    }
+    );
   }
-);
-}
 
-createTVLChart() {
-        //const lineSeries = chart.addLineSeries();
+  createTVLChart() {
+    //const lineSeries = chart.addLineSeries();
     const histogramSeries = this.chartObj.addLineSeries({ color: '#26a69a' });
 
 
@@ -164,27 +205,27 @@ createTVLChart() {
 
 
     var that = this;
-    this.chartObj.subscribeCrosshairMove(function(param: MouseEventParams) {
+    this.chartObj.subscribeCrosshairMove(function (param: MouseEventParams) {
 
       const time: any = param.time;
       const seriesPrices = param.seriesPrices;
-      if(seriesPrices) {
+      if (seriesPrices) {
         const seriesPrice = seriesPrices.get(histogramSeries);
-        if(seriesPrice) {
+        if (seriesPrice) {
           that.value = seriesPrice.valueOf();
         }
-        
+
       }
-      if(time) {
+      if (time) {
         const year = time.year;
         const month = time.month;
         const day = time.day;
         that.currentTime = year + '-' + month + '-' + day;
-      }   
+      }
+    }
+    );
   }
-);
-}
-createFeesChart() {
+  createFeesChart() {
     //const lineSeries = chart.addLineSeries();
     const histogramSeries = this.chartObj.addHistogramSeries({ color: '#26a69a' });
 
@@ -206,24 +247,32 @@ createFeesChart() {
 
 
     var that = this;
-    this.chartObj.subscribeCrosshairMove(function(param: MouseEventParams) {
+    this.chartObj.subscribeCrosshairMove(function (param: MouseEventParams) {
 
       const time: any = param.time;
       const seriesPrices = param.seriesPrices;
-      if(seriesPrices) {
+      if (seriesPrices) {
         const seriesPrice = seriesPrices.get(histogramSeries);
-        if(seriesPrice) {
+        if (seriesPrice) {
           that.value = seriesPrice.valueOf();
         }
-        
+
       }
-      if(time) {
+      if (time) {
         const year = time.year;
         const month = time.month;
         const day = time.day;
         that.currentTime = year + '-' + month + '-' + day;
-      }   
+      }
+    }
+    );
   }
-);
-}
+
+  converTime(time: number) {
+    const date = new Date(time * 1000); // Convert Unix timestamp to JavaScript date
+    const month = date.getMonth() + 1; // Month is zero-based, so add 1
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+  }
 }
