@@ -428,7 +428,13 @@ export class SwapComponent implements OnInit {
 
           this.perAmount = perAmount.toString();
 
-          const currentPerAmount = this.firstTokenReserve.dividedBy(this.secondTokenReserve).toNumber();
+          const currentPerAmount = this.firstTokenReserve.shiftedBy(-this.firstToken.decimals).dividedBy(this.secondTokenReserve.shiftedBy(-this.secondToken.decimals)).toNumber();
+          console.log('perAmount===', perAmount);
+          console.log('currentPerAmount===', currentPerAmount);
+          console.log('this.firstTokenReserve===', this.firstTokenReserve.toNumber());
+          console.log('this.secondTokenReserve===', this.secondTokenReserve.toNumber());
+          console.log('this.firstToken.decimals===', this.firstToken.decimals);
+          console.log('this.secondToken.decimals===', this.secondToken.decimals);
           const diff = perAmount > currentPerAmount ? (perAmount - currentPerAmount) : (currentPerAmount - perAmount);
           this.priceImpact = Number((diff / perAmount * 100).toFixed(2));
 
