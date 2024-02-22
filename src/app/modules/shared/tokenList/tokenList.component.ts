@@ -39,6 +39,9 @@ export class TokenListComponent implements OnInit {
     return 0;
   }
 
+  showTokenId(id: string) {
+    return id.substring(0, 5) + '...' + id.substring(id.length - 3);
+  }
   selectToken(token: Coin) {
     if (this.data.isFirst) {
       this.dataService.sendFirstToken(token);
