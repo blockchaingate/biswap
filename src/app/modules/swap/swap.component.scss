@@ -58,6 +58,17 @@ input[type=number] {
     color: #fff;
 }
 
+::ng-deep .mat-dialog-container {
+    background-color: #0d012c !important;
+    color: #fff;
+}
+
+::ng-deep .cdk-overlay-pane{
+    background-color: #0d012c;
+    color: #fff;
+
+}
+
 .coins-input-body {
     // border: 1px solid gray;
     border-radius: 8px;

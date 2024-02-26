@@ -23,7 +23,7 @@
         <div *ngFor="let token of filteredTokens">
             <button (click)="selectToken(token)" class="list-button">
         <div fxLayout="row" justify-start class="token-list-line" fxLayoutGap="20px">
-            <span> <img src='{{token.logoUrl}}' width="20px"></span>
+            <span> <img src='{{token.logoUrl}}' (error)="handleImageError($event)" width="20px"></span>
             <span>
                 {{ token.symbol }}
             </span>
