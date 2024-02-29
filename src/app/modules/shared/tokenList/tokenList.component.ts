@@ -25,7 +25,11 @@ export class TokenListComponent implements OnInit {
     this.filteredTokens = this.tokenList;
     this.filteredTokens.sort(this.compare);
     this.filteredTokens.forEach((ele) => {
-      ele.logoUrl = 'https://exchangily.com/assets/coins/' + ele.symbol.toLocaleLowerCase().substring(2) + '.png';
+      if(ele && ele.symbol){
+        ele.logoUrl = 'https://exchangily.com/assets/coins/' + ele.symbol.toLocaleLowerCase().substring(2) + '.png';
+      }else{
+        ele.logoUrl = 'https://exchangily.com/assets/coins/eth.png';
+      }
     }); 
   }
 
@@ -59,11 +63,15 @@ export class TokenListComponent implements OnInit {
   }
 
   searchToken(token: any) {
-
-    this.filteredTokens = this.tokenList.filter((x: any) => x.tickerName.toLowerCase().includes(token.toLowerCase()))
-    
+    console.log('searchToken', token);
+    this.filteredTokens = this.tokenList.filter((x: any) => x.symbol.toLowerCase().includes(token.toLowerCase()))
+    //log length of filtered tokens
+    console.log(this.filteredTokens.length);
   }
 
-  
+  handleImageError(ev: any) {
+    ev.target.src = 'https://exchangily.com/assets/coins/eth.png';
+
+  }  
 
 }
