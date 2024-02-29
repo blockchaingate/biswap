@@ -9,9 +9,8 @@ export const environment = {
 
   // smartConractAdressRouter:  "0xd99bfcbfad77f57b5ed20286c24ad71785d73993", - old router, can't charge fee
   // smartConractAdressRouter:  "0xb05c29010751d3aec15bc98602fad16c92fe25eb",    //New router with FEE - this one charges wrong fee.
-  smartConractAdressRouter:  "",    //New router with FEE
-  smartConractAdressFactory: "",
-
+  smartConractAdressRouter:  "0x17c1dbe437eeb7544df0c96bcdeb6f1d1bb0172d",
+  smartConractAdressFactory: "0xcb6e4a55cea67e09a08acce843cda3e4ee1429b1",
   
   endpoints: {
     // blockchaingate: 'http://localhost:3002/v2/',
