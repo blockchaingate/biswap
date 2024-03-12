@@ -21,6 +21,7 @@ import { PrivacyComponent } from './components/privacy.component';
 import { VersionComponent } from './components/version/version.component';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { NewFeaturesComponent } from './components/newFeatures/newFeatures.component';
+import { SocketService } from './services/websocket.service';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -60,6 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     Web3Service,
     StakeService,
     BiswapService,
+    SocketService,
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } }
   ],
   bootstrap: [AppComponent]

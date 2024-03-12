@@ -185,6 +185,11 @@ export const environment = {
         eventServer: 'https://api.trongrid.io'       
     }
 },
+
+webSocket: {
+    dp: "ws://testapi.fundark.com/ws/paycool@"
+    // dp: "ws://localhost:3000/ws/paycool@"
+}
 };
 
 /*

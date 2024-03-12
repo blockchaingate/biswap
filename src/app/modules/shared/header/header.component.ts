@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { WalletService } from 'src/app/services/wallet.service';
 import { Language } from '../../../models/language';
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { SocketService } from 'src/app/services/websocket.service';
 
 @Component({
   selector: 'app-header',
@@ -33,6 +34,7 @@ export class HeaderComponent implements OnInit {
     public dialog: MatDialog,
     private _localSt: LocalStorage,
     private tranServ: TranslateService,
+    private socketService: SocketService   
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +46,7 @@ export class HeaderComponent implements OnInit {
         }
       );
     }
-
+    this.socketService.connectSocket();
     this.setLan();
   }
 

@@ -18,6 +18,7 @@ import { SettingsComponent } from '../settings/settings.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AlertComponent } from '../shared/alert/alert.component';
 import { TranslateService } from '@ngx-translate/core';
+import { SocketService } from 'src/app/services/websocket.service';
 
 @Component({
   selector: 'app-swap',
@@ -152,7 +153,8 @@ export class SwapComponent implements OnInit {
     private router: Router,
     private translate: TranslateService,
     private renderer: Renderer2,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private socketService: SocketService
   ) { }
 
   openSettings() {
@@ -496,8 +498,6 @@ export class SwapComponent implements OnInit {
     );
     var deadline = this.utilService.getTimestamp(timestamp);
 
-
-
     let abiHex = '';
     let approveAmount;
     if (this.isFistToken) {
@@ -526,6 +526,9 @@ export class SwapComponent implements OnInit {
       approveAmount = amountInMax;
     }
 
+
+    
+
     const paramsSent = [
       {
         to: this.firstToken.id,
@@ -542,20 +545,44 @@ export class SwapComponent implements OnInit {
     });
 
     this.kanbanService
-      .sendParams(paramsSent)
-      .then((txids) => {
-        alertDialogRef.close();
-        const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
-        //this.txHash = baseUrl + '/explorer/tx-detail/' + data;
+    .sendParams(paramsSent)
+    .then((txids) => {
+      alertDialogRef.close();
+      const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
+      //this.txHash = baseUrl + '/explorer/tx-detail/' + data;
 
-        this.txHashes = txids.map((txid: string) => baseUrl + '/explorer/tx-detail/' + txid);
-      }).catch(
-        (error: any) => {
-          alertDialogRef.close();
-          console.log('error===', error);
-          this._snackBar.open(error, 'Ok');
-        }
-      );;
+      this.txHashes = txids.map((txid: string) => baseUrl + '/explorer/tx-detail/' + txid);
+    }).catch(
+      (error: any) => {
+        alertDialogRef.close();
+        console.log('error===', error);
+        this._snackBar.open(error, 'Ok');
+      }
+    );;
+
+
+
+
+
+    const paramsSentSocket = 
+    { source: "Biswap-Swap",
+    data:
+
+    [
+      {
+        to: this.firstToken.id,
+        data: this.web3Service.getApprove([environment.smartConractAdressRouter, approveAmount])
+      },
+      {
+        to: environment.smartConractAdressRouter,
+        data: abiHex
+      }
+    ]
+    }
+    this.socketService.sendMessage(paramsSentSocket);
+
+
+   
   }
 }
 

@@ -37,6 +37,16 @@ export class WalletService {
       }
     });
   }
+
+  connectWalletSocket(param: any) {
+    console.log('param===', param);
+    this.chainId = param.Namespaces + ':' + param.chainId;
+    this.account = param.address;
+    console.log('this.account=', this.account);
+    this.accountSubject.next(param.address);
+}
+
+
   async connectWalletNew() {
     console.log('connecting');
     /*
