@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 })
 
 export class SocketService {
+  isSocketActive: boolean = false;
   socket: any;
   private socketConnection = new BehaviorSubject([]);
   currentPrices = this.socketConnection.asObservable();
@@ -26,11 +27,14 @@ export class SocketService {
 
     let currentUrl = window.location.href;
     const urlParams = new URLSearchParams(currentUrl);
-    const value = urlParams.get('deviceId') ?? "webDapp";
-
+    const value = urlParams.get('deviceId');
+    
     console.log('===============0=========== > value', value);
 
-    // this.socket = new WebSocketSubject("ws://localhost:3000/ws/paycool@69FC8EC9-7F77-46EB-9445-522229F98771");
+    if(value != null){
+      this.isSocketActive = true;
+
+         // this.socket = new WebSocketSubject("ws://localhost:3000/ws/paycool@69FC8EC9-7F77-46EB-9445-522229F98771");
     this.socket = new WebSocketSubject(environment.webSocket.dp+value);
 
     this.socket.subscribe((data: any) => {
@@ -68,6 +72,14 @@ export class SocketService {
    
     
     });
+
+
+
+
+    }
+  
+
+ 
   }
 
 

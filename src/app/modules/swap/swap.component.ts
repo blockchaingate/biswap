@@ -527,60 +527,71 @@ export class SwapComponent implements OnInit {
     }
 
 
-    
+    if(this.socketService.isSocketActive){
 
-    const paramsSent = [
-      {
-        to: this.firstToken.id,
-        data: this.web3Service.getApprove([environment.smartConractAdressRouter, approveAmount])
-      },
-      {
-        to: environment.smartConractAdressRouter,
-        data: abiHex
+      const paramsSentSocket = 
+      { source: "Biswap-Swap",
+      data:
+  
+      [
+        {
+          to: this.firstToken.id,
+          data: this.web3Service.getApprove([environment.smartConractAdressRouter, approveAmount])
+        },
+        {
+          to: environment.smartConractAdressRouter,
+          data: abiHex
+        }
+      ]
       }
-    ];
-    const alertDialogRef = this.dialog.open(AlertComponent, {
-      width: '250px',
-      data: { text: 'Please approve your request in your wallet' },
-    });
+      this.socketService.sendMessage(paramsSentSocket);
+  
 
-    this.kanbanService
-    .sendParams(paramsSent)
-    .then((txids) => {
-      alertDialogRef.close();
-      const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
-      //this.txHash = baseUrl + '/explorer/tx-detail/' + data;
 
-      this.txHashes = txids.map((txid: string) => baseUrl + '/explorer/tx-detail/' + txid);
-    }).catch(
-      (error: any) => {
+    } else {
+
+      const paramsSent = [
+        {
+          to: this.firstToken.id,
+          data: this.web3Service.getApprove([environment.smartConractAdressRouter, approveAmount])
+        },
+        {
+          to: environment.smartConractAdressRouter,
+          data: abiHex
+        }
+      ];
+      const alertDialogRef = this.dialog.open(AlertComponent, {
+        width: '250px',
+        data: { text: 'Please approve your request in your wallet' },
+      });
+  
+      this.kanbanService
+      .sendParams(paramsSent)
+      .then((txids) => {
         alertDialogRef.close();
-        console.log('error===', error);
-        this._snackBar.open(error, 'Ok');
-      }
-    );;
+        const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
+        //this.txHash = baseUrl + '/explorer/tx-detail/' + data;
+  
+        this.txHashes = txids.map((txid: string) => baseUrl + '/explorer/tx-detail/' + txid);
+      }).catch(
+        (error: any) => {
+          alertDialogRef.close();
+          console.log('error===', error);
+          this._snackBar.open(error, 'Ok');
+        }
+      );;
+  
 
 
 
-
-
-    const paramsSentSocket = 
-    { source: "Biswap-Swap",
-    data:
-
-    [
-      {
-        to: this.firstToken.id,
-        data: this.web3Service.getApprove([environment.smartConractAdressRouter, approveAmount])
-      },
-      {
-        to: environment.smartConractAdressRouter,
-        data: abiHex
-      }
-    ]
     }
-    this.socketService.sendMessage(paramsSentSocket);
 
+  
+
+
+
+
+   
 
    
   }
