@@ -190,7 +190,7 @@ export const environment = {
 },
 
 webSocket: {
-    dp: "ws://testapi.fundark.com/ws/paycool@"
+    dp: "wss://api.pay.cool/ws/paycool@"
 }
 };
 
