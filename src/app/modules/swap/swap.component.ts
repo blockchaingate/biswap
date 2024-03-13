@@ -579,21 +579,8 @@ export class SwapComponent implements OnInit {
           console.log('error===', error);
           this._snackBar.open(error, 'Ok');
         }
-      );;
-  
-
-
-
+      );
     }
-
-  
-
-
-
-
-   
-
-   
   }
 }
 

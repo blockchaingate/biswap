@@ -20,6 +20,7 @@ import { AlertComponent } from '../../shared/alert/alert.component';
 import {
   MatSnackBar
 } from '@angular/material/snack-bar';
+import { SocketService } from 'src/app/services/websocket.service';
 
 @Component({
   selector: 'app-addLiquidity',
@@ -141,6 +142,7 @@ export class AddLiquidityComponent implements OnInit {
     private router: Router,
     private _snackBar: MatSnackBar,
     private apiService: ApiService,
+    private socketService: SocketService
   ) {}
 
   ngOnInit() {
@@ -495,33 +497,55 @@ export class AddLiquidityComponent implements OnInit {
     ];
 
     abiHex = this.web3Service.addLiquidity(params);
-    const alertDialogRef = this.dialog.open(AlertComponent, {
-      width: '250px',
-      data: {text: 'Please approve your request in your wallet'},
-    });
+
+
+
+
     paramsSent.push({
       to: environment.smartConractAdressRouter,
       data: abiHex
     });
+
+    if(this.socketService.isSocketActive){
+
+      const paramsSentSocket = 
+      { source: "Biswap-addLiquidity",
+      data:
+  
+      
+        paramsSent
+      
+      }
+      this.socketService.sendMessage(paramsSentSocket);
+
+      }else{
+        const alertDialogRef = this.dialog.open(AlertComponent, {
+          width: '250px',
+          data: {text: 'Please approve your request in your wallet'},
+        });
+
     this.kanbanService
-      .sendParams(paramsSent)
-      .then((txids) => { 
+    .sendParams(paramsSent)
+    .then((txids) => { 
+      alertDialogRef.close();
+      const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
+
+      
+      this.txHashes = txids.map((txid: string) =>  baseUrl + '/explorer/tx-detail/' + txid);
+
+      setTimeout(() => {
+        this.refresh()
+      }, 6000);
+
+    }).catch(
+      (error: any) => {
         alertDialogRef.close();
-        const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
+        console.log('error===', error);
+        this._snackBar.open(error, 'Ok');
+      }
+    );
 
-        
-        this.txHashes = txids.map((txid: string) =>  baseUrl + '/explorer/tx-detail/' + txid);
+      }
 
-        setTimeout(() => {
-          this.refresh()
-        }, 6000);
-
-      }).catch(
-        (error: any) => {
-          alertDialogRef.close();
-          console.log('error===', error);
-          this._snackBar.open(error, 'Ok');
-        }
-      );
   }
 }

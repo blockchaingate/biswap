@@ -16,6 +16,7 @@ import { DataService } from 'src/app/services/data.service';
 import {
   MatSnackBar
 } from '@angular/material/snack-bar';
+import { SocketService } from 'src/app/services/websocket.service';
 
 @Component({
   selector: 'app-removeLiquidity',
@@ -57,6 +58,7 @@ export class RemoveLiquidityComponent implements OnInit {
     private walletService: WalletService,
     private dataService: DataService,
     private _snackBar: MatSnackBar,
+    private socketService: SocketService
   ) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation!.extras.state as {
@@ -131,10 +133,7 @@ export class RemoveLiquidityComponent implements OnInit {
     var abiHex = this.web3Service.getApprove(args1);
     console.log('abiHex => ' + abiHex);
     
-    const alertDialogRef = this.dialog.open(AlertComponent, {
-      width: '250px',
-      data: {text: 'Please approve your request in your wallet'},
-    });
+ 
 
     const params: any = [];
     params.push(
@@ -175,7 +174,6 @@ export class RemoveLiquidityComponent implements OnInit {
 
     abiHex = this.web3Service.removeLiquidity(args2);
 
-
     params.push(
       {
         to: environment.smartConractAdressRouter,
@@ -183,6 +181,26 @@ export class RemoveLiquidityComponent implements OnInit {
       }
     );
 
+
+
+    if(this.socketService.isSocketActive){
+
+      const paramsSentSocket = 
+      { source: "Biswap-addLiquidity",
+      data:
+  
+      
+      params
+      
+      }
+      this.socketService.sendMessage(paramsSentSocket);
+
+      }else{
+
+        const alertDialogRef = this.dialog.open(AlertComponent, {
+          width: '250px',
+          data: {text: 'Please approve your request in your wallet'},
+        });
 
     this.kanbanService
     .sendParams(params)
@@ -202,6 +220,8 @@ export class RemoveLiquidityComponent implements OnInit {
         this._snackBar.open(error, 'Ok');
       }
     );
+
+      }
     /*
     this.kanbanService
       .send(this.pairId.toString(), abiHex)
