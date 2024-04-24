@@ -38,7 +38,7 @@
                 {{toIdentityString(transaction.sender ? transaction.sender : transaction.account)}}
             </div>
             <div class="titiCol col-md-2">
-                {{transaction.time}}
+                {{(transaction.time * 1000) | date : 'medium'}}
             </div>
         </div>
     </div>
