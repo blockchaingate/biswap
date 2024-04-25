@@ -39,10 +39,8 @@ export class UtilsService {
       buf = Buffer.from(address + hash2.substring(0, 8), 'hex');
       address = bs58.encode(buf);
       return address;
-  } catch (e) { }
-
-
-  return '';
+    } catch (e) { }
+    return '';
   }
 
   stripHexPrefix(str: any) {
