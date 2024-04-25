@@ -27,6 +27,7 @@
     <button mat-raised-button class="connectBtn" *ngIf="!account" (click)="connectWallet()">
       {{ 'Connect Wallet'| translate }}
     </button>
+    <span *ngIf="account">{{showAccount()}}</span>
     <button mat-raised-button color="primary" *ngIf="account" (click)="disConnectWallet()">
       {{ 'Disconnect'|translate }}
     </button>
