@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import BigNumber from 'bignumber.js';
 import * as bs58 from 'bs58';
 import { TimestampModel } from '../models/temistampModel';
+import { environment } from 'src/environments/environment';
+import * as createHash from 'create-hash';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +23,27 @@ export class UtilsService {
     return '';
   }
 
+  exgToFabAddress(address: string) {
+    try {
+      let prefix = '6f';
+      if (environment.production) {
+          prefix = '00';
+      }
+      address = prefix + this.stripHexPrefix(address);
+
+      let buf = Buffer.from(address, 'hex');
+
+      const hash1 = createHash('sha256').update(buf).digest().toString('hex');
+      const hash2 = createHash('sha256').update(Buffer.from(hash1, 'hex')).digest().toString('hex');
+
+      buf = Buffer.from(address + hash2.substring(0, 8), 'hex');
+      address = bs58.encode(buf);
+      return address;
+  } catch (e) { }
+
+
+  return '';
+  }
 
   stripHexPrefix(str: any) {
     if (!str) {

@@ -7,7 +7,7 @@ import { WalletService } from 'src/app/services/wallet.service';
 import { Language } from '../../../models/language';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { SocketService } from 'src/app/services/websocket.service';
-
+import { UtilsService } from 'src/app/services/utils.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit {
     public storageService: StorageService,
     public dialog: MatDialog,
     private _localSt: LocalStorage,
+    private utilsServ: UtilsService,
     private tranServ: TranslateService,
     private socketService: SocketService   
   ) {}
@@ -48,6 +49,11 @@ export class HeaderComponent implements OnInit {
     }
     this.socketService.connectSocket();
     this.setLan();
+  }
+
+  showAccount() {
+    const address = this.utilsServ.exgToFabAddress(this.account);
+    return address.substring(0,3) + '...' + address.substring(address.length - 3);
   }
 
   setLan() {
