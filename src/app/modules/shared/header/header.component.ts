@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { WalletService } from 'src/app/services/wallet.service';
 import { Language } from '../../../models/language';
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-header',
@@ -30,6 +31,7 @@ export class HeaderComponent implements OnInit {
     public dataService: DataService,
     public walletService: WalletService,
     public storageService: StorageService,
+    private utilsServ: UtilsService,
     public dialog: MatDialog,
     private _localSt: LocalStorage,
     private tranServ: TranslateService,
@@ -46,6 +48,11 @@ export class HeaderComponent implements OnInit {
     }
 
     this.setLan();
+  }
+
+  showAccount() {
+    const address = this.utilsServ.exgToFabAddress(this.account);
+    return address.substring(0,3) + '...' + address.substring(address.length - 3);
   }
 
   setLan() {
