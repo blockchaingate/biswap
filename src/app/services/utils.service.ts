@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import BigNumber from 'bignumber.js';
 import * as bs58 from 'bs58';
 import { TimestampModel } from '../models/temistampModel';
+import { environment } from 'src/environments/environment';
+import * as createHash from 'create-hash';
 
 @Injectable({
   providedIn: 'root',
