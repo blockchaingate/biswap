@@ -27,6 +27,9 @@ export class DetailsComponent implements OnInit {
     if(!item.amount) {
       return false;
     }
+    if(item.tokenName == 'BCC') {
+      return false;
+    }
     const exgAddress = this.utilServ.fabToExgAddress(item.address);
     return exgAddress.toLowerCase() == this.account.toLowerCase();
   }
