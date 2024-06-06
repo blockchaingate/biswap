@@ -24,7 +24,7 @@ export class DetailsComponent implements OnInit {
 
   redeemable(item) {
 
-    if(!item.amount) {
+    if(!item.amount || (item.amount < 0)) {
       return false;
     }
     const exgAddress = this.utilServ.fabToExgAddress(item.address);
