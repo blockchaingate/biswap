@@ -18,6 +18,8 @@ export class HeaderComponent implements OnInit {
   walletSession: any;
   walletLabel: string = '';
   account: string = '';
+  urllang: string = '';
+
 
   LANGUAGES: Language[] = [
     { value: 'en', viewValue: 'English' },
@@ -36,9 +38,30 @@ export class HeaderComponent implements OnInit {
     private utilsServ: UtilsService,
     private tranServ: TranslateService,
     private socketService: SocketService   
-  ) {}
+  ) {
+   
+  }
 
   ngOnInit(): void {
+
+    
+    let currentUrl = window.location.href;
+    const queryString = currentUrl.split('?')[1]; 
+    if(queryString) {
+      const params = queryString.split('&'); 
+
+      params.forEach(param => {
+        const [key, value] = param.split('=');
+        console.log(key, value);
+      });
+  
+      params.forEach(param => {
+        const [key, value] = param.split('=');
+        if (key === 'locale') {
+          this.urllang = decodeURIComponent(value);
+        }
+      });
+    }
     this.account = this.walletService.account;
     if(!this.account) {
       this.walletService.accountSubject.subscribe(
@@ -58,25 +81,47 @@ export class HeaderComponent implements OnInit {
 
   setLan() {
     const storedLan = localStorage.getItem('_lan');
-    if (storedLan) {
-      if (storedLan === 'en') {
-        this.selectedLan = this.LANGUAGES[0];
-      } else if (storedLan === 'sc') {
-        this.selectedLan = this.LANGUAGES[1];
-      } else if (storedLan === 'tc') {
-        this.selectedLan = this.LANGUAGES[2];
-      }
+
+    if (this.urllang) {
+        switch (this.urllang) {
+            case 'en':
+                this.selectedLan = this.LANGUAGES[0];
+                break;
+            case 'sc':
+            case 'zh':
+                this.selectedLan = this.LANGUAGES[1];
+                break;
+            case 'tc':
+                this.selectedLan = this.LANGUAGES[2];
+                break;
+        }
+    } else if (storedLan) {
+        switch (storedLan) {
+            case 'en':
+                this.selectedLan = this.LANGUAGES[0];
+                break;
+            case 'sc':
+                this.selectedLan = this.LANGUAGES[1];
+                break;
+            case 'tc':
+                this.selectedLan = this.LANGUAGES[2];
+                break;
+        }
     } else {
-      let userLang = navigator.language;
-      userLang = userLang.substring(0, 2);
-      if (userLang === 'CN' || userLang === 'cn' || userLang === 'zh') {
-        this.selectedLan = this.LANGUAGES[1];
-        localStorage.setItem('_lan', 'sc');
-        this._localSt.setItem('_lan', 'sc');
-      }
+        let userLang = navigator.language.substring(0, 2).toLowerCase();
+        if (userLang === 'cn' || userLang === 'zh') {
+            this.selectedLan = this.LANGUAGES[1];
+            localStorage.setItem('_lan', 'sc');
+            this._localSt.setItem('_lan', 'sc');
+        } else {
+            // Fallback language if no match is found
+            this.selectedLan = this.LANGUAGES[0];
+        }
     }
+
     this.tranServ.use(this.selectedLan.value);
-  }
+}
+
 
   openClose(lan: Language) {
     this.selectedLan = lan;
