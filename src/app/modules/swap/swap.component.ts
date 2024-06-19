@@ -127,11 +127,11 @@ export class SwapComponent implements OnInit {
   firstCoinBalance!: number;
   txHashes: any = [];
 
-  t1 = "";
-  t2 = "";
+   t1 = "";
+   t2 = "";
 
-  t1ft = "";
-  t2ft = "";
+   t1ft = "";
+   t2ft = "";
 
   //isNewPair: boolean = false;
 
@@ -173,8 +173,8 @@ export class SwapComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.t1 = this.translate.instant('THE BEST CHOICE');
-    this.t2 = this.translate.instant('IS TO PROVIDE LIQUIDITY');
+    // this.t1 = this.translate.instant('THE BEST CHOICE');
+    // this.t2 = this.translate.instant('IS TO PROVIDE LIQUIDITY');
 
     this.firstToken = new Coin();
     this.secondToken = new Coin();
@@ -266,12 +266,13 @@ export class SwapComponent implements OnInit {
 
     //typing effect for t1ft and t2ft, data from t1 and t2
     const speed = 70;
-    const t1ft = this.t1;
-    const t2ft = this.t2;
+     const t1ft = this.t1;
+     const t2ft = this.t2;
     let i = 0;
     let j = 0;
-    this.t1ft = "";
-    this.t2ft = "";
+     this.t1ft = "";
+     this.t2ft = "";
+    
     const typeWriter = () => {
       if (i < t1ft.length + t2ft.length + 1) {
         if (i < t1ft.length) {
