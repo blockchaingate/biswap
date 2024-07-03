@@ -98,6 +98,7 @@ input::-moz-placeholder {
 .tokenwithIcon {
     display: flex;
     align-items: center;
+    max-width: 90px;
 }
 
 .title1 {
@@ -131,7 +132,9 @@ h1 {
         width: 360px;
     }
 
-   
+   .tokenwithIcon {
+    font-size: 12px;
+   }
 }
 
 @media(min-width: 400px) //if more than 400 px

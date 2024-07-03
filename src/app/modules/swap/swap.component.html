@@ -37,7 +37,6 @@
 
             <div fxLayout="column" fxLayoutGap="10px">
 
-
                 <div class="coins-input-body" fxLayout="row" fxLayoutAlign="space-between center">
                     <!-- <mat-form-field>
                         <mat-label></mat-label> -->
@@ -65,7 +64,6 @@
                     </button>
                 </div>
 
-
                 <div class="coins-input-body" fxLayout="row" fxLayoutAlign="space-between center">
                     <!-- <mat-form-field>
                         <mat-label></mat-label> -->
@@ -78,9 +76,11 @@
                             <span *ngIf="secondCoinBalance >= 0">({{secondCoinBalance}})</span>
                         </span>
 
-                        <ng-template #selecta> <span class="tokenwithIcon">
+                        <ng-template #selecta>
+                            <span class="tokenwithIcon">
                                 {{"Select Token"|translate}} <mat-icon>expand_more</mat-icon>
-                            </span> </ng-template>
+                            </span>
+                        </ng-template>
                     </div>
 
                 </div>
