@@ -32,7 +32,7 @@
       {{ 'Connect Wallet'| translate }}
     </button>
     <span *ngIf="account">{{showAccount()}}</span>
-    <button mat-raised-button color="primary" *ngIf="account" (click)="disConnectWallet()">
+    <button mat-raised-button class="connectBtn" color="primary" *ngIf="account" (click)="disConnectWallet()">
       {{ 'Disconnect'|translate }}
     </button>
 

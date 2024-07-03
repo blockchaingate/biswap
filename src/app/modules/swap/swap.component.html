@@ -46,7 +46,7 @@
                     <div class="tokenSelectButton" (click)="openFirstTokenListDialog()">
                         <span class="tokenwithIcon" *ngIf="firstToken.symbol != null; else select">
                             {{ firstToken.symbol }} <span *ngIf="firstCoinBalance >= 0">({{firstCoinBalance}})</span>
-                            <mat-icon class="toright">expand_more</mat-icon>
+                            <mat-icon>expand_more</mat-icon>
                         </span>
 
                         <ng-template #select>
@@ -72,8 +72,8 @@
                     <!-- </mat-form-field> -->
                     <div class="tokenSelectButton" (click)="openSecondTokenListDialog()">
                         <span class="tokenwithIcon" *ngIf="secondToken.symbol != null; else selecta">
-                            {{ secondToken.symbol }} <mat-icon>expand_more</mat-icon>
-                            <span *ngIf="secondCoinBalance >= 0">({{secondCoinBalance}})</span>
+                            {{ secondToken.symbol }} <span *ngIf="secondCoinBalance >= 0">({{secondCoinBalance}})</span>
+                            <mat-icon>expand_more</mat-icon>
                         </span>
 
                         <ng-template #selecta>
