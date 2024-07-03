@@ -21,8 +21,8 @@ input::-moz-placeholder {
     color: black;
 }
 
-.main {
-    margin-top: 6rem;
+.maina {
+    margin-top: 1rem;
 }
 
 .swapBody {
@@ -41,13 +41,15 @@ input::-moz-placeholder {
 }
 
 .coins-input-body {
-    // border: 1px solid gray;
-    border-radius: 8px;
+    border-radius: 4px;
     justify-content: center;
     background-color: #c3c9e0;
     color: black;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 4px;
+}
+
+.tokenAmt {
+    width: 50%;
 }
 
 ::ng-deep .mat-form-field-underline {
@@ -67,17 +69,17 @@ input::-moz-placeholder {
 }
 
 .sparater {
-    margin: 10px -20px 10px;
+    margin: 10px;
     border: 0;
     border-top: 1px solid #c9c7c7;
     opacity: 0.2;
 }
 
 .mat-card-action {
-    padding: 10px 10px;
+    padding: 10px;
     button {
         width: 100%;
-        padding: 5px 5px;
+        padding: 5px;
         border-radius: 20px;
     }
 }
@@ -89,6 +91,7 @@ input::-moz-placeholder {
 }
 
 .tokenSelectButton {
+    width: 50%;
     cursor: pointer;
     font-size: larger;
     font-weight: bold;
@@ -97,8 +100,8 @@ input::-moz-placeholder {
 
 .tokenwithIcon {
     display: flex;
-    align-items: center;
-    max-width: 90px;
+    justify-content: flex-end;
+    width: 100%;
 }
 
 .title1 {
@@ -114,9 +117,14 @@ h1 {
     font-weight: 500;
 }
 
+.toright {
+    float: right;
+}
+
 @media(max-width: 600px) //if more than 400 px
 {
     .main {
+        width: 100vw;
         margin-top: 1rem;
     }
 
@@ -132,8 +140,14 @@ h1 {
         width: 360px;
     }
 
+    .tokenSelectButton {
+        width: 50%;
+    }
+
    .tokenwithIcon {
+    width: 100%;
     font-size: 12px;
+    font-weight: 500;
    }
 }
 

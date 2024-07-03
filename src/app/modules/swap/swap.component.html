@@ -7,7 +7,7 @@
         <h1>{{t2ft}}</h1>
     </div>
 -->
-    <div class="row main center-cc animated-element" #animatedElement>
+    <div class="row maina center-cc animated-element" #animatedElement>
         <mat-card>
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <mat-card-title>{{"Swap"|translate}}</mat-card-title>
@@ -40,13 +40,13 @@
                 <div class="coins-input-body" fxLayout="row" fxLayoutAlign="space-between center">
                     <!-- <mat-form-field>
                         <mat-label></mat-label> -->
-                    <input (keyup)="onKey(firstCoinAmount, true)" #token1 matInput name="firstCoinAmount" type="number"
+                    <input (keyup)="onKey(firstCoinAmount, true)" #token1 matInput name="firstCoinAmount" type="number" class="tokenAmt"
                         [(ngModel)]="firstCoinAmount" placeholder="0.0" />
                     <!-- </mat-form-field> -->
                     <div class="tokenSelectButton" (click)="openFirstTokenListDialog()">
                         <span class="tokenwithIcon" *ngIf="firstToken.symbol != null; else select">
-                            {{ firstToken.symbol }} <mat-icon>expand_more</mat-icon>
-                            <span *ngIf="firstCoinBalance >= 0">({{firstCoinBalance}})</span>
+                            {{ firstToken.symbol }} <span *ngIf="firstCoinBalance >= 0">({{firstCoinBalance}})</span>
+                            <mat-icon class="toright">expand_more</mat-icon>
                         </span>
 
                         <ng-template #select>
@@ -67,7 +67,7 @@
                 <div class="coins-input-body" fxLayout="row" fxLayoutAlign="space-between center">
                     <!-- <mat-form-field>
                         <mat-label></mat-label> -->
-                    <input (keyup)="onKey(secondCoinAmount, false)" #token2 matInput name="secondCointAmount"
+                    <input (keyup)="onKey(secondCoinAmount, false)" #token2 matInput name="secondCointAmount" class="tokenAmt"
                         type="number" [(ngModel)]="secondCoinAmount" placeholder="0.0" />
                     <!-- </mat-form-field> -->
                     <div class="tokenSelectButton" (click)="openSecondTokenListDialog()">
@@ -119,7 +119,7 @@
         </mat-card>
     </div>
 
-    <div class="row left">
+    <div class="row">
         <div class="paddingTop20 your-position mb-3 center-cc"  *ngIf="liquidityPrividerFee">
             <mat-card id="position-mat-card">
 
