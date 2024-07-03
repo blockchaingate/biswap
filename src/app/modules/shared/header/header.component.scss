@@ -77,11 +77,18 @@
 
 @media only screen and (max-width: 600px) {
     .header-logo {
-        width: 112px;
+        width: 90px;
         height: auto;
     }
+
+    .connectBtn {
+        height: 32px;
+        margin-top: 6px
+    }
+
     .header-tab-items {
         display: none !important;
+        width: 220px;
     }
 
     .topBar {
