@@ -40,7 +40,7 @@
                 <div class="coins-input-body" fxLayout="row" fxLayoutAlign="space-between center">
                     <!-- <mat-form-field>
                         <mat-label></mat-label> -->
-                    <input (keyup)="onKey(firstCoinAmount, true)" #token1 matInput name="firstCoinAmount" type="number" class="tokenAmt"
+                    <input (keyup)="onKey(firstCoinAmount, true)" #token1 name="firstCoinAmount" type="number" class="tokenAmt"
                         [(ngModel)]="firstCoinAmount" placeholder="0.0" />
                     <!-- </mat-form-field> -->
                     <div class="tokenSelectButton" (click)="openFirstTokenListDialog()">
@@ -67,7 +67,7 @@
                 <div class="coins-input-body" fxLayout="row" fxLayoutAlign="space-between center">
                     <!-- <mat-form-field>
                         <mat-label></mat-label> -->
-                    <input (keyup)="onKey(secondCoinAmount, false)" #token2 matInput name="secondCointAmount" class="tokenAmt"
+                    <input (keyup)="onKey(secondCoinAmount, false)" #token2 name="secondCointAmount" class="tokenAmt"
                         type="number" [(ngModel)]="secondCoinAmount" placeholder="0.0" />
                     <!-- </mat-form-field> -->
                     <div class="tokenSelectButton" (click)="openSecondTokenListDialog()">

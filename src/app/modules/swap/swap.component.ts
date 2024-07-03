@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import BigNumber from 'bignumber.js';
@@ -25,7 +25,7 @@ import { SocketService } from 'src/app/services/websocket.service';
   templateUrl: './swap.component.html',
   styleUrls: ['./swap.component.scss'],
 })
-export class SwapComponent implements OnInit {
+export class SwapComponent implements OnInit, AfterViewInit {
   minimumReceived!: number;
   maximumSold!: number;
   insufficientFund: boolean = false;
@@ -183,20 +183,24 @@ export class SwapComponent implements OnInit {
     this.dataService.GettokenList.subscribe((x) => {
       console.log('tokenList:', x);
       this.tokenList = x;
+      this.setDefaultPair();
       // this._firstToken = this.tokenList.find(t => t.coinType == 131072) || new Coin();
     });
     this.checkUrlToken();
 
-    this.autorefresh = setInterval(() => { this.refresh() }, 1000);
+    // this.autorefresh = setInterval(() => { this.refresh() }, 1000);
+  }
 
-    if (this.tokenList) {
-      //set default token to symbol = 'kbFAB'
-      this.tokenList.map((x) => {
-        if (x.symbol == 'kbFAB') {
-          this.firstToken = x;
+  setDefaultPair() {
+    if(this.tokenList && this.tokenList.length > 0) {
+      this.tokenList.map((t) => {
+        if (t.symbol == 'USDT') {
+          this.firstToken = t;
+        }
+        if (t.symbol == 'FAB') {
+          this.secondToken = t;
         }
       });
-
     }
   }
 
@@ -246,6 +250,8 @@ export class SwapComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    this.setDefaultPair();
+
     setTimeout(() => {
       // this will make the execution after the above boolean has changed
       this.token1Element.nativeElement.focus();
