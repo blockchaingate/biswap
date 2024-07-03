@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Web3Service } from 'src/app/services/web3.service';
 import { KanbanService } from 'src/app/services/kanban.service';
 import { environment } from 'src/environments/environment';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import BigNumber from 'bignumber.js';
 
 @Component({

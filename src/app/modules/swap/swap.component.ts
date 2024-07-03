@@ -40,9 +40,8 @@ export class SwapComponent implements OnInit {
   @ViewChild('token2')
   token2Element!: ElementRef;
 
-  @ViewChild('animatedElement', { static: true }) 
+  @ViewChild('animatedElement', { static: true })
   animatedElement!: ElementRef;
-
 
   isFistToken!: boolean;
 
@@ -84,9 +83,7 @@ export class SwapComponent implements OnInit {
   }
 
   tokenList!: Coin[];
-
   walletSession: any;
-
   _account!: string;
 
   public get account(): string {
@@ -116,29 +113,23 @@ export class SwapComponent implements OnInit {
   }
 
   tokenId!: string;
-
   firstCoinAmount!: number;
   secondCoinAmount!: number;
-
   perAmount!: string;
   perAmountLabel: string = '';
-
   secondCoinBalance!: number;
   firstCoinBalance!: number;
   txHashes: any = [];
-
-   t1 = "";
-   t2 = "";
-
-   t1ft = "";
-   t2ft = "";
-
+  t1 = "";
+  t2 = "";
+  t1ft = "";
+  t2ft = "";
   //isNewPair: boolean = false;
-
   firstTokenReserve: BigNumber = new BigNumber(0);
   secondTokenReserve: BigNumber = new BigNumber(0);
   slippage = 1;
   deadline = 20;
+
   constructor(
     private utilService: UtilsService,
     private web3Service: Web3Service,
@@ -213,9 +204,6 @@ export class SwapComponent implements OnInit {
     this.animatedElement.nativeElement.classList.add('show');
   }
 
-
-
-
   checkUrlToken() {
     this.currentRoute.params.subscribe((x) => {
       var type = this.router.url.split("/")
@@ -266,13 +254,13 @@ export class SwapComponent implements OnInit {
 
     //typing effect for t1ft and t2ft, data from t1 and t2
     const speed = 70;
-     const t1ft = this.t1;
-     const t2ft = this.t2;
+    const t1ft = this.t1;
+    const t2ft = this.t2;
     let i = 0;
     let j = 0;
-     this.t1ft = "";
-     this.t2ft = "";
-    
+    this.t1ft = "";
+    this.t2ft = "";
+
     const typeWriter = () => {
       if (i < t1ft.length + t2ft.length + 1) {
         if (i < t1ft.length) {
@@ -491,12 +479,7 @@ export class SwapComponent implements OnInit {
       return;
     }
     var to = this.account;
-    var timestamp = new TimestampModel(
-      this.deadline,
-      0,
-      0,
-      0 // here need to set for future timestamp
-    );
+    var timestamp = new TimestampModel(this.deadline, 0, 0, 0);
     var deadline = this.utilService.getTimestamp(timestamp);
 
     let abiHex = '';
@@ -527,30 +510,24 @@ export class SwapComponent implements OnInit {
       approveAmount = amountInMax;
     }
 
-
-    if(this.socketService.isSocketActive){
-
-      const paramsSentSocket = 
-      { source: "Biswap-Swap",
-      data:
-  
-      [
-        {
-          to: this.firstToken.id,
-          data: this.web3Service.getApprove([environment.smartConractAdressRouter, approveAmount])
-        },
-        {
-          to: environment.smartConractAdressRouter,
-          data: abiHex
-        }
-      ]
+    if (this.socketService.isSocketActive) {
+      const paramsSentSocket =
+      {
+        source: "Biswap-Swap",
+        data:
+          [
+            {
+              to: this.firstToken.id,
+              data: this.web3Service.getApprove([environment.smartConractAdressRouter, approveAmount])
+            },
+            {
+              to: environment.smartConractAdressRouter,
+              data: abiHex
+            }
+          ]
       }
       this.socketService.sendMessage(paramsSentSocket);
-  
-
-
     } else {
-
       const paramsSent = [
         {
           to: this.firstToken.id,
@@ -565,22 +542,22 @@ export class SwapComponent implements OnInit {
         width: '250px',
         data: { text: 'Please approve your request in your wallet' },
       });
-  
+
       this.kanbanService
-      .sendParams(paramsSent)
-      .then((txids) => {
-        alertDialogRef.close();
-        const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
-        //this.txHash = baseUrl + '/explorer/tx-detail/' + data;
-  
-        this.txHashes = txids.map((txid: string) => baseUrl + '/explorer/tx-detail/' + txid);
-      }).catch(
-        (error: any) => {
+        .sendParams(paramsSent)
+        .then((txids) => {
           alertDialogRef.close();
-          console.log('error===', error);
-          this._snackBar.open(error, 'Ok');
-        }
-      );
+          const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
+          //this.txHash = baseUrl + '/explorer/tx-detail/' + data;
+
+          this.txHashes = txids.map((txid: string) => baseUrl + '/explorer/tx-detail/' + txid);
+        }).catch(
+          (error: any) => {
+            alertDialogRef.close();
+            console.log('error===', error);
+            this._snackBar.open(error, 'Ok');
+          }
+        );
     }
   }
 }

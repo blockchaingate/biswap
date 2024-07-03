@@ -5,13 +5,16 @@ mat-sidenav {
 }
 
 mat-sidenav-container {
-    background-color: #0b0e1c;
+    width: 100vw;
+    height: 100vh;
+    background-color: #efefef;
 }
 
 mat-sidenav {
     width: 250px;
 }
 
-// main {
-//     padding: 10px;
-// }
+
+main {
+     min-height: 1000px;
+}

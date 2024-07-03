@@ -23,18 +23,14 @@ export class WalletComponent implements OnInit {
   constructor(public storageService: StorageService) {}
 
   async ngOnInit() {
-
   }
 
   async showQrCode() {
-
   }
 
   onSessionConnected(session: any) {
-
   }
 
   async send() {
-
   }
 }

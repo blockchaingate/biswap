@@ -12,7 +12,7 @@ import { SwapComponent } from '../../swap/swap.component';
 export class TokenListComponent implements OnInit {
   searchTokenLabel = '';
   tokenList: any;
-  filteredTokens: Coin [] = [];
+  filteredTokens: Coin[] = [];
 
   constructor(
     private dataService: DataService,
@@ -25,19 +25,19 @@ export class TokenListComponent implements OnInit {
     this.filteredTokens = this.tokenList;
     this.filteredTokens.sort(this.compare);
     this.filteredTokens.forEach((ele) => {
-      if(ele && ele.symbol){
+      if (ele && ele.symbol) {
         ele.logoUrl = 'https://exchangily.com/assets/coins/' + ele.symbol.toLocaleLowerCase().substring(2) + '.png';
-      }else{
+      } else {
         ele.logoUrl = 'https://exchangily.com/assets/coins/eth.png';
       }
-    }); 
+    });
   }
 
-  compare(a: Coin, b: Coin ) {
-    if ( a.tickerName < b.tickerName ){
+  compare(a: Coin, b: Coin) {
+    if (a.tickerName < b.tickerName) {
       return -1;
     }
-    if ( a.tickerName > b.tickerName ){
+    if (a.tickerName > b.tickerName) {
       return 1;
     }
     return 0;
@@ -46,15 +46,16 @@ export class TokenListComponent implements OnInit {
   showTokenId(id: string) {
     return id.substring(0, 5) + '...' + id.substring(id.length - 3);
   }
+  
   selectToken(token: Coin) {
     if (this.data.isFirst) {
       this.dataService.sendFirstToken(token);
       this.dialogRef.close({
         isFirst: true
       });
-    }else if(
+    } else if (
       this.data.isSecond
-    ){
+    ) {
       this.dataService.sendSecondToken(token);
       this.dialogRef.close({
         isSecond: true
@@ -71,7 +72,6 @@ export class TokenListComponent implements OnInit {
 
   handleImageError(ev: any) {
     ev.target.src = 'https://exchangily.com/assets/coins/eth.png';
-
-  }  
+  }
 
 }

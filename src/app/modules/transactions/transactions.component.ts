@@ -14,9 +14,7 @@ export class TransactionsComponent implements OnInit {
   pageNumTransaction = 0;
   totalPage: number = 0;
 
-  constructor(
-    private biswapServ: BiswapService,
-    private walletService: WalletService) { }
+  constructor(private biswapServ: BiswapService, private walletService: WalletService) {}
 
   connectWallet() {
     this.walletService.connectWalletNew();
@@ -24,7 +22,7 @@ export class TransactionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.account = this.walletService.account;
-    if(!this.account){
+    if (!this.account) {
       this.walletService.accountSubject.subscribe(
         account => {
           this.account = account;
@@ -49,10 +47,10 @@ export class TransactionsComponent implements OnInit {
   }
 
   changePageNumTransaction(pageNum: number) {
-    if(pageNum < 0) {
+    if (pageNum < 0) {
       pageNum = 0;
     }
-    if(pageNum > this.totalPage) {
+    if (pageNum > this.totalPage) {
       pageNum = this.totalPage;
     }
     this.pageNumTransaction = pageNum;

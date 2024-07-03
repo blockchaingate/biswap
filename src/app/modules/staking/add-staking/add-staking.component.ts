@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Web3Service } from 'src/app/services/web3.service';
 import { KanbanService } from 'src/app/services/kanban.service';
 import { environment } from 'src/environments/environment';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import BigNumber from 'bignumber.js';
 import { WalletService } from 'src/app/services/wallet.service';
 
@@ -22,7 +22,7 @@ export class AddStakingComponent implements OnInit {
 
   ngOnInit(): void {
     this.account = this.walletService.account;
-    if(!this.account) {
+    if (!this.account) {
       this.walletService.accountSubject.subscribe(
         account => {
           this.account = account;
@@ -34,7 +34,7 @@ export class AddStakingComponent implements OnInit {
   connectWallet() {
     this.walletService.connectWalletNew();
   }
-  
+
   addStaking() {
     /*
     const params = [
