@@ -1,5 +1,4 @@
 .header-tab-items span {
-    // width: 2rem;
     padding: 0px 10px;
     display: flex;
     justify-content: center;
@@ -8,15 +7,12 @@
     font-size: 16px;
     cursor: pointer;
     &:hover {
-        // border-bottom: 2px solid white;
         color: white;
         font-weight: 500;
     }
 }
 
 .mat-toolbar {
-    // color: black;
-    // background-color: #fff;
     color: #eee;
     background-color: black;
     padding: 0px 50px;
