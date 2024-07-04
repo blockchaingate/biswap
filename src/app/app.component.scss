@@ -18,3 +18,8 @@ mat-sidenav {
 main {
     min-height: calc(100vh - 418px);
 }
+
+main::-webkit-scrollbar {
+    display: none;
+}
+

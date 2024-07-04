@@ -113,4 +113,9 @@ export class DetailsComponent implements OnInit {
 
   }
 
+  showShortAddress(address: string) {
+    if(address.length < 14) return;
+    return address.substring(0,8) + ' ... ' + address.substring(address.length-8);
+  }
+
 }

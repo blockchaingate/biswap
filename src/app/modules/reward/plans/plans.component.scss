@@ -1,7 +1,25 @@
-// .rounded-card {
-//     color: black;
-// }
+.planbody {
+    background-color: #037597;
+    width: 100%;
+}
 
-.rounded-card {
-    background-color: #090130
+.title {
+    width: 100%;
+    display: flex;
+    font-size: 12px;
+    font-weight: 300;
+}
+
+.contnt {
+    width: 100%;
+    display: flex;
+    font-size: 10px;
+    font-weight: 200;
+}
+
+@media(max-width: 600px) //if more than 400 px
+{
+    .planbody {
+        width: 100%;
+    }
 }

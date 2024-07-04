@@ -146,7 +146,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2,
     private elementRef: ElementRef,
     private socketService: SocketService
-  ) { }
+  ) {}
 
   openSettings() {
     const dialogRef = this.dialog.open(SettingsComponent, {
@@ -183,9 +183,9 @@ export class SwapComponent implements OnInit, AfterViewInit {
     this.dataService.GettokenList.subscribe((x) => {
       console.log('tokenList:', x);
       this.tokenList = x;
-      this.setDefaultPair();
-      // this._firstToken = this.tokenList.find(t => t.coinType == 131072) || new Coin();
+      // this.setDefaultPair();
     });
+
     this.checkUrlToken();
 
     // this.autorefresh = setInterval(() => { this.refresh() }, 1000);
@@ -199,6 +199,9 @@ export class SwapComponent implements OnInit, AfterViewInit {
         }
         if (t.symbol == 'FAB') {
           this.secondToken = t;
+        }
+        if(this.firstToken && this.secondToken) {
+          this.getPair();
         }
       });
     }

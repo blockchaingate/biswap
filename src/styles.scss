@@ -86,10 +86,11 @@ input {
     font-size: small;
 }
 
-.titiCol.col-md-2 {
-    min-width: 150px;
+.titiCol.col-2 {
+    min-width: 50px;
+    font-size: 12px;
     overflow: hidden;
-    padding: 0 20px;
+    padding: 0;
     text-overflow: ellipsis;
 }
 

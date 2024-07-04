@@ -1,36 +1,15 @@
-// @media only screen and (max-width: 600px) {
-// }
-::-webkit-input-placeholder {
-    color: black
-}
 
-input {
-    --placeHolder-color: black;
-}
-
-input:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: black;
-}
-
-input:-moz-placeholder {
-    color: black;
-}
-
-input::-moz-placeholder {
-    color: black;
+.swapBody {
+    padding-bottom: 100px;
 }
 
 .maina {
-    margin-top: 1rem;
+    margin-top: 4rem;
 }
 
-.swapBody {
-    // background: url("/assets/images/gredient-back.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    // height: 100vh;
-    padding-bottom: 100px;
+.cardd {
+    min-width: 360px;
+    width: 100%;
 }
 
 ::ng-deep .mat-card {
@@ -43,7 +22,7 @@ input::-moz-placeholder {
 .coins-input-body {
     border-radius: 4px;
     justify-content: center;
-    background-color: #c3c9e0;
+    background-color: rgb(218, 216, 216);
     color: black;
     padding: 4px;
 }
@@ -64,7 +43,7 @@ input::-moz-placeholder {
 ::ng-deep .mat-form-field {
     width: 100%;
     label {
-        font-size: 40px;
+        font-size: 32px;
     }
 }
 
@@ -93,9 +72,9 @@ input::-moz-placeholder {
 .tokenSelectButton {
     width: 50%;
     cursor: pointer;
-    font-size: larger;
-    font-weight: bold;
-    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    color: black;
 }
 
 .tokenwithIcon {
@@ -119,13 +98,13 @@ h1 {
 
 @media(max-width: 600px) //if more than 400 px
 {
-    .main {
+    .maina {
         width: 100vw;
         margin-top: 1rem;
     }
 
     mat-card-title {
-        font-size: 16px;
+        font-size: 18px;
     }
     
     ::ng-deep .mat-card {
@@ -138,6 +117,7 @@ h1 {
 
     .tokenSelectButton {
         width: 50%;
+        font-size: 12px;
     }
 
    .tokenwithIcon {

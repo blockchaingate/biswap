@@ -81,10 +81,11 @@ h1 {
 @media(max-width: 600px) //if more than 400 px
 {
     ::ng-deep .mat-card {
-        border-radius: 12px !important;
+        border-radius: 8px !important;
         background-image: none;
         background-color: black;
         min-width: 350px;
+        width: 100%;
     }
     
     h1 {
