@@ -6,8 +6,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { WalletService } from 'src/app/services/wallet.service';
 import { Language } from '../../../models/language';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { SocketService } from 'src/app/services/websocket.service';
-import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +17,6 @@ export class HeaderComponent implements OnInit {
   walletSession: any;
   walletLabel: string = '';
   account: string = '';
-  urllang: string = '';
 
   LANGUAGES: Language[] = [
     { value: 'en', viewValue: 'English' },
@@ -35,63 +32,24 @@ export class HeaderComponent implements OnInit {
     public storageService: StorageService,
     public dialog: MatDialog,
     private _localSt: LocalStorage,
-    private utilsServ: UtilsService,
     private tranServ: TranslateService,
-    private socketService: SocketService
   ) { }
 
   ngOnInit(): void {
-    let currentUrl = window.location.href;
-    const queryString = currentUrl.split('?')[1];
-    if (queryString) {
-      const params = queryString.split('&');
-
-      params.forEach(param => {
-        const [key, value] = param.split('=');
-        console.log(key, value);
-      });
-
-      params.forEach(param => {
-        const [key, value] = param.split('=');
-        if (key === 'locale') {
-          this.urllang = decodeURIComponent(value);
-        }
-      });
-    }
-    this.account = this.walletService.account;
-    if (!this.account) {
-      this.walletService.accountSubject.subscribe(
-        account => {
-          this.account = account;
-        }
-      );
-    }
-    this.socketService.connectSocket();
     this.setLan();
+    this.walletService.accountSubject.subscribe((account: string) => {
+      this.account = account;
+    });
   }
 
   showAccount() {
-    const address = this.utilsServ.exgToFabAddress(this.account);
-    return address.substring(0, 3) + '...' + address.substring(address.length - 3);
+      return this.account.substring(0, 3) + '...' + this.account.substring(this.account.length - 3);
   }
 
   setLan() {
     const storedLan = localStorage.getItem('_lan');
 
-    if (this.urllang) {
-      switch (this.urllang) {
-        case 'en':
-          this.selectedLan = this.LANGUAGES[0];
-          break;
-        case 'sc':
-        case 'zh':
-          this.selectedLan = this.LANGUAGES[1];
-          break;
-        case 'tc':
-          this.selectedLan = this.LANGUAGES[2];
-          break;
-      }
-    } else if (storedLan) {
+    if (storedLan) {
       switch (storedLan) {
         case 'en':
           this.selectedLan = this.LANGUAGES[0];
@@ -105,23 +63,20 @@ export class HeaderComponent implements OnInit {
       }
     } else {
       let userLang = navigator.language.substring(0, 2).toLowerCase();
-      if (userLang === 'cn' || userLang === 'zh') {
+      if (userLang === 'cn' || userLang === 'zh' || userLang === 'sc') {
         this.selectedLan = this.LANGUAGES[1];
         localStorage.setItem('_lan', 'sc');
         this._localSt.setItem('_lan', 'sc');
       } else {
-        // Fallback language if no match is found
         this.selectedLan = this.LANGUAGES[0];
       }
     }
-
     this.tranServ.use(this.selectedLan.value);
   }
 
   openClose(lan: Language) {
     this.selectedLan = lan;
     this.tranServ.use(lan.value);
-
     localStorage.setItem('_lan', lan.value);
     this._localSt.setItem('_lan', lan.value);
   }
@@ -131,12 +86,10 @@ export class HeaderComponent implements OnInit {
   }
 
   connectWallet() {
-    //await this.walletService.connectWallet();
     this.walletService.connectWalletNew();
   }
 
   disConnectWallet() {
-    console.log('go for disconnect');
     this.walletService.disconnect();
   }
 }

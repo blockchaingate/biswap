@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, SimpleChange } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Coin } from 'src/app/models/coin';
 import { DataService } from 'src/app/services/data.service';
@@ -64,10 +64,7 @@ export class TokenListComponent implements OnInit {
   }
 
   searchToken(token: any) {
-    console.log('searchToken', token);
     this.filteredTokens = this.tokenList.filter((x: any) => x.symbol.toLowerCase().includes(token.toLowerCase()))
-    //log length of filtered tokens
-    console.log(this.filteredTokens.length);
   }
 
   handleImageError(ev: any) {

@@ -16,7 +16,6 @@ import { DataService } from 'src/app/services/data.service';
 import {
   MatSnackBar
 } from '@angular/material/snack-bar';
-import { SocketService } from 'src/app/services/websocket.service';
 
 @Component({
   selector: 'app-removeLiquidity',
@@ -58,7 +57,6 @@ export class RemoveLiquidityComponent implements OnInit {
     private walletService: WalletService,
     private dataService: DataService,
     private _snackBar: MatSnackBar,
-    private socketService: SocketService
   ) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation!.extras.state as {
@@ -183,45 +181,45 @@ export class RemoveLiquidityComponent implements OnInit {
 
 
 
-    if(this.socketService.isSocketActive){
+    // if(this.socketService.isSocketActive){
 
-      const paramsSentSocket = 
-      { source: "Biswap-addLiquidity",
-      data:
+    //   const paramsSentSocket = 
+    //   { source: "Biswap-addLiquidity",
+    //   data:
   
       
-      params
+    //   params
       
-      }
-      this.socketService.sendMessage(paramsSentSocket);
+    //   }
+    //   this.socketService.sendMessage(paramsSentSocket);
 
-      }else{
+    //   }else{
 
-        const alertDialogRef = this.dialog.open(AlertComponent, {
-          width: '250px',
-          data: {text: 'Please approve your request in your wallet'},
-        });
+    //     const alertDialogRef = this.dialog.open(AlertComponent, {
+    //       width: '250px',
+    //       data: {text: 'Please approve your request in your wallet'},
+    //     });
 
-    this.kanbanService
-    .sendParams(params)
-    .then((txids) => { 
-      alertDialogRef.close();
-      const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
+    // this.kanbanService
+    // .sendParams(params)
+    // .then((txids) => { 
+    //   alertDialogRef.close();
+    //   const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
 
       
-      this.txHashes = txids.map((txid: string) =>  baseUrl + '/explorer/tx-detail/' + txid);
+    //   this.txHashes = txids.map((txid: string) =>  baseUrl + '/explorer/tx-detail/' + txid);
 
-      alertDialogRef.close();
+    //   alertDialogRef.close();
 
-    }).catch(
-      (error: any) => {
-        alertDialogRef.close();
-        console.log('error===', error);
-        this._snackBar.open(error, 'Ok');
-      }
-    );
+    // }).catch(
+    //   (error: any) => {
+    //     alertDialogRef.close();
+    //     console.log('error===', error);
+    //     this._snackBar.open(error, 'Ok');
+    //   }
+    // );
 
-      }
+    //   }
     /*
     this.kanbanService
       .send(this.pairId.toString(), abiHex)

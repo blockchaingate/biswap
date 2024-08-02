@@ -48,23 +48,27 @@ export class KanbanService {
     return addr;
   }
 
-  getTokenList() {
-    var tempTokenList: Coin[] = [];
-    //var removeItems = [196629, 524290, 196628, 458753, 589826, 196609, 196613];
-    var removeItems: any = [];
-    this.http
-      .get<BaseResponseModel>(`${this.url}v3/token/erc20/100/0`)
-      .subscribe((x) => {
-        var tokenList: Coin[] = [];
-        tokenList = x.data;
-        tokenList.forEach((element) => {
+  async getTokenList() {
+    let tempTokenList: Coin[] = [];
+    let removeItems: any = [];
+  
+    try {
+      const response = await this.http.get<BaseResponseModel>(`${this.url}v3/token/erc20/100/0`).toPromise();
+      
+      if (response && response.data) {
+        response.data.forEach((element) => {
           if (removeItems.indexOf(element.type) === -1) {
             tempTokenList.push(element);
           }
         });
-      });
-    this.dataService.settokenList(tempTokenList);
+      }
+  
+      this.dataService.settokenList(tempTokenList);
+    } catch (error) {
+      console.error('Error fetching token list:', error);
+    }
   }
+  
 
   getTokenBalance(address: string, tokenContractAddress: string) {
     const obs = new Observable((observer) => {

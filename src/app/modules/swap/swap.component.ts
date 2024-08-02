@@ -15,10 +15,8 @@ import { Web3Service } from 'src/app/services/web3.service';
 import { environment } from 'src/environments/environment';
 import { TokenListComponent } from '../shared/tokenList/tokenList.component';
 import { SettingsComponent } from '../settings/settings.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AlertComponent } from '../shared/alert/alert.component';
-import { TranslateService } from '@ngx-translate/core';
-import { SocketService } from 'src/app/services/websocket.service';
 
 @Component({
   selector: 'app-swap',
@@ -45,15 +43,12 @@ export class SwapComponent implements OnInit, AfterViewInit {
 
   isFistToken!: boolean;
 
-  _firstToken!: Coin;
-  _secondToken!: Coin;
+  firstToken!: Coin;
+  secondToken!: Coin;
+  account!: string;
 
-  public get firstToken(): Coin {
-    return this._firstToken;
-  }
-
-  public set firstToken(coin: Coin) {
-    this._firstToken = coin;
+  public setFirstToken(coin: Coin) {
+    this.firstToken = coin;
     const id = coin.id;
     if (this.account && id) {
       this.kanbanService.getTokenBalance(this.account, id).subscribe(
@@ -62,15 +57,10 @@ export class SwapComponent implements OnInit, AfterViewInit {
         }
       );
     }
-
   }
 
-  public get secondToken(): Coin {
-    return this._secondToken;
-  }
-
-  public set secondToken(coin: Coin) {
-    this._secondToken = coin;
+  public setSecondToken(coin: Coin) {
+    this.secondToken = coin;
     const id = coin.id;
     if (this.account && id) {
       this.kanbanService.getTokenBalance(this.account, id).subscribe(
@@ -79,20 +69,13 @@ export class SwapComponent implements OnInit, AfterViewInit {
         }
       );
     }
-
   }
 
   tokenList!: Coin[];
   walletSession: any;
-  _account!: string;
 
-  public get account(): string {
-    return this._account;
-  }
-
-  public set account(newAccount: string) {
-    this._account = newAccount;
-
+  setAccount(newAccount: string) {
+    this.account = newAccount;
     if (newAccount) {
       if (this.firstToken && this.firstToken.id) {
         this.kanbanService.getTokenBalance(newAccount, this.firstToken.id).subscribe(
@@ -124,7 +107,6 @@ export class SwapComponent implements OnInit, AfterViewInit {
   t2 = "";
   t1ft = "";
   t2ft = "";
-  //isNewPair: boolean = false;
   firstTokenReserve: BigNumber = new BigNumber(0);
   secondTokenReserve: BigNumber = new BigNumber(0);
   slippage = 1;
@@ -142,10 +124,6 @@ export class SwapComponent implements OnInit, AfterViewInit {
     private currentRoute: ActivatedRoute,
     private apiService: ApiService,
     private router: Router,
-    private translate: TranslateService,
-    private renderer: Renderer2,
-    private elementRef: ElementRef,
-    private socketService: SocketService
   ) {}
 
   openSettings() {
@@ -164,41 +142,30 @@ export class SwapComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // this.t1 = this.translate.instant('THE BEST CHOICE');
-    // this.t2 = this.translate.instant('IS TO PROVIDE LIQUIDITY');
-
-    this.firstToken = new Coin();
-    this.secondToken = new Coin();
     this.secondCoinBalance = -1;
     this.firstCoinBalance = -1;
 
-    this.account = this.walletService.account;
-    if (!this.account) {
-      this.walletService.accountSubject.subscribe(
-        account => {
-          this.account = account;
-        }
-      );
-    }
-    this.dataService.GettokenList.subscribe((x) => {
-      console.log('tokenList:', x);
-      this.tokenList = x;
-      // this.setDefaultPair();
+    this.walletService.accountSubject.subscribe((account: string) => {
+      if (account) {
+        this.setAccount(account);
+      }
+      
     });
-
+    this.dataService.GettokenList.subscribe((x) => {
+      this.tokenList = x;
+    this.setDefaultPair();
+    });
     this.checkUrlToken();
-
-    // this.autorefresh = setInterval(() => { this.refresh() }, 1000);
   }
 
   setDefaultPair() {
     if(this.tokenList && this.tokenList.length > 0) {
       this.tokenList.map((t) => {
         if (t.symbol == 'USDT') {
-          this.firstToken = t;
+          this.setFirstToken(t);
         }
         if (t.symbol == 'FAB') {
-          this.secondToken = t;
+          this.setSecondToken(t);
         }
         if(this.firstToken && this.secondToken) {
           this.getPair();
@@ -519,55 +486,55 @@ export class SwapComponent implements OnInit, AfterViewInit {
       approveAmount = amountInMax;
     }
 
-    if (this.socketService.isSocketActive) {
-      const paramsSentSocket =
-      {
-        source: "Biswap-Swap",
-        data:
-          [
-            {
-              to: this.firstToken.id,
-              data: this.web3Service.getApprove([environment.smartConractAdressRouter, approveAmount])
-            },
-            {
-              to: environment.smartConractAdressRouter,
-              data: abiHex
-            }
-          ]
-      }
-      this.socketService.sendMessage(paramsSentSocket);
-    } else {
-      const paramsSent = [
-        {
-          to: this.firstToken.id,
-          data: this.web3Service.getApprove([environment.smartConractAdressRouter, approveAmount])
-        },
-        {
-          to: environment.smartConractAdressRouter,
-          data: abiHex
-        }
-      ];
-      const alertDialogRef = this.dialog.open(AlertComponent, {
-        width: '250px',
-        data: { text: 'Please approve your request in your wallet' },
-      });
+    // if (this.socketService.isSocketActive) {
+    //   const paramsSentSocket =
+    //   {
+    //     source: "Biswap-Swap",
+    //     data:
+    //       [
+    //         {
+    //           to: this.firstToken.id,
+    //           data: this.web3Service.getApprove([environment.smartConractAdressRouter, approveAmount])
+    //         },
+    //         {
+    //           to: environment.smartConractAdressRouter,
+    //           data: abiHex
+    //         }
+    //       ]
+    //   }
+    //   this.socketService.sendMessage(paramsSentSocket);
+    // } else {
+    //   const paramsSent = [
+    //     {
+    //       to: this.firstToken.id,
+    //       data: this.web3Service.getApprove([environment.smartConractAdressRouter, approveAmount])
+    //     },
+    //     {
+    //       to: environment.smartConractAdressRouter,
+    //       data: abiHex
+    //     }
+    //   ];
+    //   const alertDialogRef = this.dialog.open(AlertComponent, {
+    //     width: '250px',
+    //     data: { text: 'Please approve your request in your wallet' },
+    //   });
 
-      this.kanbanService
-        .sendParams(paramsSent)
-        .then((txids) => {
-          alertDialogRef.close();
-          const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
-          //this.txHash = baseUrl + '/explorer/tx-detail/' + data;
+    //   this.kanbanService
+    //     .sendParams(paramsSent)
+    //     .then((txids) => {
+    //       alertDialogRef.close();
+    //       const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
+    //       //this.txHash = baseUrl + '/explorer/tx-detail/' + data;
 
-          this.txHashes = txids.map((txid: string) => baseUrl + '/explorer/tx-detail/' + txid);
-        }).catch(
-          (error: any) => {
-            alertDialogRef.close();
-            console.log('error===', error);
-            this._snackBar.open(error, 'Ok');
-          }
-        );
-    }
+    //       this.txHashes = txids.map((txid: string) => baseUrl + '/explorer/tx-detail/' + txid);
+    //     }).catch(
+    //       (error: any) => {
+    //         alertDialogRef.close();
+    //         console.log('error===', error);
+    //         this._snackBar.open(error, 'Ok');
+    //       }
+    //     );
+    // }
   }
 }
 

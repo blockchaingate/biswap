@@ -39,10 +39,11 @@ export class WalletService {
   }
 
   connectWalletSocket(param: any) {
-    console.log('param===', param);
+    console.log('param===', JSON.stringify(param));
     this.chainId = param.Namespaces + ':' + param.chainId;
+    console.log('this.chainId=', this.chainId);
     this.account = param.address;
-    console.log('this.account=', this.account);
+    console.log('this.address=', this.account);
     this.accountSubject.next(param.address);
 }
 
