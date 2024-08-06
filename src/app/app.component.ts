@@ -72,9 +72,6 @@ export class AppComponent {
   }
 
   private setupPaycoolEventListener(): void {
-
-
-    console.log('setupPaycoolEventListener');
     document.removeEventListener(this.PAYCOOL_EVENT_NAME, this.handlePaycoolData);
     document.addEventListener(this.PAYCOOL_EVENT_NAME, this.handlePaycoolData.bind(this));
   }
@@ -88,15 +85,13 @@ export class AppComponent {
     } else {
       console.error('Invalid data received:', data);
     }
-
-  
   }
 
   private processPaycoolData(data: any[]): void {
     for (const wallet of data) {
-      if (wallet.chain === 'FAB') {
+      if (wallet.chain === 'KANBAN') {
         this.walletService.connectWalletSocket(wallet);
-        console.log('FAB address:', wallet.address);
+        console.log('KANBAN address:', wallet.address);
         break;
       }
     }

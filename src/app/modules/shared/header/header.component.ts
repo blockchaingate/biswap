@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { WalletService } from 'src/app/services/wallet.service';
 import { Language } from '../../../models/language';
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,7 @@ export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
   walletSession: any;
   walletLabel: string = '';
-  account: string = '';
+  address: string = '';
 
   LANGUAGES: Language[] = [
     { value: 'en', viewValue: 'English' },
@@ -33,17 +34,18 @@ export class HeaderComponent implements OnInit {
     public dialog: MatDialog,
     private _localSt: LocalStorage,
     private tranServ: TranslateService,
+    private utilsServ: UtilsService,
   ) { }
 
   ngOnInit(): void {
     this.setLan();
     this.walletService.accountSubject.subscribe((account: string) => {
-      this.account = account;
+      this.address = this.utilsServ.exgToFabAddress(account);
     });
   }
 
   showAccount() {
-      return this.account.substring(0, 3) + '...' + this.account.substring(this.account.length - 3);
+      return this.address.substring(0, 3) + '...' + this.address.substring(this.address.length - 3);
   }
 
   setLan() {
