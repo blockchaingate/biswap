@@ -12,9 +12,9 @@ import { environment } from "src/environments/environment";
 import { SettingsComponent } from "../../settings/settings.component";
 import { MatDialog } from "@angular/material/dialog";
 import { AlertComponent } from "../../shared/alert/alert.component";
-import { DataService } from "src/app/services/data.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { isConnected, send } from "cool-connect";
+import { send } from "cool-connect";
+import { AppComponent } from "src/app/app.component";
 
 @Component({
   selector: "app-removeLiquidity",
@@ -54,7 +54,7 @@ export class RemoveLiquidityComponent implements OnInit {
     private utilService: UtilsService,
     public dialog: MatDialog,
     private walletService: WalletService,
-    private dataService: DataService,
+    private appComponent: AppComponent,
     private _snackBar: MatSnackBar
   ) {
     const navigation = this.router.getCurrentNavigation();
@@ -196,7 +196,7 @@ export class RemoveLiquidityComponent implements OnInit {
       data: abiHex,
     });
 
-    if (isConnected()) {
+    if (this.appComponent.device_id) {
       const paramsSentSocket = { source: "Biswap-addLiquidity", data: params };
 
       send(paramsSentSocket);
@@ -226,76 +226,5 @@ export class RemoveLiquidityComponent implements OnInit {
           this._snackBar.open(error, "Ok");
         });
     }
-    /*
-    this.kanbanService
-      .send(this.pairId.toString(), abiHex)
-      .then((data) => {
-        console.log('https://test.exchangily.com/explorer/tx-detail/' + data)
-        this.apiService.getTransactionStatus(data).subscribe((res: any) =>{
-          TODO here there will be if condition with status of tx
-          alertDialogRef.close();
-          this.removeLiquidityFun(value);
-        })  
-      }).catch(
-        (error: any) => {
-          console.log('error===', error);
-          alertDialogRef.close();
-          this._snackBar.open(error, 'Ok');
-        }
-      );
-    */
   }
-
-  /*
-  removeLiquidityFun(value: any) {
-
-    var amountAMin = '0x' + new BigNumber( this.yourPoolShare)
-    .multipliedBy(new BigNumber(this.percentage))
-    .multipliedBy(new BigNumber(this.pooledFirstToken))
-    .dividedBy(new BigNumber(10000))
-    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01)))
-    .shiftedBy(this.firstTokenDecimals)
-    .toString(16).split('.')[0];
-    var amountBMin = '0x' + new BigNumber( this.yourPoolShare)
-    .multipliedBy(new BigNumber(this.percentage))
-    .multipliedBy(new BigNumber(this.pooledSecondToken))
-    .dividedBy(new BigNumber(10000))
-    .multipliedBy(new BigNumber(1).minus(new BigNumber(this.slippage * 0.01)))
-    .shiftedBy(this.secondTokenDecimals)
-    .toString(16).split('.')[0];
-    var to = this.walletService.account;
-    var timestamp = new TimestampModel(
-      this.deadline,
-      0,
-      0,
-      0 // here need to set for future timestamp
-    );
-    var deadline = this.utilService.getTimestamp(timestamp);
-
-    
-    var params = [this.firstToken, this.secondToken, value ,amountAMin, amountBMin, to, deadline];
-
-
-    var abiHex = this.web3Service.removeLiquidity(params);
-
-    const alertDialogRef = this.dialog.open(AlertComponent, {
-      width: '250px',
-      data: {text: 'Please approve your request in your wallet'},
-    });
-
-    this.kanbanService
-    .send( environment.smartConractAdressRouter, abiHex)
-    .then((data) => {
-      alertDialogRef.close();
-      const baseUrl = environment.production ? 'https://www.exchangily.com' : 'https://test.exchangily.com';
-      this.txHash = baseUrl + '/explorer/tx-detail/' + data;
-    }).catch(
-      (error: any) => {
-        console.log('error===', error);
-        alertDialogRef.close();
-        this._snackBar.open(error, 'Ok');
-      }
-    );
-  }
-  */
 }

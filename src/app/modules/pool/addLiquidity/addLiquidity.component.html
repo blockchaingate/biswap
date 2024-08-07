@@ -94,51 +94,46 @@
             </mat-card-actions>
         </mat-card>
 
-        <div class="paddingTop20 your-position mb-3" *ngIf="item">
+
+          
+
+        <div class="paddingTop20 your-position mb-3" *ngIf="item?.pair">
             <mat-card id="position-mat-card">
-
+        
                 <div>
-
+        
                     <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
                         <span> {{"Your LP tokens"|translate}}: </span>
                         <div fxLayout="row" fxLayoutAlign="center center">
-
-
                             <span> {{item.liquidityTokenBalance}}</span>
                         </div>
                     </div>
-
+        
                     <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
                         <span> {{"Pooled"|translate}} {{item.token0Name}}: </span>
                         <div fxLayout="row" fxLayoutAlign="center center">
-
-
-                            <span> {{item.pair.reserve0}}</span>
+                            <span> {{item?.pair?.reserve0}}</span>
                         </div>
                     </div>
-
+        
                     <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
                         <span> {{"Pooled"|translate}} {{item.token1Name}}:</span>
                         <div fxLayout="row" fxLayoutAlign="center center">
-
-                            <span> {{item.pair.reserve1}} </span>
-
+                            <span> {{item?.pair?.reserve1}} </span>
                         </div>
                     </div>
-
+        
                     <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
                         <span> {{"Your pool share"|translate}}: </span>
                         <div fxLayout="row" fxLayoutAlign="center center">
-
-
                             <span> {{ item.share }} % </span>
                         </div>
                     </div>
-
+        
                 </div>
             </mat-card>
         </div>
-
+        
 
 
 

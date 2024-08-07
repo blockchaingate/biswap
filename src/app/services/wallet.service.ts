@@ -22,9 +22,14 @@ export class WalletService {
 
 
   disconnect() {
-    const address = '';
-    this.account = address;
-    this.accountSubject.next(address);
+
+    console.log('disconnect=====================================> , this.session=', this.session);
+    console.log('disconnect=====================================> , this.client=', this.client);
+    console.log('disconnect=====================================> , this.topic=', this.topic);
+    console.log('disconnect=====================================> , this.account=', this.account);
+
+    this.account = "";
+    this.accountSubject.next("");
     this.client.disconnect({
       topic: this.topic,
       projectId,
@@ -50,15 +55,9 @@ export class WalletService {
 
   async connectWalletNew() {
     console.log('connecting');
-    /*
-    if(this.client) {
-      return;
-    }
-    */
     
     SignClient.init({
       projectId,
-      //relayUrl: 'wss://api.biswap.com',
       metadata: {
         name: "Biswap Dapp",
         description: "Automated FAB-based crypto exchange",
@@ -67,14 +66,19 @@ export class WalletService {
       }
     }).then(
       client => {
+
+        console.log('client================================>', client);
+
         this.client = client;
 
         client.on("session_event", (args) => {
+        console.log('args================================>', args);
+
              const id = args.id;
              const ddd = args.params;
              const topic = args.topic;
              this.topic = topic;
-             console.log('id===', id);
+            
             // Handle session events, such as "chainChanged", "accountsChanged", etc.
             
         });
@@ -95,8 +99,6 @@ export class WalletService {
         this.showQrcode();
       }
     )
-
-  
       
   }
 
@@ -105,8 +107,6 @@ export class WalletService {
   }
 
   showQrcode() {
-      console.log('showing');
-      console.log('chainId===', chainId);
       this.client.connect({
 
         // Provide the namespaces and chains (e.g. `eip155` for EVM-based chains) we want to use in this session.
@@ -120,7 +120,7 @@ export class WalletService {
           },
         },
       }).then( (connected: any) => {
-        console.log('connect in then');
+      
         const { uri, approval } = connected;
         // Open QRCode modal if a URI was returned (i.e. we're not connecting an existing pairing).
         if (uri) {

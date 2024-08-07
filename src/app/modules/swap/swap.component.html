@@ -38,17 +38,14 @@
             <div fxLayout="column" fxLayoutGap="10px">
 
                 <div class="coins-input-body" fxLayout="row" fxLayoutAlign="space-between center">
-                    <!-- <mat-form-field>
-                        <mat-label></mat-label> -->
                     <input (keyup)="onKey(firstCoinAmount, true)" #token1 name="firstCoinAmount" type="number" class="tokenAmt"
                         [(ngModel)]="firstCoinAmount" placeholder="0.0" />
-                    <!-- </mat-form-field> -->
                     <div class="tokenSelectButton" (click)="openFirstTokenListDialog()">
-                        <span class="tokenwithIcon" *ngIf="firstToken.symbol != null; else select">
+                        <span class="tokenwithIcon" *ngIf="firstToken?.symbol != null; else select">
                             {{ firstToken.symbol }} <span *ngIf="firstCoinBalance >= 0">({{firstCoinBalance}})</span>
                             <mat-icon>expand_more</mat-icon>
                         </span>
-
+                
                         <ng-template #select>
                             <span class="tokenwithIcon">
                                 {{"Select Token"|translate}} <mat-icon>expand_more</mat-icon>
@@ -56,6 +53,7 @@
                         </ng-template>
                     </div>
                 </div>
+                
 
                 <div fxLayout="row" fxLayoutAlign="center center">
                     <button (click)="changeTokens()" mat-icon-button class="example-icon"
@@ -65,25 +63,22 @@
                 </div>
 
                 <div class="coins-input-body" fxLayout="row" fxLayoutAlign="space-between center">
-                    <!-- <mat-form-field>
-                        <mat-label></mat-label> -->
-                    <input readonly #token2 name="secondCointAmount" class="tokenAmt"
-                        type="number" [(ngModel)]="secondCoinAmount" placeholder="0.0" />
-                    <!-- </mat-form-field> -->
+                    <input readonly #token2 name="secondCoinAmount" class="tokenAmt" type="number" 
+                        [(ngModel)]="secondCoinAmount" placeholder="0.0" />
                     <div class="tokenSelectButton" (click)="openSecondTokenListDialog()">
-                        <span class="tokenwithIcon" *ngIf="secondToken.symbol != null; else selecta">
+                        <span class="tokenwithIcon" *ngIf="secondToken?.symbol != null; else selecta">
                             {{ secondToken.symbol }} <span *ngIf="secondCoinBalance >= 0">({{secondCoinBalance}})</span>
                             <mat-icon>expand_more</mat-icon>
                         </span>
-
+                
                         <ng-template #selecta>
                             <span class="tokenwithIcon">
                                 {{"Select Token"|translate}} <mat-icon>expand_more</mat-icon>
                             </span>
                         </ng-template>
                     </div>
-
                 </div>
+                
 
                 <div fxLayout="row" fxLayoutAlign="space-between">
                     <span> {{perAmountLabel}} </span>

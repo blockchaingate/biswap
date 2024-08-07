@@ -40,7 +40,6 @@ export class AppComponent {
   ngOnInit() {
     this.setupPaycoolEventListener();
     this.connectToPaycool();
-    this.storageService.removeWalletSession();
   }
 
   private initializeUrlParams(): void {
@@ -77,7 +76,6 @@ export class AppComponent {
   }
 
   private handlePaycoolData(event: Event): void {
-    console.log('handlePaycoolData');
     const customEvent = event as CustomEvent;
     const data = customEvent.detail?.data;
     if (data && Array.isArray(data.data)) {
@@ -91,7 +89,6 @@ export class AppComponent {
     for (const wallet of data) {
       if (wallet.chain === 'KANBAN') {
         this.walletService.connectWalletSocket(wallet);
-        console.log('KANBAN address:', wallet.address);
         break;
       }
     }
@@ -123,9 +120,7 @@ export class AppComponent {
                 }
               }
             }
-          } else {
-            console.log('Response does not have the expected structure or source is missing');
-          }
+          } 
         } catch (e) {
           console.error('Failed to parse response or unexpected error:', e);
         }

@@ -2,7 +2,6 @@ import {
   Component,
   ElementRef,
   OnInit,
-  Renderer2,
   ViewChild,
   AfterViewInit,
 } from "@angular/core";
@@ -25,7 +24,8 @@ import { SettingsComponent } from "../settings/settings.component";
 import { MatDialog } from "@angular/material/dialog";
 import { AlertComponent } from "../shared/alert/alert.component";
 import { timer } from "rxjs";
-import { isConnected, send } from "cool-connect";
+import { send } from "cool-connect";
+import { AppComponent } from "src/app/app.component";
 
 @Component({
   selector: "app-swap",
@@ -132,7 +132,8 @@ export class SwapComponent implements OnInit, AfterViewInit {
     private biswapServ: BiswapService,
     private currentRoute: ActivatedRoute,
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
+    private appComponent: AppComponent,
   ) {}
 
   openSettings() {
@@ -176,10 +177,11 @@ export class SwapComponent implements OnInit, AfterViewInit {
         if (t.symbol == "FAB") {
           this.setSecondToken(t);
         }
-        if (this.firstToken && this.secondToken) {
-          this.getPair();
-        }
       });
+      if (this.firstToken && this.secondToken) {
+        this.getPair();
+      }
+      
     }
   }
 
@@ -489,6 +491,9 @@ export class SwapComponent implements OnInit, AfterViewInit {
   }
 
   async swapFunction() {
+
+    console.log('swapFunction --------------------------------->  started');
+
     if (
       (this.isFistToken &&
         !this.firstCoinAmount &&
@@ -502,9 +507,17 @@ export class SwapComponent implements OnInit, AfterViewInit {
       this.error = "Not enough balance";
       return;
     }
+
+
+
     var to = this.account;
     var timestamp = new TimestampModel(this.deadline, 0, 0, 0);
     var deadline = this.utilService.getTimestamp(timestamp);
+
+    console.log('to --------------------------------->  started', to);
+    console.log('deadline --------------------------------->  started', deadline);
+
+  
 
     let abiHex = "";
     let approveAmount;
@@ -548,63 +561,73 @@ export class SwapComponent implements OnInit, AfterViewInit {
       approveAmount = amountInMax;
     }
 
-    if (isConnected()) {
-      const paramsSentSocket = {
-        source: "Biswap-Swap",
-        data: [
-          {
-            to: this.firstToken.id,
-            data: this.web3Service.getApprove([
-              environment.smartConractAdressRouter,
-              approveAmount,
-            ]),
-          },
-          {
-            to: environment.smartConractAdressRouter,
-            data: abiHex,
-          },
-        ],
-      };
+if (this.appComponent.device_id) {
+  const paramsSentSocket = {
+    source: "Biswap-Swap",
+    data: [
+      {
+        to: this.firstToken?.id, // Use optional chaining
+        data: this.web3Service?.getApprove([
+          environment.smartConractAdressRouter,
+          approveAmount,
+        ]),
+      },
+      {
+        to: environment.smartConractAdressRouter,
+        data: abiHex,
+      },
+    ],
+  };
 
-      send(paramsSentSocket);
-    } else {
-      const paramsSent = [
-        {
-          to: this.firstToken.id,
-          data: this.web3Service.getApprove([
-            environment.smartConractAdressRouter,
-            approveAmount,
-          ]),
-        },
-        {
-          to: environment.smartConractAdressRouter,
-          data: abiHex,
-        },
-      ];
-      const alertDialogRef = this.dialog.open(AlertComponent, {
-        width: "250px",
-        data: { text: "Please approve your request in your wallet" },
-      });
+  if (paramsSentSocket.data[0].to && paramsSentSocket.data[0].data) {
+    send(paramsSentSocket);
+  } else {
+    console.error("Failed to set up paramsSentSocket:", paramsSentSocket);
+  }
+} else {
 
-      this.kanbanService
-        .sendParams(paramsSent)
-        .then((txids) => {
-          alertDialogRef.close();
-          const baseUrl = environment.production
-            ? "https://www.exchangily.com"
-            : "https://test.exchangily.com";
-          //this.txHash = baseUrl + '/explorer/tx-detail/' + data;
+  const paramsSent = [
+    {
+      to: this.firstToken?.id,
+      data: this.web3Service?.getApprove([
+        environment.smartConractAdressRouter,
+        approveAmount,
+      ]),
+    },
+    {
+      to: environment.smartConractAdressRouter,
+      data: abiHex,
+    },
+  ];
 
-          this.txHashes = txids.map(
-            (txid: string) => baseUrl + "/explorer/tx-detail/" + txid
-          );
-        })
-        .catch((error: any) => {
-          alertDialogRef.close();
-          console.log("error===", error);
-          this._snackBar.open(error, "Ok");
-        });
-    }
+  if (paramsSent[0].to && paramsSent[0].data) {
+    const alertDialogRef = this.dialog.open(AlertComponent, {
+      width: "250px",
+      data: { text: "Please approve your request in your wallet" },
+    });
+    this.kanbanService
+    .sendParams(paramsSent)
+    .then((txids) => {
+      alertDialogRef.close();
+      const baseUrl = environment.production
+        ? "https://www.exchangily.com"
+        : "https://test.exchangily.com";
+      //this.txHash = baseUrl + '/explorer/tx-detail/' + data;
+
+      this.txHashes = txids.map(
+        (txid: string) => baseUrl + "/explorer/tx-detail/" + txid
+      );
+    })
+    .catch((error: any) => {
+      alertDialogRef.close();
+      console.log("error===", error);
+      this._snackBar.open(error, "Ok");
+    });
+} else {
+    console.error("Failed to set up paramsSent:", paramsSent);
+  }
+}
+
   }
 }
 

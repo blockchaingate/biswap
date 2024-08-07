@@ -18,7 +18,8 @@ import { SettingsComponent } from "../../settings/settings.component";
 import { BiswapService } from "src/app/services/biswap.service";
 import { AlertComponent } from "../../shared/alert/alert.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { isConnected, send } from "cool-connect";
+import { send } from "cool-connect";
+import { AppComponent } from "src/app/app.component";
 
 @Component({
   selector: "app-addLiquidity",
@@ -136,7 +137,8 @@ export class AddLiquidityComponent implements OnInit {
     private currentRoute: ActivatedRoute,
     private router: Router,
     private _snackBar: MatSnackBar,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private appComponent: AppComponent
   ) {}
 
   ngOnInit() {
@@ -238,19 +240,6 @@ export class AddLiquidityComponent implements OnInit {
         this.firstCoinAmount = value;
       }
     }
-
-    /*
-    if(!this.firstCoinAmount ||
-      !this.secondCoinAmount ||
-      !this.firstCoinBalance || 
-      !this.secondCoinBalance ||
-      (Number(this.firstCoinAmount) > Number(this.firstCoinBalance)) ||
-      (Number(this.secondCoinAmount) > Number(this.secondCoinBalance))) {
-        this.insufficientFund = true;
-      } else {
-        this.insufficientFund = false;
-      }
-    */
   }
 
   async setInputValues(isFirst: boolean) {
@@ -264,44 +253,10 @@ export class AddLiquidityComponent implements OnInit {
       this.secondCoinAmount = new BigNumber(this.firstCoinAmount)
         .dividedBy(new BigNumber(this.perAmount))
         .toNumber();
-      /*
-      var amount: number = this.firstCoinAmount;
-
-      console.log('reserve1===', reserve1);
-      console.log('reserve2===', reserve2);
-      console.log('amount=', amount);
-      let value = new BigNumber(amount)
-        .shiftedBy(this.secondToken.decimals)
-        .toFixed(); 
-      value = value.split('.')[0];
-      const params = [value, reserve1, reserve2];
-
-      this.secondCoinAmount = await this.kanbanMiddlewareService.getQuote(
-        params, this.firstToken.decimals
-      );
-      */
     } else {
       this.firstCoinAmount = new BigNumber(this.secondCoinAmount)
         .multipliedBy(new BigNumber(this.perAmount))
         .toNumber();
-      /*
-      this.kanbanMiddlewareService.getQuoteV3(
-        reserve2, reserve1, this.secondCoinAmount
-      
-      );
-      */
-      /*
-      var amount: number = this.secondCoinAmount;
-      let value = new BigNumber(amount)
-      .shiftedBy(this.firstToken.decimals)
-        .toFixed();
-      value = value.split('.')[0];
-      const params = [value, reserve2, reserve1];
-
-      this.firstCoinAmount = await this.kanbanMiddlewareService.getQuote(
-        params, this.secondToken.decimals
-      );
-      */
     }
   }
 
@@ -320,7 +275,6 @@ export class AddLiquidityComponent implements OnInit {
       .subscribe((data1) => {
         let res: any = data1;
         var addeess = this.web3Service.decodeabiHex(res.data, "address");
-        console.log("address=", addeess);
         if (
           addeess.toString() != "0x0000000000000000000000000000000000000000"
         ) {
@@ -331,22 +285,15 @@ export class AddLiquidityComponent implements OnInit {
             .subscribe((data3) => {
               var param = ["uint112", "uint112", "uint32"];
               let res: any = data3;
-              console.log("res.data");
-              console.log(res.data);
               var value = this.web3Service.decodeabiHexs(res.data, param);
-              console.log(value);
               let firstTokenDecimals = this.firstToken.decimals;
               let secondDecimals = this.secondToken.decimals;
               if (this.firstToken.id < this.secondToken.id) {
                 this.firstTokenReserve = value[0];
                 this.secondTokenReserve = value[1];
-                //firstTokenDecimals = this.firstToken.decimals;
-                //secondDecimals = this.secondToken.decimals;
               } else {
                 this.firstTokenReserve = value[1];
                 this.secondTokenReserve = value[0];
-                //value0Decimals = this.secondToken.decimals;
-                //value1Decimals = this.firstToken.decimals;
               }
 
               var perAmount = new BigNumber(this.firstTokenReserve)
@@ -382,15 +329,11 @@ export class AddLiquidityComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((x) => {
-        console.log("x of afterClosed=", x);
         if (x.isFirst) {
-          console.log("go here");
           this.dataService.GetFirstToken.subscribe((data) => {
-            console.log("data of GetFirstToken");
             this.firstToken = data;
           });
         }
-        console.log("go threre");
         if (this.firstToken.id != null && this.secondToken.id != null) {
           this.kanbanCallMethod();
         }
@@ -411,7 +354,6 @@ export class AddLiquidityComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((x) => {
-        console.log("x of afterClosed=", x);
         if (x.isSecond) {
           this.dataService.GetSecondToken.subscribe((data) => {
             this.secondToken = data;
@@ -441,9 +383,6 @@ export class AddLiquidityComponent implements OnInit {
   }
 
   addLiqudity() {
-    console.log("this.firstToken===", this.firstToken);
-    console.log("this.secondToken===", this.secondToken);
-    console.log("go for addLiquidity");
 
     const paramsSent: any = [];
     let amountADesired =
@@ -477,9 +416,6 @@ export class AddLiquidityComponent implements OnInit {
       to: tokenB,
       data: abiHex,
     });
-
-    //var amountADesireda = '0x' + new BigNumber(amountADesired).toString(16);
-    //var amountBDesireda = '0x' + new BigNumber(amountBDesired).toString(16);
 
     var amountAMin =
       "0x" +
@@ -526,7 +462,7 @@ export class AddLiquidityComponent implements OnInit {
       data: abiHex,
     });
 
-    if (isConnected()) {
+    if (this.appComponent.device_id) {
       const paramsSentSocket = {
         source: "Biswap-addLiquidity",
         data: paramsSent,
