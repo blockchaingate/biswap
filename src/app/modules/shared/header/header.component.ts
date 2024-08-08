@@ -40,7 +40,14 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.setLan();
     this.walletService.accountSubject.subscribe((account: string) => {
-      this.address = this.utilsServ.exgToFabAddress(account);
+      if(account) {
+        console.log('account header ----------------------------------------->', account);
+        this.address = this.utilsServ.exgToFabAddress(account);
+      }else{
+        console.log('account header null----------------------------------------->');
+        this.address = '';
+      }
+
     });
   }
 
