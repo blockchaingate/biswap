@@ -319,6 +319,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
         if (this.firstToken.id != null && this.secondToken.id != null) {
           this.getPair();
         }
+        this.refresh();
       });
   }
 
@@ -341,6 +342,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
         if (this.firstToken.id != null && this.secondToken.id != null) {
           this.getPair();
         }
+        this.refresh();
       });
   }
 
