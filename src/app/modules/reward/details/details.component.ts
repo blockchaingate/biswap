@@ -27,6 +27,9 @@ export class DetailsComponent implements OnInit {
     if(!item.amount || (item.amount < 0)) {
       return false;
     }
+    if(item.tokenName == 'BCC') {
+      return false;
+    }
     const exgAddress = this.utilServ.fabToExgAddress(item.address);
     return exgAddress.toLowerCase() == this.account.toLowerCase();
   }
@@ -108,6 +111,11 @@ export class DetailsComponent implements OnInit {
       );
     }
 
+  }
+
+  showShortAddress(address: string) {
+    if(address.length < 14) return;
+    return address.substring(0,8) + ' ... ' + address.substring(address.length-8);
   }
 
 }

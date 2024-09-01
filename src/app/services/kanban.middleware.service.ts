@@ -17,20 +17,13 @@ export class KanbanMiddlewareService {
     private kanbanService: KanbanService
   ) {}
 
-  async balanceOfToken(pairAddress: string, tokenType: number) {
-    var params = [pairAddress, tokenType.toString()];
-    var abiHex = this.web3Service.getBalanceOfProxy(params);
-
-    var result = await this.kanbanService.kanbanCall1(
-      environment.smartConractAdressProxy,
-      abiHex
-    );
-    let res: any = result;
-    var value = this.web3Service.decodeabiHex(res.data, 'uint256');
-    var temp = Number(value);
-    return Number(new BigNumber(temp).dividedBy(new BigNumber(1e18)));
+    /*
+  getQuoteV3(
+    reserve1, reserve2, amount1
+  ) {
+    return new BigNumber(reserve1).multipliedBy(reserve2).dividedBy(new BigNumber(amount1)).toNumber();
   }
-
+  */
   async getTotalSupply(pairAddress: string) {
     var abiHex = this.web3Service.totalSupply();
 
@@ -60,7 +53,7 @@ export class KanbanMiddlewareService {
     } else return null;
   }
 
-  async getQuote(params: any) {
+  async getQuote(params: any, decimals: number) {
     var abiHex = this.web3Service.quote(params);
     console.log('abiHex => ' + abiHex);
     var result = await this.kanbanService.kanbanCall1(
@@ -70,7 +63,9 @@ export class KanbanMiddlewareService {
 
     let res: any = result;
     var value = this.web3Service.decodeabiHex(res.data, 'uint256');
+    console.log('value for quote=', value);
     var temp = Number(value);
-    return Number(new BigNumber(temp).dividedBy(new BigNumber(1e18)));
+    console.log('temp for quote=', temp);
+    return new BigNumber(temp).shiftedBy(-decimals).toNumber();
   }
 }

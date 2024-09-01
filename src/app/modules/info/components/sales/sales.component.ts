@@ -12,7 +12,7 @@ export class SalesComponent implements OnInit {
   @Input() items: any;
   @Input() dates: any;
   @Input() title: string = "";
-  @Input() bgColor: string = "rgba(255,0,0,0.3)";
+  @Input() bgColor: string = "#2022cf33";
 
 
   constructor() {
@@ -49,7 +49,7 @@ export class SalesComponent implements OnInit {
 
         fill: true,
         tension: 0.2,
-        borderColor: 'black',
+        borderColor: '#2022cf',
         backgroundColor: this.bgColor
       }
     ]

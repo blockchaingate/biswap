@@ -4,3 +4,10 @@
     padding: 20px;
     text-align: center;
 }
+
+@media screen and (max-width: 600px) {
+    .footer {
+        display:none;
+    }
+}
+    

@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
   walletSession: any;
   walletLabel: string = '';
-  account: string = '';
+  address: string = '';
 
   LANGUAGES: Language[] = [
     { value: 'en', viewValue: 'English' },
@@ -31,47 +31,53 @@ export class HeaderComponent implements OnInit {
     public dataService: DataService,
     public walletService: WalletService,
     public storageService: StorageService,
-    private utilsServ: UtilsService,
     public dialog: MatDialog,
     private _localSt: LocalStorage,
     private tranServ: TranslateService,
-  ) {}
+    private utilsServ: UtilsService,
+  ) { }
 
   ngOnInit(): void {
-    this.account = this.walletService.account;
-    if(!this.account) {
-      this.walletService.accountSubject.subscribe(
-        account => {
-          this.account = account;
-        }
-      );
-    }
-
     this.setLan();
+    this.walletService.accountSubject.subscribe((account: string) => {
+      if(account) {
+        console.log('account header ----------------------------------------->', account);
+        this.address = this.utilsServ.exgToFabAddress(account);
+      }else{
+        console.log('account header null----------------------------------------->');
+        this.address = '';
+      }
+
+    });
   }
 
   showAccount() {
-    const address = this.utilsServ.exgToFabAddress(this.account);
-    return address.substring(0,3) + '...' + address.substring(address.length - 3);
+      return this.address.substring(0, 3) + '...' + this.address.substring(this.address.length - 3);
   }
 
   setLan() {
     const storedLan = localStorage.getItem('_lan');
+
     if (storedLan) {
-      if (storedLan === 'en') {
-        this.selectedLan = this.LANGUAGES[0];
-      } else if (storedLan === 'sc') {
-        this.selectedLan = this.LANGUAGES[1];
-      } else if (storedLan === 'tc') {
-        this.selectedLan = this.LANGUAGES[2];
+      switch (storedLan) {
+        case 'en':
+          this.selectedLan = this.LANGUAGES[0];
+          break;
+        case 'sc':
+          this.selectedLan = this.LANGUAGES[1];
+          break;
+        case 'tc':
+          this.selectedLan = this.LANGUAGES[2];
+          break;
       }
     } else {
-      let userLang = navigator.language;
-      userLang = userLang.substring(0, 2);
-      if (userLang === 'CN' || userLang === 'cn' || userLang === 'zh') {
+      let userLang = navigator.language.substring(0, 2).toLowerCase();
+      if (userLang === 'cn' || userLang === 'zh' || userLang === 'sc') {
         this.selectedLan = this.LANGUAGES[1];
         localStorage.setItem('_lan', 'sc');
         this._localSt.setItem('_lan', 'sc');
+      } else {
+        this.selectedLan = this.LANGUAGES[0];
       }
     }
     this.tranServ.use(this.selectedLan.value);
@@ -80,7 +86,6 @@ export class HeaderComponent implements OnInit {
   openClose(lan: Language) {
     this.selectedLan = lan;
     this.tranServ.use(lan.value);
-
     localStorage.setItem('_lan', lan.value);
     this._localSt.setItem('_lan', lan.value);
   }
@@ -90,12 +95,10 @@ export class HeaderComponent implements OnInit {
   }
 
   connectWallet() {
-   //await this.walletService.connectWallet();
-   this.walletService.connectWalletNew();
+    this.walletService.connectWalletNew();
   }
 
   disConnectWallet() {
-    console.log('go for disconnect');
     this.walletService.disconnect();
   }
 }

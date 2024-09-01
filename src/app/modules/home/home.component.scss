@@ -26,7 +26,7 @@
   }
 }
 
-.headline{
+.headline {
   text-align: center;
 }
 
@@ -42,6 +42,20 @@
   padding-top: 60px;
 }
 
+@keyframes floatAnimation {
+
+  0%,
+  100% {
+    transform: translate(0%, 0%) translateY(0);
+    /* Start and end position */
+  }
+
+  50% {
+    transform: translate(0%, 0%) translateY(-10px);
+    /* Top position */
+  }
+}
+
 .contentRow {
   padding: 150px 0;
 
@@ -53,13 +67,50 @@
     height: 100%;
     padding: 0 10px;
     flex-direction: column;
+
+
+  }
+
+  .topBanner {
+    // position: relative;
+    // width: 40vw;
+    // height: 40vw;
+
+    img {
+      // position: absolute;
+      // top: 50%;
+      /* Start at the vertical center of the container */
+      // left: 50%;
+      /* Start at the horizontal center of the container */
+      // transform: translate(-50%, -50%);
+      /* Center the image */
+      animation: floatAnimation 3s ease-in-out infinite;
+      /* Apply the animation */
+    }
+  }
+
+  @keyframes changeBackground {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 
   .bannerTxt {
     .btns {
       margin-top: 20px;
+
       a {
-        background: linear-gradient(90deg, #0b2dd5 0%, #6827e1 100%);
+        background: linear-gradient(90deg, #0b2dd5 0%, #6827e1 50%, #0b2dd5 100%);
+        background-size: 200% 100%;
+        /* Double the width to cover the entire button */
+        animation: changeBackground 6s ease infinite;
+        /* Change color every 6 seconds */
       }
     }
 
@@ -73,6 +124,7 @@
   .bannerImg {
     //horizontal align image middle
     align-items: center;
+
     img {
       width: 80%;
     }
@@ -110,7 +162,8 @@
   font-size: medium;
 }
 
-h1, .headline .subtitle {
+h1,
+.headline .subtitle {
   font-size: 16px;
   font-weight: 800;
   line-height: normal;
@@ -125,6 +178,14 @@ h2 {
 h3 {
   font-size: 8px;
   font-weight: 20;
+}
+
+h1.gradient-text {
+  // background-image: linear-gradient(45deg, #ff00ff, #00ffff);
+  background-image: linear-gradient(45deg, #ffffff 0%, #bca3cf 30%, #f1be4f 60%);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
 .mt-title {
@@ -160,7 +221,7 @@ h3 {
 }
 
 @media (min-width: 600px) {
-  h1{
+  h1 {
     font-size: 40px;
   }
 
@@ -179,11 +240,13 @@ h3 {
   .mt-title {
     margin-top: 64px;
   }
+
   .showcard {
     width: 200px;
     height: 108px;
     border-radius: 7px;
   }
+
   .contentbox {
     width: 580px;
   }
@@ -215,13 +278,14 @@ h3 {
     height: 160px;
     border-radius: 10px;
   }
+
   .contentbox {
     width: 800px;
   }
 }
 
 @media (min-width: 1280px) {
-  h1{
+  h1 {
     font-size: 76px;
   }
 
@@ -246,26 +310,27 @@ h3 {
     height: 214px;
     border-radius: 14px;
   }
+
   .contentbox {
     width: 920px;
   }
 }
 
 @media (min-width: 1920px) {
-  h1{
-    font-size: 128px;
+  h1 {
+    font-size: 90px;
   }
 
   .headline .subtitle {
-    font-size: 106px;
+    font-size: 80px;
   }
 
   h2 {
-    font-size: 64px;
+    font-size: 52px;
   }
 
   h3 {
-    font-size: 36px;
+    font-size: 28px;
   }
 
   .mt-title {
@@ -296,11 +361,13 @@ h3 {
 
 .appBtns {
   display: flex;
+
   //justify-content: space-between;
   //margin-right: 20px;
-  .btns{
+  .btns {
     margin-right: 20px;
   }
+
   a {
     background: linear-gradient(90deg, #0b2dd5 0%, #6827e1 100%);
   }

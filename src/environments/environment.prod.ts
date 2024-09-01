@@ -9,18 +9,15 @@ export const environment = {
 
   // smartConractAdressRouter:  "0xd99bfcbfad77f57b5ed20286c24ad71785d73993", - old router, can't charge fee
   // smartConractAdressRouter:  "0xb05c29010751d3aec15bc98602fad16c92fe25eb",    //New router with FEE - this one charges wrong fee.
-  smartConractAdressRouter:  "0xf2fd85a831d25859c4d0b8f493bb7bfd5c27c0b3",    //New router with FEE
-  smartConractAdressProxy:   "0xe4d478abfc9592188a3c71468d3e837628922121",
-  smartConractAdressFactory: "0x8aa15747311e39f31d89bd3082d20e1463a311c8",
-  smartConractStaking: '',
-                            //  "0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc",
+  smartConractAdressRouter:  "0x17c1dbe437eeb7544df0c96bcdeb6f1d1bb0172d",
+  smartConractAdressFactory: "0xcb6e4a55cea67e09a08acce843cda3e4ee1429b1",
   
   endpoints: {
     // blockchaingate: 'http://localhost:3002/v2/',
     blockchaingate: 'https://prod.blockchaingate.com/v2/',
     coingecko: 'https://api.coingecko.com/',
     kanban: 'https://kanbanprod.fabcoinapi.com/',
-    oldexplorerapi: 'https://fabexplorer.com/api',
+    oldexplorerapi: 'https://api.pay.cool/api',
     explorerapi: 'https://api.pay.cool/api',
     //explorerapi: 'https://api.pay.cool/api',
     BTC: {
@@ -46,6 +43,7 @@ export const environment = {
     // pricehistory: 'http://18.223.17.4:3002/klinedata/'
   },
   url: 'https://kanbanprod.fabcoinapi.com/',
+  urlV3: 'https://api.pay.cool/api/',
   CoinType: {
     BTC: 1,
     ETH: 60,
@@ -190,5 +188,9 @@ export const environment = {
         eventServer: 'https://api.trongrid.io'       
     }
 },
+
+webSocket: {
+    dp: "wss://api.pay.cool/ws/paycool@"
+}
 };
 

@@ -2,16 +2,20 @@
   <div>
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
       <span routerLink="/">
-        <img class="header-logo" src="/assets/images/biswap-256w.png" width="120px" alt="image">
+        <img class="header-logo" src="/assets/images/biswap-256w.png" width="60px" alt="image">
       </span>
+      <span>V3</span>
     </button>
   </div>
 
   <div fxHide.md fxHide.lt-md class="header-tab-items" fxLayout="row" fxLayoutGap="12px">
     <span routerLink="/swap">{{'Swap'|translate}}</span>
     <span routerLink="/pool">{{'Liquidity'|translate}}</span>
+    <!--
     <span routerLink="/staking">{{'Staking'|translate}}</span>
+    -->
     <span routerLink="/reward">{{'Rewards'|translate}}</span>
+    
     <span routerLink="/transactions">{{'Transactions'|translate}}</span>
     <span routerLink="/charts">{{'Info'|translate}}</span>
   </div>
@@ -24,11 +28,11 @@
       </button>
     </div>
 
-    <button mat-raised-button class="connectBtn" *ngIf="!account" (click)="connectWallet()">
+    <button mat-raised-button class="connectBtn" *ngIf="!address" (click)="connectWallet()">
       {{ 'Connect Wallet'| translate }}
     </button>
-    <span *ngIf="account">{{showAccount()}}</span>
-    <button mat-raised-button color="primary" *ngIf="account" (click)="disConnectWallet()">
+    <span *ngIf="address">{{showAccount()}}</span>
+    <button mat-raised-button class="connectBtn" color="primary" *ngIf="address" (click)="disConnectWallet()">
       {{ 'Disconnect'|translate }}
     </button>
 
@@ -49,27 +53,5 @@
     
       </div>
     </mat-menu>
-
-<!--
-    <button mat-icon-button class="example-icon" [matMenuTriggerFor]="menu"
-      aria-label="Example icon-button with share icon">
-      <mat-icon>more_horiz</mat-icon>
-    </button>
-
-    <mat-menu class="matMenu" #menu="matMenu">
-      <button mat-menu-item>
-        <mat-icon>language</mat-icon>
-        <span>Languages</span>
-      </button>
-      <button mat-menu-item disabled>
-        <mat-icon>voicemail</mat-icon>
-        <span>Check voice mail</span>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>notifications_off</mat-icon>
-        <span>Disable alerts</span>
-      </button>
-    </mat-menu>
-  -->
   </div>
 </mat-toolbar>

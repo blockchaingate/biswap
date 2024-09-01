@@ -1,11 +1,9 @@
 .title1{
     text-align: center;
     padding: 50px 0;
-    
-    h1{
-        font-size: 50px;
-    }
+    font-size: 50px;
 }
+
 .swapBody {
     min-width: 25%;
     padding-bottom: 100px;
@@ -64,11 +62,28 @@
     border-radius: 20px;
 }
 
-::ng-deep .mat-expansion-panel-header-description {
-    flex-grow: 0 !important;
-}
-
 .action-buttons {
     width: 125px;
     border-radius: 10px;
+}
+
+@media(max-width: 600px) //if more than 400 px
+{
+    .title1{
+        text-align: center;
+        padding: 20px 0;
+        font-size: 18px;
+    }
+
+    ::ng-deep .mat-card {
+        border-radius: 12px !important;
+        background-color: transparent;
+    }
+    
+    .emty-liquidity {
+        background-color: transparent;
+        padding: 0;
+        margin: 0;
+    }
+   
 }

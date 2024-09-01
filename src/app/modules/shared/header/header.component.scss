@@ -1,7 +1,4 @@
-
-
 .header-tab-items span {
-    // width: 2rem;
     padding: 0px 10px;
     display: flex;
     justify-content: center;
@@ -10,17 +7,14 @@
     font-size: 16px;
     cursor: pointer;
     &:hover {
-        // border-bottom: 2px solid white;
         color: white;
         font-weight: 500;
     }
 }
 
 .mat-toolbar {
-    // color: black;
-    // background-color: #fff;
     color: #eee;
-    background-color: #0b0e1c;
+    background-color: black;
     padding: 0px 50px;
 }
 
@@ -79,11 +73,23 @@
 
 @media only screen and (max-width: 600px) {
     .header-logo {
-        width: 112px;
+        width: 116px;
         height: auto;
     }
+
+    .menuRight {
+        font-size: 12px;
+    }
+
+    .connectBtn {
+        height: 34px;
+        margin-top: 6px;
+        font-size: 12px;
+    }
+
     .header-tab-items {
         display: none !important;
+        width: 220px;
     }
 
     .topBar {
@@ -99,8 +105,4 @@
     .mat-toolbar-single-row{
         height: 120px !important;
     }
-
-    // .menuRight{
-    //     margin: 100px auto 0;
-    // }
 }

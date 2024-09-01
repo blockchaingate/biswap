@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, SimpleChange } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Coin } from 'src/app/models/coin';
 import { DataService } from 'src/app/services/data.service';
@@ -12,7 +12,7 @@ import { SwapComponent } from '../../swap/swap.component';
 export class TokenListComponent implements OnInit {
   searchTokenLabel = '';
   tokenList: any;
-  filteredTokens: Coin [] = [];
+  filteredTokens: Coin[] = [];
 
   constructor(
     private dataService: DataService,
@@ -25,29 +25,37 @@ export class TokenListComponent implements OnInit {
     this.filteredTokens = this.tokenList;
     this.filteredTokens.sort(this.compare);
     this.filteredTokens.forEach((ele) => {
-      ele.logoUrl = 'https://exchangily.com/assets/coins/' + ele.tickerName.toLocaleLowerCase() + '.png';
-    }); 
+      if (ele && ele.symbol) {
+        ele.logoUrl = 'https://exchangily.com/assets/coins/' + ele.symbol.toLocaleLowerCase() + '.png';
+      } else {
+        ele.logoUrl = 'https://exchangily.com/assets/coins/none.png';
+      }
+    });
   }
 
-  compare(a: Coin, b: Coin ) {
-    if ( a.tickerName < b.tickerName ){
+  compare(a: Coin, b: Coin) {
+    if (a.tickerName < b.tickerName) {
       return -1;
     }
-    if ( a.tickerName > b.tickerName ){
+    if (a.tickerName > b.tickerName) {
       return 1;
     }
     return 0;
   }
 
+  showTokenId(id: string) {
+    return id.substring(0, 5) + '...' + id.substring(id.length - 3);
+  }
+  
   selectToken(token: Coin) {
     if (this.data.isFirst) {
       this.dataService.sendFirstToken(token);
       this.dialogRef.close({
         isFirst: true
       });
-    }else if(
+    } else if (
       this.data.isSecond
-    ){
+    ) {
       this.dataService.sendSecondToken(token);
       this.dialogRef.close({
         isSecond: true
@@ -56,11 +64,10 @@ export class TokenListComponent implements OnInit {
   }
 
   searchToken(token: any) {
-
-    this.filteredTokens = this.tokenList.filter((x: any) => x.tickerName.toLowerCase().includes(token.toLowerCase()))
-    
+    this.filteredTokens = this.tokenList.filter((x: any) => x.symbol.toLowerCase().includes(token.toLowerCase()))
   }
 
-  
-
+  handleImageError(ev: any) {
+    ev.target.src = 'https://exchangily.com/assets/coins/none.png';
+  }
 }

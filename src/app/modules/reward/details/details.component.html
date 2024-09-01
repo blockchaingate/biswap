@@ -1,75 +1,70 @@
-<div class="rounded-card">
-    <div class="container">
-        <div class="row py-2">
-            <div class="titiCol col-md-4">
-                <b>{{"Address"|translate}}</b>
-            </div>
-            <div class="titiCol col-md-3">
-                <b>{{"Token"|translate}}</b>
-            </div>
-            <div class="titiCol col-md-3">
-                <b>{{"Amount"|translate}}</b>
-            </div>
-            <div class="titiCol col-md-2">
-
-            </div>
-        </div>
-
-        <div class="row py-2" *ngFor="let item of rewards;let i = index">
-            <div class="titiCol col-md-4">
-                {{item.address}}
-            </div>
-            <div class="titiCol col-md-3">
-                {{item.tokenName}}
-            </div>
-
-            <div class="titiCol col-md-3">
-              <div>{{"Active"|translate}}: {{item.amount}}</div>
-
-                <div>{{"Pending"|translate}}: {{item.pendingAmount}}</div>
-                <div>{{"Redeem"|translate}}: {{item.redeemAmount}}</div>
-            </div>
-            <div class="titiCol col-md-2">
-                <button mat-raised-button *ngIf="redeemable(item)" color="primary" (click)="redeem(item.address, item.tokenName)">
-                    {{ 'Redeem' |translate }}
-                </button>
-            </div>
-        </div>
+<div class="detailbody">
+  <div class="title">
+    <div class="titiCol col-4">
+      <b>{{"Address"|translate}}</b>
     </div>
+    <div class="titiCol col-2">
+      <b>{{"Token"|translate}}</b>
+    </div>
+    <div class="titiCol col-4">
+      <b>{{"Amount"|translate}}</b>
+    </div>
+    <div class="titiCol col-2">
+    </div>
+  </div>
+
+  <div class="contnt" *ngFor="let item of rewards;let i = index">
+    <div class="titiCol col-4">
+      {{showShortAddress(item.address)}}
+    </div>
+    <div class="titiCol col-2">
+      {{item.tokenName}}
+    </div>
+
+    <div class="titiCol col-4">
+      <div>{{"Active"|translate}}: {{item.amount > 0 ? item.amount : 0}}</div>
+      <div>{{"Pending"|translate}}: {{item.pendingAmount}}</div>
+      <div>{{"Redeem"|translate}}: {{item.redeemAmount}}</div>
+    </div>
+    <div class="titiCol col-2">
+      <button mat-raised-button *ngIf="redeemable(item)" color="primary" (click)="redeem(item.address, item.tokenName)">
+        {{ 'Redeem' |translate }}
+      </button>
+    </div>
+  </div>
 </div>
 
-
 <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-      <li class="page-item">
-        <a class="page-link" aria-label="Previous" (click)="changePageNum(pageNum - 1)">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" *ngIf="pageNum >= 1" (click)="changePageNum(pageNum - 1)">
-            {{pageNum}}</a>
-        </li>
-      <li class="page-item active">
-        <a class="page-link" (click)="changePageNum(pageNum)">
-            {{pageNum + 1}}
-        </a>
-      </li>
-      <li class="page-item" >
-        <a class="page-link" *ngIf="pageNum <= totalPage - 1" (click)="changePageNum(pageNum + 1)">
-            {{pageNum + 2}}
-        </a>
-      </li>
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a class="page-link" aria-label="Previous" (click)="changePageNum(pageNum - 1)">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" *ngIf="pageNum >= 1" (click)="changePageNum(pageNum - 1)">
+        {{pageNum}}</a>
+    </li>
+    <li class="page-item active">
+      <a class="page-link" (click)="changePageNum(pageNum)">
+        {{pageNum + 1}}
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" *ngIf="pageNum <= totalPage - 1" (click)="changePageNum(pageNum + 1)">
+        {{pageNum + 2}}
+      </a>
+    </li>
 
-      <li class="page-item" >
-        <a class="page-link" *ngIf="(pageNum < 1) && (pageNum <= totalPage - 2)" (click)="changePageNum(pageNum + 2)">
-            {{pageNum + 3}}
-        </a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" aria-label="Next" (click)="changePageNum(pageNum + 1)">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
+    <li class="page-item">
+      <a class="page-link" *ngIf="(pageNum < 1) && (pageNum <= totalPage - 2)" (click)="changePageNum(pageNum + 2)">
+        {{pageNum + 3}}
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" aria-label="Next" (click)="changePageNum(pageNum + 1)">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
 </nav>

@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-@Pipe({name: 'generateUrl'})
+@Pipe({ name: 'generateUrl' })
 export class GenerateUrlPipe implements PipeTransform {
 
   transform(txid: string): string {

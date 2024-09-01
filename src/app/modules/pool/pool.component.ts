@@ -91,11 +91,17 @@ export class PoolComponent implements OnInit {
 
   removeLiquidity(index: number) {
 
+    const liquidity = this.existedLiquidityList[index];
+    console.log('liquidity to be remove=', liquidity);
     this.router.navigate(['/pool/remove'], {
       state: {
-        pairId: this.existedLiquidityList[index].pair.id,
-        firstToken: parseInt(this.existedLiquidityList[index].pair.token0.id, 16),
-        secondToken: parseInt(this.existedLiquidityList[index].pair.token1.id, 16),
+        pairId: liquidity.pair.id,
+        firstTokenName: liquidity.token0Name,
+        secondTokenName: liquidity.token1Name,
+        firstTokenDecimals: liquidity.token0Decimals,
+        secondTokenDecimals: liquidity.token1Decimals,
+        firstToken: liquidity.pair.token0.id,
+        secondToken: liquidity.pair.token1.id,
         yourPoolShare: this.existedLiquidityList[index].share,
         pooledFirstToken: this.existedLiquidityList[index].pair.reserve0,
         pooledSecondToken: this.existedLiquidityList[index].pair.reserve1,
@@ -104,54 +110,4 @@ export class PoolComponent implements OnInit {
     });
   }
 
-  // async getExistLiquiditya() {
-
-  //   //TODO
-  //   // wallet connection needed here to calculate all numbers
-  //   // and
-  //   // need to have user pair address, this will come from Muchtar
-  //   var totalToken =
-  //     await this.kanbanMiddlewareService.getliquidityBalanceOfuser(
-  //       '0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc'
-  //     );
-  //   var totalSupply = await this.kanbanMiddlewareService.getTotalSupply(
-  //     '0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc'
-  //   );
-
-  //   if (totalToken != null)
-  //     this.totalPoolToken = this.utilService.toFixedNumber(totalToken);
-  //   this.totalSupply = this.utilService.toFixedNumber(totalSupply);
-
-  //   this.usersProportionOfLiquidityToWhole =
-  //     this.totalPoolToken / this.totalSupply;
-  //   this.yourPoolShare = (100 * this.totalPoolToken) / this.totalSupply;
-
-  //   //here token will fetch from service Muchtar will set
-
-  //   this.fisrtToken.tickerName = 'FAB';
-  //   this.secondToken.tickerName = 'EXG';
-
-  //   this.fisrtToken.coinType = 131072;
-  //   this.secondToken.coinType = 131073;
-
-  //   this.fisrtToken.decimal = await this.kanbanMiddlewareService.balanceOfToken(
-  //     '0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc',
-  //     this.fisrtToken.coinType
-  //   );
-  //   this.secondToken.decimal =
-  //     await this.kanbanMiddlewareService.balanceOfToken(
-  //       '0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc',
-  //       this.secondToken.coinType
-  //     );
-
-  //   this.firstTokeninPair =
-  //     this.utilService.toFixedNumber(this.fisrtToken.decimal) *
-  //     this.usersProportionOfLiquidityToWhole;
-  //   this.secondTokeninPair =
-  //     this.utilService.toFixedNumber(this.secondToken.decimal) *
-  //     this.usersProportionOfLiquidityToWhole;
-
-  //   console.log('usersProportionOfLiquidityToWhole');
-  //   console.log(this.usersProportionOfLiquidityToWhole);
-  // }
 }

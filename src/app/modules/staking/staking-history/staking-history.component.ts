@@ -55,14 +55,14 @@ export class StakingHistoryComponent implements OnInit {
     return new Date(timestamp * 1000).toLocaleString()
   }
   getStakesTotalCount() {
-    if(!this.account) {
+    if (!this.account) {
       return;
     }
     this.stakeServ.getStakesTotalCountByUser(this.account).subscribe(
       (ret: any) => {
         this.totalCount = ret.totalCount;
         this.loadStakes();
-        
+
       }
     );
   }

@@ -10,7 +10,7 @@ export class AllLiquidityComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('this.items245=', this.items);
+    console.log('this.items24555555=', this.items);
   }
 
 }

@@ -1,3 +1,30 @@
-// .rounded-card {
-//     color: black;
-// }
+.detailbody {
+    background-color: #042570;
+    width: 100%;
+}
+
+.title {
+    width: 100%;
+    display: flex;
+    font-size: 12px;
+    font-weight: 300;
+    background-color: black;
+}
+
+.titiCol {
+    padding: 0 2px;
+}
+
+.contnt {
+    width: 100%;
+    display: flex;
+    font-size: 10px;
+    font-weight: 200;
+}
+
+@media(max-width: 600px) //if more than 400 px
+{
+    .detailbody {
+        width: 100%;
+    }
+}

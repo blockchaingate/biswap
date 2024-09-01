@@ -17,7 +17,7 @@ import BigNumber from 'bignumber.js';
 })
 export class KanbanService {
   endpoint = environment.endpoints.kanban;
-  private url: string = environment.url;
+  private url: string = environment.urlV3;
   coins: Coin[] = [];
   walletModel: WalletModel = new WalletModel();
 
@@ -48,39 +48,46 @@ export class KanbanService {
     return addr;
   }
 
-  getTokenList() {
-    var tempTokenList: Coin[] = [];
-    //var removeItems = [196629, 524290, 196628, 458753, 589826, 196609, 196613];
-    var removeItems: any = [];
-    this.http
-      .get<BaseResponseModel>(`${this.url}exchangily/getTokenList/coinpool`)
-      .subscribe((x) => {
-        var tokenList: Coin[] = [];
-        tokenList = x.data.tokenList;
-        tokenList.forEach((element) => {
+  async getTokenList() {
+    let tempTokenList: Coin[] = [];
+    let removeItems: any = [];
+  
+    try {
+      const response = await this.http.get<BaseResponseModel>(`${this.url}v3/token/erc20/100/0`).toPromise();
+      
+      if (response && response.data) {
+        response.data.forEach((element) => {
           if (removeItems.indexOf(element.type) === -1) {
             tempTokenList.push(element);
           }
         });
-      });
-    this.dataService.settokenList(tempTokenList);
+      }
+  
+      this.dataService.settokenList(tempTokenList);
+    } catch (error) {
+      console.error('Error fetching token list:', error);
+    }
   }
+  
 
-  getTokenBalance(address: string, coinType: number) {
+  getTokenBalance(address: string, tokenContractAddress: string) {
     const obs = new Observable((observer) => {
       if(address.indexOf('0x') < 0) {
         address = this.utilServ.fabToExgAddress(address);
       }
-      const url = `${this.url}exchangily/getBalances/${address}`;
+      const url = `${this.url}kanban/token/balance/${tokenContractAddress}/${address}`;
       this.http
       .get<BaseResponseModel>(url)
       .subscribe((x: any) => {
-        const filtered = x.filter((item: any) => item.coinType == coinType);
-        let balance = 0;
-        if(filtered && (filtered.length > 0) ) {
-          balance = new BigNumber(filtered[0].unlockedAmount).shiftedBy(-18).toNumber();
+        if(x.success) {
+          const data = x.data;
+          let balance = 0;
+          if(data) {
+            balance = new BigNumber(data.balance).shiftedBy(-data.decimals).toNumber();
+          }
+          observer.next(balance);
         }
-        observer.next(balance);
+
       });
     });
     return obs;
@@ -132,6 +139,27 @@ export class KanbanService {
     const path = 'kanban/call';
     const res = this.post(path, data);
     return res.toPromise();
+  }
+
+  sendParams(params: any) {
+
+    console.log('params====', params);
+    const client = this.walletService.client;
+
+    const session = this.walletService.session;
+
+    const requestBody = {
+      topic: session.topic,
+      chainId: this.walletService.chainId,
+      request: {
+        method: 'kanban_sendTransaction',
+        params: params,
+      },
+    };
+
+    const result = client.request(requestBody);
+
+    return result;
   }
 
   send(to: string, data: string) {

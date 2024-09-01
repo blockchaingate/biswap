@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Web3Service } from 'src/app/services/web3.service';
 import { KanbanService } from 'src/app/services/kanban.service';
 import { environment } from 'src/environments/environment';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import BigNumber from 'bignumber.js';
 
 @Component({
@@ -22,6 +22,7 @@ export class WithdrawStakingComponent implements OnInit {
   }
 
   withdrawStaking() {
+    /*
     const params = [
       '0x' + new BigNumber(this.coinAmount).shiftedBy(18).toString(16)
     ];
@@ -39,5 +40,6 @@ export class WithdrawStakingComponent implements OnInit {
         this._snackBar.open(error, 'Ok');
       }
     );;
+    */
   }
 }

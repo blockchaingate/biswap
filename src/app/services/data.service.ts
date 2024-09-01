@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { Coin } from '../models/coin';
-import { WalletModel } from '../models/wallet.model';
 
 @Injectable({
   providedIn: 'root',
