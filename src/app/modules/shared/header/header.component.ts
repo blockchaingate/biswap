@@ -22,7 +22,14 @@ export class HeaderComponent implements OnInit {
   LANGUAGES: Language[] = [
     { value: 'en', viewValue: 'English' },
     { value: 'sc', viewValue: '简体中文' },
-    { value: 'tc', viewValue: '繁體中文' }
+    { value: 'tc', viewValue: '繁體中文' },
+    { value: 'fr', viewValue: 'Français' },
+    { value: 'es', viewValue: 'Español' },
+    { value: 'it', viewValue: 'Italiano' },
+    { value: 'ja', viewValue: '日本語' },
+    { value: 'ko', viewValue: '한국어' },
+    { value: 'tr', viewValue: 'Türkçe' },
+    { value: 'ar', viewValue: 'العربية' }
   ];
 
   selectedLan: Language = { value: 'en', viewValue: 'English' };
@@ -69,6 +76,29 @@ export class HeaderComponent implements OnInit {
         case 'tc':
           this.selectedLan = this.LANGUAGES[2];
           break;
+        case 'fr':
+          this.selectedLan = this.LANGUAGES[3];
+          break;
+        case 'es':
+          this.selectedLan = this.LANGUAGES[4];
+          break;
+        case 'it':
+          this.selectedLan = this.LANGUAGES[5];
+          break;
+        case 'ja':
+          this.selectedLan = this.LANGUAGES[6];
+          break;
+        case 'ko':
+          this.selectedLan = this.LANGUAGES[7];
+          break;
+        case 'tr':
+          this.selectedLan = this.LANGUAGES[8];
+          break;
+        case 'ar':
+          this.selectedLan = this.LANGUAGES[9];
+          break;
+        default:
+          this.selectedLan = this.LANGUAGES[0]; // default to English
       }
     } else {
       let userLang = navigator.language.substring(0, 2).toLowerCase();
@@ -77,7 +107,9 @@ export class HeaderComponent implements OnInit {
         localStorage.setItem('_lan', 'sc');
         this._localSt.setItem('_lan', 'sc');
       } else {
-        this.selectedLan = this.LANGUAGES[0];
+        this.tranServ.use(this.selectedLan.value);
+        localStorage.setItem('_lan', this.selectedLan.value);
+        this._localSt.setItem('_lan', this.selectedLan.value);
       }
     }
     this.tranServ.use(this.selectedLan.value);
