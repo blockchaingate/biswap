@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { KanbanService } from './services/kanban.service';
 import { StorageService } from './services/storage.service';
 import { WalletService } from './services/wallet.service';
@@ -12,7 +12,7 @@ import { LocalStorage } from '@ngx-pwa/local-storage';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'biSwap';
   urllang: string = '';
   device_id: string = '';
