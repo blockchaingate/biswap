@@ -90,6 +90,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
         this.kanbanService
           .getTokenBalance(newAccount, this.firstToken.id)
           .subscribe((balance: any) => {
+            console.log('balance111=', balance);
             this.firstCoinBalance = balance;
           });
       }
@@ -158,6 +159,13 @@ export class SwapComponent implements OnInit, AfterViewInit {
       this.setAccount(this.walletService.account);
     }
 
+    this.walletService.accountSubject.subscribe(
+      (accountSubject: any) => {
+        if(accountSubject) {
+          this.setAccount(accountSubject);
+        }
+      }
+    );
     this.dataService.GettokenList.subscribe((x) => {
       this.tokenList = x;
 
@@ -311,6 +319,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
         if (this.firstToken.id != null && this.secondToken.id != null) {
           this.getPair();
         }
+        this.refresh();
       });
   }
 
@@ -333,6 +342,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
         if (this.firstToken.id != null && this.secondToken.id != null) {
           this.getPair();
         }
+        this.refresh();
       });
   }
 

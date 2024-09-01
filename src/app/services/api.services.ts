@@ -53,6 +53,10 @@ getTokenInfoFromId(tokenId : string) {
   return this.http.get(url);
 }
 
+getFabTokenLogo(tokenId: string) {
+  const url = 'https://api.blockchaingate.com/v2/issuetoken/' + tokenId + '/logo';
+  return this.http.get(url);
+}
 }
 
 

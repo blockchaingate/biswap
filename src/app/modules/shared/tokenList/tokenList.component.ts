@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Coin } from 'src/app/models/coin';
 import { DataService } from 'src/app/services/data.service';
 import { SwapComponent } from '../../swap/swap.component';
+import { ApiService } from 'src/app/services/api.services';
 
 @Component({
   selector: 'app-tokenList',
@@ -16,6 +17,7 @@ export class TokenListComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
+    private apiServ: ApiService,
     public dialogRef: MatDialogRef<SwapComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
@@ -67,7 +69,25 @@ export class TokenListComponent implements OnInit {
     this.filteredTokens = this.tokenList.filter((x: any) => x.symbol.toLowerCase().includes(token.toLowerCase()))
   }
 
-  handleImageError(ev: any) {
+  handleImageError(ev: any, tokenId: string) {
     ev.target.src = 'https://exchangily.com/assets/coins/none.png';
+    /*
+    if(tokenId.indexOf('0x') === 0) {
+      tokenId = tokenId.substring(2);
+    }
+    
+    this.apiServ.getFabTokenLogo(tokenId).subscribe({
+      next: (ret: any) => {
+        console.log('ret===', ret);
+      },
+      error: (error: any) => {
+        console.log('error of handleImageError=', error);
+        
+      }
+    }
+
+    );
+    */
+    //
   }
 }
