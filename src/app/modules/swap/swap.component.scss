@@ -1,5 +1,5 @@
 .swapBody {
-    padding-bottom: 100px;
+    padding-bottom: 20px;
 }
 
 .maina {
@@ -11,19 +11,12 @@
     width: 100%;
 }
 
-::ng-deep .mat-card {
-    border-radius: 12px !important;
-    background-image: linear-gradient(#5b51cc, #3f5ac5);
-    border: 1px solid lightblue;
-    width: 360px;
-}
-
 .coins-input-body {
     border-radius: 4px;
     justify-content: center;
     background-color: rgb(218, 216, 216);
     color: black;
-    padding: 4px;
+    padding: 1rem;
 }
 
 .tokenAmt {
@@ -93,18 +86,29 @@
     margin-bottom: 60px;
 }
 
-h1 {
-    font-size: 28px;
-    font-weight: 500;
+@media(max-width: 1920px) {
+
+    .title2 {
+        margin-top: 80px;
+        margin-bottom: 80px;
+    }
 }
 
-h2 {
-    font-size: 20px
+@media(max-width: 1280px) {
+    .title2 {
+        margin-top: 52px;
+        margin-bottom: 60px;
+    }
 }
 
-@media(max-width: 600px) //if more than 400 px
+@media(max-width: 1024px) {
+    .title2 {
+        margin-top: 40px;
+        margin-bottom: 50px;
+    }
+}
 
-    {
+@media(max-width: 640px) {
     .maina {
         width: 100vw;
         margin-top: 1rem;
@@ -114,12 +118,24 @@ h2 {
         font-size: 18px;
     }
 
+    .cardd {
+        box-shadow: none;
+    }
+
+    .coins-input-body {
+        background-color: #f0f0f0;
+        border: none;
+        box-shadow: none;
+    }
+
     ::ng-deep .mat-card {
         background-image: none;
-        background-color: #0d0f1f;
+        color: black;
+        background-color: white;
         border: none;
+        box-shadow: none;
         font-size: 12px;
-        width: 360px;
+        width: 100%;
     }
 
     .tokenSelectButton {
@@ -138,81 +154,4 @@ h2 {
         margin-bottom: 30px;
     }
 
-}
-
-@media(min-width: 600px) //if more than 400 px
-
-    {
-    h1 {
-        font-size: 40px
-    }
-
-    h2 {
-        font-size: 20px
-    }
-
-    h3 {
-        font-size: 12px;
-    }
-}
-
-@media(min-width: 960px) //if more than 400 px
-
-    {
-    h1 {
-        font-size: 64px
-    }
-
-    h2 {
-        font-size: 32px
-    }
-
-    h3 {
-        font-size: 18px;
-    }
-
-    .title2 {
-        margin-top: 40px;
-        margin-bottom: 50px;
-    }
-}
-
-@media(min-width: 1280px) //if more than 400 px
-
-    {
-    h1 {
-        font-size: 50px
-    }
-
-    h2 {
-        font-size: 42px
-    }
-
-    h3 {
-        font-size: 24px;
-    }
-
-    .title2 {
-        margin-top: 52px;
-        margin-bottom: 60px;
-    }
-}
-
-@media(min-width: 1920px) {
-    h1 {
-        font-size: 100px
-    }
-
-    h2 {
-        font-size: 64px
-    }
-
-    h3 {
-        font-size: 36px;
-    }
-
-    .title2 {
-        margin-top: 80px;
-        margin-bottom: 80px;
-    }
 }

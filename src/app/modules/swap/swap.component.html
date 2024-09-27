@@ -1,12 +1,5 @@
 <div fxLayout="column" fxLayoutAlign="start center" class="swapBody">
-<!--
-    <div class="title1" fxLayoutAlign="center start">
-        <h1>{{t1ft}}</h1>
-    </div>
-    <div class="title1 title2" fxLayoutAlign="center start">
-        <h1>{{t2ft}}</h1>
-    </div>
--->
+
     <div class="row maina center-cc animated-element" #animatedElement>
         <mat-card class="cardd">
             <div fxLayout="row" fxLayoutAlign="space-between center">
@@ -17,15 +10,6 @@
                         aria-label="Example icon-button with share icon">
                         <mat-icon>settings</mat-icon>
                     </button>
-                    <!--
-          <button
-            mat-icon-button
-            class="example-icon"
-            aria-label="Example icon-button with share icon"
-          >
-            <mat-icon>more_horiz</mat-icon>
-          </button>
-          -->
                 </div>
             </div>
 
@@ -36,10 +20,8 @@
             <hr class="sparater" />
 
             <div fxLayout="column" fxLayoutGap="10px">
-
                 <div class="coins-input-body" fxLayout="row" fxLayoutAlign="space-between center">
-                    <input (keyup)="onKey(firstCoinAmount, true)" #token1 name="firstCoinAmount" type="number" class="tokenAmt"
-                        [(ngModel)]="firstCoinAmount" placeholder="0.0" />
+                    <input (keyup)="onKey(firstCoinAmount, true)" #token1 name="firstCoinAmount" type="number" class="tokenAmt" [(ngModel)]="firstCoinAmount" placeholder="0.0" />
                     <div class="tokenSelectButton" (click)="openFirstTokenListDialog()">
                         <span class="tokenwithIcon" *ngIf="firstToken?.symbol != null; else select">
                             {{ firstToken.symbol }} <span *ngIf="firstCoinBalance >= 0">({{firstCoinBalance}})</span>
@@ -54,7 +36,6 @@
                     </div>
                 </div>
                 
-
                 <div fxLayout="row" fxLayoutAlign="center center">
                     <button (click)="changeTokens()" mat-icon-button class="example-icon"
                         aria-label="Example icon-button with share icon">
@@ -78,7 +59,6 @@
                         </ng-template>
                     </div>
                 </div>
-                
 
                 <div fxLayout="row" fxLayoutAlign="space-between">
                     <span> {{perAmountLabel}} </span>
@@ -117,9 +97,7 @@
     <div class="row">
         <div class="paddingTop20 your-position mb-3 center-cc"  *ngIf="liquidityPrividerFee">
             <mat-card id="position-mat-card">
-
                 <div>
-
                     <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5" *ngIf="minimumReceived">
                         <span> {{"Minimum received"|translate}}: </span>
                         <div fxLayout="row" fxLayoutAlign="center center">
@@ -144,9 +122,7 @@
                     <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
                         <span> {{"Liquidity Provider Fee"|translate}} :</span>
                         <div fxLayout="row" fxLayoutAlign="center center">
-
                             <span>{{liquidityPrividerFee}} {{liquidityPrividerFeeCoin}}</span>
-
                         </div>
                     </div>
 

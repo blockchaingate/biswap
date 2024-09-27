@@ -23,3 +23,8 @@ main::-webkit-scrollbar {
     display: none;
 }
 
+@media(max-width: 640px) {
+    mat-sidenav-container {
+        background-color: white;
+    }   
+}

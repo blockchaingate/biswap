@@ -7,7 +7,7 @@
 ::ng-deep .mat-dialog-container {
     border-radius: 8px;
     overflow: hidden !important;
-    background-color: #8c86af;
+    background-color: #cececf;
 }
 
 ::ng-deep .mat-dialog-content {
@@ -32,12 +32,12 @@ mat-form-field mat-label {
 
 .search-token-input {
     width: 93%;
-    height: 56px;
-    border-radius: 8px;
-    margin-bottom: 16px;
-    background-color: #dbd7d7;
+    height: 42px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    background-color: #f0f0f0;
     color: black;
-    font-size: medium;
+    font-size: small;
 }
 
 ::ng-deep .mat-form-field-flex {
@@ -47,7 +47,7 @@ mat-form-field mat-label {
 
 ::ng-deep .mat-input-element {
     caret-color: white;
-    font-size: medium;
+    font-size: small;
     height: 32px;
 }
 
@@ -67,4 +67,12 @@ mat-form-field mat-label {
     span {
         color: black;
     }
+}
+
+@media(max-width: 640px) {
+::ng-deep .cdk-overlay-pane {
+    width: 240px;
+    border-radius: 3px;
+    // border: 1px solid red;
+}
 }
