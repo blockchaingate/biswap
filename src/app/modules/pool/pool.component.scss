@@ -78,7 +78,35 @@ h1 {
     font-weight: 500;
 }
 
-@media(max-width: 600px) //if more than 400 px
+@media(max-width: 1920px) {
+    .title1 {
+        margin-top: 200px;
+        margin-bottom: 160px;
+    }
+    .mat-card {
+        width: 560px;
+    }
+}
+
+@media(max-width: 1280px) //if more than 400 px
+{
+    .title1 {
+        margin: 100px 0 50px;
+    }
+    .mat-card {
+        width: 500px;
+    }
+}
+
+@media(max-width: 960px) //if more than 400 px
+{
+    .title1 {
+        margin-top: 100px;
+        margin-bottom: 80px;
+    }
+}
+
+@media(max-width: 640px) //if more than 400 px
 {
     ::ng-deep .mat-card {
         border-radius: 8px !important;
@@ -88,100 +116,17 @@ h1 {
         width: 100%;
     }
     
-    h1 {
-        font-size: 18px
-    }
-    h2 {
-        font-size: 12px
-    }
     .title1 {
         margin-top: 48px;
         margin-bottom: 38px;
     }
 }
 
-@media(min-width: 400px) //if more than 400 px
+
+@media(max-width: 400px) //if more than 400 px
 {
-    h1 {
-        font-size: 28px
-    }
-    h2 {
-        font-size: 20px
-    }
     .title1 {
         margin-top: 48px;
         margin-bottom: 38px;
-    }
-}
-
-@media(min-width: 600px) //if more than 400 px
-{
-    h1 {
-        font-size: 40px
-    }
-    h2 {
-        font-size: 20px
-    }
-    h3 {
-        font-size: 12px;
-    }
-    .title1 {
-        margin-top: 68px;
-        margin-bottom: 56px;
-    }
-}
-
-@media(min-width: 960px) //if more than 400 px
-{
-    h1 {
-        font-size: 64px
-    }
-    h2 {
-        font-size: 32px
-    }
-    h3 {
-        font-size: 18px;
-    }
-    .title1 {
-        margin-top: 100px;
-        margin-bottom: 80px;
-    }
-}
-
-@media(min-width: 1280px) //if more than 400 px
-{
-    h1 {
-        font-size: 50px
-    }
-    h2 {
-        font-size: 42px
-    }
-    h3 {
-        font-size: 24px;
-    }
-    .title1 {
-        margin: 100px 0 50px;
-    }
-    .mat-card {
-        width: 500px;
-    }
-}
-
-@media(min-width: 1920px) {
-    h1 {
-        font-size: 100px
-    }
-    h2 {
-        font-size: 64px
-    }
-    h3 {
-        font-size: 36px;
-    }
-    .title1 {
-        margin-top: 200px;
-        margin-bottom: 160px;
-    }
-    .mat-card {
-        width: 560px;
     }
 }

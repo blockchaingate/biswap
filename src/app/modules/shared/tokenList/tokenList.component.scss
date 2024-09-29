@@ -8,6 +8,7 @@
     border-radius: 8px;
     overflow: hidden !important;
     background-color: #cececf;
+    color: black;
 }
 
 ::ng-deep .mat-dialog-content {
@@ -37,6 +38,13 @@ mat-form-field mat-label {
     margin-bottom: 8px;
     background-color: #f0f0f0;
     color: black;
+    font-size: small;
+}
+
+.search-token-input input {
+    border: none;
+    background-color: black;
+    color: white;
     font-size: small;
 }
 
