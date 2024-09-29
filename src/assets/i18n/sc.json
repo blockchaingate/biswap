@@ -12,7 +12,7 @@
     "Disconnect": "断开连接",
     "EXPLORER NEW SPACE": "探索未来金融新天地",
     "BISWAP PROTOCOL": "币旺(Biswap)创新协议",
-    "BiswapProtcl": "世界上唯一鏈接到真實業務的 defi 網絡。在 Biswap，您可以交易、賺取和構建您的業務系統以獲得可能會升值的獎勵。",
+    "BiswapProtcl": "全球唯一将去中心化创新金融协议与实体经济紧密结合的高效率、低成本、高收益金融应用，通过币旺(Biswap)去中心化网络，用户不仅可以匿名的方式自由进行实时交易，还可以通过注入流动性而赚取交易收入、免费获取空投，从而进一步免费获取一系列绝佳收益项目的权益。更重要的是，通过币旺系统，用户可以直接迈向未来，深刻融入新一代金融生态，长久获取高额回报，甚至建立自己的商业金融帝国。",
     "Trade tokens in an instant": "进行即时交易",
     "Select Token": "选取币种",
     "Select a Token": "选取币种",
@@ -131,5 +131,8 @@
     "downloadApk": "下载",
     "whatsnew": "什么是新的",
     "lastRelease": "最后发布",
-    "candidate": "候选人"
+    "candidate": "候选人",
+    "Social Media": "社交媒体",
+    "Useful links":"链接",
+    "Contact":"联系"
 }

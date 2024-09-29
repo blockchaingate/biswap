@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="start center" class="swapBody">
 
-    <div class="row maina center-cc animated-element" #animatedElement>
+    <div class="row maina animated-element" #animatedElement>
         <mat-card class="cardd">
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <mat-card-title>{{"Swap"|translate}}</mat-card-title>
@@ -95,7 +95,7 @@
     </div>
 
     <div class="row">
-        <div class="paddingTop20 your-position mb-3 center-cc"  *ngIf="liquidityPrividerFee">
+        <div class="paddingTop20 your-position mb-3"  *ngIf="liquidityPrividerFee">
             <mat-card id="position-mat-card">
                 <div>
                     <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5" *ngIf="minimumReceived">
