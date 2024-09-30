@@ -59,21 +59,21 @@
     background: linear-gradient(90deg, #0b2dd5 0%, #6827e1 100%);
 }
 
-@media only screen and (max-width: 2800px) {
+@media only screen and (max-width: 1920px) {
     .header-logo {
         width: 180px;
         height: auto;
     }
 }
 
-@media only screen and (max-width: 1275px) {
+@media only screen and (max-width: 1280px) {
     .header-logo {
         width: 120px;
         height: auto;
     }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 640px) {
     .header-logo {
         width: 116px;
         height: auto;
