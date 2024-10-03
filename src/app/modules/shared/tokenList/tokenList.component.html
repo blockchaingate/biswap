@@ -12,11 +12,8 @@
     <div>
         {{"Search"|translate}}
     </div>
-    <div fxLayout="row">
-        <mat-form-field class="search-token-input">
-            <!-- <mat-label>Enter token name</mat-label> -->
-            <input matInput name="searchTokenLabel" type="text" [(ngModel)]="searchTokenLabel" (ngModelChange)="searchToken($event)" />
-        </mat-form-field>
+    <div class="search-token-input">
+        <input matInput name="searchTokenLabel" class="searchinput" type="text" [(ngModel)]="searchTokenLabel" (ngModelChange)="searchToken($event)" />
     </div>
 
     <div class="tokenlist" mat-dialog-content fxLayout="column" fxLayoutGap="5px">

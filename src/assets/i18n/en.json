@@ -23,6 +23,7 @@
     "Price impact": "Price impact",
     "Slippage Tolerance": "Slippage Tolerance",
     "Slippage tolerance": "Slippage tolerance",
+    "slippageErrMsg": "Slippage tolerance must be between 0.1 and 99.9",
     "Liquidity Provider Fee": "Liquidity Provider Fee",
     "Route": "Route",
     "No Liquidity for this pair": "No Liquidity for this pair",

@@ -1,6 +1,6 @@
 ::ng-deep .cdk-overlay-pane {
     width: 320px;
-    border-radius: 8px;
+    border-radius: 5px;
     // border: 1px solid red;
 }
 
@@ -32,19 +32,21 @@ mat-form-field mat-label {
 }
 
 .search-token-input {
-    width: 93%;
+    width: 100%;
     height: 42px;
     border-radius: 4px;
     margin-bottom: 8px;
-    background-color: #f0f0f0;
-    color: black;
+    padding: 0;
     font-size: small;
 }
 
 .search-token-input input {
     border: none;
-    background-color: black;
-    color: white;
+    border-radius: 4px;
+    width: 100%;
+    background-color: white;
+    padding-left: 4px;
+    padding-right: 4px;;
     font-size: small;
 }
 
@@ -67,20 +69,26 @@ mat-form-field mat-label {
     background-color: #e2e1e1;
     border: 0;
     border-radius: 5px;
-     :hover {
+
+    :hover {
         height: 30px;
         line-height: 40px;
         background-color: #868585;
     }
+
     span {
         color: black;
     }
 }
 
 @media(max-width: 640px) {
-::ng-deep .cdk-overlay-pane {
-    width: 240px;
-    border-radius: 3px;
-    // border: 1px solid red;
-}
+    ::ng-deep .cdk-overlay-pane {
+        width: 240px;
+        border-radius: 3px;
+        //border: 1px solid red;
+    }
+
+    .container {
+        padding: 0;
+    }
 }

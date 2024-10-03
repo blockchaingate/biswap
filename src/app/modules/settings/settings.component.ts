@@ -12,7 +12,8 @@ export interface DialogData {
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
-
+  slippageErr = false;
+  
   constructor(
     public dialogRef: MatDialogRef<SettingsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -25,4 +26,11 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  keyUp() {
+    if(this.data.slippage<0 || this.data.slippage>100){
+      this.slippageErr = true;
+    } else {
+      this.slippageErr = false;
+    }
+  }
 }

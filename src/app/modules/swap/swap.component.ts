@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-} from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import BigNumber from "bignumber.js";
@@ -55,6 +49,8 @@ export class SwapComponent implements OnInit, AfterViewInit {
   firstToken!: Coin;
   secondToken!: Coin;
   account!: string;
+  editSlippage: boolean = false;
+  slippageErr = false;
 
   public setFirstToken(coin: Coin) {
     this.firstToken = coin;
@@ -135,12 +131,13 @@ export class SwapComponent implements OnInit, AfterViewInit {
     private apiService: ApiService,
     private router: Router,
     private appComponent: AppComponent,
-  ) {}
+  ) { }
 
   openSettings() {
     const dialogRef = this.dialog.open(SettingsComponent, {
       width: "250px",
       data: { slippage: this.slippage, deadline: this.deadline },
+      panelClass: "custom-dialog-container",
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -161,7 +158,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
 
     this.walletService.accountSubject.subscribe(
       (accountSubject: any) => {
-        if(accountSubject) {
+        if (accountSubject) {
           this.setAccount(accountSubject);
         }
       }
@@ -189,7 +186,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
       if (this.firstToken && this.secondToken) {
         this.getPair();
       }
-      
+
     }
   }
 
@@ -463,6 +460,9 @@ export class SwapComponent implements OnInit, AfterViewInit {
     var temp = this.firstToken;
     this.dataService.sendFirstToken(this.secondToken);
     this.dataService.sendSecondToken(temp);
+    var tempBal = this.secondCoinBalance;
+    this.secondCoinBalance = this.firstCoinBalance;
+    this.firstCoinBalance = tempBal;
 
     this.firstCoinAmount = 0;
     this.secondCoinAmount = 0;
@@ -518,16 +518,12 @@ export class SwapComponent implements OnInit, AfterViewInit {
       return;
     }
 
-
-
     var to = this.account;
     var timestamp = new TimestampModel(this.deadline, 0, 0, 0);
     var deadline = this.utilService.getTimestamp(timestamp);
 
     console.log('to --------------------------------->  started', to);
     console.log('deadline --------------------------------->  started', deadline);
-
-  
 
     let abiHex = "";
     let approveAmount;
@@ -571,73 +567,88 @@ export class SwapComponent implements OnInit, AfterViewInit {
       approveAmount = amountInMax;
     }
 
-if (this.appComponent.device_id) {
-  const paramsSentSocket = {
-    source: "Biswap-Swap",
-    data: [
-      {
-        to: this.firstToken?.id, // Use optional chaining
-        data: this.web3Service?.getApprove([
-          environment.smartConractAdressRouter,
-          approveAmount,
-        ]),
-      },
-      {
-        to: environment.smartConractAdressRouter,
-        data: abiHex,
-      },
-    ],
-  };
+    if (this.appComponent.device_id) {
+      const paramsSentSocket = {
+        source: "Biswap-Swap",
+        data: [
+          {
+            to: this.firstToken?.id, // Use optional chaining
+            data: this.web3Service?.getApprove([
+              environment.smartConractAdressRouter,
+              approveAmount,
+            ]),
+          },
+          {
+            to: environment.smartConractAdressRouter,
+            data: abiHex,
+          },
+        ],
+      };
 
-  if (paramsSentSocket.data[0].to && paramsSentSocket.data[0].data) {
-    send(paramsSentSocket);
-  } else {
-    console.error("Failed to set up paramsSentSocket:", paramsSentSocket);
+      if (paramsSentSocket.data[0].to && paramsSentSocket.data[0].data) {
+        send(paramsSentSocket);
+      } else {
+        console.error("Failed to set up paramsSentSocket:", paramsSentSocket);
+      }
+    } else {
+
+      const paramsSent = [
+        {
+          to: this.firstToken?.id,
+          data: this.web3Service?.getApprove([
+            environment.smartConractAdressRouter,
+            approveAmount,
+          ]),
+        },
+        {
+          to: environment.smartConractAdressRouter,
+          data: abiHex,
+        },
+      ];
+
+      if (paramsSent[0].to && paramsSent[0].data) {
+        const alertDialogRef = this.dialog.open(AlertComponent, {
+          width: "250px",
+          data: { text: "Please approve your request in your wallet" },
+        });
+        this.kanbanService
+          .sendParams(paramsSent)
+          .then((txids) => {
+            alertDialogRef.close();
+            const baseUrl = environment.production
+              ? "https://www.exchangily.com"
+              : "https://test.exchangily.com";
+            //this.txHash = baseUrl + '/explorer/tx-detail/' + data;
+
+            this.txHashes = txids.map(
+              (txid: string) => baseUrl + "/explorer/tx-detail/" + txid
+            );
+          })
+          .catch((error: any) => {
+            alertDialogRef.close();
+            console.log("error===", error);
+            this._snackBar.open(error, "Ok");
+          });
+      } else {
+        console.error("Failed to set up paramsSent:", paramsSent);
+      }
+    }
+
   }
-} else {
 
-  const paramsSent = [
-    {
-      to: this.firstToken?.id,
-      data: this.web3Service?.getApprove([
-        environment.smartConractAdressRouter,
-        approveAmount,
-      ]),
-    },
-    {
-      to: environment.smartConractAdressRouter,
-      data: abiHex,
-    },
-  ];
-
-  if (paramsSent[0].to && paramsSent[0].data) {
-    const alertDialogRef = this.dialog.open(AlertComponent, {
-      width: "250px",
-      data: { text: "Please approve your request in your wallet" },
-    });
-    this.kanbanService
-    .sendParams(paramsSent)
-    .then((txids) => {
-      alertDialogRef.close();
-      const baseUrl = environment.production
-        ? "https://www.exchangily.com"
-        : "https://test.exchangily.com";
-      //this.txHash = baseUrl + '/explorer/tx-detail/' + data;
-
-      this.txHashes = txids.map(
-        (txid: string) => baseUrl + "/explorer/tx-detail/" + txid
-      );
-    })
-    .catch((error: any) => {
-      alertDialogRef.close();
-      console.log("error===", error);
-      this._snackBar.open(error, "Ok");
-    });
-} else {
-    console.error("Failed to set up paramsSent:", paramsSent);
+  keyUp() {
+    if(this.slippage<0 || this.slippage>100){
+      this.slippageErr = true;
+    } else {
+      this.slippageErr = false;
+    }
   }
-}
 
+  onBlur(){
+    if(this.slippage<0 || this.slippage>100){
+      this.slippage = 1;
+      this.slippageErr = false;
+    } 
   }
 }
 

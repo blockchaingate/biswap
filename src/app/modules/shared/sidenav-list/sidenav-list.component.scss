@@ -12,3 +12,9 @@ a:active {
     display: inline-block;
     padding-left: 6px;
 }
+
+@media(max-width: 640px) {
+   .mat-nav-list a {
+        color: black;
+    }
+}

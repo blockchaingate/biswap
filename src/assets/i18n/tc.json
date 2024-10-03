@@ -23,6 +23,7 @@
     "Price impact": "價格影響",
     "Slippage Tolerance": "滑點範圍",
     "Slippage tolerance": "滑點範圍",
+    "slippageErrMsg": "滑點範圍必須在0.1到99.9之間",
     "Liquidity Provider Fee": "流動性提供費",
     "Route": "路由",
     "No Liquidity for this pair": "不存在此交易對",
