@@ -26,7 +26,7 @@
     "slippageErrMsg": "Slippage tolerance must be between 0.1 and 99.9",
     "Liquidity Provider Fee": "Liquidity Provider Fee",
     "Route": "Route",
-    "No Liquidity for this pair": "No Liquidity for this pair",
+    "No liquidity for this pair": "No liquidity for this pair",
     "Close": "Close",
     "Add Staking": "Add Staking",
     "Add staking to earn tokens": "Add staking to earn tokens",

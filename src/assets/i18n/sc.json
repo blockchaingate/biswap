@@ -26,7 +26,7 @@
     "slippageErrMsg": "滑点范围必须在0.1到99.9之间",
     "Liquidity Provider Fee": "流动性提供费",
     "Route": "路由",
-    "No Liquidity for this pair": "不存在此交易对",
+    "No liquidity for this pair": "不存在此交易对",
     "Close": "关闭",
     "Add Staking": "添加质押",
     "Add staking to earn tokens": "添加质押赚取代币收入",
