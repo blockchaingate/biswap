@@ -78,15 +78,15 @@
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <p>{{"Your pool share"|translate}}:</p>
-                <p> {{ item.share }} %</p>
+                <p> {{ item.share }} % </p>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <p>{{"You pooled" |translate}} {{item.token0Name}}:</p>
-                <p> {{ (item.share * item.pair.reserve0 / 100).toFixed(18) }}</p>
+                <p> {{ (item.share * item.pair.reserve0 / 100).toFixed(8) }}</p>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <p>{{"You pooled"|translate}} {{item.token1Name}}:</p>
-                <p> {{ (item.share * item.pair.reserve1 / 100).toFixed(18) }}</p>
+                <p> {{ (item.share * item.pair.reserve1 / 100).toFixed(8) }}</p>
             </div>
 
             <hr>

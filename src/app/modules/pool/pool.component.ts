@@ -105,7 +105,7 @@ export class PoolComponent implements OnInit {
         yourPoolShare: this.existedLiquidityList[index].share,
         pooledFirstToken: this.existedLiquidityList[index].pair.reserve0,
         pooledSecondToken: this.existedLiquidityList[index].pair.reserve1,
-        totalPoolToken: this.existedLiquidityList[index].liquidityTokenBalance 
+        totalPoolToken: this.existedLiquidityList[index].liquidityTokenBalance, 
       },
     });
   }
