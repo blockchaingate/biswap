@@ -467,6 +467,9 @@ export class SwapComponent implements OnInit, AfterViewInit {
     this.firstCoinAmount = 0;
     this.secondCoinAmount = 0;
 
+    var tempBal = this.secondCoinBalance;
+    this.secondCoinBalance = this.firstCoinBalance;
+    this.firstCoinBalance = tempBal;
     //this.kanbanCallMethod();
   }
 
