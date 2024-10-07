@@ -458,8 +458,10 @@ export class SwapComponent implements OnInit, AfterViewInit {
 
   changeTokens() {
     var temp = this.firstToken;
-    this.dataService.sendFirstToken(this.secondToken);
-    this.dataService.sendSecondToken(temp);
+    this.firstToken = this.secondToken
+    this.secondToken = temp;
+    this.dataService.sendFirstToken(this.firstToken);
+    this.dataService.sendSecondToken(this.secondToken);
     var tempBal = this.secondCoinBalance;
     this.secondCoinBalance = this.firstCoinBalance;
     this.firstCoinBalance = tempBal;
