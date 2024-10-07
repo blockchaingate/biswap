@@ -4,46 +4,43 @@
 import * as Btc from 'bitcoinjs-lib';
 
 export const environment = {
-  production: true,
-
-
-  // smartConractAdressRouter:  "0xd99bfcbfad77f57b5ed20286c24ad71785d73993", - old router, can't charge fee
-  // smartConractAdressRouter:  "0xb05c29010751d3aec15bc98602fad16c92fe25eb",    //New router with FEE - this one charges wrong fee.
-  smartConractAdressRouter:  "0x17c1dbe437eeb7544df0c96bcdeb6f1d1bb0172d",
-  smartConractAdressFactory: "0xcb6e4a55cea67e09a08acce843cda3e4ee1429b1",
+  production: false,
+  smartConractAdressRouter:  "0x956464fa0bc9acc46ef2364f582cdef7afefd51b",
+  smartConractAdressFactory: "0x6f0acd5519ee285562f56086b14fca0247f8ff79",
+                            //  "0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc",
   
   endpoints: {
     // blockchaingate: 'http://localhost:3002/v2/',
-    blockchaingate: 'https://prod.blockchaingate.com/v2/',
+    blockchaingate: 'https://test.blockchaingate.com/v2/',
     coingecko: 'https://api.coingecko.com/',
-    kanban: 'https://kanbanprod.fabcoinapi.com/',
-    oldexplorerapi: 'https://api.pay.cool/api',
-    explorerapi: 'https://api.pay.cool/api',
-    //explorerapi: 'https://api.pay.cool/api',
+    kanban: 'https://kanbantest.fabcoinapi.com/',
+    oldexplorerapi: 'https://testapi.fundark.com/api',
+    explorerapi: 'https://testapi.fundark.com/api',
+    // explorerapi: 'https://api.pay.cool/api',
     BTC: {
-      exchangily: 'https://btcprod.fabcoinapi.com/',
+      exchangily: 'https://btctest.fabcoinapi.com/',
     },
     FAB: {
-      exchangily: 'https://fabprod.fabcoinapi.com/',
+      exchangily: 'https://fabtest.fabcoinapi.com/',
     },
     ETH: {
-      exchangily: 'https://ethprod.fabcoinapi.com/',
+      exchangily: 'https://ethtest.fabcoinapi.com/',
       // etherscan: 'https://api-ropsten.etherscan.io/'
     },
     BCH: {
-      exchangily: 'https://bchprod.fabcoinapi.com/',
+      exchangily: 'https://bchtest.fabcoinapi.com/',
     },
     DOGE: {
-      exchangily: 'https://dogeprod.fabcoinapi.com/',
+      exchangily: 'https://dogetest.fabcoinapi.com/',
     },
     LTC: {
-      exchangily: 'https://ltcprod.fabcoinapi.com/',
+      exchangily: 'https://ltctest.fabcoinapi.com/',
     },
 
     // pricehistory: 'http://18.223.17.4:3002/klinedata/'
   },
-  url: 'https://kanbanprod.fabcoinapi.com/',
-  urlV3: 'https://api.pay.cool/api/',
+  url: 'https://kanbantest.fabcoinapi.com/',
+  urlV3: 'https://testapi.fundark.com/api/',
   CoinType: {
     BTC: 1,
     ETH: 60,
@@ -190,7 +187,16 @@ export const environment = {
 },
 
 webSocket: {
-    dp: "wss://api.pay.cool/ws/paycool@"
+    dp: "wss://testapi.fundark.com/ws/paycool@"
+    // dp: "ws://localhost:3000/ws/paycool@"
 }
 };
 
+/*
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

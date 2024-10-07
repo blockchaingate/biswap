@@ -507,15 +507,8 @@ export class SwapComponent implements OnInit, AfterViewInit {
     console.log('swapFunction --------------------------------->  started');
 
     if (
-      (this.isFistToken &&
-        !this.firstCoinAmount &&
-        !this.firstCoinBalance &&
-        this.firstCoinAmount > this.firstCoinBalance) ||
-      (!this.isFistToken &&
-        !this.secondCoinAmount &&
-        !this.secondCoinBalance &&
-        this.secondCoinAmount > this.secondCoinBalance)
-    ) {
+      (this.isFistToken && !this.firstCoinAmount && !this.firstCoinBalance && this.firstCoinAmount > this.firstCoinBalance) ||
+      (!this.isFistToken && !this.secondCoinAmount && !this.secondCoinBalance && this.secondCoinAmount > this.secondCoinBalance)) {
       this.error = "Not enough balance";
       return;
     }
