@@ -632,18 +632,18 @@ export class SwapComponent implements OnInit, AfterViewInit {
   }
 
   keyUp() {
-    if(this.slippage<0 || this.slippage>100){
+    if (this.slippage < 0 || this.slippage > 100) {
       this.slippageErr = true;
     } else {
       this.slippageErr = false;
     }
   }
 
-  onBlur(){
-    if(this.slippage<0 || this.slippage>100){
+  onBlur() {
+    if (this.slippage < 0 || this.slippage > 100) {
       this.slippage = 1;
       this.slippageErr = false;
-    } 
+    }
   }
 }
 
