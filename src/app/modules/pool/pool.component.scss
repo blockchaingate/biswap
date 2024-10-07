@@ -2,11 +2,8 @@
     min-width: 25%;
     
     padding: 2rem 1rem;
-    // background: url("/assets/images/gradient2-back.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    // height: 100vh;
-    // background-color: #eaebec;
 }
 
 ::ng-deep .mat-card {
@@ -28,12 +25,12 @@
 }
 
 .submitButton {
-    margin-left: 12rem;
+   // margin-left: 12rem;
     margin-bottom: 0;
 }
 
 ::ng-deep .mat-form-field label {
-    font-size: 40px;
+   // font-size: 40px;
 }
 
 .sparater {
@@ -44,7 +41,8 @@
 }
 
 .emty-liquidity {
-    background-color: black;
+    background-color: white;
+    color: black;
     padding: 30px;
     margin: 10px -16px 10px;
 }
@@ -68,65 +66,57 @@
     border-radius: 10px;
 }
 
-.title1 {
-    max-width: 1280px;
-    margin: 50px 0;
-    text-shadow: 3px 3px gray;
-}
-
 h1 {
     font-weight: 500;
 }
 
 @media(max-width: 1920px) {
-    .title1 {
-        margin-top: 200px;
-        margin-bottom: 160px;
-    }
     .mat-card {
-        width: 560px;
+        max-width: 560px;
     }
 }
 
 @media(max-width: 1280px) //if more than 400 px
 {
-    .title1 {
-        margin: 100px 0 50px;
-    }
     .mat-card {
-        width: 500px;
+        max-width: 500px;
     }
 }
 
 @media(max-width: 960px) //if more than 400 px
 {
-    .title1 {
-        margin-top: 100px;
-        margin-bottom: 80px;
-    }
 }
 
 @media(max-width: 640px) //if more than 400 px
 {
+    .cardd {
+        box-shadow: none;
+    }
+
+    .coins-input-body {
+        background-color: #f0f0f0;
+        border: none;
+        box-shadow: none;
+    }
+
     ::ng-deep .mat-card {
         border-radius: 8px !important;
         background-image: none;
-        background-color: black;
+        background-color: white;
+        color: black;
         min-width: 350px;
-        width: 100%;
+        border: none;
+        box-shadow: none;
+      //  width: 100%;
     }
     
-    .title1 {
-        margin-top: 48px;
-        margin-bottom: 38px;
+    .exist-liquddity {
+        min-width: 350px;
+        width: 100%;
     }
 }
 
 
 @media(max-width: 400px) //if more than 400 px
 {
-    .title1 {
-        margin-top: 48px;
-        margin-bottom: 38px;
-    }
 }

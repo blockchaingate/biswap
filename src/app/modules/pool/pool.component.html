@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="start center" class="swapBody">
-    <div class="cardContent">
 
-        <mat-card class="card">
+    <div class="row">
+        <mat-card class="cardd">
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <mat-card-title fxLayout="column">
                     <span class="paddingTop5">{{"Your Liquidity"|translate}} </span>
@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <mat-card-content>
+            <div>
                 <div class="emty-liquidity" *ngIf="isWalletConnect != true; else other">
                     <span> {{"Connect to a wallet to view your liquidity"|translate}}. </span>
                 </div>
@@ -33,7 +33,7 @@
                         <span *ngIf="totalPoolToken != null && isWalletConnect"> {{"LiquidityDetail"|translate}}</span>
                     </div>
                 </ng-template>
-            </mat-card-content>
+            </div>
 
             <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
             <mat-card-actions fxLayout="row" fxLayoutAlign="center center" class="mat-card-action">

@@ -8,7 +8,7 @@
 }
 
 .cardd {
-    min-width: 360px;
+    min-width: 350px;
     width: 100%;
 }
 
@@ -31,9 +31,9 @@
 
 ::ng-deep .mat-form-field label {
     font-size: 40px;
-  }
+}
 
-  .sparater {
+.sparater {
     margin: 10px -20px 10px;
     border: 0;
     border-top: 1px solid #c9c7c7;
@@ -42,6 +42,7 @@
 
 .mat-card-action {
     padding: 10px 10px;
+
     button {
         width: 100%;
         padding: 5px 5px;
@@ -49,22 +50,32 @@
     }
 }
 
-.tokenwithIcon{
+.tokenwithIcon {
     display: flex;
     align-items: center;
 }
 
-@media(max-width: 600px) //if more than 400 px
-{
+@media(max-width: 640px) {
     .swapBody {
         width: 100vw;
     }
 
-    .cardContent {
-        width: 100vw;
+    .coins-input-body {
+        background-color: #f0f0f0;
+        border: none;
+        box-shadow: none;
     }
 
+    ::ng-deep .mat-card {
+        background-color: white;
+        border: none;
+        box-shadow: none;
+        color: black;
+        width: 100%;
+    }
+    
     .cardd {
+        box-shadow: none;
         width: 100%;
     }
 }
