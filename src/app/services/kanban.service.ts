@@ -8,7 +8,7 @@ import { DataService } from './data.service';
 import { BaseResponseModel } from '../models/baseResponseModel';
 import { Web3Service } from './web3.service';
 import { WalletService } from './wallet.service';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { UtilsService } from './utils.service';
 import BigNumber from 'bignumber.js';
 
@@ -21,29 +21,17 @@ export class KanbanService {
   coins: Coin[] = [];
   walletModel: WalletModel = new WalletModel();
 
-  constructor(
-    private web3Service: Web3Service,
-    private dataService: DataService,
-    private storageService: StorageService,
-    private utilServ: UtilsService,
-    private walletService: WalletService,
-    private http: HttpClient
-  ) {
+  constructor(private web3Service: Web3Service, private dataService: DataService, private storageService: StorageService, private utilServ: UtilsService, private walletService: WalletService, private http: HttpClient) {
   }
 
   async getCoinPoolAddress() {
-    const headers = new HttpHeaders().set(
-      'Content-Type',
-      'text/plain; charset=utf-8'
-    );
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8' );
     let path = 'exchangily/getCoinPoolAddress';
     path = this.endpoint + path;
     let addr = '';
     try {
-      addr = (await this.http
-        .get(path, { headers, responseType: 'text' })
-        .toPromise()) as string;
-    } catch (e) {}
+      addr = (await lastValueFrom(this.http.get(path, { headers, responseType: 'text' }))) as string;
+    } catch (e) { }
 
     return addr;
   }
@@ -51,10 +39,10 @@ export class KanbanService {
   async getTokenList() {
     let tempTokenList: Coin[] = [];
     let removeItems: any = [];
-  
+
     try {
-      const response = await this.http.get<BaseResponseModel>(`${this.url}v3/token/erc20/100/0`).toPromise();
-      
+      const response = await lastValueFrom(this.http.get<BaseResponseModel>(`${this.url}v3/token/erc20/100/0`));
+
       if (response && response.data) {
         response.data.forEach((element) => {
           if (removeItems.indexOf(element.type) === -1) {
@@ -62,33 +50,32 @@ export class KanbanService {
           }
         });
       }
-  
+
       this.dataService.settokenList(tempTokenList);
     } catch (error) {
       console.error('Error fetching token list:', error);
     }
   }
-  
 
   getTokenBalance(address: string, tokenContractAddress: string) {
     const obs = new Observable((observer) => {
-      if(address.indexOf('0x') < 0) {
+      if (address.indexOf('0x') < 0) {
         address = this.utilServ.fabToExgAddress(address);
       }
       const url = `${this.url}kanban/token/balance/${tokenContractAddress}/${address}`;
       this.http
-      .get<BaseResponseModel>(url)
-      .subscribe((x: any) => {
-        if(x.success) {
-          const data = x.data;
-          let balance = 0;
-          if(data) {
-            balance = new BigNumber(data.balance).shiftedBy(-data.decimals).toNumber();
+        .get<BaseResponseModel>(url)
+        .subscribe((x: any) => {
+          if (x.success) {
+            const data = x.data;
+            let balance = 0;
+            if (data) {
+              balance = new BigNumber(data.balance).shiftedBy(-data.decimals).toNumber();
+            }
+            observer.next(balance);
           }
-          observer.next(balance);
-        }
 
-      });
+        });
     });
     return obs;
   }
@@ -100,10 +87,7 @@ export class KanbanService {
   }
 
   post(path: string, data: any) {
-    const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Cache-Control': 'no-cache',
-    });
+    const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json', 'Cache-Control': 'no-cache', 'Access-Control-Allow-Origin': '*' });
     const options = {
       headers: httpHeaders,
     };
