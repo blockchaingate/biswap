@@ -509,7 +509,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
     if (
       (this.isFistToken && !this.firstCoinAmount && !this.firstCoinBalance && this.firstCoinAmount > this.firstCoinBalance) ||
       (!this.isFistToken && !this.secondCoinAmount && !this.secondCoinBalance && this.secondCoinAmount > this.secondCoinBalance)) {
-      this.error = "Not enough balance";
+      this.error = "No enough balance";
       return;
     }
 

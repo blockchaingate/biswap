@@ -94,9 +94,6 @@
             </mat-card-actions>
         </mat-card>
 
-
-          
-
         <div class="paddingTop20 your-position mb-3" *ngIf="item?.pair">
             <mat-card id="position-mat-card">
         
@@ -134,9 +131,6 @@
             </mat-card>
         </div>
         
-
-
-
         <div *ngIf="txHashes && txHashes.length > 0">
             <div *ngFor="let txHash of txHashes">
                 <a [href]="txHash" target="_blank" [textContent]="txHash"> </a>
@@ -149,3 +143,4 @@
             <p>{{newPair}}</p>
         </div>
     </div>
+</div>
