@@ -91,7 +91,7 @@
 
                 <ng-template #asd>
                     <button mat-raised-button color="primary" (click)="swapFunction()"
-                        *ngIf="!insufficientFund">Swap{{(priceImpact > 5) ? ' Anyway' : ''}}</button>
+                        *ngIf="!insufficientFund">{{"Swap{{(priceImpact > 5) ? ' Anyway' : ''}}"|translate}}</button>
                     <button mat-raised-button color="primary" disabled *ngIf="insufficientFund">Insufficent
                         {{firstToken.tickerName}} balance</button>
                 </ng-template>
