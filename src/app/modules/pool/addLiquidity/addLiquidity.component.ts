@@ -38,6 +38,7 @@ export class AddLiquidityComponent implements OnInit {
   public get firstToken(): Coin {
     return this._firstToken;
   }
+
   public set firstToken(coin: Coin) {
     this._firstToken = coin;
     const id = coin.id;
@@ -53,6 +54,7 @@ export class AddLiquidityComponent implements OnInit {
   public get secondToken(): Coin {
     return this._secondToken;
   }
+
   public set secondToken(coin: Coin) {
     this._secondToken = coin;
     const id = coin.id;
@@ -64,6 +66,7 @@ export class AddLiquidityComponent implements OnInit {
         });
     }
   }
+
   tokenList: Coin[] = [];
 
   isWalletConnect: boolean = true;
@@ -172,6 +175,7 @@ export class AddLiquidityComponent implements OnInit {
         }
       });
   }
+  
   openSettings() {
     const dialogRef = this.dialog.open(SettingsComponent, {
       width: "250px",

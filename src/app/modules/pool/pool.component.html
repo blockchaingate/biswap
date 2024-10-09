@@ -74,11 +74,11 @@
 
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <p>{{"Your LP tokens"|translate}}:</p>
-                <p>{{ showAmount(item.liquidityTokenBalance) }}</p>
+                <p>{{ (showAmount(item.liquidityTokenBalance)).toFixed(8) }}</p>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <p>{{"Your pool share"|translate}}:</p>
-                <p> {{ item.share }} % </p>
+                <p> {{ (item.share * 1.0).toFixed(8) }} % </p>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <p>{{"You pooled" |translate}} {{item.token0Name}}:</p>
