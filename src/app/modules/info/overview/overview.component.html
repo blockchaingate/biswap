@@ -1,16 +1,15 @@
-<div class="mt-5">
+<div class="overall">
     <h1>{{"Biswap Info & Analytics"|translate}}</h1>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-12">
             <div *ngIf="isItemLoaded">
                 <div>{{"Liquidity"|translate}}</div>
                 <div><b>${{currentLiquidity}}</b></div>
                 <div>{{currentTime}}</div>
-                <app-sales [items]="totalLiquidityFAB" [dates]="formattedDates" [title]="'Liquidity' | translate"
-                    ></app-sales>
+                <app-sales [items]="totalLiquidityFAB" [dates]="formattedDates" [title]="'Liquidity' | translate"></app-sales>
             </div>
         </div>
-        <div class="col-md-6 bg-w">
+        <div class="col-md-6 col-sm-12 bg-w secondv">
             <div *ngIf="isItemLoaded">
                 <div>{{"Volume"|translate}}</div>
                 <div><b>${{currentVolume}}</b></div>
