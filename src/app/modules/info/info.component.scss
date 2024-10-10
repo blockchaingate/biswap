@@ -1,4 +1,4 @@
-.infoTop{
+.infoTop {
     margin-top: 30px;
 }
 
@@ -17,7 +17,13 @@ mat-button-toggle:hover {
 }
 
 @media(max-width: 640px) {
-    .infoTop{
+    .infoTop {
         margin-top: 0;
     }
-}   
+
+    .mat-button-toggle-group {
+        height: 32px;
+        align-items: center;
+    }
+
+}

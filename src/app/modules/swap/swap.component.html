@@ -73,7 +73,7 @@
                         <span *ngIf="editSlippage==false">
                             {{ slippage }} 
                         </span>
-                        <input *ngIf="editSlippage==true" type="number" [(ngModel)]="slippage" fxFlex="64px" (blur)="editSlippage=false; onBlur()" (keyup)="keyUp()"/> %
+                        <input *ngIf="editSlippage==true" type="number" [(ngModel)]="slippage" fxFlex="64px" (blur)="editSlippage=false; onBlur()" (keyup)="keyUp()" title="Slippage Tolerance" placeholder="Enter slippage tolerance"/> %
                     </span>
                 </div>
                 <div *ngIf="slippageErr" class="warn">
