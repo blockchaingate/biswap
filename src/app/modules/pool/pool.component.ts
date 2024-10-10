@@ -66,6 +66,10 @@ export class PoolComponent implements OnInit {
   showAmount(amount: any) {
     return new BigNumber(amount).shiftedBy(-18).toNumber()
   }
+
+  showShortAmount(amount: any) {
+    return new amount.toNumber().toFixed(8).toString();
+  }
   
   getExistLiquidity(){
     this.apiService.getUserExistPair(this.account, this.page).subscribe((res: any) =>{

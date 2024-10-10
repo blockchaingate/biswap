@@ -15,4 +15,8 @@ export class TransactionsComponent implements OnInit {
   toIdentityString(id: string) {
     return id.substring(0,3) + '...' + id.substring(id.length - 3);
   }
+
+  showShortAmount(amount: any) {
+    return parseFloat(amount+'').toFixed(8).replace(/\.0+$/,'');
+  }
 }

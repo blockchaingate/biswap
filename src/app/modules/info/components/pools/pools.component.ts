@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import BigNumber from 'bignumber.js';
 
 @Component({
   selector: 'app-pools',
@@ -17,5 +18,13 @@ export class PoolsComponent implements OnInit {
       return 0;
     }
     return Number((pair.summary.dailyVolumeUSD * 0.003 / pair.summary.reserveUSD * 365 * 100).toFixed(2));
+  }
+
+  showAmount(amount: any) {
+    return new BigNumber(amount).shiftedBy(-18).toNumber()
+  }
+  
+  showShortAmount(amount: any) {
+    return parseFloat(amount+'').toFixed(8).replace(/\.0+$/,'');
   }
 }

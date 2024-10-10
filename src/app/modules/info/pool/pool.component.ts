@@ -14,7 +14,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
   transactions: any;
   title: string = '';
   value: any;
-  identity: string ='';
+  identity: string = '';
   currentTime: any;
   items: any;
   chartObj: any;
@@ -26,7 +26,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
   @ViewChild('chart') chart!: ElementRef;
 
   constructor(
-    private biswapServ: BiswapService, 
+    private biswapServ: BiswapService,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -53,14 +53,14 @@ export class PoolComponent implements OnInit, AfterViewInit {
       );
     });
 
-    
+
   }
 
   changePageNum(pageNum: number) {
-    if(pageNum < 0) {
+    if (pageNum < 0) {
       pageNum = 0;
     }
-    if(pageNum > this.totalPage) {
+    if (pageNum > this.totalPage) {
       pageNum = this.totalPage;
     }
     this.pageNum = pageNum;
@@ -70,7 +70,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    
+
     this.biswapServ.getPairDayDatas(this.identity).subscribe(
       (items: any) => {
 
@@ -80,151 +80,156 @@ export class PoolComponent implements OnInit, AfterViewInit {
       });
   }
   changeTab(tabName: string) {
-        this.title = tabName;
+    this.title = tabName;
 
-        switch(tabName) {
-          case 'Volume':
-            this.createVolumeChart();
-            break;
-          case 'TVL':
-            this.createTVLChart();
-            break;
-          case 'Fees':
-            this.createFeesChart();
-            break;        
-        }
-
+    switch (tabName) {
+      case 'Volume':
+        this.createVolumeChart();
+        break;
+      case 'TVL':
+        this.createTVLChart();
+        break;
+      case 'Fees':
+        this.createFeesChart();
+        break;
+    }
   }
 
   createVolumeChart() {
 
-        //const lineSeries = chart.addLineSeries();
-        const histogramSeries = this.chartObj.addHistogramSeries({ color: '#26a69a' });
-    
-    
-        const histogramDatas = this.items.map((item: any) => {
-          const date = new Date(item.date * 1000);
-          const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
-          const lineData = {
-            time: timeString,
-            value: item.dailyVolumeUSD
-          };
-          return lineData;
-        });
-        const currentItem = histogramDatas[histogramDatas.length - 1];
-        this.value = currentItem.value;
-        this.currentTime = currentItem.time;
-    
-        histogramSeries.setData(histogramDatas);
-    
-    
-        var that = this;
-        this.chartObj.subscribeCrosshairMove(function(param: MouseEventParams) {
-    
-          const time: any = param.time;
-          const seriesPrices = param.seriesPrices;
-          if(seriesPrices) {
-            const seriesPrice = seriesPrices.get(histogramSeries);
-            if(seriesPrice) {
-              that.value = seriesPrice.valueOf();
-            }
-            
-          }
-          if(time) {
-            const year = time.year;
-            const month = time.month;
-            const day = time.day;
-            that.currentTime = year + '-' + month + '-' + day;
-          }   
+    //const lineSeries = chart.addLineSeries();
+    const histogramSeries = this.chartObj.addHistogramSeries({ color: '#26a69a' });
+
+    const histogramDatas = this.items.map((item: any) => {
+      const date = new Date(item.date * 1000);
+      const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
+      const lineData = {
+        time: timeString,
+        value: item.dailyVolumeUSD
+      };
+      return lineData;
+    });
+    const currentItem = histogramDatas[histogramDatas.length - 1];
+    this.value = currentItem.value;
+    this.currentTime = currentItem.time;
+
+    histogramSeries.setData(histogramDatas);
+
+
+    var that = this;
+    this.chartObj.subscribeCrosshairMove(function (param: MouseEventParams) {
+
+      const time: any = param.time;
+      const seriesPrices = param.seriesPrices;
+      if (seriesPrices) {
+        const seriesPrice = seriesPrices.get(histogramSeries);
+        if (seriesPrice) {
+          that.value = seriesPrice.valueOf();
+        }
+
       }
-    );
-  }
-  
-  createTVLChart() {
-            //const lineSeries = chart.addLineSeries();
-        const histogramSeries = this.chartObj.addLineSeries({ color: '#26a69a' });
-    
-    
-        const histogramDatas = this.items.map((item: any) => {
-          const date = new Date(item.date * 1000);
-          const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
-          const lineData = {
-            time: timeString,
-            value: item.reserveUSD
-          };
-          return lineData;
-        });
-        const currentItem = histogramDatas[histogramDatas.length - 1];
-        this.value = currentItem.value;
-        this.currentTime = currentItem.time;
-    
-        histogramSeries.setData(histogramDatas);
-    
-    
-        var that = this;
-        this.chartObj.subscribeCrosshairMove(function(param: MouseEventParams) {
-    
-          const time: any = param.time;
-          const seriesPrices = param.seriesPrices;
-          if(seriesPrices) {
-            const seriesPrice = seriesPrices.get(histogramSeries);
-            if(seriesPrice) {
-              that.value = seriesPrice.valueOf();
-            }
-            
-          }
-          if(time) {
-            const year = time.year;
-            const month = time.month;
-            const day = time.day;
-            that.currentTime = year + '-' + month + '-' + day;
-          }   
+      if (time) {
+        const year = time.year;
+        const month = time.month;
+        const day = time.day;
+        that.currentTime = year + '-' + month + '-' + day;
       }
-    );
-  }
-  createFeesChart() {
-        //const lineSeries = chart.addLineSeries();
-        const histogramSeries = this.chartObj.addHistogramSeries({ color: '#26a69a' });
-    
-    
-        const histogramDatas = this.items.map((item: any) => {
-          const date = new Date(item.date * 1000);
-          const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
-          const lineData = {
-            time: timeString,
-            value: new BigNumber(item.dailyVolumeUSD).multipliedBy(new BigNumber(0.003)).toNumber()
-          };
-          return lineData;
-        });
-        const currentItem = histogramDatas[histogramDatas.length - 1];
-        this.value = currentItem.value;
-        this.currentTime = currentItem.time;
-    
-        histogramSeries.setData(histogramDatas);
-    
-    
-        var that = this;
-        this.chartObj.subscribeCrosshairMove(function(param: MouseEventParams) {
-    
-          const time: any = param.time;
-          const seriesPrices = param.seriesPrices;
-          if(seriesPrices) {
-            const seriesPrice = seriesPrices.get(histogramSeries);
-            if(seriesPrice) {
-              that.value = seriesPrice.valueOf();
-            }
-            
-          }
-          if(time) {
-            const year = time.year;
-            const month = time.month;
-            const day = time.day;
-            that.currentTime = year + '-' + month + '-' + day;
-          }   
-      }
+    }
     );
   }
 
+  createTVLChart() {
+    //const lineSeries = chart.addLineSeries();
+    const histogramSeries = this.chartObj.addLineSeries({ color: '#26a69a' });
+
+
+    const histogramDatas = this.items.map((item: any) => {
+      const date = new Date(item.date * 1000);
+      const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
+      const lineData = {
+        time: timeString,
+        value: item.reserveUSD
+      };
+      return lineData;
+    });
+    const currentItem = histogramDatas[histogramDatas.length - 1];
+    this.value = currentItem.value;
+    this.currentTime = currentItem.time;
+
+    histogramSeries.setData(histogramDatas);
+
+
+    var that = this;
+    this.chartObj.subscribeCrosshairMove(function (param: MouseEventParams) {
+
+      const time: any = param.time;
+      const seriesPrices = param.seriesPrices;
+      if (seriesPrices) {
+        const seriesPrice = seriesPrices.get(histogramSeries);
+        if (seriesPrice) {
+          that.value = seriesPrice.valueOf();
+        }
+
+      }
+      if (time) {
+        const year = time.year;
+        const month = time.month;
+        const day = time.day;
+        that.currentTime = year + '-' + month + '-' + day;
+      }
+    }
+    );
+  }
+  createFeesChart() {
+    //const lineSeries = chart.addLineSeries();
+    const histogramSeries = this.chartObj.addHistogramSeries({ color: '#26a69a' });
+
+
+    const histogramDatas = this.items.map((item: any) => {
+      const date = new Date(item.date * 1000);
+      const timeString = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
+      const lineData = {
+        time: timeString,
+        value: new BigNumber(item.dailyVolumeUSD).multipliedBy(new BigNumber(0.003)).toNumber()
+      };
+      return lineData;
+    });
+    const currentItem = histogramDatas[histogramDatas.length - 1];
+    this.value = currentItem.value;
+    this.currentTime = currentItem.time;
+
+    histogramSeries.setData(histogramDatas);
+
+
+    var that = this;
+    this.chartObj.subscribeCrosshairMove(function (param: MouseEventParams) {
+
+      const time: any = param.time;
+      const seriesPrices = param.seriesPrices;
+      if (seriesPrices) {
+        const seriesPrice = seriesPrices.get(histogramSeries);
+        if (seriesPrice) {
+          that.value = seriesPrice.valueOf();
+        }
+
+      }
+      if (time) {
+        const year = time.year;
+        const month = time.month;
+        const day = time.day;
+        that.currentTime = year + '-' + month + '-' + day;
+      }
+    }
+    );
+  }
+
+  showShortAmount(amount: any) {
+    return new amount.toNumber().toFixed(8).toString();
+  }
+  
+  showAmount(amount: any) {
+    return new BigNumber(amount).shiftedBy(-18).toNumber()
+  }
 }
 
 

@@ -1,46 +1,44 @@
-<div class="rounded-card">
-    <div class="container">
-        <div class="row py-3">
-            <div class="titiCol col-md-2">
-                <b>#</b>
-            </div>
-            <div class="titiCol col-md-2">
-                <b>{{"Pool"|translate}}</b>
-            </div>
-
-            <div class="titiCol col-md-2">
-                <b>{{"Volume 24h"|translate}}</b>
-            </div>
-            <div class="titiCol col-md-2">
-                <b>{{"LP Reward Fee"|translate}}</b>
-            </div>
-            <div class="titiCol col-md-2">
-                <b>{{"Lp Reward APR"|translate}}(%)</b>
-            </div>
-            <div class="titiCol col-md-2">
-                <b>{{"Liquidity"|translate}}</b>
-            </div>
+<div class="container">
+    <div class="row pt-2 title">
+        <div class="titiCol col-1">
+            <b>#</b>
+        </div>
+        <div class="titiCol col-2">
+            <b>{{"Pool"|translate}}</b>
         </div>
 
-        <div class="row  py-3" *ngFor="let pair of pairs;let i = index">
-            <div class="titiCol col-md-2">
-                {{i + 1}}
-            </div>
-            <div class="titiCol col-md-2">
-                <a href="/info/pool/{{pair._id}}">{{pair.name}}</a>
-            </div>
-            <div class="titiCol col-md-2">
-                {{pair.summary.dailyVolumeUSD}}
-            </div>
-            <div class="titiCol col-md-2">
-                {{pair.summary.dailyVolumeUSD * 0.003}}
-            </div>
-            <div class="titiCol col-md-2">
-                {{getARP(pair)}}
-            </div>
-            <div class="titiCol col-md-2">
-                {{pair.totalLiquidity}}
-            </div>
+        <div class="titiCol col-2">
+            <b>{{"Volume 24h"|translate}}</b>
+        </div>
+        <div class="titiCol col-2">
+            <b>{{"LP Reward Fee"|translate}}</b>
+        </div>
+        <div class="titiCol col-2">
+            <b>{{"Lp Reward APR"|translate}}(%)</b>
+        </div>
+        <div class="titiCol col-3">
+            <b>{{"Liquidity"|translate}}</b>
+        </div>
+    </div>
+
+    <div class="row formrow" *ngFor="let pair of pairs;let i = index">
+        <div class="titiCol col-1">
+            {{i + 1}}
+        </div>
+        <div class="titiCol col-2">
+            <a href="/info/pool/{{pair._id}}">{{pair.name}}</a>
+        </div>
+        <div class="titiCol col-2">
+            {{showShortAmount(pair.summary.dailyVolumeUSD)}}
+        </div>
+        <div class="titiCol col-2">
+            {{showShortAmount(pair.summary.dailyVolumeUSD * 0.003)}}
+        </div>
+        <div class="titiCol col-2">
+            {{showShortAmount(getARP(pair))}}
+        </div>
+        <div class="titiCol col-3">
+            {{showShortAmount(showAmount(pair.totalLiquidity))}}
         </div>
     </div>
 </div>
