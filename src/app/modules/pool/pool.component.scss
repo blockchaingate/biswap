@@ -11,6 +11,11 @@
     width: 100%;
 }
 
+mat-expansion-panel {
+    background-color: #0044aa;
+    color: white;
+}
+
 ::ng-deep .mat-card {
     border-radius: 8px;
     background-image: linear-gradient(37deg, #bb91f9, #3f5ac5);

@@ -26,40 +26,35 @@ export class PoolComponent implements OnInit {
   fisrtToken: Coin = new Coin();
   secondToken: Coin = new Coin();
 
-
-  fisrtTokenName: number=0;
-  secondTokenName: number=0;
+  fisrtTokenName: number = 0;
+  secondTokenName: number = 0;
 
   firstTokeninPair!: number;
   secondTokeninPair!: number;
   totalPoolToken!: number;
   totalSupply!: number;
   yourPoolShare!: number;
-
   walletAddress: string = '';
-
-
   existedLiquidityList: any[] = [];
-
   page: number = 0;
-  constructor(
-    private apiService: ApiService,
-    private walletService: WalletService,
-    private utilServ: UtilsService,
-    private router: Router,
-  ) {}
+
+  constructor(private apiService: ApiService, private walletService: WalletService, private utilServ: UtilsService, private router: Router,) { }
 
   async ngOnInit() {
     this.account = this.walletService.account;
-    if(!this.account) {
+    if (!this.account) {
       this.walletService.accountSubject.subscribe(
         account => {
           this.account = account;
-          this.getExistLiquidity();
+          if (this.account) {
+            this.isWalletConnect = true;
+            this.getExistLiquidity();
+          }
         }
       );
-    }else {
+    } else {
       this.getExistLiquidity();
+      this.isWalletConnect = true;
     }
   }
 
@@ -70,17 +65,17 @@ export class PoolComponent implements OnInit {
   showShortAmount(amount: any) {
     return new amount.toNumber().toFixed(8).toString();
   }
-  
-  getExistLiquidity(){
-    this.apiService.getUserExistPair(this.account, this.page).subscribe((res: any) =>{
-      if(res.length > 0){
+
+  getExistLiquidity() {
+    this.apiService.getUserExistPair(this.account, this.page).subscribe((res: any) => {
+      if (res.length > 0) {
         /*
         for (const item of res) {
           item.liquidityTokenBalance = item.liquidityTokenBalance / 1e18;
         }
         */
-        this.existedLiquidityList = res ;
-        this.page ++;
+        this.existedLiquidityList = res;
+        this.page++;
       }
     })
   }
@@ -94,7 +89,6 @@ export class PoolComponent implements OnInit {
   }
 
   removeLiquidity(index: number) {
-
     const liquidity = this.existedLiquidityList[index];
     console.log('liquidity to be remove=', liquidity);
     this.router.navigate(['/pool/remove'], {
@@ -109,7 +103,7 @@ export class PoolComponent implements OnInit {
         yourPoolShare: this.existedLiquidityList[index].share,
         pooledFirstToken: this.existedLiquidityList[index].pair.reserve0,
         pooledSecondToken: this.existedLiquidityList[index].pair.reserve1,
-        totalPoolToken: this.existedLiquidityList[index].liquidityTokenBalance, 
+        totalPoolToken: this.existedLiquidityList[index].liquidityTokenBalance,
       },
     });
   }

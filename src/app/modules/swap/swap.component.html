@@ -37,15 +37,13 @@
                 </div>
                 
                 <div fxLayout="row" fxLayoutAlign="center center">
-                    <button (click)="changeTokens()" mat-icon-button class="example-icon"
-                        aria-label="Example icon-button with share icon">
+                    <button (click)="changeTokens()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
                         <mat-icon>swap_vert</mat-icon>
                     </button>
                 </div>
 
                 <div class="coins-input-body" fxLayout="row" fxLayoutAlign="space-between center">
-                    <input readonly #token2 name="secondCoinAmount" class="tokenAmt" type="number" 
-                        [(ngModel)]="secondCoinAmount" placeholder="0.0" />
+                    <input readonly #token2 name="secondCoinAmount" class="tokenAmt" type="number" [(ngModel)]="secondCoinAmount" placeholder="0.0" />
                     <div class="tokenSelectButton btn" (click)="openSecondTokenListDialog()">
                         <span class="tokenwithIcon" *ngIf="secondToken?.symbol != null; else selecta">
                             {{ secondToken.symbol }} <span *ngIf="secondCoinBalance >= 0">({{secondCoinBalance}})</span>
@@ -62,9 +60,7 @@
 
                 <div fxLayout="row" fxLayoutAlign="space-between">
                     <span> {{perAmountLabel}} </span>
-                    <span>
-                        {{ perAmount }}
-                    </span>
+                    <span> {{ perAmount }} </span>
                 </div>
 
                 <div fxLayout="row" fxLayoutAlign="space-between">
@@ -79,7 +75,6 @@
                 <div *ngIf="slippageErr" class="warn">
                     {{"slippageErrMsg"|translate}}
                 </div>
-
             </div>
 
             <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
@@ -90,7 +85,7 @@
                 </button>
 
                 <ng-template #asd>
-                    <button mat-raised-button color="primary" (click)="swapFunction()" *ngIf="!insufficientFund">Swap{{(priceImpact > 5) ? ' Anyway' : ''}}</button>
+                    <button mat-raised-button color="primary" (click)="swapFunction()" *ngIf="!insufficientFund">{{"Swap"|translate}}{{(priceImpact > 5) ? ' Anyway' : ''}}</button>
                     <button mat-raised-button color="primary" disabled *ngIf="insufficientFund">Insufficent
                         {{firstToken.tickerName}} balance</button>
                 </ng-template>
