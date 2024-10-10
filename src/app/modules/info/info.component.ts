@@ -8,7 +8,10 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 })
 export class InfoComponent implements OnInit {
   tabName = 'overview';
+  selectedTab = 1;
+
   constructor(private activatedRoute: ActivatedRoute) {}
+
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       if(params && params['tabName']) {

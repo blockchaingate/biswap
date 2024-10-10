@@ -1,13 +1,15 @@
 .planbody {
-    background-color: #037597;
+    background-color: white;
+    color: black;
+    font-size: 16px;
     width: 100%;
 }
 
 .title {
     width: 100%;
     display: flex;
-    font-size: 12px;
-    font-weight: 300;
+    font-weight: 400;
+    background-color: silver;
 }
 
 .titiCol {
@@ -17,13 +19,17 @@
 .contnt {
     width: 100%;
     display: flex;
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 200;
 }
 
 @media(max-width: 640px) //if more than 400 px
 {
     .planbody {
-        width: 100%;
+        font-size: 10px;
+    }
+
+    .contnt {
+        font-size: 10px;
     }
 }

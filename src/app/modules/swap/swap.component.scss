@@ -46,15 +46,13 @@
 }
 
 ::ng-deep .mat-form-field {
- //   width: 100%;
-
     label {
         font-size: 32px;
     }
 }
 
 ::ng-deep .mat-card {
-    border-radius: 8px !important;
+    border-radius: 8px;
     background-image: linear-gradient(37deg, #bb91f9, #3f5ac5);
     min-width: 350px;
 }
@@ -152,7 +150,7 @@
     ::ng-deep .mat-card {
         background-image: none;
         color: black;
-        background-color: white;
+     //   background-color: white;
         border: none;
         box-shadow: none;
         font-size: 12px;

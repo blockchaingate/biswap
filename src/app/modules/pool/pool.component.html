@@ -1,11 +1,11 @@
-<div fxLayout="column" fxLayoutAlign="start center" class="swapBody">
+<div fxLayout="column" fxLayoutAlign="start center" class="poolBody">
 
-    <div class="row">
+    <div class="row maina">
         <mat-card class="cardd">
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <mat-card-title fxLayout="column">
-                    <span class="paddingTop5">{{"Your Liquidity"|translate}} </span>
-                    <h5 class="paddingTop5">{{"Remove liquidity to receive tokens back"|translate}}</h5>
+                    <h2>{{"Your Liquidity"|translate}} </h2>
+                    <h4>{{"Remove liquidity to receive tokens back"|translate}}</h4>
                 </mat-card-title>
 
                 <div class="paddingBottom20">
@@ -18,16 +18,15 @@
                 </div>
             </div>
 
-            <div>
+            <div fxLayout="row">
                 <div class="emty-liquidity" *ngIf="isWalletConnect != true; else other">
-                    <span> {{"Connect to a wallet to view your liquidity"|translate}}. </span>
+                    <h4> {{"Connect to a wallet to view your liquidity"|translate}}. </h4>
                 </div>
 
                 <ng-template #other>
                     <div class="emty-liquidity" fxLayout="column" fxLayoutAlign="center center">
                         <span *ngIf="totalPoolToken == null">{{"No liquidity found"|translate}}. </span>
-                        <span *ngIf="totalPoolToken == null" class="marginTop20">{{"Don't see a pool you
-                            joined"|translate}} ?
+                        <span *ngIf="totalPoolToken == null" class="marginTop20">{{"Don't see a pool you joined"|translate}} ?
                         </span>
 
                         <span *ngIf="totalPoolToken != null && isWalletConnect"> {{"LiquidityDetail"|translate}}</span>

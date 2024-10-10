@@ -1,9 +1,14 @@
-.swapBody {
-    min-width: 25%;
-    
-    padding: 2rem 1rem;
-    background-size: cover;
-    background-repeat: no-repeat;
+.poolBody {
+    padding-bottom: 20px;
+}
+
+.maina {
+    margin-top: 4rem;
+}
+
+.cardd {
+    min-width: 360px;
+    width: 100%;
 }
 
 ::ng-deep .mat-card {
@@ -29,8 +34,10 @@
     margin-bottom: 0;
 }
 
-::ng-deep .mat-form-field label {
-   // font-size: 40px;
+::ng-deep .mat-form-field {
+    label {
+        font-size: 32px;
+    }
 }
 
 .sparater {
@@ -41,8 +48,7 @@
 }
 
 .emty-liquidity {
-    background-color: white;
-    color: black;
+    color: white;
     padding: 30px;
     margin: 10px -16px 10px;
 }
@@ -89,12 +95,18 @@ h1 {
 
 @media(max-width: 640px) //if more than 400 px
 {
+    .maina {
+        width: 100vw;
+        margin-top: 1rem;
+    }
+
     .cardd {
         box-shadow: none;
     }
 
     .coins-input-body {
         background-color: #f0f0f0;
+        color: black;
         border: none;
         box-shadow: none;
     }
@@ -110,9 +122,21 @@ h1 {
       //  width: 100%;
     }
 
+    .emty-liquidity {
+        color: black;
+    }
+
     .exist-liquddity {
         width: 90%;
         margin: 4px auto;
+    }
+
+    h2 {
+        font-size: 12px;
+    }
+
+    h4 {
+        font-size: 10px;
     }
 }
 

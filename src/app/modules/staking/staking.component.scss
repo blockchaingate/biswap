@@ -1,6 +1,6 @@
 .stakeBody {
-    min-width: 25%;
-    width: 800px;
+    min-width: 350px;
+    width: 480px;
     margin: auto;
 }
 
@@ -8,10 +8,12 @@
     text-align: center;
     padding: 50px 0;
     font-size: 40px;
+    font-weight: 500;
     color: white;
 }
 
-::ng-deep .mat-card {
+.cardd {
+    padding: 1rem;
     border-radius: 12px;
     background-color: #0044aa;
 }
@@ -57,10 +59,10 @@
     border-radius: 10px;
 }
 
-@media(max-width: 640px) {
+@media screen and (max-width: 640px) {
     .stakeBody {
         width: 100%;
-        padding: 0 4px;
+        padding: 0 1rem;
         border: none;
         box-shadow: none;
     }
@@ -72,15 +74,11 @@
         color: black;
     }
 
-    .paddingTop5 {
-        font-size: 12px;
-    }
-
-    ::ng-deep .mat-card {
-        box-shadow: none;
-        border: none;
+    .cardd {
         background-color: white;
         color: black;
+        box-shadow: none;
+        border: none;
     }
 
     .emty-liquidity {

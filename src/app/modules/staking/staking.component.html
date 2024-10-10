@@ -2,11 +2,11 @@
     <div class="title1">
         {{"Staking"|translate}}
     </div>
-    <mat-card>
+    <div class="cardd">
         <div fxLayout="row" fxLayoutAlign="space-between center">
             <mat-card-title fxLayout="column">
-                <span class="paddingTop5"> {{"Your Stakings"|translate}} </span>
-                <h5 class="paddingTop5">{{"Redeem your stakings to receive tokens back"|translate}}</h5>
+                <h3> {{"Your Stakings"|translate}} </h3>
+                <h5>{{"Redeem your stakings to receive tokens back"|translate}}</h5>
             </mat-card-title>
 
             <div class="paddingBottom20">
@@ -20,7 +20,7 @@
 
         <div>
             <div class="emty-liquidity" *ngIf="!account; else other">
-                <span> {{"Connect to a wallet to view your stakings."|translate}} </span>
+                <h5> {{"Connect to a wallet to view your stakings."|translate}} </h5>
             </div>
 
             <ng-template #other>
@@ -54,15 +54,15 @@
                 {{"Connect to wallet"|translate}}
             </button>
 
-            <ng-template #asd>
+            <ng-template class="my-2" #asd>
                 <button mat-raised-button color="primary" (click)="addStaking()">
                     + {{"Add Staking"|translate}}
                 </button>
-                <button *ngIf="amount" mat-raised-button color="basic" (click)="withdrawStaking()">
+                <button class="my-2" *ngIf="amount" mat-raised-button color="basic" (click)="withdrawStaking()">
                     + {{"Withdraw Staking"|translate}}
                 </button>
 
             </ng-template>
         </mat-card-actions>
-    </mat-card>
+    </div>
 </div>

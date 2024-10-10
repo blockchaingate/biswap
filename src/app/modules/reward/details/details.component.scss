@@ -1,14 +1,17 @@
 .detailbody {
-    background-color: #042570;
+    background-color: white;
+    color: black;
+    font-size: 16px;
     width: 100%;
+    margin-bottom: 8px;
 }
 
 .title {
     width: 100%;
     display: flex;
-    font-size: 12px;
-    font-weight: 300;
-    background-color: black;
+    font-weight: 600;
+    background-color: silver;
+    color: black;
 }
 
 .titiCol {
@@ -18,24 +21,21 @@
 .contnt {
     width: 100%;
     display: flex;
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 200;
 }
 
 @media(max-width: 640px) //if more than 400 px
 {
-    .detailbody {
-        width: 100%;
-        background-color: #f7f7f7;
-        color: black;
+    .title {
+        font-size: 10px;
     }
 
-    .title {
-        background-color: black;
-        color: white
+    .contnt {
+        font-size: 10px;
     }
 
     nav a{
-        font-size: 12px;
+        font-size: 10px;
     }
 }
