@@ -36,6 +36,7 @@ export class PoolComponent implements OnInit {
   yourPoolShare!: number;
   walletAddress: string = '';
   existedLiquidityList: any[] = [];
+  hasLiquidities: boolean = false;
   page: number = 0;
 
   constructor(private apiService: ApiService, private walletService: WalletService, private utilServ: UtilsService, private router: Router,) { }
@@ -75,6 +76,8 @@ export class PoolComponent implements OnInit {
         }
         */
         this.existedLiquidityList = res;
+        this.hasLiquidities = true;
+
         this.page++;
       }
     })

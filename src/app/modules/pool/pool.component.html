@@ -24,12 +24,10 @@
                 </div>
 
                 <ng-template #other>
-                    <div class="emty-liquidity" fxLayout="column" fxLayoutAlign="center center">
-                        <span *ngIf="totalPoolToken == null">{{"No liquidity found"|translate}}. </span>
-                        <span *ngIf="totalPoolToken == null" class="marginTop20">{{"Don't see a pool you joined"|translate}} ?
-                        </span>
-
-                        <span *ngIf="totalPoolToken != null && isWalletConnect"> {{"LiquidityDetail"|translate}}</span>
+                    <div class="emty-liquidity" fxLayout="column" fxLayoutAlign="center start">
+                        <span *ngIf="hasLiquidities == false">{{"No liquidity found"|translate}}. </span>
+                        <span *ngIf="hasLiquidities == false" class="marginTop20">{{"Don't see a pool you joined"|translate}} ?</span>
+                        <span *ngIf="hasLiquidities == true && isWalletConnect"> {{"LiquidityDetail"|translate}}</span>
                     </div>
                 </ng-template>
             </div>
