@@ -56,7 +56,7 @@
     "ngx-ui-loader": "^19.0.0",
     "pino": "^10.1.0",
     "query-string": "9.3.1",
-    "readable-stream":"^4.7.0",
+    "readable-stream": "^4.7.0",
     "rxjs": "~7.8.2",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
