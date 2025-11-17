@@ -1,0 +1,74 @@
+<div class="stakeBody">
+    <div class="title1">
+        {{"Staking"|translate}}
+    </div>
+    <div class="cardd">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-card-title fxLayout="column">
+                <h3> {{"Your Stakings"|translate}} </h3>
+                <h5>{{"Redeem your stakings to receive tokens back"|translate}}</h5>
+            </mat-card-title>
+
+            <div class="paddingBottom20">
+
+                <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+                    (click)="showStakings()">
+                    <mat-icon>more_horiz</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div>
+            @if(!account) {
+            <div class="emty-liquidity">
+                <h5> {{"Connect to a wallet to view your stakings."|translate}} </h5>
+            </div>
+            } @else {
+            <div class="emty-liquidity" fxLayout="column" fxLayoutAlign="center center">
+                @if(!amount) {
+                <div>{{"No staking found"|translate}}. </div>
+                } @else {
+                <div>
+                    <div fxLayout="row" fxLayoutAlign="space-between center">
+                        <div fxFlex.md="40">
+                            {{"Amount"|translate}}:
+                        </div>
+                        <div fxFlex.md="60">
+                            {{amount}}
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="space-between center">
+                        <div fxFlex.md="40">
+                            {{"Reward"|translate}}:
+                        </div>
+                        <div fxFlex.md="60">
+                            {{reward}}
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+            }
+        </div>
+
+        <mat-card-actions fxLayout="column" fxLayoutAlign="center center" class="mat-card-action">
+            @if(!account) {
+            <button mat-raised-button color="primary" (click)="connectWallet()">
+                {{"Connect to wallet"|translate}}
+            </button>
+            } @else {
+            <ng-template class="my-2" #asd>
+                <button mat-raised-button color="primary" (click)="addStaking()">
+                    + {{"Add Staking"|translate}}
+                </button>
+                @if(amount) {
+                <button class="my-2" mat-raised-button color="basic" (click)="withdrawStaking()">
+                    + {{"Withdraw Staking"|translate}}
+                </button>
+                }
+            </ng-template>
+            }
+        </mat-card-actions>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+import { Component, OnInit, Inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
+
+export interface DialogData {
+  slippage: number;
+  deadline: number;
+}
+
+@Component({
+  selector: 'app-settings',
+  standalone: true,
+  imports: [FormsModule, TranslateModule, MatDialogModule],
+  templateUrl: './settings.component.html',
+  styleUrls: ['./settings.component.scss']
+})
+export class SettingsComponent implements OnInit {
+  slippageErr = false;
+
+  constructor(
+    public dialogRef: MatDialogRef<SettingsComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+  ) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  ngOnInit(): void {
+  }
+
+  keyUp() {
+    if (this.data.slippage < 0 || this.data.slippage > 100) {
+      this.slippageErr = true;
+    } else {
+      this.slippageErr = false;
+    }
+  }
+}

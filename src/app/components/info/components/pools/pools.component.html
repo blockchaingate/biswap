@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row pt-2 title">
+        <div class="titiCol col-1">
+            <b>#</b>
+        </div>
+        <div class="titiCol col-2">
+            <b>{{"Pool"|translate}}</b>
+        </div>
+
+        <div class="titiCol col-2">
+            <b>{{"Volume 24h"|translate}}</b>
+        </div>
+        <div class="titiCol col-2">
+            <b>{{"LP Reward Fee"|translate}}</b>
+        </div>
+        <div class="titiCol col-2">
+            <b>{{"Lp Reward APR"|translate}}(%)</b>
+        </div>
+        <div class="titiCol col-3">
+            <b>{{"Liquidity"|translate}}</b>
+        </div>
+    </div>
+
+    @for (pair of pairs; track pair._id;) {
+    <div class="row formrow">
+        <div class="titiCol col-1">
+            {{$index + 1}}
+        </div>
+        <div class="titiCol col-2">
+            <a href="/info/pool/{{pair._id}}">{{pair.name}}</a>
+        </div>
+        <div class="titiCol col-2">
+            {{showShortAmount(pair.summary.dailyVolumeUSD)}}
+        </div>
+        <div class="titiCol col-2">
+            {{showShortAmount(pair.summary.dailyVolumeUSD * 0.003)}}
+        </div>
+        <div class="titiCol col-2">
+            {{showShortAmount(getARP(pair))}}
+        </div>
+        <div class="titiCol col-3">
+            {{showShortAmount(showAmount(pair.totalLiquidity))}}
+        </div>
+    </div>
+    }
+</div>

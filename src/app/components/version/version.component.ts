@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { version } from '../../../environments/version';
 import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-version',
+  standalone: true,
+  imports: [],
   templateUrl: './version.component.html',
   styleUrls: ['./version.component.scss']
 })

@@ -1,42 +1,56 @@
 import { Injectable } from '@angular/core';
+import { StorageMap } from '@ngx-pwa/local-storage';
+import { error } from 'console';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class StorageService {
-  constructor() {}
 
-    getWalletSession(){
-        var clientSession = localStorage.getItem('client-session');
-        if(clientSession != undefined || clientSession != null){
-            return JSON.parse(clientSession);
-        }else return null;
+    constructor(private storage: StorageMap) { }
+
+    // Wallet Session Management
+    getWalletSession() {
+        //this.storage.get('client-session').subscribe((data: any) => {
+        //    return JSON.parse(data);
+        //});
+
+        //use subscribe to call it:
+        return this.storage.get('client-session');
     }
 
-    removeWalletSession(){
-        localStorage.removeItem('client-session');
+    removeWalletSession() {
+        this.storage.delete('client-session').subscribe(() => { });
     }
 
-    createWalletSession(session: any){
-        localStorage.setItem('client-session', JSON.stringify(session));
+    createWalletSession(session: any) {
+        this.storage.set('client-session', JSON.stringify(session)).subscribe(() => { });
     }
 
+    //DeviceID Management
+    getDeviceID() {
+        //this.storage.get('device-id').subscribe((data: any) => {
+        //    return data;
+        //});
 
-    //cant store clinet into local Storage 
+        //use subscribe to call it:
+        return this.storage.get('device-id');
+    }
 
-    // getWalletClient(){
-    //     var clientWallet = sessionStorage.getItem('client-wallet');
-    //     if(clientWallet != undefined || clientWallet != null){
-    //         return JSON.parse(clientWallet);
-    //     }else return null;
-    // }
+    setDeviceID(deviceID: string) {
+        this.storage.set('device-id', deviceID).subscribe(() => { });
+    }
 
-    // removeWalletClient(){
-    //     sessionStorage.removeItem('client-wallet');
-    // }
+    removeDeviceID() {
+        this.storage.delete('device-id').subscribe(() => { });
+    }
 
-    // createWalletClient(client: any){
-    //     sessionStorage.setItem('client-wallet', JSON.stringify(client));
-    // }
-    
+    // Language
+    getLanguage() {
+        return this.storage.get('_lan');
+    }
+
+    setLanguage(language: string) {
+        this.storage.set('_lan', language).subscribe(() => { });
+    }
 }

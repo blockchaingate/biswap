@@ -1,0 +1,42 @@
+<div class="container">
+    <div mat-dialog-title>
+        <div fxLayout="row" fxLayoutAlign="space-between center" align-center="center">
+            <h3>{{"Select a Token"|translate}}</h3>
+            <button mat-dialog-close mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <hr class="sparater" />
+    </div>
+
+    <div>
+        {{"Search"|translate}}
+    </div>
+    <div class="search-token-input">
+        <input matInput name="searchTokenLabel" class="searchinput" type="text" [(ngModel)]="searchTokenLabel"
+            (ngModelChange)="searchToken($event)" />
+    </div>
+
+    <div class="tokenlist" mat-dialog-content fxLayout="column" fxLayoutGap="5px">
+        @for(token of filteredTokens; track token.id) {
+        <div>
+            <button (click)="selectToken(token)" class="list-button">
+                <div fxLayout="row" justify-start class="token-list-line" fxLayoutGap="20px">
+                    <span> <img src='{{token.logoUrl}}' (error)="handleImageError($event, token.id)"
+                            width="20px"></span>
+                    <span>
+                        {{ token.symbol }}({{showTokenId(token.id)}})
+                    </span>
+                </div>
+            </button>
+        </div>
+        }
+    </div>
+
+    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="center center">
+        <div mat-dialog-actions>
+            <button mat-button mat-dialog-close>{{"Close"|translate}}</button>
+        </div>
+    </div>
+</div>

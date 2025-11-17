@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import * as bs58 from 'bs58';
 import { TimestampModel } from '../models/temistampModel';
 import { environment } from 'src/environments/environment';
-import * as createHash from 'create-hash';
+import createHash from 'create-hash';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +13,8 @@ export class UtilsService {
 
   fabToExgAddress(address: string) {
     try {
-      const bytes = bs58.decode(address);
-      const addressInWallet = bytes.toString('hex');
+      const bytes = bs58.default.decode(address);
+      const addressInWallet = bytes.toString();
       if (!addressInWallet || addressInWallet.length !== 50) {
         return '';
       }
@@ -27,7 +27,7 @@ export class UtilsService {
     try {
       let prefix = '6f';
       if (environment.production) {
-          prefix = '00';
+        prefix = '00';
       }
       address = prefix + this.stripHexPrefix(address);
 
@@ -37,7 +37,7 @@ export class UtilsService {
       const hash2 = createHash('sha256').update(Buffer.from(hash1, 'hex')).digest().toString('hex');
 
       buf = Buffer.from(address + hash2.substring(0, 8), 'hex');
-      address = bs58.encode(buf);
+      address = bs58.default.encode(buf);
       return address;
     } catch (e) { }
     return '';

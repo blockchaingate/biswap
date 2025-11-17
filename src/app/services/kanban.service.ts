@@ -25,7 +25,7 @@ export class KanbanService {
   }
 
   async getCoinPoolAddress() {
-    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8' );
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
     let path = 'exchangily/getCoinPoolAddress';
     path = this.endpoint + path;
     let addr = '';
@@ -44,7 +44,7 @@ export class KanbanService {
       const response = await lastValueFrom(this.http.get<BaseResponseModel>(`${this.url}v3/token/erc20/100/0`));
 
       if (response && response.data) {
-        response.data.forEach((element) => {
+        response.data.forEach((element: any) => {
           if (removeItems.indexOf(element.type) === -1) {
             tempTokenList.push(element);
           }

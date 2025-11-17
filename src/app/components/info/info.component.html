@@ -1,0 +1,24 @@
+<div class="container infoTop">
+    <mat-button-toggle-group name="tabName" [(ngModel)]="tabName" aria-label="Font Style">
+        <mat-button-toggle value="overview" (click)="selectedTab=1;"
+            [class.selected]="selectedTab==1">{{"Overview"|translate}}</mat-button-toggle>
+        <mat-button-toggle value="pools" (click)="selectedTab=2;"
+            [class.selected]="selectedTab==2">{{"Pools"|translate}}</mat-button-toggle>
+        <mat-button-toggle value="tokens" (click)="selectedTab=3;"
+            [class.selected]="selectedTab==3">{{"Tokens"|translate}}</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    @if(tabName=='overview') {
+    <div>
+        <app-overview></app-overview>
+    </div>
+    } @else if(tabName=='pools') {
+    <div>
+        <app-all-pools></app-all-pools>
+    </div>
+    } @else {
+    <div>
+        <app-all-tokens></app-all-tokens>
+    </div>
+    }
+</div>

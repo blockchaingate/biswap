@@ -1,0 +1,114 @@
+<div fxLayout="column" fxLayoutAlign="start center" class="poolBody">
+
+    <div class="row maina">
+        <mat-card class="cardd">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <mat-card-title fxLayout="column">
+                    <h2>{{"Your Liquidity"|translate}} </h2>
+                    <h4>{{"Remove liquidity to receive tokens back"|translate}}</h4>
+                </mat-card-title>
+
+                <div class="paddingBottom20">
+                    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+                        <mat-icon>settings</mat-icon>
+                    </button>
+                    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+                        <mat-icon>more_horiz</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div fxLayout="row">
+                @if(isWalletConnect != true) {
+                <div class="emty-liquidity">
+                    <h4> {{"Connect to a wallet to view your liquidity"|translate}}. </h4>
+                </div>
+                } @else {
+                <div class="emty-liquidity" fxLayout="column" fxLayoutAlign="center start">
+                    @if(hasLiquidities == false) {
+                    <span>{{"No liquidity found"|translate}}. </span>
+                    <span class="marginTop20">{{"Don't see a pool you joined"|translate}} ?</span>
+                    } @else if(hasLiquidities == true && isWalletConnect) {
+                    <span> {{"LiquidityDetail"|translate}}</span>
+                    }
+                </div>
+                }
+            </div>
+
+            <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
+            <mat-card-actions fxLayout="row" fxLayoutAlign="center center" class="mat-card-action">
+                @if(!account) {
+                <button mat-raised-button color="primary" (click)="connectWallet()">
+                    {{"Connect to wallet"|translate}}
+                </button>
+                } @else {
+                <button mat-raised-button color="primary" (click)="addLiquidityFunction()">
+                    + {{"Add Liquidity"|translate}}
+                </button>
+                }
+            </mat-card-actions>
+        </mat-card>
+
+        @for(item of existedLiquidityList; track item) {
+        <mat-expansion-panel class="exist-liquddity" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title> {{item.token0Name}} / {{item.token1Name}} </mat-panel-title>
+                <mat-panel-description>
+                    {{"Manage"|translate}}
+                    <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <hr>
+
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <p>{{"Pooled"|translate}} {{item.token0Name}}:</p>
+                <p>{{item.pair.reserve0}}</p>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <p>{{"Pooled"|translate}} {{item.token1Name}}:</p>
+                <p>{{item.pair.reserve1}}</p>
+            </div>
+
+            <hr>
+
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <p>{{"Your LP tokens"|translate}}:</p>
+                <p>{{ (showAmount(item.liquidityTokenBalance)).toFixed(8) }}</p>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <p>{{"Your pool share"|translate}}:</p>
+                <p> {{ (item.share * 1.0).toFixed(8) }} % </p>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <p>{{"You pooled" |translate}} {{item.token0Name}}:</p>
+                <p> {{ (item.share * item.pair.reserve0 / 100).toFixed(8) }}</p>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <p>{{"You pooled"|translate}} {{item.token1Name}}:</p>
+                <p> {{ (item.share * item.pair.reserve1 / 100).toFixed(8) }}</p>
+            </div>
+
+            <hr>
+
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <button class="action-buttons" mat-raised-button color="primary" (click)="removeLiquidity($index)">
+                    {{"Remove"|translate}}
+                </button>
+
+            </div>
+        </mat-expansion-panel>
+        }
+
+        <div fxLayout="row" fxLayoutAlign="center center" class="mt-3">
+            @if(existedLiquidityList.length > 0) {
+            <button mat-raised-button color="primary" (click)="getExistLiquidity()">
+                {{"load more"|translate}}
+            </button>
+            }
+        </div>
+
+    </div>
+</div>
+
+<ngx-ui-loader></ngx-ui-loader>

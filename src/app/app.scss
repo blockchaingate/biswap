@@ -1,0 +1,36 @@
+mat-sidenav-container,
+mat-sidenav-content,
+mat-sidenav {
+    height: 100%;
+    background-color: black;
+}
+
+mat-sidenav-container {
+    width: 100vw;
+    height: 100vh;
+}
+
+mat-sidenav {
+    width: 250px;
+}
+
+main {
+    min-height: calc(100vh - 418px);
+}
+
+main::-webkit-scrollbar {
+    display: none;
+}
+
+@media(max-width: 640px) {
+
+    mat-sidenav-container,
+    mat-sidenav-content,
+    mat-sidenav {
+        background-color: white;
+    }
+
+    mat-sidenav {
+        width: 200px;
+    }
+}

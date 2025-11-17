@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
 
 html,
 body {
@@ -120,37 +121,37 @@ h6 {
     h1 {
         font-size: 80px;
     }
-    
+
     h2 {
         font-size: 60px
     }
-    
+
     h3 {
         font-size: 40px
     }
-    
+
     h4 {
         font-size: 20px
     }
 
     h5 {
         font-size: 14px
-    }  
+    }
 }
 
 @media screen and (max-width: 1280px) {
     h1 {
         font-size: 64px;
     }
-    
+
     h2 {
         font-size: 48px
     }
-    
+
     h3 {
         font-size: 32px
     }
-    
+
     h4 {
         font-size: 16px
     }
@@ -158,25 +159,25 @@ h6 {
     h5 {
         font-size: 12px
     }
-    
+
     h6 {
         font-size: 9px
-    }    
+    }
 }
 
 @media screen and (max-width: 1024px) {
     h1 {
         font-size: 48px;
     }
-    
+
     h2 {
         font-size: 36px
     }
-    
+
     h3 {
         font-size: 24px
     }
-    
+
     h4 {
         font-size: 12px
     }
@@ -184,28 +185,27 @@ h6 {
     h5 {
         font-size: 10px
     }
-    
+
     h6 {
         font-size: 8px
-    }    
+    }
 }
 
-@media screen and (max-width: 768px) {
-}
+@media screen and (max-width: 768px) {}
 
 @media screen and (max-width: 640px) {
     h1 {
         font-size: 40px;
     }
-    
+
     h2 {
         font-size: 30px
     }
-    
+
     h3 {
         font-size: 20px
     }
-    
+
     h4 {
         font-size: 10px
     }
@@ -213,25 +213,25 @@ h6 {
     h5 {
         font-size: 9px
     }
-    
+
     h6 {
         font-size: 7px
-    }   
+    }
 }
 
 @media screen and (max-width: 480px) {
     h1 {
         font-size: 32px;
     }
-    
+
     h2 {
         font-size: 24px
     }
-    
+
     h3 {
         font-size: 16px
     }
-    
+
     h4 {
         font-size: 8px
     }
@@ -239,9 +239,8 @@ h6 {
     h5 {
         font-size: 7px
     }
-    
+
     h6 {
         font-size: 6px
-    }    
+    }
 }
-    

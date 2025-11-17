@@ -1,0 +1,141 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="swapBody">
+    <div fxFlex="25" fxFlex.sm="50" fxFlex.xs="70" fxFlex.md="35">
+        <mat-card>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <button mat-icon-button class="example-icon" (click)="goBack()"
+                    aria-label="Example icon-button with share icon">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <mat-card-title>{{"Remove Liquidity"|translate}} </mat-card-title>
+
+                <div>
+                    <button mat-icon-button (click)="openSettings()" class="example-icon"
+                        aria-label="Example icon-button with share icon">
+                        <mat-icon>settings</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div fxLayoutAlign="start center" class="tip-text paddingBottom5">
+                <span class="tip-span">
+                    {{"RLTip"|translate}}
+                </span>
+            </div>
+
+            <div class="paddingTop20">
+                <span>{{"Remove Amount"|translate}}</span>
+
+                <div class="percentage paddingTop20">
+                    <span> {{ percentage }} % </span>
+                </div>
+            </div>
+
+            <div class="paddingTop10">
+                <mat-slider (input)="onInputChange($event)" step="1" min="0" max="100" aria-label="units"
+                    [(ngModel)]="percentage"></mat-slider>
+            </div>
+
+            <div>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    @if(selectedFirstTokenAmount > 0) {
+                    <span> {{selectedFirstTokenAmount}} </span>
+                    } @else {
+                    <span> - </span>
+                    }
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <span> {{firstTokenName}} </span>
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    @if(selectedSecondTokenAmount > 0) {
+                    <span> {{selectedSecondTokenAmount}} </span>
+                    } @else {
+                    <span> - </span>
+                    }
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <span> {{secondTokenName}} </span>
+                    </div>
+                </div>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
+                <button class="action-buttons" fxFlex="20" mat-stroked-button (click)="setAmount(25)">
+                    %25
+                </button>
+                <button class="action-buttons" fxFlex="20" mat-stroked-button (click)="setAmount(50)">
+                    %50
+                </button>
+                <button class="action-buttons" fxFlex="20" mat-stroked-button (click)="setAmount(75)">
+                    %75
+                </button>
+                <button class="action-buttons" fxFlex="20" mat-stroked-button (click)="setAmount(100)">
+                    Max
+                </button>
+            </div>
+
+            <mat-action-row fxLayoutAlign="space-around center" class="paddingTop20">
+                @if(percentage != 0) {
+                <button class="action-buttons" fxFlex="40" mat-raised-button color="primary"
+                    (click)="removeLiquidity()">
+                    {{"Remove"|translate}}
+                </button>
+                } @else {
+                <button class="disable-button" mat-raised-button color="primary">
+                    {{"Enter Amount"|translate}}
+                </button>
+                }
+            </mat-action-row>
+        </mat-card>
+
+
+        <div class="paddingTop20 your-position">
+            <mat-card id="position-mat-card">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <mat-card-title>{{"Your Position"|translate}} </mat-card-title>
+                </div>
+
+                <div>
+                    <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
+                        <span> {{"Your LP tokens"|translate}}: </span>
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                            <span> {{totalPoolToken}}</span>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
+                        <span> {{"Your pool share"|translate}}: </span>
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                            <span> {{yourPoolShare}} %</span>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
+                        <span> {{firstTokenName}}: </span>
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                            <span> {{pooledFirstToken}} </span>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="space-between center" class="padding5">
+                        <span> {{secondTokenName}}: </span>
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                            <span> {{pooledSecondToken}} </span>
+                        </div>
+                    </div>
+
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>
+
+@if(txHashes && txHashes.length > 0) {
+<div>
+    @for(txHash of txHashes;track txHash) {
+    <div>
+        <a [href]="txHash" target="_blank" [textContent]="txHash"> </a>
+    </div>
+    }
+</div>
+}
