@@ -1,116 +1,149 @@
-.header-tab-items span {
-    padding: 0px 10px;
-    display: flex;
-    justify-content: center;
-    margin-top: 0.6em;
-    font-weight: 300;
+.app-header {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(145deg, #121420, #0b0d14);
+  color: #e9ecf5;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #e9ecf5;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.menu-toggle {
+  display: none;
+  color: #e9ecf5;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  justify-content: center;
+}
+
+.nav-links a {
+  color: #cfd3e1;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #0b0d14;
+  background: #7bd8ff;
+}
+
+.nav-links a.active {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.lang button {
+  height: 36px;
+  font-size: 14px;
+  padding: 0 10px;
+}
+
+.connect {
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
+.wallet-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 8px 10px;
+  border-radius: 12px;
+}
+
+.wallet-chip span {
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .app-header {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 10px;
+  }
+
+  .nav-links {
+    grid-column: 1 / -1;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-links {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .brand-name {
     font-size: 16px;
-    cursor: pointer;
+  }
 
-    &:hover {
-        color: white;
-        font-weight: 500;
-    }
-}
+  .lang button {
+    height: 32px;
+    font-size: 12px;
+    padding: 0 8px;
+  }
 
-.mat-toolbar {
-    color: #eee;
-    background-color: black;
-    padding: 0px 50px;
-}
-
-.lanbtn {
-    font-size: medium;
-}
-
-.content {
-    color: white;
-    ;
-    font-size: small;
-    min-width: 200px;
-    padding-left: 4px;
-    padding-right: 4px;
-}
-
-.selLan {
-    padding-left: 4px;
-    padding-right: 4px;
-    color: white;
-}
-
-.lanitem {
-    width: 60px;
-}
-
-.lanitem:hover {
-    background-color: lightgray;
-    color: black;
-}
-
-::ng-deep .mat-menu-panel {
-    margin-top: 30px;
-}
-
-.header-logo {
-    width: 160px;
-}
-
-.connectBtn {
-    background: linear-gradient(90deg, #0b2dd5 0%, #6827e1 100%);
-}
-
-@media only screen and (max-width: 1920px) {
-    .header-logo {
-        width: 180px;
-        height: auto;
-    }
-}
-
-@media only screen and (max-width: 1280px) {
-    .header-logo {
-        width: 120px;
-        height: auto;
-    }
-}
-
-@media only screen and (max-width: 640px) {
-    .header-logo {
-        width: 116px;
-        height: auto;
-    }
-
-    .logo {
-        display: none;
-    }
-
-    .menuRight {
-        font-size: 12px;
-    }
-
-    .connectBtn {
-        height: 34px;
-        margin-top: 6px;
-        font-size: 12px;
-    }
-
-    .header-tab-items {
-        display: none !important;
-        width: 220px;
-    }
-
-    .topBar {
-        flex-direction: column !important;
-        background-color: white;
-        color: black;
-   }
-
-    .mat-icon-button {
-        width: auto !important;
-        height: auto !important;
-        margin-bottom: 10px;
-    }
-
-    .mat-toolbar-single-row {
-        height: 50px !important;
-    }
+  .connect {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
 }

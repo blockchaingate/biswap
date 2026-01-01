@@ -1,61 +1,49 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="topBar">
-  <div class="logo">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <span routerLink="/">
-        <img class="header-logo" src="/assets/images/biswap-256w.png" width="30px" alt="image">
-      </span>
-      <span>V3</span>
-    </button>
+<header class="app-header">
+  <div class="brand">
+    <a class="brand-link" routerLink="/">
+      <img class="logo" src="/assets/images/biswap4.png" alt="Biswap" />
+      <span class="brand-name">Biswap</span>
+    </a>
   </div>
 
-  <div class="header-tab-items d-none d-lg-flex" fxLayout="row" fxLayoutGap="12px">
-    <span routerLink="/swap">
-      <h4>{{'Swap'|translate}}</h4>
-    </span>
-    <span routerLink="/pool">{{'Liquidity'|translate}}</span>
-    <!--
-    <span routerLink="/staking">{{'Staking'|translate}}</span>
-    -->
-    <span routerLink="/reward">{{'Rewards'|translate}}</span>
+  <button class="menu-toggle" mat-icon-button (click)="onToggleSidenav()" aria-label="Open navigation">
+    <mat-icon>menu</mat-icon>
+  </button>
 
-    <span routerLink="/transactions">{{'Transactions'|translate}}</span>
-    <span routerLink="/charts">{{'Info'|translate}}</span>
-  </div>
+  <nav class="nav-links">
+    <a routerLink="/swap" routerLinkActive="active">{{'Swap'|translate}}</a>
+    <a routerLink="/pool" routerLinkActive="active">{{'Liquidity'|translate}}</a>
+    <a routerLink="/reward" routerLinkActive="active">{{'Rewards'|translate}}</a>
+    <a routerLink="/transactions" routerLinkActive="active">{{'Transactions'|translate}}</a>
+    <a routerLink="/charts" routerLinkActive="active">{{'Info'|translate}}</a>
+  </nav>
 
-  <div fxLayoutGap="12px" fxLayout="row" class="menuRight">
-    <div class="d-flex d-lg-none" layout-align="end center">
-      <button mat-icon-button (click)="onToggleSidenav()">
-        <mat-icon>menu</mat-icon>
+  <div class="actions">
+    <div class="lang">
+      <button mat-stroked-button color="primary" [matMenuTriggerFor]="menu">
+        {{selectedLan.viewValue}}
+        <mat-icon>expand_more</mat-icon>
       </button>
+      <mat-menu class="matMenu" #menu="matMenu">
+        @for(lan of LANGUAGES; track lan.value) {
+        <button mat-menu-item (click)="openClose(lan)">
+          {{lan.viewValue}}
+        </button>
+        }
+      </mat-menu>
     </div>
 
     @if(!address){
-    <button mat-raised-button class="connectBtn" (click)="connectWallet()">
+    <button mat-raised-button color="primary" class="connect" (click)="connectWallet()">
       {{ 'Connect Wallet'| translate }}
     </button>
     } @else {
-    <span>{{showAccount()}}</span>
-    <button mat-raised-button class="connectBtn" color="primary" (click)="disConnectWallet()">
-      {{ 'Disconnect'|translate }}
-    </button>
+    <div class="wallet-chip">
+      <span>{{showAccount()}}</span>
+      <button mat-icon-button color="primary" (click)="disConnectWallet()" aria-label="Disconnect">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
     }
-    <button mat-icon-button class="example-icon" [matMenuTriggerFor]="menu"
-      aria-label="Example icon-button with share icon">
-      {{selectedLan.viewValue}}
-    </button>
-
-    <mat-menu class="matMenu" #menu="matMenu">
-      <div class="selLan" id="selLan">
-        <h3>{{'SelLan' | translate}}</h3>
-      </div>
-      <hr style="color:white">
-      <div class="content">
-        @for(lan of LANGUAGES; track lan.value) {
-        <div class="lanitem handcursor" (click)="openClose(lan)">
-          {{lan.viewValue}}
-        </div>
-        }
-      </div>
-    </mat-menu>
   </div>
-</mat-toolbar>
+</header>

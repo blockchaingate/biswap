@@ -7,15 +7,15 @@ import { WalletService } from 'src/app/services/wallet.service';
 import { Language } from '../../../models/language';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { UtilsService } from 'src/app/services/utils.service';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatToolbarModule, MatIconModule, RouterLink, MatMenuModule, TranslateModule],
+  imports: [MatIconModule, MatMenuModule, MatButtonModule, RouterLink, TranslateModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
