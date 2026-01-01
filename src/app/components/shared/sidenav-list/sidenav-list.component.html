@@ -1,22 +1,33 @@
-<mat-nav-list>
+<div class="drawer">
+  <div class="drawer-header">
+    <a routerLink="/" class="brand">
+      <img src="/assets/images/biswap4.png" alt="Biswap" />
+      <span>Biswap</span>
+    </a>
+    <button mat-icon-button aria-label="Close menu" (click)="onSidenavClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-nav-list class="mat-nav-list">
     <a mat-list-item routerLink="/swap" (click)="onSidenavClose()">
-        <mat-icon>autorenew</mat-icon><span class="nav-caption">{{"Swap"|translate}}</span>
+      <mat-icon>autorenew</mat-icon><span class="nav-caption">{{"Swap"|translate}}</span>
     </a>
 
     <a mat-list-item routerLink="/pool" (click)="onSidenavClose()">
-        <mat-icon>waves</mat-icon><span class="nav-caption">{{"Liquidity"|translate}}</span>
-    </a>
-
-    <a mat-list-item routerLink="/staking" (click)="onSidenavClose()">
-        <mat-icon>receipt</mat-icon><span class="nav-caption">{{"Staking"|translate}}</span>
+      <mat-icon>waves</mat-icon><span class="nav-caption">{{"Liquidity"|translate}}</span>
     </a>
 
     <a mat-list-item routerLink="/reward" (click)="onSidenavClose()">
-        <mat-icon>card_giftcard</mat-icon><span class="nav-caption">{{"Rewards"|translate}}</span>
+      <mat-icon>card_giftcard</mat-icon><span class="nav-caption">{{"Rewards"|translate}}</span>
     </a>
 
-    <a mat-list-item routerLink="/info" (click)="onSidenavClose()">
-        <mat-icon>info</mat-icon><span class="nav-caption">{{"Info"|translate}}</span>
+    <a mat-list-item routerLink="/transactions" (click)="onSidenavClose()">
+      <mat-icon>history</mat-icon><span class="nav-caption">{{"Transactions"|translate}}</span>
     </a>
 
-</mat-nav-list>
+    <a mat-list-item routerLink="/charts" (click)="onSidenavClose()">
+      <mat-icon>insights</mat-icon><span class="nav-caption">{{"Info"|translate}}</span>
+    </a>
+  </mat-nav-list>
+</div>
