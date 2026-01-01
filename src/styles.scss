@@ -291,6 +291,8 @@ h6 {
 html,
 body {
     height: 100%;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -299,4 +301,20 @@ body {
     font-size: clamp(14px, 1.6vw, 16px);
     line-height: 1.6;
     letter-spacing: 0.01em;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+mat-sidenav-container,
+mat-sidenav-content {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+mat-sidenav-container {
+    min-height: 100vh;
 }
