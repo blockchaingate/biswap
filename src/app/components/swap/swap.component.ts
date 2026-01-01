@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import BigNumber from "bignumber.js";
@@ -136,7 +136,8 @@ export class SwapComponent implements OnInit, AfterViewInit {
     private currentRoute: ActivatedRoute,
     private apiService: ApiService,
     private router: Router,
-    private storage: StorageService
+    private storage: StorageService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   openSettings() {
@@ -202,6 +203,9 @@ export class SwapComponent implements OnInit, AfterViewInit {
     if (this.firstToken?.symbol && this.secondToken?.symbol) {
       this.getPair();
     }
+
+    // ensure the UI reflects the defaults immediately
+    this.cdr.detectChanges();
   }
 
   animateElement() {
@@ -306,6 +310,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
       .subscribe((data: any) => {
         var address = this.web3Service.decodeabiHex(data.data, "address");
         this.tokenId = (address as string).toString();
+        this.cdr.detectChanges();
       });
   }
 
