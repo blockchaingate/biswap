@@ -7,7 +7,8 @@
     "types": [],
     "paths": {
       "stream": ["./node_modules/stream-browserify/index.js"],
-      "util": ["./node_modules/util/util.js"]
+      "util": ["./node_modules/util/util.js"],
+      "assert": ["./src/assert-shim.ts"]
     }
   },
   "include": [
