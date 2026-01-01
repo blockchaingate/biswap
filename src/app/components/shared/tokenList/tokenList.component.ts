@@ -6,13 +6,13 @@ import { SwapComponent } from '../../swap/swap.component';
 import { ApiService } from 'src/app/services/api.services';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-tokenList',
   standalone: true,
-  imports: [MatIconModule, TranslateModule, BrowserModule, FormsModule],
+  imports: [MatIconModule, TranslateModule, CommonModule, FormsModule],
   templateUrl: './tokenList.component.html',
   styleUrls: ['./tokenList.component.scss']
 })

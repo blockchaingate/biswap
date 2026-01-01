@@ -2,7 +2,6 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChang
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideClientHydration } from '@angular/platform-browser';
 import { ToastrModule } from 'ngx-toastr';
 import { provideTranslateService } from "@ngx-translate/core";
 import { provideTranslateHttpLoader } from "@ngx-translate/http-loader";
@@ -21,7 +20,6 @@ export const appConfig: ApplicationConfig = {
       fallbackLang: 'en',
       lang: 'en'
     }),
-    provideClientHydration(),
     provideHttpClient(withInterceptorsFromDi()),
     importProvidersFrom(ToastrModule.forRoot())
   ]

@@ -4,7 +4,11 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": [],
+    "paths": {
+      "stream": ["./node_modules/stream-browserify/index.js"],
+      "util": ["./node_modules/util/util.js"]
+    }
   },
   "include": [
     "src/**/*.ts"

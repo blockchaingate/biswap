@@ -23,7 +23,7 @@
             <input (keyup)="onKey(firstCoinAmount, true)" #token1 name="firstCoinAmount" type="number" class="tokenAmt"
               [(ngModel)]="firstCoinAmount" placeholder="0.0" />
             <button type="button" class="tokenSelectButton" (click)="openFirstTokenListDialog()">
-              @if(firstToken.symbol != null) {
+              @if(firstToken.symbol) {
               <span class="tokenwithIcon">
                 {{ firstToken.symbol }}
                 <mat-icon>expand_more</mat-icon>
@@ -39,7 +39,7 @@
 
         <div class="swap-toggle" fxLayout="row" fxLayoutAlign="center center">
           <button (click)="changeTokens()" mat-mini-fab color="primary" aria-label="Swap tokens">
-            <mat-icon>swap_vert</mat-icon>
+            <mat-icon fontIcon="swap_vert"></mat-icon>
           </button>
         </div>
 
@@ -54,7 +54,7 @@
             <input readonly #token2 name="secondCoinAmount" class="tokenAmt" type="number"
               [(ngModel)]="secondCoinAmount" placeholder="0.0" />
             <button type="button" class="tokenSelectButton" (click)="openSecondTokenListDialog()">
-              @if(secondToken.symbol != null) {
+              @if(secondToken.symbol) {
               <span class="tokenwithIcon">
                 {{ secondToken.symbol }}
                 <mat-icon>expand_more</mat-icon>
@@ -109,7 +109,7 @@
           </button>
           } @else {
           <button mat-raised-button color="primary" disabled>
-            Insufficent {{firstToken.tickerName}} balance
+            Insufficent {{firstToken.tickerName || firstToken.symbol || ''}} balance
           </button>
           }
           }

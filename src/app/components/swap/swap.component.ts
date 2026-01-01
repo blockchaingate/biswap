@@ -17,7 +17,6 @@ import { TokenListComponent } from "../shared/tokenList/tokenList.component";
 import { SettingsComponent } from "../settings/settings.component";
 import { MatDialog } from "@angular/material/dialog";
 import { AlertComponent } from "../shared/alert/alert.component";
-import { timer } from "rxjs";
 import { send } from "cool-connect";
 import { StorageService } from "src/app/services/storage.service";
 import { MatCardModule } from "@angular/material/card";
@@ -53,8 +52,8 @@ export class SwapComponent implements OnInit, AfterViewInit {
 
   isFistToken!: boolean;
 
-  firstToken!: Coin;
-  secondToken!: Coin;
+  firstToken: Coin = new Coin();
+  secondToken: Coin = new Coin();
   account!: string;
   editSlippage: boolean = false;
   slippageErr = false;
@@ -173,27 +172,35 @@ export class SwapComponent implements OnInit, AfterViewInit {
     this.dataService.GettokenList.subscribe((x) => {
       this.tokenList = x;
 
-      timer(1000).subscribe(() => {
-        this.setDefaultPair();
-      });
+      this.setDefaultPair();
     });
     this.checkUrlToken();
   }
 
   setDefaultPair() {
-    if (this.tokenList && this.tokenList.length > 0) {
-      this.tokenList.map((t) => {
-        if (t.symbol == "USDT") {
-          this.setFirstToken(t);
-        }
-        if (t.symbol == "FAB") {
-          this.setSecondToken(t);
-        }
-      });
-      if (this.firstToken && this.secondToken) {
-        this.getPair();
-      }
+    if (!this.tokenList || this.tokenList.length === 0) {
+      return;
+    }
 
+    const hasFirst = this.firstToken && this.firstToken.symbol;
+    const hasSecond = this.secondToken && this.secondToken.symbol;
+
+    const preferredFrom = this.tokenList.find((t) => t.symbol === "USDT") ?? this.tokenList[0];
+    const preferredTo =
+      this.tokenList.find((t) => t.symbol === "FAB" && t.id !== preferredFrom?.id) ??
+      this.tokenList.find((t) => t.id !== preferredFrom?.id) ??
+      this.tokenList[1];
+
+    if (!hasFirst && preferredFrom) {
+      this.setFirstToken(preferredFrom);
+    }
+
+    if (!hasSecond && preferredTo) {
+      this.setSecondToken(preferredTo);
+    }
+
+    if (this.firstToken?.symbol && this.secondToken?.symbol) {
+      this.getPair();
     }
   }
 
