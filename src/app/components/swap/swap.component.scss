@@ -1,176 +1,289 @@
 .swapBody {
-    padding-bottom: 20px;
+  padding-bottom: 24px;
+  width: 100%;
 }
 
-.maina {
-    margin-top: 4rem;
+.swap-shell {
+  width: min(560px, 100%);
 }
 
-.cardd {
-    min-width: 360px;
-    width: 100%;
+.swap-panel {
+  background: radial-gradient(circle at 20% 20%, rgba(123, 94, 255, 0.15), transparent 35%),
+    radial-gradient(circle at 90% 10%, rgba(0, 196, 255, 0.12), transparent 30%),
+    linear-gradient(145deg, #121420, #0b0d14);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  border-radius: 20px;
+  padding: 20px;
+  color: #e9ecf5;
 }
 
-.coins-input-body {
-    border-radius: 4px;
-    justify-content: center;
-    background-color: rgb(218, 216, 216);
-    color: black;
-    padding: 1rem;
+.panel-header {
+  margin-bottom: 8px;
+
+  .title-block {
+    display: grid;
+    gap: 4px;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(233, 236, 245, 0.7);
+  }
+
+  mat-card-title {
+    font-size: 26px;
+    line-height: 1.1;
+    font-weight: 700;
+    margin: 0;
+  }
 }
 
-.custom-dialog-container {
-    border-radius: 5px;
-    overflow: hidden !important;
-    background-color: white;
-    color: black;
-    padding: 0px;
+.ghost-icon {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e9ecf5;
+  border-radius: 12px;
+}
+
+.panel-body {
+  margin-top: 6px;
+}
+
+.input-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.input-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(233, 236, 245, 0.7);
+
+  .label {
+    font-weight: 600;
+  }
+
+  .muted {
+    font-size: 12px;
+  }
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .tokenAmt {
-    width: 50%;
-    height: 40px;
-    border-radius: 4px;
-    padding-left: 0.5rem;
-    border: 1px solid gray;
-    box-shadow: none;
+  flex: 1;
+  height: 54px;
+  border-radius: 12px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.35);
+  color: #e9ecf5;
+  font-size: 18px;
+  font-weight: 600;
+  outline: none;
 }
 
-::ng-deep .mat-form-field-underline {
-    display: none;
-}
-
-.submitButton {
-    margin-left: 12rem;
-    margin-bottom: 0;
-}
-
-::ng-deep .mat-form-field {
-    label {
-        font-size: 32px;
-    }
-}
-
-::ng-deep .mat-card {
-    border-radius: 8px;
-    background-image: linear-gradient(37deg, #bb91f9, #3f5ac5);
-    min-width: 350px;
-}
-
-.sparater {
-    margin: 10px;
-    border: 0;
-    border-top: 1px solid #c9c7c7;
-    opacity: 0.2;
-}
-
-.mat-card-action {
-    padding: 10px;
-
-    button {
-        width: 100%;
-        padding: 5px;
-        border-radius: 20px;
-    }
-}
-
-.nopair {
-    font-size: small;
-    color: orange;
-    padding: 1rem;
+.tokenAmt::placeholder {
+  color: rgba(233, 236, 245, 0.5);
 }
 
 .tokenSelectButton {
-    width: calc(50% - 8px);
-    margin-left: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    color: black;
-    border-radius: 4px;
-    border: 1px solid gray;
+  min-width: 140px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
+  color: #e9ecf5;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.tokenSelectButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 .tokenwithIcon {
-    display: flex;
-    justify-content: flex-end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 700;
+}
+
+.swap-toggle {
+  padding: 4px 0;
+
+  button {
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.info-grid {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(233, 236, 245, 0.82);
+}
+
+.strong {
+  font-weight: 700;
+}
+
+.inline-pill {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #e9ecf5;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.slippage-edit input {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 6px 8px;
+  color: #e9ecf5;
+  width: 70px;
+}
+
+.action {
+  margin-top: 6px;
+
+  button {
     width: 100%;
+    border-radius: 12px;
+    padding: 14px;
+    font-weight: 700;
+  }
 }
 
-.title1 {
-    max-width: 1280px;
-    margin-top: 100px;
+.summary-card {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #e9ecf5;
 }
 
-.title2 {
-    margin-bottom: 60px;
+.summary-title {
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
 }
 
-@media(max-width: 1920px) {
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 
-    .title2 {
-        margin-top: 80px;
-        margin-bottom: 80px;
-    }
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
-@media(max-width: 1280px) {
-    .title2 {
-        margin-top: 52px;
-        margin-bottom: 60px;
-    }
+.route-row {
+  align-items: flex-start;
+
+  .route {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
 }
 
-@media(max-width: 1024px) {
-    .title2 {
-        margin-top: 40px;
-        margin-bottom: 50px;
-    }
+.route-chip {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 4px 8px;
+  font-size: 12px;
 }
 
-@media(max-width: 640px) {
-    .maina {
-        width: 100vw;
-        margin-top: 1rem;
-    }
+.route-arrow {
+  opacity: 0.5;
+  align-self: center;
+}
 
-    mat-card-title {
-        font-size: 18px;
-    }
+.tx-list {
+  margin-top: 12px;
+  display: grid;
+  gap: 6px;
+}
 
-    .cardd {
-        box-shadow: none;
-    }
+.tx-link {
+  color: #8bd5ff;
+  word-break: break-all;
+}
 
-    .coins-input-body {
-        background-color: #f0f0f0;
-        border: none;
-        box-shadow: none;
-    }
+.error-text {
+  margin-top: 10px;
+}
 
-    ::ng-deep .mat-card {
-        background-image: none;
-        color: black;
-        background-color: white;
-        border: none;
-        box-shadow: none;
-        font-size: 12px;
-        width: 100%;
-    }
+.warn {
+  color: #ffb74d;
+  font-size: 12px;
+}
 
-    .tokenSelectButton {
-        width: 50%;
-        font-size: 12px;
-    }
+.nopair {
+  font-size: 13px;
+  color: orange;
+  padding: 1rem 0;
+}
 
-    .tokenwithIcon {
-        width: 100%;
-        font-size: 12px;
-        font-weight: 500;
-    }
+@media (max-width: 640px) {
+  .swap-shell {
+    width: 100%;
+  }
 
-    .title2 {
-        margin-top: 20px;
-        margin-bottom: 30px;
-    }
+  .swap-panel {
+    padding: 16px;
+    border-radius: 16px;
+  }
 
+  .tokenSelectButton {
+    min-width: 120px;
+  }
+
+  .input-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tokenAmt {
+    width: 100%;
+  }
+
+  .action button {
+    padding: 12px;
+  }
+
+  .summary-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
 }
