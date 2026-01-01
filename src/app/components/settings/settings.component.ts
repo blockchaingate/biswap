@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 
 export interface DialogData {
@@ -11,7 +13,7 @@ export interface DialogData {
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [FormsModule, TranslateModule, MatDialogModule],
+  imports: [FormsModule, TranslateModule, MatDialogModule, MatIconModule, MatButtonModule],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })

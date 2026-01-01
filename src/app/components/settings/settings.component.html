@@ -1,23 +1,43 @@
-<div class="settingDiv">
-    <h2 mat-dialog-title>{{"Settings"|translate}}</h2>
-    <div>
-        <p>{{"Slippage tolerance"|translate}}(%)</p>
-        <div>
-            <input type="number" [(ngModel)]="data.slippage" fxFlex="64px" (keyup)="keyUp()" /> %
-        </div>
-        @if(slippageErr) {
-        <div class="warn">
-            {{"slippageErrMsg"|translate}}
-        </div>
-        }
-        <br>
-        <p>{{"Transaction deadline(minutes)"|translate}}</p>
-        <div>
-            <input matInput [(ngModel)]="data.deadline">
-            <div>
-            </div>
-            <div mat-dialog-actions class="btns">
-                <button mat-button (click)="onNoClick()">{{"Cancel"|translate}}</button>
-                <button mat-button [mat-dialog-close]="data" cdkFocusInitial>{{"Save"|translate}}</button>
-            </div>
-        </div>
+<div class="settings-dialog">
+  <header class="dialog-header">
+    <div class="title-block">
+      <p class="eyebrow">{{'Preferences'|translate}}</p>
+      <h2>{{'Settings'|translate}}</h2>
+    </div>
+    <button mat-icon-button aria-label="Close settings" mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <section class="field">
+    <div class="label-row">
+      <span>{{'Slippage tolerance'|translate}} (%)</span>
+      <span class="hint">{{'Recommended: 0.5% - 1%'|translate}}</span>
+    </div>
+    <div class="input-row">
+      <input type="number" [(ngModel)]="data.slippage" (keyup)="keyUp()" />
+      <span class="suffix">%</span>
+    </div>
+    @if(slippageErr) {
+    <div class="warn">
+      {{"slippageErrMsg"|translate}}
+    </div>
+    }
+  </section>
+
+  <section class="field">
+    <div class="label-row">
+      <span>{{'Transaction deadline (minutes)'|translate}}</span>
+      <span class="hint">{{'Auto-cancels if pending longer'|translate}}</span>
+    </div>
+    <div class="input-row">
+      <input type="number" [(ngModel)]="data.deadline" />
+      <span class="suffix">min</span>
+    </div>
+  </section>
+
+  <footer class="dialog-actions" mat-dialog-actions>
+    <button mat-stroked-button color="primary" (click)="onNoClick()">{{"Cancel"|translate}}</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>{{"Save"|translate}}</button>
+  </footer>
+</div>

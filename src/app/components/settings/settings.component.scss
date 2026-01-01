@@ -1,34 +1,121 @@
 :host {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  // background-color: #0d012c;
+  display: block;
+}
+
+::ng-deep .cdk-overlay-pane {
+  max-width: 420px;
+  width: 92vw;
+  position: relative;
+  top: -20px;
 }
 
 ::ng-deep .mat-dialog-container {
-  border-radius: 8px;
+  border-radius: 0;
   overflow: hidden !important;
-  background-color: white;
-  color: black;
+  padding: 0;
+  background: linear-gradient(180deg, #ffffff, #f5f6fb);
+  color: #0f172a;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.22);
 }
 
-.btns {
+.settings-dialog {
+  padding: 16px 16px 14px;
+  display: grid;
+  gap: 12px;
+  max-width: 380px;
+}
+
+.dialog-header {
   display: flex;
-  flex-direction: row;
+  align-items: flex-start;
   justify-content: space-between;
-  width: 100%;
+  gap: 12px;
 }
 
-.settingDiv {
-  width: 100%;
-  color: black;
+.title-block {
+  display: grid;
+  gap: 4px;
 }
 
-input {
-  width: 100%;
-  border-radius: 5px;
-  background-color: white;
-  color: black;
-  margin-bottom: 10px;
-  border: 1px solid #c7c5c5;
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.dialog-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.field {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.hint {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: #f9fafb;
+}
+
+.input-row input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 15px;
+  color: #0f172a;
+}
+
+.suffix {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.warn {
+  color: #b45309;
+  font-size: 12px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+@media (max-width: 640px) {
+  .settings-dialog {
+    padding: 16px 14px;
+  }
+
+  .field {
+    padding: 10px 12px;
+  }
 }

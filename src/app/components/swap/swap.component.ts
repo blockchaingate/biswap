@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import BigNumber from "bignumber.js";
@@ -31,6 +31,7 @@ import { NgxUiLoaderModule } from "ngx-ui-loader";
   imports: [FormsModule, MatCardModule, MatIconModule, TranslateModule, NgxUiLoaderModule],
   templateUrl: "./swap.component.html",
   styleUrls: ["./swap.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SwapComponent implements OnInit, AfterViewInit {
   minimumReceived!: number;
@@ -205,7 +206,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
     }
 
     // ensure the UI reflects the defaults immediately
-    this.cdr.detectChanges();
+    this.cdr.markForCheck();
   }
 
   animateElement() {
@@ -310,7 +311,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
       .subscribe((data: any) => {
         var address = this.web3Service.decodeabiHex(data.data, "address");
         this.tokenId = (address as string).toString();
-        this.cdr.detectChanges();
+        this.cdr.markForCheck();
       });
   }
 
@@ -327,6 +328,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
         if (x != undefined && x.isFirst) {
           this.dataService.GetFirstToken.subscribe((data) => {
             this.firstToken = data;
+            this.cdr.markForCheck();
           });
         }
 
@@ -350,6 +352,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
         if (x != undefined && x.isSecond) {
           this.dataService.GetSecondToken.subscribe((data) => {
             this.secondToken = data;
+            this.cdr.markForCheck();
           });
         }
 
