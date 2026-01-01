@@ -64,7 +64,7 @@ export class RemoveLiquidityComponent implements OnInit {
     private storage: StorageService,
     private _snackBar: MatSnackBar
   ) {
-    const navigation = this.router.getCurrentNavigation();
+    const navigation = this.router.currentNavigation();
     const state = navigation!.extras.state as {
       pairId: string;
       firstTokenName: string;
