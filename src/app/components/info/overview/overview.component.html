@@ -1,86 +1,51 @@
-<div class="overall">
-    <h1>{{"Biswap Info & Analytics"|translate}}</h1>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            @if(isItemLoaded) {
-            <div>
-                <div class="row">
-                    <div class="col-2">{{"Liquidity"|translate}}:</div>
-                    <div class="col-7"><b>${{currentLiquidity}}</b></div>
-                    <div class="col-3">{{currentTime}}</div>
-                </div>
-                <app-sales [items]="totalLiquidityFAB" [dates]="formattedDates"
-                    [title]="'Liquidity' | translate"></app-sales>
-            </div>
-            }
-        </div>
-        <div class="col-md-6 col-sm-12 bg-w secondv">
-            @if(isItemLoaded) {
-            <div>
-                <div class="row">
-                    <div class="col-2">{{"Volume"|translate}}:</div>
-                    <div class="col-7"><b>${{currentVolume}}</b></div>
-                    <div class="col-3">{{currentTime}}</div>
-                </div>
-                <app-sales [items]="dailyVolumeUntrackedValues" [dates]="formattedDates"
-                    [title]="'Volume' | translate"></app-sales>
-            </div>
-            }
-        </div>
-
+<div class="overview">
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-header">
+        <span class="eyebrow">{{'Liquidity'|translate}}</span>
+        <span class="time">{{currentTime}}</span>
+      </div>
+      <div class="metric-value">${{currentLiquidity}}</div>
+      @if(isItemLoaded) {
+      <app-sales [items]="totalLiquidityFAB" [dates]="formattedDates" [title]="'Liquidity' | translate"></app-sales>
+      }
     </div>
-    <!-- <div class="container">
-        <div class="infoAna row">
-            <app-all-liquidity class="overviewitem col-md-6" [items]="items"></app-all-liquidity>
-            <app-all-volume class="overviewitem col-md-6" [items]="items"></app-all-volume>
-        </div>
-    </div> -->
 
-    <h1 class="mt-4">{{"Top tokens"|translate}}</h1>
+    <div class="metric-card">
+      <div class="metric-header">
+        <span class="eyebrow">{{'Volume'|translate}}</span>
+        <span class="time">{{currentTime}}</span>
+      </div>
+      <div class="metric-value">${{currentVolume}}</div>
+      @if(isItemLoaded) {
+      <app-sales [items]="dailyVolumeUntrackedValues" [dates]="formattedDates" [title]="'Volume' | translate"></app-sales>
+      }
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>{{"Top tokens"|translate}}</h2>
+    </div>
     <app-top-tokens [tokens]="tokens"></app-top-tokens>
-    <h1 class="mt-4">{{"Top pools"|translate}}</h1>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>{{"Top pools"|translate}}</h2>
+    </div>
     <app-top-pools [pairs]="pairs"></app-top-pools>
-    <h1 class="mt-4">{{"Transactions"|translate}}</h1>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>{{"Transactions"|translate}}</h2>
+    </div>
     <app-all-transactions [transactions]="transactions"></app-all-transactions>
-
-    <nav aria-label="Page navigation" class="mt-2">
-        <ul class="pagination justify-content-center">
-            <li class="page-item handcursor">
-                <a class="page-link" aria-label="Previous" (click)="changePageNumTransaction(pageNumTransaction - 1)">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item handcursor">
-                @if(pageNumTransaction >= 1) {
-                <a class="page-link" (click)="changePageNumTransaction(pageNumTransaction - 1)">
-                    {{pageNumTransaction}}</a>
-                }
-            </li>
-            <li class="page-item handcursor active">
-                <a class="page-link" (click)="changePageNumTransaction(pageNumTransaction)">
-                    {{pageNumTransaction + 1}}
-                </a>
-            </li>
-            <li class="page-item handcursor">
-                @if(pageNumTransaction <= totalPage - 1) { <a class="page-link"
-                    (click)="changePageNumTransaction(pageNumTransaction + 1)">
-                    {{pageNumTransaction + 2}}
-                    </a>
-                    }
-            </li>
-
-            <li class="page-item handcursor">
-                @if((pageNumTransaction < 1) && (pageNumTransaction <=totalPage - 2)) { <a class="page-link"
-                    (click)="changePageNumTransaction(pageNumTransaction + 2)">
-                    {{pageNumTransaction + 3}}
-                    </a>
-                    }
-            </li>
-            <li class="page-item handcursor">
-                <a class="page-link" aria-label="Next" (click)="changePageNumTransaction(pageNumTransaction + 1)">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <div class="pager">
+      <button mat-stroked-button color="primary" (click)="changePageNumTransaction(pageNumTransaction - 1)">&laquo;</button>
+      <span class="page-index">{{pageNumTransaction + 1}} / {{totalPage + 1}}</span>
+      <button mat-stroked-button color="primary" (click)="changePageNumTransaction(pageNumTransaction + 1)">&raquo;</button>
+    </div>
+  </section>
 </div>

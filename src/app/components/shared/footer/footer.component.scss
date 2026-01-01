@@ -1,13 +1,18 @@
-.footer{
+.footer {
     background-color: #000;
     color: #fff;
     padding: 20px;
     text-align: center;
 }
 
-@media screen and (max-width: 640px) {
-    .footer {
-        display:none;
+div {
+    h4 {
+        color: white;
     }
 }
-    
+
+@media screen and (max-width: 640px) {
+    .footer {
+        display: none;
+    }
+}

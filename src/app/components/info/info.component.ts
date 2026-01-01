@@ -7,11 +7,12 @@ import { OverviewComponent } from './overview/overview.component';
 import { AllPoolsComponent } from './all-pools/all-pools.component';
 import { AllTokensComponent } from './all-tokens/all-tokens.component';
 import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-info',
   standalone: true,
-  imports: [FormsModule, MatButtonModule, MatButtonToggleModule, TranslateModule, OverviewComponent, AllPoolsComponent, AllTokensComponent],
+  imports: [FormsModule, MatButtonModule, MatButtonToggleModule, MatCardModule, TranslateModule, OverviewComponent, AllPoolsComponent, AllTokensComponent],
   templateUrl: './info.component.html',
   styleUrls: ['./info.component.scss']
 })

@@ -1,45 +1,27 @@
-<div class="container">
-    <div class="row title">
-        <div class="titiCol col-1">
-            <b>#</b>
-        </div>
-        <div class="titiCol col-2">
-            <b>{{"Name"|translate}}</b>
-        </div>
-        <div class="titiCol col-2">
-            <b>{{"Price"|translate}}</b>
-        </div>
-        <div class="titiCol col-2">
-            <b>{{"Price change"|translate}}</b>
-        </div>
-        <div class="titiCol col-2">
-            <b>{{"Volume 24h"|translate}}</b>
-        </div>
-        <div class="titiCol col-3">
-            <b>{{"Liquidity"|translate}}</b>
-        </div>
+<div class="tokens-grid">
+  @for(token of tokens; track token._id;) {
+  <div class="token-card">
+    <div class="token-header">
+      <div class="left">
+        <span class="index">#{{$index+1}}</span>
+        <a class="name" href="/info/token/{{token._id}}">{{token.name}}</a>
+      </div>
+      <span class="price">${{showShortAmount(token.summary.priceUSD)}}</span>
     </div>
-
-    @for(token of tokens; track token._id;) {
-    <div class="row formrow">
-        <div class="titiCol col-1">
-            {{$index+1}}
-        </div>
-        <div class="titiCol col-2">
-            <a href="/info/token/{{token._id}}">{{token.name}}</a>
-        </div>
-        <div class="titiCol col-2">
-            {{showShortAmount(token.summary.priceUSD)}}
-        </div>
-        <div class="titiCol col-2">
-            {{showShortAmount(token.summary.priceChange24h)}}
-        </div>
-        <div class="titiCol col-2">
-            {{showShortAmount(token.summary.dailyVolumeUSD)}}
-        </div>
-        <div class="titiCol col-3">
-            {{showShortAmount(token.totalLiquidity)}}
-        </div>
+    <div class="token-body">
+      <div class="metric">
+        <span>{{'Price change'|translate}}</span>
+        <span class="strong">{{showShortAmount(token.summary.priceChange24h)}}</span>
+      </div>
+      <div class="metric">
+        <span>{{'Volume 24h'|translate}}</span>
+        <span class="strong">{{showShortAmount(token.summary.dailyVolumeUSD)}}</span>
+      </div>
+      <div class="metric">
+        <span>{{'Liquidity'|translate}}</span>
+        <span class="strong">{{showShortAmount(token.totalLiquidity)}}</span>
+      </div>
     </div>
-    }
+  </div>
+  }
 </div>

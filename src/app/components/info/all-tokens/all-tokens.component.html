@@ -1,39 +1,6 @@
 <app-tokens [tokens]="tokens"></app-tokens>
-<nav aria-label="Page navigation">
-  <ul class="pagination justify-content-center">
-    <li class="page-item handcursor">
-      <a class="page-link" aria-label="Previous" (click)="changePageNum(pageNum - 1)">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li class="page-item handcursor">
-      @if(pageNum >= 1) {
-      <a class="page-link" (click)="changePageNum(pageNum - 1)">
-        {{pageNum}}</a>
-      }
-    </li>
-    <li class="page-item handcursor active">
-      <a class="page-link" (click)="changePageNum(pageNum)">
-        {{pageNum + 1}}
-      </a>
-    </li>
-    <li class="page-item handcursor">
-      @if(pageNum <= totalPage - 1) { <a class="page-link" (click)="changePageNum(pageNum + 1)">
-        {{pageNum + 2}}
-        </a>
-        }
-    </li>
-
-    <li class="page-item handcursor">
-      @if((pageNum < 1) && (pageNum <=totalPage - 1)) { <a class="page-link" (click)="changePageNum(pageNum + 2)">
-        {{pageNum + 3}}
-        </a>
-        }
-    </li>
-    <li class="page-item handcursor">
-      <a class="page-link" aria-label="Next" (click)="changePageNum(pageNum + 1)">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
+<div class="pager">
+  <button mat-stroked-button color="primary" (click)="changePageNum(pageNum - 1)">&laquo;</button>
+  <span class="page-index">{{pageNum + 1}} / {{totalPage + 1}}</span>
+  <button mat-stroked-button color="primary" (click)="changePageNum(pageNum + 1)">&raquo;</button>
+</div>
