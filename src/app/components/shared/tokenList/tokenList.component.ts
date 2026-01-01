@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { Coin } from 'src/app/models/coin';
 import { DataService } from 'src/app/services/data.service';
-import { SwapComponent } from '../../swap/swap.component';
 import { ApiService } from 'src/app/services/api.services';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-tokenList',
   standalone: true,
-  imports: [MatIconModule, TranslateModule, CommonModule, FormsModule],
+  imports: [MatIconModule, TranslateModule, CommonModule, FormsModule, MatDialogModule, MatButtonModule],
   templateUrl: './tokenList.component.html',
   styleUrls: ['./tokenList.component.scss']
 })
@@ -24,7 +24,7 @@ export class TokenListComponent implements OnInit {
   constructor(
     private dataService: DataService,
     private apiServ: ApiService,
-    public dialogRef: MatDialogRef<SwapComponent>,
+    public dialogRef: MatDialogRef<TokenListComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
