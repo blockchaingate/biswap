@@ -26,6 +26,153 @@ body {
     margin: 0;
 }
 
+.mat-toolbar.topBar {
+    background: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.mat-card {
+    background-color: var(--mat-sys-surface-container);
+    color: var(--mat-sys-on-surface);
+    border-radius: 12px;
+}
+
+.mat-raised-button.connectBtn {
+    letter-spacing: 0.4px;
+}
+
+/* Minimal flex-layout stand-in while the directives are absent */
+[fxLayout] {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+[fxLayout="row"] {
+    flex-direction: row;
+}
+
+[fxLayout="column"] {
+    flex-direction: column;
+}
+
+[fxLayoutAlign="space-between center"] {
+    justify-content: space-between;
+    align-items: center;
+}
+
+[fxLayoutAlign="center center"] {
+    justify-content: center;
+    align-items: center;
+}
+
+[fxLayoutAlign="center start"] {
+    justify-content: center;
+    align-items: flex-start;
+}
+
+[fxLayoutAlign="start center"] {
+    justify-content: flex-start;
+    align-items: center;
+}
+
+[fxLayoutAlign="space-around center"] {
+    justify-content: space-around;
+    align-items: center;
+}
+
+[fxLayoutAlign="space-between"] {
+    justify-content: space-between;
+}
+
+[fxLayoutGap] {
+    gap: 12px;
+}
+
+[fxLayoutGap="12px"] {
+    gap: 12px;
+}
+
+[fxLayoutGap="10px"] {
+    gap: 10px;
+}
+
+[fxLayoutGap="5%"] {
+    gap: 5%;
+}
+
+.swapBody,
+.poolBody,
+.dashboard-body,
+.downlaodBody {
+    width: min(1100px, 100%);
+    margin: 0 auto;
+    padding: clamp(16px, 4vw, 32px);
+    box-sizing: border-box;
+}
+
+.mat-card {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.rounded-card .row {
+    display: flex;
+    gap: 12px;
+}
+
+.titiCol {
+    min-width: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 960px) {
+    .rounded-card .row {
+        flex-direction: column;
+    }
+
+    .menuRight {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .titiCol {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 768px) {
+    [fxLayout="row"] {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .swapBody,
+    .poolBody,
+    .dashboard-body,
+    .downlaodBody {
+        padding: clamp(12px, 3vw, 20px);
+    }
+
+    .mat-card {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 0 8px;
+    }
+
+    .header-tab-items {
+        display: none !important;
+    }
+}
+
 .handcursor {
     cursor: pointer;
 }

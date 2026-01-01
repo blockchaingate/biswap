@@ -8,7 +8,7 @@
     </button>
   </div>
 
-  <div fxHide.md fxHide.lt-md class="header-tab-items" fxLayout="row" fxLayoutGap="12px">
+  <div class="header-tab-items d-none d-lg-flex" fxLayout="row" fxLayoutGap="12px">
     <span routerLink="/swap">
       <h4>{{'Swap'|translate}}</h4>
     </span>
@@ -23,7 +23,7 @@
   </div>
 
   <div fxLayoutGap="12px" fxLayout="row" class="menuRight">
-    <div fxHide.gt-md layout-align="end center">
+    <div class="d-flex d-lg-none" layout-align="end center">
       <button mat-icon-button (click)="onToggleSidenav()">
         <mat-icon>menu</mat-icon>
       </button>
