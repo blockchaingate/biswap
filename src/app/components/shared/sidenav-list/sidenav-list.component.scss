@@ -42,13 +42,13 @@ a:active {
   color: #7bd8ff;
 }
 
-.nav-caption {
+nav-caption {
   display: inline-block;
   padding-left: 10px;
   font-weight: 600;
 }
 
-.mat-nav-list {
+mat-nav-list {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -57,7 +57,7 @@ a:active {
   width: 100%;
 }
 
-.mat-nav-list a {
+mat-nav-list a {
   border-radius: 12px;
   display: flex;
   align-items: center;
