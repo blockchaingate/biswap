@@ -1,106 +1,44 @@
-@if(!account) {
-<div class="text-center my-3">
+<div class="tx-page">
+  @if(!account) {
+  <div class="connect-card">
+    <p>{{'Connect to see your transactions'|translate}}</p>
     <button mat-raised-button color="primary" (click)="connectWallet()">
-        {{"Connect to wallet"|translate}}
+      {{"Connect to wallet"|translate}}
     </button>
-</div>
-} @else {
-<div>
-    <div class="container">
-        <div class="row transRow">
-            <div class="titiCol col-md-12">
-                <h1 class="text-center">
-                    {{"Transactions"|translate}}
-                </h1>
-                <p class="desc">
-                    {{"BiswapProtcl" | translate}}
-                </p>
-            </div>
-        </div>
+  </div>
+  } @else {
+  <div class="tx-hero">
+    <div>
+      <p class="eyebrow">{{'History'|translate}}</p>
+      <h1>{{'Transactions'|translate}}</h1>
+      <p class="subline">{{'BiswapProtcl' | translate}}</p>
     </div>
-    <div class="rounded-card container">
-        <div class="container">
+  </div>
 
-            <div class="row py-2">
-                <div class="titiCol col-md-2">
-                    <b>{{"ACTION"|translate}}</b>
-                </div>
-                <div class="titiCol col-md-2">
-                    <b>{{"TOTAL VALUE"|translate}}</b>
-                </div>
-                <div class="titiCol col-md-3">
-                    <b>{{"TOKEN"|translate}}1 {{"AMOUNT"|translate}}</b>
-                </div>
-                <div class="titiCol col-md-3">
-                    <b>{{"TOKEN"|translate}}2 {{"AMOUNT"|translate}}</b>
-                </div>
-                <div class="titiCol col-md-2">
-                    <b>{{"TIME"|translate}}</b>
-                </div>
-            </div>
-
-            @for(transaction of transactions; track transactions.time) {
-            <div class="row  py-2">
-                <div class="titiCol col-md-2">
-                    {{transaction.name}}
-                </div>
-                <div class="titiCol col-md-2">
-                    {{transaction.amountUSD}}
-                </div>
-                <div class="titiCol col-md-3">
-                    {{transaction.amount0}}
-                </div>
-                <div class="titiCol col-md-3">
-                    {{transaction.amount1}}
-                </div>
-                <div class="titiCol col-md-2">
-                    {{(transaction.time * 1000) | date : 'medium'}}
-                </div>
-            </div>
-            }
-        </div>
+  <div class="tx-list">
+    <div class="tx-header">
+      <span>{{'ACTION'|translate}}</span>
+      <span>{{'TOTAL VALUE'|translate}}</span>
+      <span>{{'TOKEN'|translate}}1 {{'AMOUNT'|translate}}</span>
+      <span>{{'TOKEN'|translate}}2 {{'AMOUNT'|translate}}</span>
+      <span>{{'TIME'|translate}}</span>
     </div>
 
+    @for(transaction of transactions; track transactions.time) {
+    <div class="tx-row">
+      <span class="strong">{{transaction.name}}</span>
+      <span>${{transaction.amountUSD}}</span>
+      <span>{{transaction.amount0}}</span>
+      <span>{{transaction.amount1}}</span>
+      <span class="muted">{{(transaction.time * 1000) | date : 'medium'}}</span>
+    </div>
+    }
+  </div>
 
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <li class="page-item">
-                <a class="page-link" aria-label="Previous" (click)="changePageNumTransaction(pageNumTransaction - 1)">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item ">
-                @if(pageNumTransaction >= 1) {
-                <a class="page-link" (click)="changePageNumTransaction(pageNumTransaction - 1)">
-                    {{pageNumTransaction}}</a>
-                }
-            </li>
-            <li class="page-item active">
-                <a class="page-link" (click)="changePageNumTransaction(pageNumTransaction)">
-                    {{pageNumTransaction + 1}}
-                </a>
-            </li>
-            <li class="page-item">
-                @if(pageNumTransaction + 1 < totalPage) { <a class="page-link"
-                    (click)="changePageNumTransaction(pageNumTransaction + 1)">
-                    {{pageNumTransaction + 2}}
-                    </a>
-                    }
-            </li>
-
-            <li class="page-item">
-                @if((pageNumTransaction < 1) && (pageNumTransaction + 2 <=totalPage)) { <a class="page-link"
-                    (click)="changePageNumTransaction(pageNumTransaction + 2)">
-                    {{pageNumTransaction + 3}}
-                    </a>
-                    }
-            </li>
-            <li class="page-item">
-                <a class="page-link" aria-label="Next" (click)="changePageNumTransaction(pageNumTransaction + 1)">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+  <div class="pager">
+    <button mat-stroked-button color="primary" (click)="changePageNumTransaction(pageNumTransaction - 1)">&laquo;</button>
+    <span class="page-index">{{pageNumTransaction + 1}} / {{totalPage + 1}}</span>
+    <button mat-stroked-button color="primary" (click)="changePageNumTransaction(pageNumTransaction + 1)">&raquo;</button>
+  </div>
+  }
 </div>
-}

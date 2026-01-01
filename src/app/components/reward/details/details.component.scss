@@ -1,42 +1,67 @@
-.detailbody {
-    background-color: white;
-    color: black;
-    font-size: 16px;
-    width: 100%;
-    margin-bottom: 8px;
-    border: 1px solid silver;
+.rewards-list {
+  display: grid;
+  gap: 10px;
 }
 
-.title {
-    width: 100%;
-    display: flex;
-    font-weight: 600;
-    background-color: silver;
-    color: black;
+.reward-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px;
+  color: #e9ecf5;
 }
 
-.titiCol {
-    padding: 0 2px;
+.reward-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
-.contnt {
-    width: 100%;
-    display: flex;
-    font-size: 14px;
-    font-weight: 200;
+.address {
+  font-weight: 700;
 }
 
-@media(max-width: 640px) //if more than 400 px
-{
-    .title {
-        font-size: 10px;
-    }
+.token {
+  font-size: 12px;
+  opacity: 0.8;
+}
 
-    .contnt {
-        font-size: 10px;
-    }
+.reward-body {
+  display: grid;
+  gap: 6px;
+}
 
-    nav a{
-        font-size: 10px;
-    }
+.stat {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.strong {
+  font-weight: 700;
+}
+
+.reward-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pager {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #e9ecf5;
+}
+
+.page-index {
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .reward-card {
+    padding: 10px;
+  }
 }

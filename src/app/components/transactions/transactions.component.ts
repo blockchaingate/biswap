@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { BiswapService } from 'src/app/services/biswap.service';
 import { WalletService } from 'src/app/services/wallet.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-transactions',
   standalone: true,
-  imports: [TranslateModule, DatePipe],
+  imports: [TranslateModule, DatePipe, MatButtonModule],
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.scss']
 })

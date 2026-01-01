@@ -1,47 +1,93 @@
-.rewardbody {
-    width: 800px;
-    margin: auto;
-    padding: 1rem;
+.reward-page {
+  padding: 24px 12px 32px;
+  display: grid;
+  gap: 18px;
 }
 
-.title1{
-    text-align: center;
-    padding: 40px 0 0;
-    color: white;
-    h1{
-        font-size: 40px;
-    }
+.hero {
+  background: linear-gradient(135deg, #111522, #0b0d14);
+  color: #e9ecf5;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
 }
 
-@media(max-width: 800px) //if more than 400 px
-{
-    .rewardbody {
-        width: 100%;
-    }
-
-    .title1{
-        text-align: center;
-        padding: 0;
-        
-        h1{
-            font-size: 22px;
-        }
-    }
+.hero-copy {
+  display: grid;
+  gap: 6px;
 }
 
-@media(max-width: 640px) //if more than 400 px
-{
-    .rewardbody {
-        width: 100%;
-        padding: 0 1rem;
-    }
+.hero h1 {
+  margin: 0;
+  color: white;
+  font-size: clamp(26px, 3vw, 34px);
+}
 
-    .title1{
-        padding: 0;
-        color: black;
-        
-        h1{
-            font-size: 16px;
-        }
-    }
+.subline {
+  margin: 0;
+  opacity: 0.8;
+}
+
+.hero-badge .pill {
+  background: rgba(0, 199, 255, 0.12);
+  color: #7bd8ff;
+  border: 1px solid rgba(0, 199, 255, 0.3);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.cards-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.reward-card {
+  background: radial-gradient(circle at 20% 20%, rgba(123, 94, 255, 0.1), transparent 35%),
+    linear-gradient(145deg, #121420, #0b0d14);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #e9ecf5;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 900px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cards-grid .reward-card:last-child {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .reward-page {
+    padding: 16px 10px 24px;
+  }
+
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

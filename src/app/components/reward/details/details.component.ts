@@ -4,11 +4,12 @@ import { WalletService } from 'src/app/services/wallet.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UtilsService } from 'src/app/services/utils.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-reward-details',
   standalone: true,
-  imports: [TranslateModule],
+  imports: [TranslateModule, MatButtonModule],
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss']
 })

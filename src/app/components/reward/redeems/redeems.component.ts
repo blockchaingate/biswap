@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
 import { BiswapService } from 'src/app/services/biswap.service';
 
 @Component({
   selector: 'app-reward-redeems',
   standalone: true,
-  imports: [TranslateModule],
+  imports: [TranslateModule, MatButtonModule],
   templateUrl: './redeems.component.html',
   styleUrls: ['./redeems.component.scss']
 })

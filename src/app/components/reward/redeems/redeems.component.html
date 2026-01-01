@@ -1,35 +1,22 @@
-<div class="rounded-card">
-    <div class="container">
-        <div class="row py-2">
-            <div class="titiCol col-md-4">
-                <b>{{"Address"|translate}}</b>
-            </div>
-            <div class="titiCol col-md-3">
-                <b>{{"Token"|translate}}</b>
-            </div>
-            <div class="titiCol col-md-3">
-                <b>{{"Amount"|translate}}</b>
-            </div>
-            <div class="titiCol col-md-2">
-                {{"Txid"|translate}}
-            </div>
-        </div>
-
-        @for(item of redeems; track item.txid) {
-        <div class="row table-data py-2">
-            <div class="titiCol col-md-4">
-                {{item.address}}
-            </div>
-            <div class="titiCol col-md-3">
-                {{item.tokenName}}
-            </div>
-            <div class="titiCol col-md-3">
-                {{item.amount}}
-            </div>
-            <div class="titiCol col-md-2">
-                {{item.txid}}
-            </div>
-        </div>
-        }
+<div class="redeems-list">
+  @for(item of redeems; track item.txid) {
+  <div class="redeem-card">
+    <div class="redeem-row">
+      <span class="label">{{'Address'|translate}}</span>
+      <span class="value">{{item.address}}</span>
     </div>
+    <div class="redeem-row">
+      <span class="label">{{'Token'|translate}}</span>
+      <span class="value">{{item.tokenName}}</span>
+    </div>
+    <div class="redeem-row">
+      <span class="label">{{'Amount'|translate}}</span>
+      <span class="value strong">{{item.amount}}</span>
+    </div>
+    <div class="redeem-row">
+      <span class="label">{{'Txid'|translate}}</span>
+      <span class="value">{{item.txid}}</span>
+    </div>
+  </div>
+  }
 </div>
