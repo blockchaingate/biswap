@@ -1,0 +1,27 @@
+<div class="pools-grid">
+  @for (pair of pairs; track pair._id;) {
+  <div class="pool-card">
+    <div class="pool-header">
+      <div class="pair">
+        <span class="index">#{{$index + 1}}</span>
+        <a class="pair-name" href="/info/pool/{{pair._id}}">{{pair.name}}</a>
+      </div>
+      <div class="liquidity">{{showShortAmount(showAmount(pair.totalLiquidity))}}</div>
+    </div>
+    <div class="pool-metrics">
+      <div class="metric">
+        <span>{{'Volume 24h'|translate}}</span>
+        <span class="strong">{{showShortAmount(pair.summary.dailyVolumeUSD)}}</span>
+      </div>
+      <div class="metric">
+        <span>{{'LP Reward Fee'|translate}}</span>
+        <span class="strong">{{showShortAmount(pair.summary.dailyVolumeUSD * 0.003)}}</span>
+      </div>
+      <div class="metric">
+        <span>{{'Lp Reward APR'|translate}} (%)</span>
+        <span class="strong">{{showShortAmount(getARP(pair))}}</span>
+      </div>
+    </div>
+  </div>
+  }
+</div>

@@ -1,0 +1,7 @@
+<app-pools [pairs]="pairs"></app-pools>
+
+<div class="pager">
+  <button mat-stroked-button color="primary" (click)="changePageNum(pageNum - 1)">&laquo;</button>
+  <span class="page-index">{{pageNum + 1}} / {{totalPage + 1}}</span>
+  <button mat-stroked-button color="primary" (click)="changePageNum(pageNum + 1)">&raquo;</button>
+</div>

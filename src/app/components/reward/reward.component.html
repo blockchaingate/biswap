@@ -1,0 +1,44 @@
+<div class="reward-page">
+  <header class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">{{'Rewards'|translate}}</p>
+      <h1>{{'Earn, track and redeem'|translate}}</h1>
+      <p class="subline">{{'View active plans, monitor rewards, and redeem with confidence'|translate}}</p>
+    </div>
+    <div class="hero-badge">
+      <span class="pill">{{'Live'|translate}}</span>
+    </div>
+  </header>
+
+  <section class="cards-grid">
+    <mat-card class="reward-card">
+      <div class="card-header">
+        <div>
+          <p class="eyebrow">{{'Programs'|translate}}</p>
+          <h3>{{'Active plans'|translate}}</h3>
+        </div>
+      </div>
+      <app-reward-plans></app-reward-plans>
+    </mat-card>
+
+    <mat-card class="reward-card">
+      <div class="card-header">
+        <div>
+          <p class="eyebrow">{{'Your rewards'|translate}}</p>
+          <h3>{{'Balances & claims'|translate}}</h3>
+        </div>
+      </div>
+      <app-reward-details></app-reward-details>
+    </mat-card>
+
+    <mat-card class="reward-card">
+      <div class="card-header">
+        <div>
+          <p class="eyebrow">{{'History'|translate}}</p>
+          <h3>{{'Recent redeems'|translate}}</h3>
+        </div>
+      </div>
+      <app-reward-redeems></app-reward-redeems>
+    </mat-card>
+  </section>
+</div>

@@ -1,0 +1,184 @@
+<div fxLayout="column" fxLayoutAlign="start center" class="swapBody">
+  <div class="swap-shell animated-element" #animatedElement>
+    <mat-card class="swap-panel">
+      <div class="panel-header" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="title-block">
+          <div class="eyebrow">{{'Trade tokens in an instant'|translate}}</div>
+          <mat-card-title>{{'Swap'|translate}}</mat-card-title>
+        </div>
+        <button (click)="openSettings()" mat-icon-button aria-label="Settings" class="ghost-icon">
+          <mat-icon>settings</mat-icon>
+        </button>
+      </div>
+
+      <div class="panel-body" fxLayout="column" fxLayoutGap="16px">
+        <div class="input-card">
+          <div class="input-top">
+            <span class="label">{{'From'|translate}}</span>
+            @if(firstCoinBalance >= 0) {
+            <span class="muted">{{'Balance'|translate}}: {{firstCoinBalance}}</span>
+            }
+          </div>
+          <div class="input-row">
+            <input (keyup)="onKey(firstCoinAmount, true)" #token1 name="firstCoinAmount" type="number" class="tokenAmt"
+              [(ngModel)]="firstCoinAmount" placeholder="0.0" />
+            <button type="button" class="tokenSelectButton" (click)="openFirstTokenListDialog()">
+              @if(firstToken.symbol) {
+              <span class="tokenwithIcon">
+                {{ firstToken.symbol }}
+                <mat-icon>expand_more</mat-icon>
+              </span>
+              } @else {
+              <span class="tokenwithIcon">
+                {{"Select Token"|translate}} <mat-icon>expand_more</mat-icon>
+              </span>
+              }
+            </button>
+          </div>
+        </div>
+
+        <div class="swap-toggle" fxLayout="row" fxLayoutAlign="center center">
+          <button (click)="changeTokens()" mat-mini-fab color="primary" aria-label="Swap tokens">
+            <mat-icon fontIcon="swap_vert"></mat-icon>
+          </button>
+        </div>
+
+        <div class="input-card">
+          <div class="input-top">
+            <span class="label">{{'To'|translate}}</span>
+            @if(secondCoinBalance >= 0) {
+            <span class="muted">{{'Balance'|translate}}: {{secondCoinBalance}}</span>
+            }
+          </div>
+          <div class="input-row">
+            <input readonly #token2 name="secondCoinAmount" class="tokenAmt" type="number"
+              [(ngModel)]="secondCoinAmount" placeholder="0.0" />
+            <button type="button" class="tokenSelectButton" (click)="openSecondTokenListDialog()">
+              @if(secondToken.symbol) {
+              <span class="tokenwithIcon">
+                {{ secondToken.symbol }}
+                <mat-icon>expand_more</mat-icon>
+              </span>
+              } @else {
+              <span class="tokenwithIcon">
+                {{"Select Token"|translate}} <mat-icon>expand_more</mat-icon>
+              </span>
+              }
+            </button>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-row">
+            <span class="muted">{{perAmountLabel}}</span>
+            <span class="strong">{{ perAmount }}</span>
+          </div>
+          <div class="info-row">
+            <span class="muted">{{'Slippage Tolerance'|translate}}</span>
+            <span class="strong">
+              @if(!editSlippage) {
+              <button class="inline-pill" type="button" (click)="editSlippage=true">
+                {{ slippage }}%
+              </button>
+              }
+              @if(editSlippage==true) {
+              <span class="slippage-edit">
+                <input type="number" [(ngModel)]="slippage" fxFlex="64px" (blur)="editSlippage=false; onBlur()"
+                  (keyup)="keyUp()" title="Slippage Tolerance" placeholder="Enter slippage tolerance" /> %
+              </span>
+              }
+            </span>
+          </div>
+          @if(slippageErr) {
+          <div class="warn">
+            {{"slippageErrMsg"|translate}}
+          </div>
+          }
+        </div>
+
+        @if(tokenId && (tokenId!='0x0000000000000000000000000000000000000000')) {
+        <div class="action">
+          @if(!account) {
+          <button mat-raised-button color="primary" (click)="connectWallet()">
+            {{"Connect to wallet"|translate}}
+          </button>
+          } @else {
+          @if(!insufficientFund) {
+          <button mat-raised-button color="primary" (click)="swapFunction()">
+            {{"Swap"|translate}}{{(priceImpact > 5) ? ' Anyway' : ''}}
+          </button>
+          } @else {
+          <button mat-raised-button color="primary" disabled>
+            Insufficent {{firstToken.tickerName || firstToken.symbol || ''}} balance
+          </button>
+          }
+          }
+        </div>
+        }
+      </div>
+    </mat-card>
+
+    @if(liquidityPrividerFee) {
+    <mat-card class="summary-card">
+      <div class="summary-title">{{'Trade summary'|translate}}</div>
+      @if(minimumReceived) {
+      <div class="summary-row">
+        <span>{{'Minimum received'|translate}}</span>
+        <span>{{minimumReceived}}</span>
+      </div>
+      }
+
+      @if(maximumSold) {
+      <div class="summary-row">
+        <span>{{'Maximum sold'|translate}}</span>
+        <span>{{maximumSold}}</span>
+      </div>
+      }
+
+      <div class="summary-row">
+        <span>{{'Price impact'|translate}}</span>
+        <span [class.text-danger]="priceImpact > 5">{{priceImpact}}%</span>
+      </div>
+
+      <div class="summary-row">
+        <span>{{'Liquidity Provider Fee'|translate}}</span>
+        <span>{{liquidityPrividerFee}} {{liquidityPrividerFeeCoin}}</span>
+      </div>
+
+      <div class="summary-row route-row">
+        <span>{{'Route'|translate}}</span>
+        <div class="route">
+          @for(item of route; track item) {
+          <span class="route-chip">
+            {{item}}
+          </span>
+          @if($index != route.length - 1) {
+          <span class="route-arrow">→</span>
+          }
+          }
+        </div>
+      </div>
+    </mat-card>
+    }
+
+    @if(txHashes && txHashes.length > 0) {
+    <div class="tx-list">
+      @for(txHash of txHashes; track txHash) {
+      <a class="tx-link" [href]="txHash" target="_blank" [textContent]="txHash"> </a>
+      }
+    </div>
+    }
+
+    @if(error) {
+    <p class="text-danger error-text">{{error}}</p>
+    }
+
+    @if(tokenId=='0x0000000000000000000000000000000000000000') {
+    <div class="nopair black mt-2">
+      {{"No liquidity for this pair"|translate}}.
+    </div>
+    }
+  </div>
+</div>
+
+<ngx-ui-loader></ngx-ui-loader>

@@ -1,0 +1,32 @@
+.container {
+    border: 1px solid silver;
+    font-size: 12px;
+}
+
+.title {
+    background-color: black;
+    color: white;
+    height: 36px;
+}
+
+.formrow {
+    border-bottom: 1px solid silver;
+    height: 24px;
+}
+
+.titiCol a{
+    color: rgb(153, 172, 248);
+    text-decoration: none;
+    transition: all 0.3s;
+    vertical-align: middle;
+}
+
+.titiCol a:hover{
+    color: aqua;
+}
+
+@media(max-width: 640px) {
+    .container {
+        font-size: 8px;
+    }
+}

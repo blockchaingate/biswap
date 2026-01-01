@@ -1,0 +1,42 @@
+<div class="token-dialog">
+  <header class="dialog-header">
+    <div class="title-block">
+      <p class="eyebrow">{{'Select a Token'|translate}}</p>
+      <h3>{{'Search, filter and pick your asset'|translate}}</h3>
+    </div>
+    <button mat-dialog-close mat-icon-button aria-label="Close token list" class="close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <div class="search-area">
+    <div class="search-label">{{'Search'|translate}}</div>
+    <div class="search-box">
+      <mat-icon>search</mat-icon>
+      <input name="searchTokenLabel" type="text" [(ngModel)]="searchTokenLabel" (ngModelChange)="searchToken($event)"
+        placeholder="{{'Search by symbol or address'|translate}}" />
+    </div>
+  </div>
+
+  <div class="tokenlist" mat-dialog-content>
+    @for(token of filteredTokens; track token.id) {
+    <button (click)="selectToken(token)" class="list-button">
+      <div class="token-info">
+        <img class="token-img" src='{{token.logoUrl}}' (error)="handleImageError($event, token.id)" alt="logo">
+        <div class="token-meta">
+          <div class="token-row">
+            <span class="symbol">{{ token.symbol }}</span>
+            <span class="id">{{showTokenId(token.id)}}</span>
+          </div>
+          <div class="name">{{ token.tickerName || token.name }}</div>
+        </div>
+      </div>
+      <mat-icon class="chevron">chevron_right</mat-icon>
+    </button>
+    }
+  </div>
+
+  <div class="dialog-actions">
+    <button mat-stroked-button color="primary" mat-dialog-close>{{'Close'|translate}}</button>
+  </div>
+</div>

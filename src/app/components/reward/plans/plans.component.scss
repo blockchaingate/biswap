@@ -1,0 +1,45 @@
+.plans-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.plan-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px;
+  color: #e9ecf5;
+}
+
+.plan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.pair {
+  font-weight: 700;
+}
+
+.token {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.plan-body {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.plan-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.strong {
+  font-weight: 700;
+}

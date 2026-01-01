@@ -1,0 +1,37 @@
+<div class="rewards-list">
+  @for(item of rewards; track item) {
+  <div class="reward-card">
+    <div class="reward-header">
+      <div class="address">{{showShortAddress(item.address)}}</div>
+      <div class="token">{{item.tokenName}}</div>
+    </div>
+    <div class="reward-body">
+      <div class="stat">
+        <span>{{'Active'|translate}}</span>
+        <span class="strong">{{item.amount > 0 ? item.amount : 0}}</span>
+      </div>
+      <div class="stat">
+        <span>{{'Pending'|translate}}</span>
+        <span class="strong">{{item.pendingAmount}}</span>
+      </div>
+      <div class="stat">
+        <span>{{'Redeem'|translate}}</span>
+        <span class="strong">{{item.redeemAmount}}</span>
+      </div>
+    </div>
+    @if(redeemable(item)) {
+    <div class="reward-actions">
+      <button mat-raised-button color="primary" (click)="redeem(item.address, item.tokenName)">
+        {{ 'Redeem' |translate }}
+      </button>
+    </div>
+    }
+  </div>
+  }
+</div>
+
+<div class="pager">
+  <button mat-stroked-button color="primary" (click)="changePageNum(pageNum - 1)">&laquo;</button>
+  <span class="page-index">{{pageNum + 1}} / {{totalPage + 1}}</span>
+  <button mat-stroked-button color="primary" (click)="changePageNum(pageNum + 1)">&raquo;</button>
+</div>

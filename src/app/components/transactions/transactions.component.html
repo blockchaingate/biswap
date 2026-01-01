@@ -1,0 +1,44 @@
+<div class="tx-page">
+  @if(!account) {
+  <div class="connect-card">
+    <p>{{'Connect to see your transactions'|translate}}</p>
+    <button mat-raised-button color="primary" (click)="connectWallet()">
+      {{"Connect to wallet"|translate}}
+    </button>
+  </div>
+  } @else {
+  <div class="tx-hero">
+    <div>
+      <p class="eyebrow">{{'History'|translate}}</p>
+      <h1>{{'Transactions'|translate}}</h1>
+      <p class="subline">{{'BiswapProtcl' | translate}}</p>
+    </div>
+  </div>
+
+  <div class="tx-list">
+    <div class="tx-header">
+      <span>{{'ACTION'|translate}}</span>
+      <span>{{'TOTAL VALUE'|translate}}</span>
+      <span>{{'TOKEN'|translate}}1 {{'AMOUNT'|translate}}</span>
+      <span>{{'TOKEN'|translate}}2 {{'AMOUNT'|translate}}</span>
+      <span>{{'TIME'|translate}}</span>
+    </div>
+
+    @for(transaction of transactions; track transactions.time) {
+    <div class="tx-row">
+      <span class="strong">{{transaction.name}}</span>
+      <span>${{transaction.amountUSD}}</span>
+      <span>{{transaction.amount0}}</span>
+      <span>{{transaction.amount1}}</span>
+      <span class="muted">{{(transaction.time * 1000) | date : 'medium'}}</span>
+    </div>
+    }
+  </div>
+
+  <div class="pager">
+    <button mat-stroked-button color="primary" (click)="changePageNumTransaction(pageNumTransaction - 1)">&laquo;</button>
+    <span class="page-index">{{pageNumTransaction + 1}} / {{totalPage + 1}}</span>
+    <button mat-stroked-button color="primary" (click)="changePageNumTransaction(pageNumTransaction + 1)">&raquo;</button>
+  </div>
+  }
+</div>

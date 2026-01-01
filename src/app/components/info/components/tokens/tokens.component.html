@@ -1,0 +1,27 @@
+<div class="tokens-grid">
+  @for(token of tokens; track token._id;) {
+  <div class="token-card">
+    <div class="token-header">
+      <div class="left">
+        <span class="index">#{{$index+1}}</span>
+        <a class="name" href="/info/token/{{token._id}}">{{token.name}}</a>
+      </div>
+      <span class="price">${{showShortAmount(token.summary.priceUSD)}}</span>
+    </div>
+    <div class="token-body">
+      <div class="metric">
+        <span>{{'Price change'|translate}}</span>
+        <span class="strong">{{showShortAmount(token.summary.priceChange24h)}}</span>
+      </div>
+      <div class="metric">
+        <span>{{'Volume 24h'|translate}}</span>
+        <span class="strong">{{showShortAmount(token.summary.dailyVolumeUSD)}}</span>
+      </div>
+      <div class="metric">
+        <span>{{'Liquidity'|translate}}</span>
+        <span class="strong">{{showShortAmount(token.totalLiquidity)}}</span>
+      </div>
+    </div>
+  </div>
+  }
+</div>

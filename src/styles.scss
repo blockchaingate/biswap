@@ -1,15 +1,176 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
 
-html,
-body {
-    height: 100%;
-    margin: 0;
+html {
+    @include mat.theme((color: (primary: mat.$magenta-palette,
+                tertiary: mat.$violet-palette,
+            ),
+            typography: Roboto,
+            density: 0,
+        ));
 }
 
 body {
+    // Default the application to a light color theme. This can be changed to
+    // `dark` to enable the dark color theme, or to `light dark` to defer to the
+    // user's system settings.
+    color-scheme: light;
+
+    // Set a default background, font and text colors for the application using
+    // Angular Material's system-level CSS variables. Learn more about these
+    // variables at https://material.angular.dev/guide/system-variables
+    background-color: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-body-medium);
+
+    // Reset the user agent margin.
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-color: #0b0e1c;
+}
+
+.mat-toolbar.topBar {
+    background: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.mat-card {
+    background-color: var(--mat-sys-surface-container);
+    color: var(--mat-sys-on-surface);
+    border-radius: 12px;
+}
+
+.mat-raised-button.connectBtn {
+    letter-spacing: 0.4px;
+}
+
+/* Minimal flex-layout stand-in while the directives are absent */
+[fxLayout] {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+[fxLayout="row"] {
+    flex-direction: row;
+}
+
+[fxLayout="column"] {
+    flex-direction: column;
+}
+
+[fxLayoutAlign="space-between center"] {
+    justify-content: space-between;
+    align-items: center;
+}
+
+[fxLayoutAlign="center center"] {
+    justify-content: center;
+    align-items: center;
+}
+
+[fxLayoutAlign="center start"] {
+    justify-content: center;
+    align-items: flex-start;
+}
+
+[fxLayoutAlign="start center"] {
+    justify-content: flex-start;
+    align-items: center;
+}
+
+[fxLayoutAlign="space-around center"] {
+    justify-content: space-around;
+    align-items: center;
+}
+
+[fxLayoutAlign="space-between"] {
+    justify-content: space-between;
+}
+
+[fxLayoutGap] {
+    gap: 12px;
+}
+
+[fxLayoutGap="12px"] {
+    gap: 12px;
+}
+
+[fxLayoutGap="10px"] {
+    gap: 10px;
+}
+
+[fxLayoutGap="5%"] {
+    gap: 5%;
+}
+
+.swapBody,
+.poolBody,
+.dashboard-body,
+.downlaodBody {
+    width: min(1100px, 100%);
+    margin: 0 auto;
+    padding: clamp(16px, 4vw, 32px);
+    box-sizing: border-box;
+}
+
+.mat-card {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.rounded-card .row {
+    display: flex;
+    gap: 12px;
+}
+
+.titiCol {
+    min-width: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 960px) {
+    .rounded-card .row {
+        flex-direction: column;
+    }
+
+    .menuRight {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .titiCol {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 768px) {
+    [fxLayout="row"] {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .swapBody,
+    .poolBody,
+    .dashboard-body,
+    .downlaodBody {
+        padding: clamp(12px, 3vw, 20px);
+    }
+
+    .mat-card {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 0 8px;
+    }
+
+    .header-tab-items {
+        display: none !important;
+    }
 }
 
 .handcursor {
@@ -21,13 +182,6 @@ body {
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     margin: 0;
-}
-
-
-/* Firefox */
-
-input[type=number] {
-    -moz-appearance: textfield;
 }
 
 .padding5 {
@@ -86,7 +240,7 @@ input {
     font-size: small;
 }
 
-.titiCol.col-2 {
+.titiCol .col-2 {
     min-width: 50px;
     font-size: 12px;
     overflow: hidden;
@@ -94,13 +248,73 @@ input {
     text-overflow: ellipsis;
 }
 
-// .rounded-card .container {
-//     overflow-x: scroll;
-// }
-
-@media screen and (max-width: 600px) {
-    .col.col-2 {
-        min-width: 100px;
-    }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Inter', 'Roboto', 'Segoe UI', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.35em 0;
+    color: var(--mat-sys-on-surface);
 }
-    
+
+h1 {
+    font-size: clamp(32px, 4vw, 44px);
+}
+
+h2 {
+    font-size: clamp(28px, 3.4vw, 36px);
+}
+
+h3 {
+    font-size: clamp(22px, 2.8vw, 30px);
+}
+
+h4 {
+    font-size: clamp(18px, 2.2vw, 24px);
+    font-weight: 600;
+}
+
+h5 {
+    font-size: clamp(16px, 1.9vw, 20px);
+    font-weight: 600;
+}
+
+h6 {
+    font-size: clamp(14px, 1.6vw, 18px);
+    font-weight: 600;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', 'Roboto', 'Segoe UI', sans-serif;
+    font-size: clamp(14px, 1.6vw, 16px);
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+mat-sidenav-container,
+mat-sidenav-content {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+mat-sidenav-container {
+    min-height: 100vh;
+}

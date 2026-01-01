@@ -1,0 +1,22 @@
+<div class="redeems-list">
+  @for(item of redeems; track item.txid) {
+  <div class="redeem-card">
+    <div class="redeem-row">
+      <span class="label">{{'Address'|translate}}</span>
+      <span class="value">{{item.address}}</span>
+    </div>
+    <div class="redeem-row">
+      <span class="label">{{'Token'|translate}}</span>
+      <span class="value">{{item.tokenName}}</span>
+    </div>
+    <div class="redeem-row">
+      <span class="label">{{'Amount'|translate}}</span>
+      <span class="value strong">{{item.amount}}</span>
+    </div>
+    <div class="redeem-row">
+      <span class="label">{{'Txid'|translate}}</span>
+      <span class="value">{{item.txid}}</span>
+    </div>
+  </div>
+  }
+</div>
