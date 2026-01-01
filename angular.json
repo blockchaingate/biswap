@@ -32,6 +32,9 @@
             "styles": [
               "src/styles.scss",
               "src/bootstrap.scss"
+            ],
+            "allowedCommonJsDependencies": [
+              "qrcode"
             ]
           },
           "configurations": {

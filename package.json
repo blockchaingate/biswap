@@ -40,7 +40,7 @@
     "@ngx-translate/http-loader": "^17.0.0",
     "@walletconnect/modal": "^2.7.0",
     "@walletconnect/sign-client": "^2.23.1",
-    "asset": "^0.4.13",
+    "assert": "^2.1.0",
     "bignumber.js": "^9.3.1",
     "bitcoinjs-lib": "^6.0.1",
     "browser": "^0.2.6",
