@@ -4,6 +4,7 @@ import * as bs58 from 'bs58';
 import { TimestampModel } from '../models/temistampModel';
 import { environment } from 'src/environments/environment';
 import createHash from 'create-hash';
+import { Buffer } from 'buffer';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class UtilsService {
   fabToExgAddress(address: string) {
     try {
       const bytes = bs58.default.decode(address);
-      const addressInWallet = bytes.toString();
+      const addressInWallet = Buffer.from(bytes).toString('hex');
       if (!addressInWallet || addressInWallet.length !== 50) {
         return '';
       }
@@ -42,7 +43,7 @@ export class UtilsService {
     } catch (e) { }
     return '';
   }
-  
+
   stripHexPrefix(str: any) {
     if (!str) {
       return '';

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import SignClient from "@walletconnect/sign-client";
 import { WalletConnectModal } from "@walletconnect/modal";
 const projectId = "3acbabd1deb4672edfd4ca48226cfc0f";
-import { Subject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 import { environment } from "src/environments/environment";
 import { ConnectService } from "src/app/services/connect.service";
 const chainId = environment.production ? 211 : 212;
@@ -16,7 +16,7 @@ export class WalletService {
   topic: any;
   chainId: string = "";
   walletConnectModal: any;
-  accountSubject = new Subject<string>();
+  accountSubject = new BehaviorSubject<string>("");
 
   constructor(private connectService: ConnectService) {
     this.connectService.currentAddress.subscribe((address) => {

@@ -68,11 +68,6 @@ export class App implements OnInit, OnDestroy {
       this.pairingQrUrl = state.qrUrl;
       this.pairingLink = state.link;
     }));
-    const storedWalletAddress = this.storage.get<string>('walletAddress');
-    if (storedWalletAddress) {
-      this.walletAddress = storedWalletAddress;
-      this.hasReceivedAddress = true;
-    }
     this.subscriptions.add(this.connectServ.currentAddress.subscribe((address) => {
       this.zone.run(() => {
         this.walletAddress = address || '';
@@ -120,9 +115,17 @@ export class App implements OnInit, OnDestroy {
     }
   }
 */
-   private initializeUrlParams(): void {
+  private initializeUrlParams(): void {
     let urllang = window.location.pathname.split('/')[1];
-    const params = new URLSearchParams(window.location.search);
+
+    // Combining parameters from search and hash to be robust against routing strategies
+    let queryString = window.location.search;
+    if (window.location.hash.includes('?')) {
+      const hashQuery = window.location.hash.split('?')[1];
+      queryString = queryString ? `${queryString}&${hashQuery}` : `?${hashQuery}`;
+    }
+
+    const params = new URLSearchParams(queryString);
     const rawDeviceId = params.get('deviceId') || params.get('device_id');
     const rawWalletAddress = params.get('walletAddress') || params.get('wallet_address');
     const rawAppId = params.get('appId') || params.get('app_id');
@@ -157,15 +160,21 @@ export class App implements OnInit, OnDestroy {
     } else {
       // Try to load from storage (device id only; wallet address comes from wallet)
       const storedDeviceId = this.storage.get<string>('deviceId');
+      // Retrieve stored wallet address to restore session
+      const storedWalletAddress = this.storage.get<string>('walletAddress') || undefined;
+      const effectiveAddress = urlWalletAddress || storedWalletAddress;
+
       if (storedDeviceId) {
         this.logger.info('Using stored device ID:', storedDeviceId);
         this.device_id = storedDeviceId;
         this.storage.setDeviceID(storedDeviceId);
+
+        // Pass effective address (URL or Stored) to ensure ConnectService knows we are connected
         this.connectServ.initWalletChannel(
           storedDeviceId,
           this.appName,
           this.appId || undefined,
-          undefined
+          effectiveAddress
         );
       } else {
         this.logger.warn('No device ID provided and none stored');
@@ -252,7 +261,7 @@ export class App implements OnInit, OnDestroy {
     }
   }
 
-    checkLanguage(lang: string): void {
+  checkLanguage(lang: string): void {
     if (lang && lang.length === 2) {
       lang = lang.toLowerCase();
       const theLang = this.LANGUAGES.find(language => language.value === lang);
@@ -286,52 +295,52 @@ export class App implements OnInit, OnDestroy {
     this.logger.info('Language switched to:', lang);
   }
 
-/*
-  private connectToPaycool(): void {
-    var account = '';
-    if (this.device_id) {
-      this.walletService.accountSubject.subscribe((param: string) => {
-        account = param;
-      });
-      const client = createClient(this.device_id, {
-           appId: environment.dappId,
-          role: 'dapp',
-          scopes: environment.walletConnScopes || ['sendTransaction', 'login'],
-          urlBase: environment.walletConnWsRoot || environment.paycoolWebsocketRoot,
-          roomId,
-          walletAddress, // For direct connection mode
-          heartbeatMs: environment.wsHeartbeatMs,
-          idleTimeoutMs: environment.wsIdleTimeoutMs,
-          keepAlive: true,
-          enableLogging: environment.enableLogging,
-      });
-      client.on('message', (response: string) => {
-        try {
-          const data = JSON.parse(response);
-          // Check if data has a property 'data'
-          if (data && data.hasOwnProperty('data') && data.hasOwnProperty('source')) {
-            if (account === '') {
-
-              if (data["source"] != null) {
-                let str = data["source"];
-                let parts = str.split("-");
-                let secondPart = parts[1];
-                if (secondPart == "connect") {
-                  data.data.forEach((item: any) => {
-                    if (item.chain === "FAB") {
-                      this.walletService.connectWalletSocket(item);
-                    }
-                  });
+  /*
+    private connectToPaycool(): void {
+      var account = '';
+      if (this.device_id) {
+        this.walletService.accountSubject.subscribe((param: string) => {
+          account = param;
+        });
+        const client = createClient(this.device_id, {
+             appId: environment.dappId,
+            role: 'dapp',
+            scopes: environment.walletConnScopes || ['sendTransaction', 'login'],
+            urlBase: environment.walletConnWsRoot || environment.paycoolWebsocketRoot,
+            roomId,
+            walletAddress, // For direct connection mode
+            heartbeatMs: environment.wsHeartbeatMs,
+            idleTimeoutMs: environment.wsIdleTimeoutMs,
+            keepAlive: true,
+            enableLogging: environment.enableLogging,
+        });
+        client.on('message', (response: string) => {
+          try {
+            const data = JSON.parse(response);
+            // Check if data has a property 'data'
+            if (data && data.hasOwnProperty('data') && data.hasOwnProperty('source')) {
+              if (account === '') {
+  
+                if (data["source"] != null) {
+                  let str = data["source"];
+                  let parts = str.split("-");
+                  let secondPart = parts[1];
+                  if (secondPart == "connect") {
+                    data.data.forEach((item: any) => {
+                      if (item.chain === "FAB") {
+                        this.walletService.connectWalletSocket(item);
+                      }
+                    });
+                  }
                 }
               }
             }
+          } catch (e) {
+            console.error('Failed to parse response or unexpected error:', e);
           }
-        } catch (e) {
-          console.error('Failed to parse response or unexpected error:', e);
-        }
-      });
-
+        });
+  
+      }
     }
-  }
-*/
+  */
 }
