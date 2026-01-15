@@ -71,6 +71,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
         .getTokenBalance(this.account, id)
         .subscribe((balance: any) => {
           this.firstCoinBalance = balance;
+          this.cdr.markForCheck();
         });
     }
   }
@@ -83,6 +84,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
         .getTokenBalance(this.account, id)
         .subscribe((balance: any) => {
           this.secondCoinBalance = balance;
+          this.cdr.markForCheck();
         });
     }
   }
@@ -98,6 +100,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
           .getTokenBalance(newAccount, this.firstToken.id)
           .subscribe((balance: any) => {
             this.firstCoinBalance = balance;
+            this.cdr.markForCheck();
           });
       }
 
@@ -106,6 +109,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
           .getTokenBalance(newAccount, this.secondToken.id)
           .subscribe((balance: any) => {
             this.secondCoinBalance = balance;
+            this.cdr.markForCheck();
           });
       }
     }
