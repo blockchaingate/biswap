@@ -81,6 +81,15 @@
           <span class="strong">{{ perAmount }}</span>
           }
         </div>
+        @if(!isNewPair && firstTokenTotalLiquidity > 0) {
+        <div class="info-row">
+          <span class="muted">{{'Total Liquidity'|translate}}</span>
+          <span class="strong text-end">
+            <div>{{firstTokenTotalLiquidity | number:'1.0-4'}} {{firstToken.symbol}}</div>
+            <div>{{secondTokenTotalLiquidity | number:'1.0-4'}} {{secondToken.symbol}}</div>
+          </span>
+        </div>
+        }
         @if(newPair) {
         <div class="warn">{{newPair}}</div>
         }

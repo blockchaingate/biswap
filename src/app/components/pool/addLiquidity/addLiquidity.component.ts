@@ -129,6 +129,8 @@ export class AddLiquidityComponent implements OnInit, OnDestroy {
 
   secondCoinBalance!: number;
   firstCoinBalance!: number;
+  firstTokenTotalLiquidity: number = 0;
+  secondTokenTotalLiquidity: number = 0;
 
   //walletAddress:string;
   _pairAddress: string = "";
@@ -317,6 +319,9 @@ export class AddLiquidityComponent implements OnInit, OnDestroy {
                 this.secondTokenReserve = new BigNumber(value[0] as string | number);
               }
 
+              this.firstTokenTotalLiquidity = this.firstTokenReserve.shiftedBy(-firstTokenDecimals).toNumber();
+              this.secondTokenTotalLiquidity = this.secondTokenReserve.shiftedBy(-secondDecimals).toNumber();
+
               var perAmount = new BigNumber(this.firstTokenReserve)
                 .shiftedBy(-firstTokenDecimals)
                 .dividedBy(
@@ -330,6 +335,7 @@ export class AddLiquidityComponent implements OnInit, OnDestroy {
                 this.firstToken.symbol + " per " + this.secondToken.symbol;
 
               this.perAmount = perAmount;
+              this.cdr.detectChanges();
             });
           this.isNewPair = false;
           this.newPair = "";

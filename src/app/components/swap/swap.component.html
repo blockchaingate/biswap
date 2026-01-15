@@ -15,7 +15,8 @@
         <div class="input-top">
           <span class="label">{{'From'|translate}}</span>
           @if(firstCoinBalance >= 0) {
-          <span class="muted balance">{{ firstCoinBalance | number:'1.4-4' }} {{ firstToken.symbol || firstToken.tickerName || '' }}</span>
+          <span class="muted balance">{{ firstCoinBalance | number:'1.4-4' }} {{ firstToken.symbol ||
+            firstToken.tickerName || '' }}</span>
           }
         </div>
         <div class="input-row">
@@ -46,12 +47,13 @@
         <div class="input-top">
           <span class="label">{{'To'|translate}}</span>
           @if(secondCoinBalance >= 0) {
-          <span class="muted balance">{{ secondCoinBalance | number:'1.4-4' }} {{ secondToken.symbol || secondToken.tickerName || '' }}</span>
+          <span class="muted balance">{{ secondCoinBalance | number:'1.4-4' }} {{ secondToken.symbol ||
+            secondToken.tickerName || '' }}</span>
           }
         </div>
         <div class="input-row">
-          <input readonly #token2 name="secondCoinAmount" class="tokenAmt" type="number"
-            [(ngModel)]="secondCoinAmount" placeholder="0.0" />
+          <input readonly #token2 name="secondCoinAmount" class="tokenAmt" type="number" [(ngModel)]="secondCoinAmount"
+            placeholder="0.0" />
           <button type="button" class="tokenSelectButton" (click)="openSecondTokenListDialog()">
             @if(secondToken.symbol) {
             <span class="tokenwithIcon">
@@ -82,12 +84,21 @@
             }
             @if(editSlippage==true) {
             <span class="slippage-edit">
-              <input type="number" [(ngModel)]="slippage" (blur)="editSlippage=false; onBlur()"
-                (keyup)="keyUp()" title="Slippage Tolerance" placeholder="Enter slippage tolerance" /> %
+              <input type="number" [(ngModel)]="slippage" (blur)="editSlippage=false; onBlur()" (keyup)="keyUp()"
+                title="Slippage Tolerance" placeholder="Enter slippage tolerance" /> %
             </span>
             }
           </span>
         </div>
+        @if(tokenId && tokenId!='0x0000000000000000000000000000000000000000') {
+        <div class="info-row">
+          <span class="muted">{{'Total Liquidity'|translate}}</span>
+          <span class="strong text-end">
+            <div>{{firstTokenTotalLiquidity | number:'1.0-4'}} {{firstToken.symbol}}</div>
+            <div>{{secondTokenTotalLiquidity | number:'1.0-4'}} {{secondToken.symbol}}</div>
+          </span>
+        </div>
+        }
         @if(slippageErr) {
         <div class="warn">
           {{"slippageErrMsg"|translate}}

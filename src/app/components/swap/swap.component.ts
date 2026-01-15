@@ -122,6 +122,8 @@ export class SwapComponent implements OnInit, AfterViewInit {
   perAmountLabel: string = "";
   secondCoinBalance!: number;
   firstCoinBalance!: number;
+  firstTokenTotalLiquidity: number = 0;
+  secondTokenTotalLiquidity: number = 0;
   txHashes: any = [];
   private txSubscription?: Subscription;
   t1 = "";
@@ -329,6 +331,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
         var address = this.web3Service.decodeabiHex(data.data, "address");
         this.tokenId = (address as string).toString();
         this.cdr.markForCheck();
+        this.setInputValues(true);
       });
   }
 
@@ -436,6 +439,9 @@ export class SwapComponent implements OnInit, AfterViewInit {
         this.secondTokenReserve = new BigNumber(value[0] as string | number);
       }
 
+      this.firstTokenTotalLiquidity = this.firstTokenReserve.shiftedBy(-this.firstToken.decimals).toNumber();
+      this.secondTokenTotalLiquidity = this.secondTokenReserve.shiftedBy(-this.secondToken.decimals).toNumber();
+
       if (isFirst && this.firstCoinAmount) {
         var amount: number = this.firstCoinAmount;
         this.insufficientFund = Number(amount) > Number(this.firstCoinBalance);
@@ -493,31 +499,35 @@ export class SwapComponent implements OnInit, AfterViewInit {
           .toNumber();
       }
 
-      if (
-        (isFirst && this.firstCoinAmount) ||
-        (!isFirst && this.secondCoinAmount)
-      ) {
-        var perAmount = this.firstCoinAmount / this.secondCoinAmount;
+      // Always calculate per amount (spot price) if reserves exist
+      if (this.firstTokenReserve.gt(0) && this.secondTokenReserve.gt(0)) {
+        this.perAmountLabel = this.firstToken.symbol + " per " + this.secondToken.symbol;
 
-        this.perAmountLabel =
-          this.firstToken.symbol + " per " + this.secondToken.symbol;
-
-        this.perAmount = perAmount.toString();
-
+        // Calculate spot price
         const currentPerAmount = this.firstTokenReserve
           .shiftedBy(-this.firstToken.decimals)
           .dividedBy(
             this.secondTokenReserve.shiftedBy(-this.secondToken.decimals)
           )
           .toNumber();
-        const diff =
-          perAmount > currentPerAmount
+
+        // If amounts are entered, use executed price, otherwise use spot price
+        if ((isFirst && this.firstCoinAmount) || (!isFirst && this.secondCoinAmount)) {
+          var perAmount = this.firstCoinAmount / this.secondCoinAmount;
+          this.perAmount = perAmount.toString();
+
+          const diff = perAmount > currentPerAmount
             ? perAmount - currentPerAmount
             : currentPerAmount - perAmount;
-        this.priceImpact = Number(((diff / perAmount) * 100).toFixed(2));
-
-        this.route = [this.firstToken.symbol, this.secondToken.symbol];
+          this.priceImpact = Number(((diff / perAmount) * 100).toFixed(2));
+          this.route = [this.firstToken.symbol, this.secondToken.symbol];
+        } else {
+          this.perAmount = currentPerAmount.toString();
+          this.priceImpact = 0;
+        }
       }
+
+      this.cdr.markForCheck();
     });
   }
 
