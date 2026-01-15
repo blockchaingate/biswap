@@ -25,6 +25,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { TranslateModule } from "@ngx-translate/core";
 import { FormsModule } from "@angular/forms";
 import { NgxUiLoaderModule } from "ngx-ui-loader";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-swap",
@@ -117,6 +118,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
   secondCoinBalance!: number;
   firstCoinBalance!: number;
   txHashes: any = [];
+  private txSubscription?: Subscription;
   t1 = "";
   t2 = "";
   t1ft = "";
@@ -173,6 +175,11 @@ export class SwapComponent implements OnInit, AfterViewInit {
         }
       }
     );
+    this.txSubscription = this.connectService.currentTxid.subscribe((txid) => {
+      if (txid) {
+        this.refreshTokenBalances();
+      }
+    });
     this.dataService.GettokenList.subscribe((x) => {
       this.tokenList = x;
 
@@ -369,6 +376,34 @@ export class SwapComponent implements OnInit, AfterViewInit {
     if (this.autorefresh) {
       clearInterval(this.autorefresh);
     }
+    if (this.txSubscription) {
+      this.txSubscription.unsubscribe();
+    }
+  }
+
+  private refreshTokenBalances() {
+    if (!this.account) {
+      return;
+    }
+
+    const updateBalance = (token: Coin | undefined, setter: (value: number) => void) => {
+      if (!token?.id) {
+        return;
+      }
+      this.kanbanService
+        .getTokenBalance(this.account, token.id)
+        .subscribe((balance: any) => {
+          setter(balance);
+          this.cdr.markForCheck();
+        });
+    };
+
+    updateBalance(this.firstToken, (balance) => {
+      this.firstCoinBalance = balance;
+    });
+    updateBalance(this.secondToken, (balance) => {
+      this.secondCoinBalance = balance;
+    });
   }
 
   async setInputValues(isFirst: boolean) {

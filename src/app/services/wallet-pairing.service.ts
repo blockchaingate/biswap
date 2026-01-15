@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { StorageService } from './storage.service';
 import { ConnectService } from './connect.service';
@@ -22,7 +22,8 @@ export class WalletPairingService {
 
   constructor(
     private storage: StorageService,
-    private connectService: ConnectService
+    private connectService: ConnectService,
+    private zone: NgZone
   ) {
     this.connectService.currentAddress.subscribe((addr) => {
       if (addr) {
@@ -71,12 +72,16 @@ export class WalletPairingService {
     const link = this.buildPairingUrl(deviceId);
     const socketUrl = this.buildSocketUrl(deviceId);
     const qrUrl = this.buildQrUrl(socketUrl || link);
-    this.state$.next({ visible: true, qrUrl, link });
+    this.zone.run(() => {
+      this.state$.next({ visible: true, qrUrl, link });
+    });
     return deviceId;
   }
 
   close() {
-    this.state$.next({ visible: false, qrUrl: '', link: '' });
+    this.zone.run(() => {
+      this.state$.next({ visible: false, qrUrl: '', link: '' });
+    });
   }
 
   copyLink() {

@@ -1,4 +1,4 @@
-import { Component, signal, OnInit, OnDestroy } from '@angular/core';
+import { Component, signal, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidenavListComponent } from './components/shared/sidenav-list/sidenav-list.component';
@@ -30,6 +30,8 @@ export class App implements OnInit, OnDestroy {
   pairingVisible = false;
   pairingQrUrl = '';
   pairingLink = '';
+  private pairingAutoPrompted = false;
+  private hasReceivedAddress = false;
 
   urllang: string = '';
   device_id: string = '';
@@ -51,6 +53,7 @@ export class App implements OnInit, OnDestroy {
     private pairingService: WalletPairingService,
     private translate: TranslateService,
     private logger: LoggerService,
+    private zone: NgZone,
   ) {
     // this.initializeUrlParams();
   }
@@ -64,6 +67,26 @@ export class App implements OnInit, OnDestroy {
       this.pairingVisible = state.visible;
       this.pairingQrUrl = state.qrUrl;
       this.pairingLink = state.link;
+    }));
+    const storedWalletAddress = this.storage.get<string>('walletAddress');
+    if (storedWalletAddress) {
+      this.walletAddress = storedWalletAddress;
+      this.hasReceivedAddress = true;
+    }
+    this.subscriptions.add(this.connectServ.currentAddress.subscribe((address) => {
+      this.zone.run(() => {
+        this.walletAddress = address || '';
+        if (address) {
+          this.hasReceivedAddress = true;
+          this.storage.set('walletAddress', address);
+          this.pairingService.close();
+        } else {
+          this.storage.remove('walletAddress');
+          if (this.hasReceivedAddress) {
+            this.connectWallet();
+          }
+        }
+      });
     }));
     this.autoPromptPairing();
     //this.connectToPaycool();
@@ -161,13 +184,17 @@ export class App implements OnInit, OnDestroy {
     if (hasWalletParam) {
       return;
     }
-    if (!hasDeviceParam && !this.walletAddress) {
+    if (!hasDeviceParam && !this.hasConnectedWallet()) {
       setTimeout(() => {
-        if (!this.walletAddress) {
+        if (!this.hasConnectedWallet()) {
           this.pairingService.open(this.appName);
         }
       }, 300);
     }
+  }
+
+  private hasConnectedWallet(): boolean {
+    return !!this.connectServ.currentAddress.value || !!this.walletAddress;
   }
 
   connectWallet(): void {
@@ -175,9 +202,12 @@ export class App implements OnInit, OnDestroy {
   }
 
   disconnectWallet(): void {
+    this.hasReceivedAddress = false;
     this.connectServ.disconnect();
     this.walletAddress = '';
+    this.storage.remove('walletAddress');
     this.pairingService.close();
+    this.connectWallet();
   }
 
   closePairing(): void {

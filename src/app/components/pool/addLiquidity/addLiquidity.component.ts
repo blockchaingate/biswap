@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { DecimalPipe } from "@angular/common";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -27,6 +27,7 @@ import { TranslateModule } from "@ngx-translate/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { FormsModule } from "@angular/forms";
 import { StorageService } from "src/app/services/storage.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-addLiquidity",
@@ -35,7 +36,7 @@ import { StorageService } from "src/app/services/storage.service";
   templateUrl: "./addLiquidity.component.html",
   styleUrls: ["./addLiquidity.component.scss"],
 })
-export class AddLiquidityComponent implements OnInit {
+export class AddLiquidityComponent implements OnInit, OnDestroy {
   slippage = 1;
   deadline = 20;
   error: string = "";
@@ -114,6 +115,7 @@ export class AddLiquidityComponent implements OnInit {
 
   txHashes: any = [];
   newPair: String = "";
+  private txSubscription?: Subscription;
 
   isNewPair: boolean = false;
 
@@ -167,6 +169,11 @@ export class AddLiquidityComponent implements OnInit {
     }
     this.dataService.GettokenList.subscribe((x) => {
       this.tokenList = x;
+    });
+    this.txSubscription = this.connectServ.currentTxid.subscribe((txid) => {
+      if (txid) {
+        this.refresh();
+      }
     });
     this.checkUrlToken();
   }
@@ -506,5 +513,11 @@ export class AddLiquidityComponent implements OnInit {
       }
     });
 
+  }
+
+  ngOnDestroy(): void {
+    if (this.txSubscription) {
+      this.txSubscription.unsubscribe();
+    }
   }
 }

@@ -5,6 +5,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { WalletPairingService } from 'src/app/services/wallet-pairing.service';
 import { WalletService } from 'src/app/services/wallet.service';
+import { ConnectService } from 'src/app/services/connect.service';
 import { Language } from '../../../models/language';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { MatIconModule } from '@angular/material/icon';
@@ -41,6 +42,7 @@ export class HeaderComponent implements OnInit {
     public dialog: MatDialog,
     private _storateMap: StorageMap,
     private tranServ: TranslateService,
+    private connectService: ConnectService,
   ) { }
 
   ngOnInit(): void {
@@ -105,6 +107,7 @@ export class HeaderComponent implements OnInit {
   }
 
   disConnectWallet() {
+    this.connectService.disconnect();
     this.walletService.disconnect();
   }
 }
