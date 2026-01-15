@@ -1,71 +1,71 @@
 .app-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
   width: 100%;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  background: linear-gradient(145deg, #121420, #0b0d14);
-  color: #e9ecf5;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  gap: 16px;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(14px);
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   min-width: 0;
 }
 
 .brand-link {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   text-decoration: none;
-  color: #e9ecf5;
+  color: var(--text);
 }
 
 .logo {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
 }
 
 .brand-name {
   font-weight: 700;
   font-size: 18px;
+  font-family: var(--font-display);
 }
 
 .menu-toggle {
   display: none;
-  color: #e9ecf5;
+  color: var(--text);
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .nav-links a {
-  color: #cfd3e1;
+  color: var(--muted);
   text-decoration: none;
   font-weight: 600;
   font-size: 14px;
-  padding: 8px 10px;
-  border-radius: 10px;
-  transition: background 120ms ease, color 120ms ease;
+  padding: 8px 14px;
+  border-radius: 999px;
+  transition: all 150ms ease;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
-  color: #0b0d14;
-  background: #7bd8ff;
-}
-
-.nav-links a.active {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  color: var(--text);
+  background: #eef6f4;
 }
 
 .actions {
@@ -78,41 +78,29 @@
 .lang button {
   height: 36px;
   font-size: 14px;
-  padding: 0 10px;
+  padding: 0 12px;
+  border-radius: 999px;
 }
 
 .connect {
-  border-radius: 12px;
-  padding: 8px 14px;
+  border-radius: 999px;
+  padding: 8px 16px;
   font-size: 14px;
+  background: var(--primary);
+  color: #fff;
 }
 
-.wallet-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 8px 10px;
-  border-radius: 12px;
-}
-
-.wallet-chip span {
-  font-weight: 700;
-}
-
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .app-header {
     grid-template-columns: 1fr auto;
     grid-template-rows: auto auto;
-    gap: 10px;
   }
 
   .nav-links {
     grid-column: 1 / -1;
-    width: 100%;
-    overflow-x: auto;
-    padding-bottom: 4px;
     justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 6px;
   }
 }
 
@@ -134,16 +122,5 @@
 
   .brand-name {
     font-size: 16px;
-  }
-
-  .lang button {
-    height: 32px;
-    font-size: 12px;
-    padding: 0 8px;
-  }
-
-  .connect {
-    padding: 8px 12px;
-    font-size: 14px;
   }
 }

@@ -29,10 +29,12 @@ import { FormsModule } from "@angular/forms";
 import { StorageService } from "src/app/services/storage.service";
 import { Subscription } from "rxjs";
 
+import { MatButtonModule } from "@angular/material/button";
+
 @Component({
   selector: "app-addLiquidity",
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatCardModule, MatIconModule, TranslateModule, DecimalPipe],
+  imports: [FormsModule, MatFormFieldModule, MatCardModule, MatIconModule, MatButtonModule, TranslateModule, DecimalPipe],
   templateUrl: "./addLiquidity.component.html",
   styleUrls: ["./addLiquidity.component.scss"],
 })
@@ -89,7 +91,6 @@ export class AddLiquidityComponent implements OnInit, OnDestroy {
 
   public set account(newAccount: string) {
     this._account = newAccount;
-    console.log("newAccount=", newAccount);
     if (newAccount) {
       if (this.firstToken && this.firstToken.id) {
         this.kanbanService

@@ -50,7 +50,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.setLan();
     this.walletService.accountSubject.subscribe((account: string) => {
-      console.log('[HeaderComponent] account update:', account);
       this.address = account || '';
       this.cdr.markForCheck();
     });

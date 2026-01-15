@@ -1,14 +1,14 @@
 .redeems-list {
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .redeem-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
   padding: 12px;
-  color: #e9ecf5;
+  color: var(--text);
   display: grid;
   gap: 6px;
 }
@@ -20,7 +20,7 @@
 }
 
 .label {
-  opacity: 0.75;
+  color: var(--muted);
 }
 
 .value {

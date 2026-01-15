@@ -1,153 +1,109 @@
-.poolBody {
-  padding-bottom: 24px;
-  width: 100%;
+.pool-page {
+  width: min(1040px, 92vw);
+  margin: 0 auto;
+  padding: 32px 0 64px;
 }
 
-.pool-shell {
-  width: min(640px, 100%);
-}
-
-.pool-panel {
-  background: radial-gradient(circle at 20% 20%, rgba(123, 94, 255, 0.15), transparent 35%),
-    radial-gradient(circle at 90% 10%, rgba(0, 196, 255, 0.12), transparent 30%),
-    linear-gradient(145deg, #121420, #0b0d14);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-  border-radius: 20px;
-  padding: 20px;
-  color: #e9ecf5;
-}
-
-.panel-header {
-  margin-bottom: 12px;
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.title-block {
+.pool-card {
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-1);
   display: grid;
-  gap: 4px;
+  gap: 20px;
 }
 
-.eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 12px;
-  opacity: 0.75;
+.pool-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
 
-.subtitle {
-  margin: 0;
-  opacity: 0.75;
-  font-size: 13px;
+.header-actions {
+  display: flex;
+  gap: 8px;
 }
 
-.header-actions .ghost-icon {
-  background: rgba(255, 255, 255, 0.06);
-  color: #e9ecf5;
-  border-radius: 12px;
+.icon-button {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
 }
 
 .status-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .status-line {
   display: grid;
-  gap: 2px;
-}
-
-.muted {
-  color: rgba(233, 236, 245, 0.8);
-  font-size: 14px;
+  gap: 4px;
 }
 
 .action-row {
   display: flex;
-  justify-content: flex-start;
 }
 
 .positions-grid {
-  margin-top: 16px;
   display: grid;
-  gap: 12px;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .liquidity-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 14px;
-  color: #e9ecf5;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  padding: 16px;
+  background: #fff;
+  display: grid;
+  gap: 8px;
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-}
-
-.pair {
-  display: grid;
-  gap: 2px;
 }
 
 .pair-symbol {
   font-weight: 700;
 }
 
-.pair-sub {
-  font-size: 12px;
-  opacity: 0.7;
-}
-
 .metric {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 6px 0;
-  font-size: 14px;
+  font-size: 0.9rem;
 }
 
 .divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--border);
   margin: 6px 0;
 }
 
 .card-actions {
-  margin-top: 10px;
   display: flex;
   justify-content: flex-end;
 }
 
-.action-buttons {
-  width: 130px;
-  border-radius: 12px;
-}
-
 .load-more {
-  margin-top: 12px;
+  display: flex;
+  justify-content: center;
 }
 
-@media (max-width: 640px) {
-  .pool-shell {
-    width: 100%;
+@media (max-width: 720px) {
+  .pool-card {
+    padding: 18px;
   }
 
-  .pool-panel {
-    padding: 16px;
-    border-radius: 16px;
-  }
-
-  .liquidity-card {
-    padding: 12px;
+  .pool-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

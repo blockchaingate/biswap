@@ -20,7 +20,6 @@ export class WalletService {
 
   constructor(private connectService: ConnectService) {
     this.connectService.currentAddress.subscribe((address) => {
-      console.log('[WalletService] currentAddress update:', address);
       if (address) {
         this.setExternalAddress(address);
       } else if (this.account && !this.session) {
@@ -30,7 +29,6 @@ export class WalletService {
   }
 
   setExternalAddress(address: string) {
-    console.log('[WalletService] setExternalAddress:', address);
     this.account = address || "";
     if (address && !this.chainId) {
       this.chainId = `eip155:${chainId}`;
@@ -70,8 +68,6 @@ export class WalletService {
   }
 
   async connectWalletNew() {
-    console.log("connecting");
-
     SignClient.init({
       projectId,
       metadata: {
@@ -93,7 +89,6 @@ export class WalletService {
       });
 
       client.on("session_update", ({ topic, params }) => {
-        console.log("topic===", topic);
         const { namespaces } = params;
         const _session = client.session.get(topic);
         // Overwrite the `namespaces` of the existing session with the incoming one.
@@ -110,7 +105,6 @@ export class WalletService {
   }
 
   onSessionUpdate(updatedSession: any) {
-    console.log("updatedSession===", updatedSession);
   }
 
   showQrcode() {

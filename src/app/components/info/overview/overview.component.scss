@@ -10,12 +10,11 @@
 }
 
 .metric-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
   padding: 14px;
-  color: #e9ecf5;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  color: var(--text);
 }
 
 .metric-header {
@@ -32,16 +31,16 @@
 }
 
 .time {
-  opacity: 0.7;
+  color: var(--muted);
   font-size: 12px;
 }
 
 .section {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 16px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
   padding: 12px;
-  color: #e9ecf5;
+  color: var(--text);
 }
 
 .section-header {

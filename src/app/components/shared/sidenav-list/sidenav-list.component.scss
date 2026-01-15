@@ -3,10 +3,10 @@
 }
 
 .drawer {
-  background: linear-gradient(145deg, #121420, #0b0d14);
-  color: #e9ecf5;
+  background: var(--surface);
+  color: var(--text);
   min-height: 100%;
-  padding: 14px;
+  padding: 16px;
   width: 260px;
   box-sizing: border-box;
 }
@@ -23,7 +23,7 @@
   align-items: center;
   gap: 8px;
   text-decoration: none;
-  color: #e9ecf5;
+  color: var(--text);
   font-weight: 700;
 }
 
@@ -34,15 +34,15 @@
 
 a {
   text-decoration: none;
-  color: #e9ecf5;
+  color: var(--text);
 }
 
 a:hover,
 a:active {
-  color: #7bd8ff;
+  color: var(--primary);
 }
 
-nav-caption {
+.nav-caption {
   display: inline-block;
   padding-left: 10px;
   font-weight: 600;
@@ -69,11 +69,12 @@ mat-nav-list a {
 }
 
 .mat-nav-list a:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: #eef6f4;
 }
 
 .mat-nav-list .mat-icon {
   font-size: 22px;
+  color: var(--primary);
 }
 
 ::ng-deep .mat-drawer-inner-container {

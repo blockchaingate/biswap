@@ -1,14 +1,14 @@
 .rewards-list {
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .reward-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
   padding: 12px;
-  color: #e9ecf5;
+  color: var(--text);
 }
 
 .reward-header {
@@ -24,7 +24,7 @@
 
 .token {
   font-size: 12px;
-  opacity: 0.8;
+  color: var(--muted);
 }
 
 .reward-body {
@@ -53,11 +53,12 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #e9ecf5;
+  color: var(--muted);
 }
 
 .page-index {
   font-weight: 700;
+  color: var(--text);
 }
 
 @media (max-width: 640px) {

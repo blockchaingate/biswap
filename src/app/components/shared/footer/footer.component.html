@@ -1,86 +1,37 @@
-<!-- Footer -->
-<footer class="text-center text-lg-start bg-dark footer">
-    <!-- Section: Social media -->
-
-    <!-- Section: Links  -->
-    <section class="">
-        <div class="container text-center text-md-start mt-5">
-            <!-- Grid row -->
-            <div class="row mt-3">
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                    <!-- Content -->
-                    <span routerLink="/">
-                        <img class="header-logo" src="/assets/images/biswap-256w.png" width="100px" alt="image">
-                    </span>
-                    <p>
-                        {{"BiswapProtcl" | translate}}
-                    </p>
-                </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                    <!-- Links -->
-                    <h4 class="text-uppercase fw-bold mb-4">
-                        {{"Social Media"|translate}}
-                    </h4>
-                    <p>
-                        <a href="https://www.facebook.com/BestDEX" class="text-reset">Facebook</a>
-                    </p>
-                    <p>
-                        <a href="https://twitter.com/exchangilydex" class="text-reset">X <span>(Twitter)</span></a>
-                    </p>
-                    <p>
-                        <a href="https://t.me/exchangily_chat" class="text-reset">Telegram</a>
-                    </p>
-                    <p>
-                        <a href="https://www.tiktok.com/@exchangilydex" class="text-reset">Tiktok</a>
-                    </p>
-                </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                    <!-- Links -->
-                    <h4 class="text-uppercase fw-bold mb-4">
-                        {{"Useful links"|translate}}
-                    </h4>
-                    <p>
-                        <a routerLink="/swap" class="text-reset">{{"Swap"|translate}}</a>
-                    </p>
-                    <p>
-                        <a routerLink="/pool" class="text-reset">{{"Liquidity"|translate}}</a>
-                    </p>
-                    <p>
-                        <a routerLink="/staking" class="text-reset">{{"Staking"|translate}}</a>
-                    </p>
-                    <p>
-                        <a routerLink="/reward" class="text-reset">{{"Rewards"|translate}}</a>
-                    </p>
-                </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                    <!-- Links -->
-                    <h4 class="text-uppercase fw-bold mb-4">{{"Contact"|translate}}</h4>
-                    <p>
-                        service&#64;biswap.com
-                    </p>
-                </div>
-                <!-- Grid column -->
-            </div>
-            <!-- Grid row -->
-        </div>
-    </section>
-    <!-- Section: Links  -->
-
-    <!-- Copyright -->
-    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-        © {{year}} Copyright
-        <a class="text-reset" href="https://biswap.com/">biswap.com</a>
+<footer class="app-footer">
+  <div class="footer-shell">
+    <div class="footer-brand">
+      <img class="footer-logo" src="/assets/images/biswap-256w.png" alt="Biswap" />
+      <div>
+        <div class="footer-title">Biswap</div>
+        <p>{{"BiswapProtcl" | translate}}</p>
+      </div>
     </div>
-    <!-- Copyright -->
+
+    <div class="footer-links">
+      <div>
+        <h4>{{"Social Media"|translate}}</h4>
+        <a href="https://www.facebook.com/BestDEX" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://twitter.com/exchangilydex" target="_blank" rel="noopener">X (Twitter)</a>
+        <a href="https://t.me/exchangily_chat" target="_blank" rel="noopener">Telegram</a>
+        <a href="https://www.tiktok.com/@exchangilydex" target="_blank" rel="noopener">TikTok</a>
+      </div>
+      <div>
+        <h4>{{"Useful links"|translate}}</h4>
+        <a routerLink="/swap">{{"Swap"|translate}}</a>
+        <a routerLink="/pool">{{"Liquidity"|translate}}</a>
+        <a routerLink="/staking">{{"Staking"|translate}}</a>
+        <a routerLink="/reward">{{"Rewards"|translate}}</a>
+      </div>
+      <div>
+        <h4>{{"Contact"|translate}}</h4>
+        <span>service&#64;biswap.com</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-base">
+    <span>© {{year}} Biswap</span>
+    <a href="https://biswap.com/" target="_blank" rel="noopener">biswap.com</a>
+  </div>
 </footer>
-<!-- Footer -->

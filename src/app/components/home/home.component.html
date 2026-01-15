@@ -1,174 +1,74 @@
-<div class="container-fluid">
-    <!-- <div class="banner text-center" fxLayout="column" fxLayoutAligh="center center" >
-        <div class="mt-title">
-            <h1>{{'EXPLORER NEW SPACE'| translate}} ！</h1>
+<div class="home-shell">
+  <section class="hero surface-card">
+    <div class="hero-copy">
+      <span class="badge">{{ 'BISWAP PROTOCOL' | translate }}</span>
+      <h1 class="hero-title">{{ 'The Future of Decentralized Trading' | translate }}</h1>
+      <p class="hero-sub">{{ 'BiswapProtcl' | translate }}</p>
+      <div class="hero-actions">
+        <a routerLink="/swap" class="primary-cta">{{ 'Get Started' | translate }}</a>
+        <a routerLink="/pool" class="ghost-cta">{{ 'Liquidity' | translate }}</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <img src="/assets/images/biswap-icon.png" alt="Biswap" />
+        <div class="hero-card-meta">
+          <span>{{ 'Instant Swap' | translate }}</span>
+          <span>{{ 'Liquidity Pools' | translate }}</span>
+          <span>{{ 'Earn & Get Airdrop' | translate }}</span>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="mt-title" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5%">
-            <div class="showcard swapcard handcursor" fxLayoutAlign="center center" routerLink="/swap">
-                <h1 class="swaptxt">{{"SWAP"|translate}}</h1>
-            </div>
-            <div class="showcard lpcard handcursor" fxLayoutAlign="center center" routerLink="/pool">
-                <h1 class="swaptxt">{{"POOL"|translate}}</h1>
-            </div>
-        </div>
+  <section class="stats-grid">
+    <div class="stat-tile">
+      <span>{{ 'Total Value Locked' | translate }}</span>
+      <strong>$42.5M+</strong>
+    </div>
+    <div class="stat-tile">
+      <span>{{ 'Total Volume' | translate }}</span>
+      <strong>$1.2B+</strong>
+    </div>
+    <div class="stat-tile">
+      <span>{{ 'Trading Pairs' | translate }}</span>
+      <strong>150+</strong>
+    </div>
+  </section>
 
-        <div class="mt-title desc">
-            <h2>{{"BISWAP PROTOCOL"|translate}}</h2>
-        </div>
-        <div class="row" fxLayoutAlign="center center">
-            <div class="contentbox">
-                {{"BiswapProtcl" | translate}}
-            </div>
-        </div>
-    </div> -->
-    <section class="container-fluid banner">
-        <div class="container">
-            <div class="row contentRow">
-                <div class="col-md-6">
-                    <div class="bannerTxt">
-                        <h1 class="title gradient-text">
-                            {{"BISWAP PROTOCOL"|translate}}
-                        </h1>
+  <section class="feature-grid">
+    <div class="feature-card" routerLink="/swap">
+      <mat-icon>swap_horiz</mat-icon>
+      <h3>{{ 'Instant Swap' | translate }}</h3>
+      <p>{{ 'Swap tokens instantly with low fees and minimal slippage.' | translate }}</p>
+    </div>
+    <div class="feature-card" routerLink="/pool">
+      <mat-icon>waves</mat-icon>
+      <h3>{{ 'Liquidity Pools' | translate }}</h3>
+      <p>{{ 'PROVIDE LIQUIDITY Detial' | translate }}</p>
+    </div>
+    <div class="feature-card" routerLink="/reward">
+      <mat-icon>monetization_on</mat-icon>
+      <h3>{{ 'EARN & GET AIRDROP' | translate }}</h3>
+      <p>{{ 'EARN GET AIRDROP Detial' | translate }}</p>
+    </div>
+  </section>
 
-                        <p class="desc">
-                            {{"BiswapProtcl" | translate}}
-                        </p>
-                        <div class="btns">
-                            <a href="/" class="btn btn-primary btn-lg " target="_blank">
-                                {{"Get Started"|translate}}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="bannerImg topBanner">
-                        <img src="/assets/images/biswap-icon.png" alt="biswap">
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-    <section class="container-fluid headline">
-        <div class="container">
-            <div class="row textRow2">
-                <div class="col-md-12">
-                    <div class="subtitle">
-
-                        {{"subtitle" | translate}}
-                        <!-- {{"PROVIDE LIQUIDITY Detial"|translate}} -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="container-fluid ">
-        <div class="container">
-            <div class="row contentRow">
-                <div class="col-md-6">
-                    <div class="bannerImg">
-                        <img src="/assets/images/LootBoxes.png" alt="">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="bannerTxt">
-                        <h1 class="title">
-                            {{"EARN & GET AIRDROP"|translate}}
-                        </h1>
-                        <p class="desc">
-                            {{"EARN GET AIRDROP Detial" | translate}}
-                        </p>
-                        <div class="btns">
-                            <a href="/" class="btn btn-primary btn-lg " target="_blank">
-                                {{"Get Started"|translate}}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-    <section class="container-fluid reward">
-        <div class="container">
-            <div class="row textRow">
-                <div class="col-md-12">
-                    <h2>
-                        <!-- {{"subtitle" | translate}} -->
-                        {{"PROVIDE LIQUIDITY Detial"|translate}}
-                    </h2>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="container-fluid">
-        <div class="container">
-            <div class="row contentRow">
-                <div class="col-md-6">
-                    <div class="bannerTxt">
-                        <h1 class="title">
-                            {{"Info & Analytics"|translate}}
-                        </h1>
-                        <p class="desc">
-                            {{"Info Analytics Detial" | translate}}
-                        </p>
-                        <div class="btns">
-                            <a href="/" class="btn btn-primary btn-lg " target="_blank">
-                                {{"Get Started"|translate}}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="bannerImg">
-                        <img src="/assets/images/arrowUp.png" alt="">
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-    <section class="container-fluid">
-        <div class="container">
-            <div class="row contentRow">
-                <div class="col-md-6">
-                    <div class="bannerImg">
-                        <img src="/assets/images/AppIniPhone.png" alt="">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="bannerTxt">
-                        <h1 class="title">
-                            {{"download"|translate}}
-                        </h1>
-                        <p class="desc">
-                            {{"downloadcontent" | translate}}
-                        </p>
-                        <div class="appBtns">
-                            <div class="btns">
-                                <a href="https://apps.apple.com/us/app/biswap/id1634279692?platform=iphone"
-                                    class="btn btn-primary btn-lg " target="_blank">
-                                    {{"IOS"|translate}}
-                                </a>
-                            </div>
-                            <div class="btns">
-                                <a href="https://play.google.com/store/apps/details?id=com.biswap.mobile"
-                                    class="btn btn-primary btn-lg " target="_blank">
-                                    {{"ANDROID"|translate}}
-                                </a>
-                            </div>
-                            <div class="btns">
-                                <a routerLink="/download" class="btn btn-primary btn-lg " target="_self">
-                                    {{"APK"|translate}}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
+  <section class="cta surface-soft">
+    <div>
+      <h2>{{ 'Trade on the Go' | translate }}</h2>
+      <p>{{ 'downloadcontent' | translate }}</p>
+    </div>
+    <div class="cta-actions">
+      <a href="https://apps.apple.com/us/app/biswap/id1634279692?platform=iphone" target="_blank" class="ghost-cta">
+        <mat-icon>apple</mat-icon>
+        iOS App
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.biswap.mobile" target="_blank" class="ghost-cta">
+        <mat-icon>android</mat-icon>
+        Android App
+      </a>
+      <a routerLink="/download" class="primary-cta">Download APK</a>
+    </div>
+  </section>
 </div>

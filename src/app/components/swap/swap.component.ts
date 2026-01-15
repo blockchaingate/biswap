@@ -27,10 +27,12 @@ import { FormsModule } from "@angular/forms";
 import { NgxUiLoaderModule } from "ngx-ui-loader";
 import { Subscription } from "rxjs";
 
+import { MatButtonModule } from "@angular/material/button";
+
 @Component({
   selector: "app-swap",
   standalone: true,
-  imports: [FormsModule, MatCardModule, MatIconModule, TranslateModule, NgxUiLoaderModule, DecimalPipe],
+  imports: [FormsModule, MatCardModule, MatIconModule, MatButtonModule, TranslateModule, NgxUiLoaderModule, DecimalPipe],
   templateUrl: "./swap.component.html",
   styleUrls: ["./swap.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -95,7 +97,6 @@ export class SwapComponent implements OnInit, AfterViewInit {
         this.kanbanService
           .getTokenBalance(newAccount, this.firstToken.id)
           .subscribe((balance: any) => {
-            console.log('balance111=', balance);
             this.firstCoinBalance = balance;
           });
       }
@@ -561,7 +562,6 @@ export class SwapComponent implements OnInit, AfterViewInit {
 
   async swapFunction() {
 
-    console.log('swapFunction --------------------------------->  started');
 
     if (
       (this.isFistToken && !this.firstCoinAmount && !this.firstCoinBalance && this.firstCoinAmount > this.firstCoinBalance) ||
@@ -574,8 +574,6 @@ export class SwapComponent implements OnInit, AfterViewInit {
     var timestamp = new TimestampModel(this.deadline, 0, 0, 0);
     var deadline = this.utilService.getTimestamp(timestamp);
 
-    console.log('to --------------------------------->  started', to);
-    console.log('deadline --------------------------------->  started', deadline);
 
     let abiHex = "";
     let approveAmount;
@@ -595,7 +593,6 @@ export class SwapComponent implements OnInit, AfterViewInit {
           .toString(16)
           .split(".")[0];
       const params = [amountIn, amountOutMin, path, to, deadline];
-      console.log("params is1:", params);
       abiHex = this.web3Service.swapExactTokensForTokens(params);
       approveAmount = amountIn;
     } else {
@@ -614,7 +611,6 @@ export class SwapComponent implements OnInit, AfterViewInit {
           .toString(16)
           .split(".")[0];
       const params = [amountOut, amountInMax, path, to, deadline];
-      console.log("params is2:", params);
       abiHex = this.web3Service.swapTokensForExactTokens(params);
       approveAmount = amountInMax;
     }

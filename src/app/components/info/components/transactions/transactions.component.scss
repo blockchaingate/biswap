@@ -1,32 +1,36 @@
 .container {
-    border: 1px solid silver;
-    font-size: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-size: 12px;
+  background: #fff;
 }
 
 .title {
-    background-color: black;
-    color: white;
-    height: 36px;
+  background: var(--surface-2);
+  color: var(--text);
+  height: 36px;
+  font-weight: 700;
 }
 
 .formrow {
-    border-bottom: 1px solid silver;
-    height: 24px;
+  border-bottom: 1px solid var(--border);
+  height: 24px;
 }
 
-.titiCol a{
-    color: rgb(153, 172, 248);
-    text-decoration: none;
-    transition: all 0.3s;
-    vertical-align: middle;
+.titiCol a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: all 0.2s;
+  vertical-align: middle;
 }
 
-.titiCol a:hover{
-    color: aqua;
+.titiCol a:hover {
+  color: var(--primary-dark);
 }
 
 @media(max-width: 640px) {
-    .container {
-        font-size: 8px;
-    }
+  .container {
+    font-size: 10px;
+  }
 }
