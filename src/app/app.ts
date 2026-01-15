@@ -51,6 +51,7 @@ export class App {
   }
 
   ngOnInit() {
+    this.initializeUrlParams();
     this.setupPaycoolEventListener();
     this.kanbanService.getTokenList();
     this.storage.removeWalletSession();
@@ -104,6 +105,7 @@ export class App {
       this.logger.info('Initializing wallet channel with device ID:', this.device_id);
       // Store device ID for future sessions
       this.storage.set('deviceId', this.device_id);
+      this.storage.setDeviceID(this.device_id);
       if (urlWalletAddress) {
         this.storage.set('walletAddress', urlWalletAddress);
       }
@@ -125,6 +127,7 @@ export class App {
       if (storedDeviceId) {
         this.logger.info('Using stored device ID:', storedDeviceId);
         this.device_id = storedDeviceId;
+        this.storage.setDeviceID(storedDeviceId);
         this.connectServ.initWalletChannel(
           storedDeviceId,
           this.appName,

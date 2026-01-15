@@ -17,7 +17,7 @@
           <div class="input-top">
             <span class="label">{{'Token A'|translate}}</span>
             @if(firstCoinBalance >= 0) {
-            <span class="muted">{{'Balance'|translate}}: {{firstCoinBalance}}</span>
+            <span class="muted balance">{{ firstCoinBalance | number:'1.4-4' }} {{ firstToken.symbol || firstToken.tickerName || '' }}</span>
             }
           </div>
           <div class="input-row">
@@ -46,7 +46,7 @@
           <div class="input-top">
             <span class="label">{{'Token B'|translate}}</span>
             @if(secondCoinBalance >= 0) {
-            <span class="muted">{{'Balance'|translate}}: {{secondCoinBalance}}</span>
+            <span class="muted balance">{{ secondCoinBalance | number:'1.4-4' }} {{ secondToken.symbol || secondToken.tickerName || '' }}</span>
             }
           </div>
           <div class="input-row">

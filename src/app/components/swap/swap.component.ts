@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy } from "@angular/core";
+import { DecimalPipe } from "@angular/common";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import BigNumber from "bignumber.js";
@@ -28,7 +29,7 @@ import { NgxUiLoaderModule } from "ngx-ui-loader";
 @Component({
   selector: "app-swap",
   standalone: true,
-  imports: [FormsModule, MatCardModule, MatIconModule, TranslateModule, NgxUiLoaderModule],
+  imports: [FormsModule, MatCardModule, MatIconModule, TranslateModule, NgxUiLoaderModule, DecimalPipe],
   templateUrl: "./swap.component.html",
   styleUrls: ["./swap.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush

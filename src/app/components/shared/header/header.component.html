@@ -33,17 +33,14 @@
       </mat-menu>
     </div>
 
-    @if(!address){
-    <button mat-raised-button color="primary" class="connect" (click)="connectWallet()">
-      {{ 'Connect Wallet'| translate }}
+    <button
+      mat-raised-button
+      color="primary"
+      class="connect"
+      (click)="address ? disConnectWallet() : connectWallet()"
+      [attr.aria-label]="address ? 'Disconnect wallet' : 'Connect wallet'"
+    >
+      {{ address ? showAccount() : ('Connect Wallet' | translate) }}
     </button>
-    } @else {
-    <div class="wallet-chip">
-      <span>{{showAccount()}}</span>
-      <button mat-icon-button color="primary" (click)="disConnectWallet()" aria-label="Disconnect">
-        <mat-icon>logout</mat-icon>
-      </button>
-    </div>
-    }
   </div>
 </header>

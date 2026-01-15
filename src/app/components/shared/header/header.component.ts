@@ -6,7 +6,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { WalletService } from 'src/app/services/wallet.service';
 import { Language } from '../../../models/language';
 import { StorageMap } from '@ngx-pwa/local-storage';
-import { UtilsService } from 'src/app/services/utils.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -40,25 +39,23 @@ export class HeaderComponent implements OnInit {
     public dialog: MatDialog,
     private _storateMap: StorageMap,
     private tranServ: TranslateService,
-    private utilsServ: UtilsService,
   ) { }
 
   ngOnInit(): void {
     this.setLan();
     this.walletService.accountSubject.subscribe((account: string) => {
-      if (account) {
-        console.log('account header ----------------------------------------->', account);
-        this.address = this.utilsServ.exgToFabAddress(account);
-      } else {
-        console.log('account header null----------------------------------------->');
-        this.address = '';
-      }
-
+      this.address = account || '';
     });
   }
 
   showAccount() {
-    return this.address.substring(0, 3) + '...' + this.address.substring(this.address.length - 3);
+    if (!this.address) {
+      return '';
+    }
+    if (this.address.length <= 10) {
+      return this.address;
+    }
+    return `${this.address.substring(0, 6)}...${this.address.substring(this.address.length - 4)}`;
   }
 
   setLan() {

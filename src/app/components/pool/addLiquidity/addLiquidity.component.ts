@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { DecimalPipe } from "@angular/common";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import BigNumber from "bignumber.js";
@@ -30,7 +31,7 @@ import { StorageService } from "src/app/services/storage.service";
 @Component({
   selector: "app-addLiquidity",
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatCardModule, MatIconModule, TranslateModule],
+  imports: [FormsModule, MatFormFieldModule, MatCardModule, MatIconModule, TranslateModule, DecimalPipe],
   templateUrl: "./addLiquidity.component.html",
   styleUrls: ["./addLiquidity.component.scss"],
 })
@@ -466,8 +467,6 @@ export class AddLiquidityComponent implements OnInit {
       to: environment.smartConractAdressRouter,
       data: abiHex,
     });
-
-    
 
     this.storage.getDeviceID().subscribe((device_id: any) => {
       if (device_id) {

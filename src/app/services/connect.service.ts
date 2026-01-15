@@ -12,6 +12,7 @@ import { LoggerService } from './logger.service';
 import { environment } from '../../environments/environment';
 import { UserStateService } from './user-state.service';
 import { StorageService } from './storage.service';
+import { UtilsService } from './utils.service';
 // import { WalletMessage } from '../models/wallet.model';
 
 type Tx = { to: string; data: string };
@@ -24,6 +25,7 @@ export class ConnectService {
   // readonly currentUser = new BehaviorSubject<any>(null); // Moved to UserStateService
   private deviceId = '';
   private appName = 'world-dao';
+  private appId = environment.dappId;
   private walletClient: WalletConnConnectClient | null = null;
   private isLoggingIn = false;
 
@@ -36,8 +38,9 @@ export class ConnectService {
   }
 
   setExternalAddress(address: string) {
-    this.currentAddress.next(address);
-    if (address) {
+    const normalized = this.normalizeAddress(address);
+    this.currentAddress.next(normalized);
+    if (normalized) {
       this.connectionState.next('open');
     }
   }
@@ -45,7 +48,8 @@ export class ConnectService {
   constructor(
     private logger: LoggerService,
     private userState: UserStateService,
-    private storage: StorageService
+    private storage: StorageService,
+    private utils: UtilsService,
   ) { }
 
   /** Call once after you know/persist a deviceId (e.g. post QR pair). */
@@ -61,6 +65,7 @@ export class ConnectService {
 
     this.deviceId = deviceId;
     this.appName = appName;
+    this.appId = appId || environment.dappId;
     this.logger.info('Initializing wallet channel for device:', deviceId);
 
     try {
@@ -77,7 +82,7 @@ export class ConnectService {
 
       if (!this.walletClient) {
         this.walletClient = createClient(deviceId, {
-          appId: appId || environment.dappId,
+          appId: this.appId,
           role: 'dapp',
           scopes: environment.walletConnScopes || ['sendTransaction', 'login'],
           urlBase: environment.walletConnWsRoot || environment.paycoolWebsocketRoot,
@@ -344,7 +349,7 @@ export class ConnectService {
     } catch (error) {
       this.logger.error('Failed to force reconnect', error);
       // Fallback to full reinitialization
-      return this.initWalletChannel(this.deviceId, this.appName);
+      return this.initWalletChannel(this.deviceId, this.appName, this.appId);
     }
   }
 
@@ -357,7 +362,7 @@ export class ConnectService {
   }
 
   private buildRoomId(deviceId: string): string {
-    return `${deviceId}-${environment.dappId}`;
+    return `${deviceId}-${this.appId}`;
   }
 
   private sendWalletRequest(payload: any, timeoutMs: number): Promise<any> {
@@ -367,24 +372,32 @@ export class ConnectService {
     return this.walletClient.sendRequest(payload, timeoutMs);
   }
 
+  private normalizeAddress(address: string): string {
+    if (!address) return '';
+    const trimmed = address.trim();
+    if (!trimmed) return '';
+    if (trimmed.startsWith('0x') || trimmed.startsWith('0X')) {
+      return trimmed;
+    }
+    const converted = this.utils.fabToExgAddress(trimmed);
+    return converted || trimmed;
+  }
+
   // Identity and Login Flow
 
   private handleAddressReceived(address: string) {
-    if (this.currentAddress.value !== address) {
-      this.currentAddress.next(address);
+    const normalized = this.normalizeAddress(address);
+    if (!normalized) return;
+
+    if (this.currentAddress.value !== normalized) {
+      this.currentAddress.next(normalized);
     }
     const existingUser = this.userState.getUser();
-    if (existingUser && existingUser.walletAddress !== address) {
-      this.userState.setUser({ ...existingUser, walletAddress: address });
+    if (existingUser && existingUser.walletAddress !== normalized) {
+      this.userState.setUser({ ...existingUser, walletAddress: normalized });
     }
 
-    // Check for cached UserProfile
-    // We need to inject StorageService or use a helper. 
-    // Since injecting StorageService here might cause circular deps if not careful (though unlikely as this is root),
-    // we'll assume the App component might trigger this check or we do it here if we inject StorageService.
-    // However, to keep ConnectService self-contained regarding auth flow:
-
-    this.checkCacheAndLogin(address);
+    this.checkCacheAndLogin(normalized);
   }
 
   private async checkCacheAndLogin(address: string) {

@@ -4,6 +4,7 @@ import { WalletConnectModal } from "@walletconnect/modal";
 const projectId = "3acbabd1deb4672edfd4ca48226cfc0f";
 import { Subject } from "rxjs";
 import { environment } from "src/environments/environment";
+import { ConnectService } from "src/app/services/connect.service";
 const chainId = environment.production ? 211 : 212;
 @Injectable({
   providedIn: "root",
@@ -17,22 +18,47 @@ export class WalletService {
   walletConnectModal: any;
   accountSubject = new Subject<string>();
 
-  constructor() {}
+  constructor(private connectService: ConnectService) {
+    this.connectService.currentAddress.subscribe((address) => {
+      if (address) {
+        this.setExternalAddress(address);
+      } else if (this.account && !this.session) {
+        this.setExternalAddress('');
+      }
+    });
+  }
+
+  setExternalAddress(address: string) {
+    this.account = address || "";
+    if (address && !this.chainId) {
+      this.chainId = `eip155:${chainId}`;
+    }
+    this.accountSubject.next(this.account);
+  }
 
   disconnect() {
     this.account = "";
     this.accountSubject.next("");
-    this.client.disconnect({
-      topic: this.topic,
-      projectId,
-      //relayUrl: 'wss://api.biswap.com',
-      metadata: {
-        name: "Biswap Dapp",
-        description: "Automated FAB-based crypto exchange",
-        url: "#",
-        icons: ["https://walletconnect.com/walletconnect-logo.png"],
-      },
-    });
+    if (!this.client || !this.topic) {
+      this.session = null;
+      this.chainId = "";
+      return;
+    }
+    try {
+      this.client.disconnect({
+        topic: this.topic,
+        projectId,
+        //relayUrl: 'wss://api.biswap.com',
+        metadata: {
+          name: "Biswap Dapp",
+          description: "Automated FAB-based crypto exchange",
+          url: "#",
+          icons: ["https://walletconnect.com/walletconnect-logo.png"],
+        },
+      });
+    } catch (error) {
+      console.warn("Wallet disconnect failed:", error);
+    }
   }
 
   connectWalletSocket(param: any) {
