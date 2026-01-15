@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -43,12 +44,15 @@ export class HeaderComponent implements OnInit {
     private _storateMap: StorageMap,
     private tranServ: TranslateService,
     private connectService: ConnectService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
     this.setLan();
     this.walletService.accountSubject.subscribe((account: string) => {
+      console.log('[HeaderComponent] account update:', account);
       this.address = account || '';
+      this.cdr.markForCheck();
     });
   }
 

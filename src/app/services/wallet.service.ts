@@ -20,6 +20,7 @@ export class WalletService {
 
   constructor(private connectService: ConnectService) {
     this.connectService.currentAddress.subscribe((address) => {
+      console.log('[WalletService] currentAddress update:', address);
       if (address) {
         this.setExternalAddress(address);
       } else if (this.account && !this.session) {
@@ -29,6 +30,7 @@ export class WalletService {
   }
 
   setExternalAddress(address: string) {
+    console.log('[WalletService] setExternalAddress:', address);
     this.account = address || "";
     if (address && !this.chainId) {
       this.chainId = `eip155:${chainId}`;
