@@ -24,7 +24,7 @@ export class ConnectService {
   readonly connectionState = new BehaviorSubject<ConnectionState>('idle');
   // readonly currentUser = new BehaviorSubject<any>(null); // Moved to UserStateService
   private deviceId = '';
-  private appName = 'world-dao';
+  private appName = 'Biswap';
   private appId = environment.dappId;
   private walletClient: WalletConnConnectClient | null = null;
   private isLoggingIn = false;
@@ -53,7 +53,7 @@ export class ConnectService {
   ) { }
 
   /** Call once after you know/persist a deviceId (e.g. post QR pair). */
-  initWalletChannel(deviceId: string, appName = 'world-dao', appId?: string, walletAddress?: string): boolean {
+  initWalletChannel(deviceId: string, appName = 'Biswap', appId?: string, walletAddress?: string): boolean {
     if (!deviceId) {
       this.logger.error('Device ID is required to initialize wallet channel');
       return false;
@@ -437,7 +437,7 @@ export class ConnectService {
       requestId, // Required by server
       data: {
         action: 'login',
-        message: 'Login to World DAO',
+        message: 'Login to Biswap DApp',
         address: address, // Tell wallet which address we expect to sign
         app: this.appName,
         chain: 'KANBAN'

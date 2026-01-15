@@ -6,6 +6,7 @@ import * as Btc from 'bitcoinjs-lib';
 export const environment = {
   production: true,
   dappId: '65fc39b85c0f7971ea2c6655',
+  dappName: 'Biswap',
   paycoolApiRoot: 'https://api.pay.cool/api/',
   paycoolWebsocketRoot: 'wss://api.pay.cool/ws/',
   walletConnWsRoot: 'wss://api.pay.cool/ws/',

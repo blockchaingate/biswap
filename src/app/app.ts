@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit, OnDestroy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidenavListComponent } from './components/shared/sidenav-list/sidenav-list.component';
@@ -13,6 +13,7 @@ import { WalletService } from './services/wallet.service';
 import { Language } from './models/language';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -21,11 +22,14 @@ import { environment } from '../environments/environment';
   styleUrls: ['./app.scss'],
   standalone: true
 })
-export class App {
+export class App implements OnInit, OnDestroy {
   protected readonly title = signal('biswap');
   walletAddress: string = '';
   appId: string = ''
   appName: string = 'biswap';
+  pairingVisible = false;
+  pairingQrUrl = '';
+  pairingLink = '';
 
   urllang: string = '';
   device_id: string = '';
@@ -37,6 +41,7 @@ export class App {
   ];
   selectedLan: Language = { value: 'en', viewValue: 'English' };
   private readonly PAYCOOL_EVENT_NAME = 'Paycool-Data';
+  private subscriptions = new Subscription();
 
   constructor(
     private kanbanService: KanbanService,
@@ -55,6 +60,11 @@ export class App {
     this.setupPaycoolEventListener();
     this.kanbanService.getTokenList();
     this.storage.removeWalletSession();
+    this.subscriptions.add(this.pairingService.stateChanges.subscribe((state) => {
+      this.pairingVisible = state.visible;
+      this.pairingQrUrl = state.qrUrl;
+      this.pairingLink = state.link;
+    }));
     this.autoPromptPairing();
     //this.connectToPaycool();
   }
@@ -182,6 +192,10 @@ export class App {
     this.pairingService.close();
     this.connectServ.reConnectWallet();
     this.connectServ.triggerWalletAddress(this.appName);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   private setupPaycoolEventListener(): void {

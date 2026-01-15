@@ -51,3 +51,77 @@ main::-webkit-scrollbar {
         width: 200px;
     }
 }
+
+.pairing-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(10, 10, 10, 0.75);
+    backdrop-filter: blur(6px);
+}
+
+.pairing-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    border-radius: 16px;
+    background: rgba(5, 5, 5, 0.95);
+    color: white;
+    width: min(340px, 90vw);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    text-align: center;
+}
+
+.pairing-card h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.pairing-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.pairing-qr {
+    width: 220px;
+    height: 220px;
+    border-radius: 14px;
+    background: white;
+    padding: 10px;
+    object-fit: contain;
+}
+
+.pairing-actions {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.pairing-btn {
+    flex: 1;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    background: transparent;
+    color: white;
+    transition: transform 0.12s ease, border-color 0.18s ease;
+}
+
+.pairing-btn:hover {
+    border-color: #fff;
+    transform: translateY(-1px);
+}
+
+.pairing-btn.primary {
+    background: #5c6ef8;
+    border-color: transparent;
+}

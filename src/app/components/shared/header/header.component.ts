@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DataService } from 'src/app/services/data.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { WalletPairingService } from 'src/app/services/wallet-pairing.service';
 import { WalletService } from 'src/app/services/wallet.service';
 import { Language } from '../../../models/language';
 import { StorageMap } from '@ngx-pwa/local-storage';
@@ -35,6 +36,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     public dataService: DataService,
     public walletService: WalletService,
+    private pairingService: WalletPairingService,
     public storageService: StorageService,
     public dialog: MatDialog,
     private _storateMap: StorageMap,
@@ -97,8 +99,9 @@ export class HeaderComponent implements OnInit {
     this.sidenavToggle.emit();
   }
 
+
   connectWallet() {
-    this.walletService.connectWalletNew();
+    this.pairingService.open('biswap');
   }
 
   disConnectWallet() {

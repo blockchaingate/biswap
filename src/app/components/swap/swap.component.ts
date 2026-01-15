@@ -586,29 +586,25 @@ export class SwapComponent implements OnInit, AfterViewInit {
 
     this.storage.getDeviceID().subscribe(device_id => {
       if (device_id) {
-        const paramsSentSocket = {
-          source: "Biswap-Swap",
-          data: [
-            {
-              to: this.firstToken?.id, // Use optional chaining
-              data: this.web3Service?.getApprove([
-                environment.smartConractAdressRouter,
-                approveAmount,
-              ]),
-            },
-            {
-              to: environment.smartConractAdressRouter,
-              data: abiHex,
-            },
-          ],
-        };
-
-        if (paramsSentSocket.data[0].to && paramsSentSocket.data[0].data) {
-          this.connectService.send(paramsSentSocket);
-          // send(paramsSentSocket);
-        } else {
-          console.error("Failed to set up paramsSentSocket:", paramsSentSocket);
+        const txs = [
+          {
+            to: this.firstToken?.id,
+            data: this.web3Service?.getApprove([
+              environment.smartConractAdressRouter,
+              approveAmount,
+            ]),
+          },
+          {
+            to: environment.smartConractAdressRouter,
+            data: abiHex,
+          },
+        ];
+        const hasApproveParams = !!(txs[0].to && txs[0].data);
+        if (!hasApproveParams) {
+          console.error("Failed to set up transaction payload:", txs);
+          return;
         }
+        this.connectService.sendTransaction(txs);
       } else {
         const paramsSent = [
           {
