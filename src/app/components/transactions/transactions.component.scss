@@ -96,4 +96,9 @@
   .tx-row span:nth-child(1) {
     grid-column: span 2;
   }
+
+  .tx-page {
+    width: 100%;
+    padding: 20px 16px 48px;
+  }
 }

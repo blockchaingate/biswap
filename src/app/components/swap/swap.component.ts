@@ -53,7 +53,7 @@ export class SwapComponent implements OnInit, AfterViewInit {
   token2Element!: ElementRef;
 
   @ViewChild("animatedElement", { static: true })
-  animatedElement!: ElementRef;
+  animatedElement?: ElementRef;
 
   isFistToken!: boolean;
 
@@ -220,6 +220,9 @@ export class SwapComponent implements OnInit, AfterViewInit {
   }
 
   animateElement() {
+    if (!this.animatedElement?.nativeElement) {
+      return;
+    }
     this.animatedElement.nativeElement.classList.add("show");
   }
 

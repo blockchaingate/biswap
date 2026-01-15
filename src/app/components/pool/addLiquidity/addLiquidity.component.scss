@@ -175,4 +175,22 @@
   .add-card {
     padding: 18px;
   }
+
+  .add-page {
+    width: 100%;
+    padding: 20px 16px 48px;
+  }
+
+  .tokenAmt {
+    font-size: 1.4rem;
+  }
+
+  .input-row {
+    flex-wrap: wrap;
+  }
+
+  .tokenSelectButton {
+    width: 100%;
+    justify-content: space-between;
+  }
 }
