@@ -3,9 +3,9 @@
 }
 
 .swap-page {
-  width: min(520px, 92vw);
+  width: 100%;
   margin: 0 auto;
-  padding: 32px 0 64px;
+  padding: 32px 16px 64px;
   display: grid;
   gap: 20px;
 }
@@ -18,6 +18,9 @@
   box-shadow: var(--shadow-1);
   display: grid;
   gap: 18px;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
 }
 
 .swap-header {
@@ -149,6 +152,9 @@
   padding: 18px;
   display: grid;
   gap: 10px;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
 }
 
 .summary-title {
@@ -178,6 +184,9 @@
 .tx-list {
   display: grid;
   gap: 8px;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
 }
 
 .tx-link {
@@ -196,6 +205,9 @@
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
   background: #fff;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
 }
 
 @media (max-width: 600px) {
