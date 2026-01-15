@@ -5,6 +5,18 @@ import * as Btc from 'bitcoinjs-lib';
 
 export const environment = {
   production: false,
+  dappId: '65fc39b85c0f7971ea2c6655',
+  paycoolApiRoot: 'https://api.pay.cool/api/',
+  paycoolWebsocketRoot: 'wss://api.pay.cool/ws/',
+  walletConnWsRoot: 'wss://api.pay.cool/ws/',
+  walletConnScopes: ['sendTransaction', 'login'],
+  requestTimeout: 30000,
+  wsHeartbeatMs: 25000,
+  wsIdleTimeoutMs: 60000,
+  enableLogging: false,
+  cacheEnabled: true,
+  cacheDuration: 60000, // 1 minute
+
   smartConractAdressRouter:  "0x956464fa0bc9acc46ef2364f582cdef7afefd51b",
   smartConractAdressFactory: "0x6f0acd5519ee285562f56086b14fca0247f8ff79",
                             //  "0x161d9DD445C3DAcFbF630B05a0F3bf31027261dc",

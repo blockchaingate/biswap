@@ -5,21 +5,27 @@ import { SidenavListComponent } from './components/shared/sidenav-list/sidenav-l
 import { HeaderComponent } from './components/shared/header/header.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { KanbanService } from './services/kanban.service';
+import { ConnectService } from './services/connect.service';
+import { LoggerService } from './services/logger.service';
 import { StorageService } from './services/storage.service';
+import { WalletPairingService } from './services/wallet-pairing.service';
 import { WalletService } from './services/wallet.service';
-import { createConnection } from 'cool-connect';
 import { Language } from './models/language';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatSidenavModule, SidenavListComponent, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet, MatSidenavModule, SidenavListComponent, HeaderComponent, FooterComponent, TranslateModule],
   templateUrl: './app.html',
-  styleUrl: './app.scss',
+  styleUrls: ['./app.scss'],
   standalone: true
 })
 export class App {
   protected readonly title = signal('biswap');
+  walletAddress: string = '';
+  appId: string = ''
+  appName: string = 'biswap';
 
   urllang: string = '';
   device_id: string = '';
@@ -34,22 +40,26 @@ export class App {
 
   constructor(
     private kanbanService: KanbanService,
-    private storageService: StorageService,
-    private walletService: WalletService,
-    private tranServ: TranslateService,
     private storage: StorageService,
+    private walletService: WalletService,
+    private connectServ: ConnectService,
+    private pairingService: WalletPairingService,
+    private translate: TranslateService,
+    private logger: LoggerService,
   ) {
-    this.initializeUrlParams();
-    this.kanbanService.getTokenList();
-    this.storageService.removeWalletSession();
+    // this.initializeUrlParams();
   }
 
   ngOnInit() {
     this.setupPaycoolEventListener();
-    this.connectToPaycool();
+    this.kanbanService.getTokenList();
+    this.storage.removeWalletSession();
+    this.autoPromptPairing();
+    //this.connectToPaycool();
   }
 
-  private initializeUrlParams(): void {
+  /*
+  private initializeUrlParams__(): void {
     const urllang = window.location.pathname.split('/')[1];
     this.urllang = urllang || 'en';
 
@@ -71,9 +81,104 @@ export class App {
           this.selectedLan = this.LANGUAGES[2];
           break;
       }
-      this.tranServ.use(this.selectedLan.value);
+      this.translate.use(this.selectedLan.value);
       this.storage.setLanguage(this.selectedLan.value);
     }
+  }
+*/
+   private initializeUrlParams(): void {
+    let urllang = window.location.pathname.split('/')[1];
+    const params = new URLSearchParams(window.location.search);
+    const rawDeviceId = params.get('deviceId') || params.get('device_id');
+    const rawWalletAddress = params.get('walletAddress') || params.get('wallet_address');
+    const rawAppId = params.get('appId') || params.get('app_id');
+    const deviceId = rawDeviceId ? decodeURIComponent(rawDeviceId) : '';
+    const urlWalletAddress = rawWalletAddress ? decodeURIComponent(rawWalletAddress) : '';
+    const urlAppId = rawAppId ? decodeURIComponent(rawAppId) : '';
+    const appId = urlAppId || environment.dappId;
+    this.device_id = deviceId;
+    this.walletAddress = urlWalletAddress;
+    this.appId = appId;
+
+    if (this.device_id) {
+      this.logger.info('Initializing wallet channel with device ID:', this.device_id);
+      // Store device ID for future sessions
+      this.storage.set('deviceId', this.device_id);
+      if (urlWalletAddress) {
+        this.storage.set('walletAddress', urlWalletAddress);
+      }
+      if (urlAppId) {
+        this.storage.set('appId', urlAppId);
+      }
+      const success = this.connectServ.initWalletChannel(
+        this.device_id,
+        this.appName,
+        this.appId || undefined,
+        urlWalletAddress || undefined
+      );
+      if (!success) {
+        this.logger.error('Failed to initialize wallet channel');
+      }
+    } else {
+      // Try to load from storage (device id only; wallet address comes from wallet)
+      const storedDeviceId = this.storage.get<string>('deviceId');
+      if (storedDeviceId) {
+        this.logger.info('Using stored device ID:', storedDeviceId);
+        this.device_id = storedDeviceId;
+        this.connectServ.initWalletChannel(
+          storedDeviceId,
+          this.appName,
+          this.appId || undefined,
+          undefined
+        );
+      } else {
+        this.logger.warn('No device ID provided and none stored');
+      }
+    }
+
+    urllang = params.get('locale') ? decodeURIComponent(params.get('locale')!) : urllang;
+
+    this.checkLanguage(urllang);
+  }
+
+  private autoPromptPairing(): void {
+    const params = new URLSearchParams(window.location.search);
+    const hasDeviceParam = !!(params.get('device_id') || params.get('deviceId'));
+    const hasWalletParam = !!(params.get('walletAddress') || params.get('wallet_address'));
+    if (hasWalletParam) {
+      return;
+    }
+    if (!hasDeviceParam && !this.walletAddress) {
+      setTimeout(() => {
+        if (!this.walletAddress) {
+          this.pairingService.open(this.appName);
+        }
+      }, 300);
+    }
+  }
+
+  connectWallet(): void {
+    this.pairingService.open(this.appName);
+  }
+
+  disconnectWallet(): void {
+    this.connectServ.disconnect();
+    this.walletAddress = '';
+    this.pairingService.close();
+  }
+
+  closePairing(): void {
+    this.pairingService.close();
+  }
+
+  copyPairingLink(): void {
+    this.pairingService.copyLink();
+  }
+
+  confirmPairing(): void {
+    this.pairingService.close();
+    this.connectServ.reConnectWallet();
+    this.connectServ.triggerWalletAddress(this.appName);
   }
 
   private setupPaycoolEventListener(): void {
@@ -100,13 +205,60 @@ export class App {
     }
   }
 
+    checkLanguage(lang: string): void {
+    if (lang && lang.length === 2) {
+      lang = lang.toLowerCase();
+      const theLang = this.LANGUAGES.find(language => language.value === lang);
+      if (theLang) {
+        this.selectedLan = theLang;
+        this.selectedLan = this.LANGUAGES.filter(language => language.value === lang)[0] || this.LANGUAGES[0];
+        this.logger.debug('Language set to:', lang);
+      } else {
+        // the url language is not supported
+        this.selectedLan = this.LANGUAGES[0];
+        this.selectedLan = this.LANGUAGES[0];
+        this.logger.warn('Unsupported language:', lang, 'using English');
+      }
+    } else {
+      this.selectedLan = this.LANGUAGES[0];
+    }
+
+    // Store language preference
+    this.storage.set('language', this.selectedLan.value);
+  }
+
+  setLanguage(): void {
+    this.translate.use(this.selectedLan.value);
+    this.translate.setDefaultLang(this.selectedLan.value);
+  }
+
+  switchLanguage(lang: string): void {
+    this.selectedLan = this.LANGUAGES.find(language => language.value === lang) || this.LANGUAGES[0];
+    this.translate.use(lang);
+    this.storage.set('language', lang);
+    this.logger.info('Language switched to:', lang);
+  }
+
+/*
   private connectToPaycool(): void {
     var account = '';
     if (this.device_id) {
       this.walletService.accountSubject.subscribe((param: string) => {
         account = param;
       });
-      createConnection(this.device_id).subscribe((response) => {
+      const client = createClient(this.device_id, {
+           appId: environment.dappId,
+          role: 'dapp',
+          scopes: environment.walletConnScopes || ['sendTransaction', 'login'],
+          urlBase: environment.walletConnWsRoot || environment.paycoolWebsocketRoot,
+          roomId,
+          walletAddress, // For direct connection mode
+          heartbeatMs: environment.wsHeartbeatMs,
+          idleTimeoutMs: environment.wsIdleTimeoutMs,
+          keepAlive: true,
+          enableLogging: environment.enableLogging,
+      });
+      client.on('message', (response: string) => {
         try {
           const data = JSON.parse(response);
           // Check if data has a property 'data'
@@ -134,5 +286,5 @@ export class App {
 
     }
   }
-
+*/
 }

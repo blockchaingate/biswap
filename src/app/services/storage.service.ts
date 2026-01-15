@@ -6,8 +6,48 @@ import { error } from 'console';
     providedIn: 'root',
 })
 export class StorageService {
+    private readonly PREFIX = 'exchangily_';
 
     constructor(private storage: StorageMap) { }
+
+    set<T>(key: string, value: T): void {
+        try {
+            const serialized = JSON.stringify(value);
+            localStorage.setItem(this.PREFIX + key, serialized);
+        } catch (error) {
+            console.error('Error saving to storage:', error);
+        }
+    }
+
+    get<T>(key: string, defaultValue?: T): T | null {
+        try {
+            const item = localStorage.getItem(this.PREFIX + key);
+            if (item === null) {
+                return defaultValue !== undefined ? defaultValue : null;
+            }
+            return JSON.parse(item) as T;
+        } catch (error) {
+            console.error('Error reading from storage:', error);
+            return defaultValue !== undefined ? defaultValue : null;
+        }
+    }
+
+    remove(key: string): void {
+        localStorage.removeItem(this.PREFIX + key);
+    }
+
+    clear(): void {
+        const keys = Object.keys(localStorage);
+        keys.forEach(key => {
+            if (key.startsWith(this.PREFIX)) {
+                localStorage.removeItem(key);
+            }
+        });
+    }
+
+    has(key: string): boolean {
+        return localStorage.getItem(this.PREFIX + key) !== null;
+    }
 
     // Wallet Session Management
     getWalletSession() {
@@ -16,15 +56,15 @@ export class StorageService {
         //});
 
         //use subscribe to call it:
-        return this.storage.get('client-session');
+        return this.storage.get(this.PREFIX + 'client-session');
     }
 
     removeWalletSession() {
-        this.storage.delete('client-session').subscribe(() => { });
+        this.storage.delete(this.PREFIX + 'client-session').subscribe(() => { });
     }
 
     createWalletSession(session: any) {
-        this.storage.set('client-session', JSON.stringify(session)).subscribe(() => { });
+        this.storage.set(this.PREFIX + 'client-session', JSON.stringify(session)).subscribe(() => { });
     }
 
     //DeviceID Management
@@ -34,15 +74,15 @@ export class StorageService {
         //});
 
         //use subscribe to call it:
-        return this.storage.get('device-id');
+        return this.storage.get(this.PREFIX + 'device-id');
     }
 
     setDeviceID(deviceID: string) {
-        this.storage.set('device-id', deviceID).subscribe(() => { });
+        this.storage.set(this.PREFIX + 'device-id', deviceID).subscribe(() => { });
     }
 
     removeDeviceID() {
-        this.storage.delete('device-id').subscribe(() => { });
+        this.storage.delete(this.PREFIX + 'device-id').subscribe(() => { });
     }
 
     // Language

@@ -17,7 +17,7 @@ import { TokenListComponent } from "../shared/tokenList/tokenList.component";
 import { SettingsComponent } from "../settings/settings.component";
 import { MatDialog } from "@angular/material/dialog";
 import { AlertComponent } from "../shared/alert/alert.component";
-import { send } from "cool-connect";
+import { ConnectService } from "src/app/services/connect.service";
 import { StorageService } from "src/app/services/storage.service";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
@@ -138,7 +138,8 @@ export class SwapComponent implements OnInit, AfterViewInit {
     private apiService: ApiService,
     private router: Router,
     private storage: StorageService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private connectService: ConnectService
   ) { }
 
   openSettings() {
@@ -602,7 +603,8 @@ export class SwapComponent implements OnInit, AfterViewInit {
         };
 
         if (paramsSentSocket.data[0].to && paramsSentSocket.data[0].data) {
-          send(paramsSentSocket);
+          this.connectService.send(paramsSentSocket);
+          // send(paramsSentSocket);
         } else {
           console.error("Failed to set up paramsSentSocket:", paramsSentSocket);
         }

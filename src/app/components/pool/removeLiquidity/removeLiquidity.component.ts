@@ -13,7 +13,7 @@ import { SettingsComponent } from "../../settings/settings.component";
 import { MatDialog } from "@angular/material/dialog";
 import { AlertComponent } from "../../shared/alert/alert.component";
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
-import { send } from "cool-connect";
+import { ConnectService } from "src/app/services/connect.service";
 import { StorageService } from "src/app/services/storage.service";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
@@ -62,7 +62,8 @@ export class RemoveLiquidityComponent implements OnInit {
     public dialog: MatDialog,
     private walletService: WalletService,
     private storage: StorageService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private connectService: ConnectService
   ) {
     const navigation = this.router.currentNavigation();
     const state = navigation!.extras.state as {
@@ -206,7 +207,8 @@ export class RemoveLiquidityComponent implements OnInit {
     this.storage.getDeviceID().subscribe((device_id: any) => {
       if (device_id) {
         const paramsSentSocket = { source: "Biswap-addLiquidity", data: params };
-        send(paramsSentSocket);
+        this.connectService.send(paramsSentSocket);
+        //send(paramsSentSocket);
       } else {
         const alertDialogRef = this.dialog.open(AlertComponent, {
           width: "250px",
