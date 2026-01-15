@@ -19,12 +19,15 @@ import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { TranslateModule } from "@ngx-translate/core";
 import { FormsModule } from "@angular/forms";
-import { MatExpansionPanelActionRow } from '@angular/material/expansion';
+import { MatExpansionPanelActionRow } from '@angular/material/expansion'; // Keeping import for potentially other uses if needed, but removing from component imports for now based on lint. 
+// Actually, standard practice is to remove unused imports entirely.
+
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
   selector: "app-removeLiquidity",
   standalone: true,
-  imports: [FormsModule, MatExpansionPanelActionRow, MatCardModule, MatIconModule, MatSliderModule, MatSnackBarModule, TranslateModule],
+  imports: [FormsModule, MatCardModule, MatIconModule, MatSliderModule, MatSnackBarModule, TranslateModule, MatButtonModule],
   templateUrl: "./removeLiquidity.component.html",
   styleUrls: ["./removeLiquidity.component.scss"],
 })

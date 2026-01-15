@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
 import { DecimalPipe } from "@angular/common";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -59,6 +59,7 @@ export class AddLiquidityComponent implements OnInit, OnDestroy {
         .getTokenBalance(this.account, id)
         .subscribe((balance: any) => {
           this.firstCoinBalance = balance;
+          this.cdr.detectChanges();
         });
     }
   }
@@ -75,6 +76,7 @@ export class AddLiquidityComponent implements OnInit, OnDestroy {
         .getTokenBalance(this.account, id)
         .subscribe((balance: any) => {
           this.secondCoinBalance = balance;
+          this.cdr.detectChanges();
         });
     }
   }
@@ -97,6 +99,7 @@ export class AddLiquidityComponent implements OnInit, OnDestroy {
           .getTokenBalance(newAccount, this.firstToken.id)
           .subscribe((balance: any) => {
             this.firstCoinBalance = balance;
+            this.cdr.detectChanges();
           });
       }
 
@@ -105,6 +108,7 @@ export class AddLiquidityComponent implements OnInit, OnDestroy {
           .getTokenBalance(newAccount, this.secondToken.id)
           .subscribe((balance: any) => {
             this.secondCoinBalance = balance;
+            this.cdr.detectChanges();
           });
       }
     }
@@ -153,6 +157,7 @@ export class AddLiquidityComponent implements OnInit, OnDestroy {
     private storage: StorageService,
     private apiService: ApiService,
     private connectServ: ConnectService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
