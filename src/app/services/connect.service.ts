@@ -277,6 +277,22 @@ export class ConnectService {
         return;
       }
 
+      if (parsed.type === 'connect-response') {
+        const address = this.extractAddress(parsed);
+        if (address) {
+          this.logger.info('[ConnectService] Received connect-response, address:', address);
+          // Set dummy user state to prevent login loop
+          this.userState.setUser({ walletAddress: address, token: 'connected-no-auth' });
+
+          this.handleAddressReceived(address);
+          this.connectionState.next('open');
+          this.isLoggingIn = false; // Reset flag
+        } else {
+          this.logger.warn('[ConnectService] Received connect-response without address');
+        }
+        return;
+      }
+
       if (parsed.type === 'login-response') {
         this.logger.info('[ConnectService] Received login-response:', parsed);
       }
@@ -436,20 +452,19 @@ export class ConnectService {
       source: `${this.appName}-login`,
       requestId, // Required by server
       data: {
-        action: 'login',
-        message: 'Login to Biswap DApp',
-        address: address, // Tell wallet which address we expect to sign
+        action: 'connect', // Changed from 'login' to 'connect'
+        message: `Connect to ${this.appName}`,
+        address: address, // Tell wallet which address we expect
         app: this.appName,
         chain: 'KANBAN'
       }
     };
     // We use send() instead of sendWalletRequest because we don't expect a direct response to this requestId.
-    // The flow is: login-challenge -> wallet signs -> login-response -> backend verifies -> login-token.
-    // The 'login-token' message is what we listen for in routeInbound.
+    // The flow is: login-challenge -> wallet confirms -> connect-response
     if (this.walletClient) {
       this.walletClient.send(payload);
     } else {
-      this.logger.error('Cannot send login challenge: wallet client not initialized');
+      this.logger.error('Cannot send connect challenge: wallet client not initialized');
       this.isLoggingIn = false;
     }
   }
