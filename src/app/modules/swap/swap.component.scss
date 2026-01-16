@@ -1,36 +1,19 @@
-// @media only screen and (max-width: 600px) {
-// }
-::-webkit-input-placeholder {
-    color: black
-}
-
-input {
-    --placeHolder-color: black;
-}
-
-input:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: black;
-}
-
-input:-moz-placeholder {
-    color: black;
-}
-
-input::-moz-placeholder {
-    color: black;
-}
 
 .main {
     margin-top: 3rem;
 }
 
 .swapBody {
-    // background: url("/assets/images/gredient-back.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    // height: 100vh;
     padding-bottom: 100px;
+}
+
+.maina {
+    margin-top: 4rem;
+}
+
+.cardd {
+    min-width: 360px;
+    width: 100%;
 }
 
 ::ng-deep .mat-card {
@@ -41,13 +24,15 @@ input::-moz-placeholder {
 }
 
 .coins-input-body {
-    // border: 1px solid gray;
-    border-radius: 8px;
+    border-radius: 4px;
     justify-content: center;
-    background-color: #c3c9e0;
+    background-color: rgb(218, 216, 216);
     color: black;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 4px;
+}
+
+.tokenAmt {
+    width: 50%;
 }
 
 ::ng-deep .mat-form-field-underline {
@@ -62,41 +47,44 @@ input::-moz-placeholder {
 ::ng-deep .mat-form-field {
     width: 100%;
     label {
-        font-size: 40px;
+        font-size: 32px;
     }
 }
 
 .sparater {
-    margin: 10px -20px 10px;
+    margin: 10px;
     border: 0;
     border-top: 1px solid #c9c7c7;
     opacity: 0.2;
 }
 
 .mat-card-action {
-    padding: 10px 10px;
+    padding: 10px;
     button {
         width: 100%;
-        padding: 5px 5px;
+        padding: 5px;
         border-radius: 20px;
     }
 }
 
 .nopair {
-    font-size: large;
+    font-size: small;
     color: orange;
+    padding: 1rem;
 }
 
 .tokenSelectButton {
+    width: 50%;
     cursor: pointer;
-    font-size: larger;
-    font-weight: bold;
-    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    color: black;
 }
 
 .tokenwithIcon {
     display: flex;
-    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
 }
 
 .title1 {
@@ -110,6 +98,37 @@ input::-moz-placeholder {
 
 h1 {
     font-weight: 500;
+}
+
+@media(max-width: 600px) //if more than 400 px
+{
+    .maina {
+        width: 100vw;
+        margin-top: 1rem;
+    }
+
+    mat-card-title {
+        font-size: 18px;
+    }
+    
+    ::ng-deep .mat-card {
+        background-image: none;
+        background-color: #0d0f1f;
+        border: none;
+        font-size: 12px;
+        width: 360px;
+    }
+
+    .tokenSelectButton {
+        width: 50%;
+        font-size: 12px;
+    }
+
+   .tokenwithIcon {
+    width: 100%;
+    font-size: 12px;
+    font-weight: 500;
+   }
 }
 
 @media(min-width: 400px) //if more than 400 px

@@ -1,0 +1,38 @@
+.redeems-list {
+  display: grid;
+  gap: 12px;
+}
+
+.redeem-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  color: var(--text);
+  display: grid;
+  gap: 6px;
+}
+
+.redeem-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.label {
+  color: var(--muted);
+}
+
+.value {
+  text-align: right;
+}
+
+.strong {
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .redeem-card {
+    padding: 10px;
+  }
+}

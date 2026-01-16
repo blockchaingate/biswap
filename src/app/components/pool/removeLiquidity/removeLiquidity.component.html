@@ -1,0 +1,92 @@
+<div class="remove-page animate-fade-in">
+    <section class="remove-card">
+        <div class="remove-header">
+            <button mat-icon-button class="icon-button" (click)="goBack()" aria-label="Back">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <h2>{{'Remove Liquidity'|translate}}</h2>
+            <button mat-icon-button class="icon-button" (click)="openSettings()" aria-label="Settings">
+                <mat-icon>settings</mat-icon>
+            </button>
+        </div>
+
+        <div class="remove-body">
+            <div class="tip-box">
+                {{'RLTip'|translate}}
+            </div>
+
+            <div class="amount-display">
+                <span class="label">{{'Remove Amount'|translate}}</span>
+                <div class="percentage-text">{{ percentage }}%</div>
+            </div>
+
+            <div class="slider-container">
+                <mat-slider min="0" max="100" step="1" discrete>
+                    <input matSliderThumb [(ngModel)]="percentage" (ngModelChange)="setAmount($event)">
+                </mat-slider>
+            </div>
+
+            <div class="preset-buttons">
+                <button class="preset-btn" (click)="setAmount(25)">25%</button>
+                <button class="preset-btn" (click)="setAmount(50)">50%</button>
+                <button class="preset-btn" (click)="setAmount(75)">75%</button>
+                <button class="preset-btn" (click)="setAmount(100)">Max</button>
+            </div>
+
+            <div class="token-breakdown">
+                <div class="token-row">
+                    <span>{{selectedFirstTokenAmount > 0 ? selectedFirstTokenAmount : '-'}}</span>
+                    <span class="token-info">{{firstTokenName}}</span>
+                </div>
+                <div class="token-row">
+                    <span>{{selectedSecondTokenAmount > 0 ? selectedSecondTokenAmount : '-'}}</span>
+                    <span class="token-info">{{secondTokenName}}</span>
+                </div>
+            </div>
+
+            <div class="action">
+                @if(percentage > 0) {
+                <button mat-raised-button color="primary" (click)="removeLiquidity()">
+                    {{'Remove'|translate}}
+                </button>
+                } @else {
+                <button mat-raised-button color="primary" disabled>
+                    {{'Enter Amount'|translate}}
+                </button>
+                }
+            </div>
+        </div>
+    </section>
+
+    <section class="summary-card">
+        <div class="summary-title">{{'Your Position'|translate}}</div>
+
+        <div class="summary-row">
+            <span>{{'Your LP tokens'|translate}}:</span>
+            <span>{{totalPoolToken}}</span>
+        </div>
+        <div class="summary-row">
+            <span>{{'Your pool share'|translate}}:</span>
+            <span class="strong">{{yourPoolShare}}%</span>
+        </div>
+        <div class="summary-row">
+            <span>{{firstTokenName}}:</span>
+            <span>{{pooledFirstToken}}</span>
+        </div>
+        <div class="summary-row">
+            <span>{{secondTokenName}}:</span>
+            <span>{{pooledSecondToken}}</span>
+        </div>
+    </section>
+
+    @if(txHashes && txHashes.length > 0) {
+    <div class="tx-list">
+        @for(txHash of txHashes; track txHash) {
+        <a class="tx-link" [href]="txHash" target="_blank">
+            <mat-icon>open_in_new</mat-icon>
+            {{txHash}}
+        </a>
+        }
+    </div>
+    }
+</div>

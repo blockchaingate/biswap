@@ -1,0 +1,51 @@
+<div class="overview">
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-header">
+        <span class="eyebrow">{{'Liquidity'|translate}}</span>
+        <span class="time">{{currentTime}}</span>
+      </div>
+      <div class="metric-value">${{currentLiquidity}}</div>
+      @if(isItemLoaded) {
+      <app-sales [items]="totalLiquidityFAB" [dates]="formattedDates" [title]="'Liquidity' | translate"></app-sales>
+      }
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-header">
+        <span class="eyebrow">{{'Volume'|translate}}</span>
+        <span class="time">{{currentTime}}</span>
+      </div>
+      <div class="metric-value">${{currentVolume}}</div>
+      @if(isItemLoaded) {
+      <app-sales [items]="dailyVolumeUntrackedValues" [dates]="formattedDates" [title]="'Volume' | translate"></app-sales>
+      }
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>{{"Top tokens"|translate}}</h2>
+    </div>
+    <app-top-tokens [tokens]="tokens"></app-top-tokens>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>{{"Top pools"|translate}}</h2>
+    </div>
+    <app-top-pools [pairs]="pairs"></app-top-pools>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>{{"Transactions"|translate}}</h2>
+    </div>
+    <app-all-transactions [transactions]="transactions"></app-all-transactions>
+    <div class="pager">
+      <button mat-stroked-button color="primary" (click)="changePageNumTransaction(pageNumTransaction - 1)">&laquo;</button>
+      <span class="page-index">{{pageNumTransaction + 1}} / {{totalPage + 1}}</span>
+      <button mat-stroked-button color="primary" (click)="changePageNumTransaction(pageNumTransaction + 1)">&raquo;</button>
+    </div>
+  </section>
+</div>

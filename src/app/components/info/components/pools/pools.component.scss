@@ -1,0 +1,60 @@
+.pools-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.pool-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  color: var(--text);
+}
+
+.pool-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.pair {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pair-name {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.pair-name:hover {
+  color: var(--primary-dark);
+}
+
+.index {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.liquidity {
+  font-weight: 700;
+}
+
+.pool-metrics {
+  display: grid;
+  gap: 6px;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.strong {
+  font-weight: 700;
+}

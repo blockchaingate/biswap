@@ -1,8 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-errorMessages',
+  standalone: true,
+  imports: [TranslateModule],
   templateUrl: './errorMessages.component.html',
   styleUrls: ['./errorMessages.component.scss']
 })

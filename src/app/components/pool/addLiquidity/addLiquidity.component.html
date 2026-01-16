@@ -1,0 +1,160 @@
+<div class="add-page">
+  <section class="add-card">
+    <div class="add-header">
+      <div class="section-title">
+        <span class="eyebrow">{{'Liquidity'|translate}}</span>
+        <h2>{{'Add Liquidity'|translate}}</h2>
+        <p class="muted">{{'Add liquidity to receive LP tokens'|translate}}</p>
+      </div>
+      <button mat-icon-button class="icon-button" (click)="openSettings()" aria-label="Settings">
+        <mat-icon>settings</mat-icon>
+      </button>
+    </div>
+
+    <div class="add-body">
+      <div class="input-card">
+        <div class="input-top">
+          <span class="label">{{'Token A'|translate}}</span>
+          @if(firstCoinBalance >= 0) {
+          <span class="muted balance">{{'Balance'|translate}}: {{ firstCoinBalance | number:'1.4-4' }}</span>
+          }
+        </div>
+        <div class="input-row">
+          <input (keyup)="onKey(firstCoinAmount, true)" #token1 name="firstCoinAmount" type="number" class="tokenAmt"
+            [(ngModel)]="firstCoinAmount" placeholder="0.0" />
+
+          <button type="button" class="tokenSelectButton" (click)="openFirstTokenListDialog()">
+            @if(firstToken.symbol) {
+            <span class="tokenwithIcon">
+              @if(firstToken.logoUrl) {
+              <img [src]="firstToken.logoUrl" alt="token"
+                style="width: 20px; height: 20px; border-radius: 50%; margin-right: 5px;">
+              }
+              {{ firstToken.symbol }}
+            </span>
+            } @else {
+            <span>{{"Select Token"|translate}}</span>
+            }
+            <mat-icon>expand_more</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="add-toggle">
+        <div class="plus-icon">
+          <mat-icon>add</mat-icon>
+        </div>
+      </div>
+
+      <div class="input-card">
+        <div class="input-top">
+          <span class="label">{{'Token B'|translate}}</span>
+          @if(secondCoinBalance >= 0) {
+          <span class="muted balance">{{'Balance'|translate}}: {{ secondCoinBalance | number:'1.4-4' }}</span>
+          }
+        </div>
+        <div class="input-row">
+          <input (keyup)="onKey(secondCoinAmount, false)" #token2 name="secondCoinAmount" type="number" class="tokenAmt"
+            [(ngModel)]="secondCoinAmount" placeholder="0.0" />
+
+          <button type="button" class="tokenSelectButton" (click)="openSecondTokenListDialog()">
+            @if(secondToken.symbol) {
+            <span class="tokenwithIcon">
+              @if(secondToken.logoUrl) {
+              <img [src]="secondToken.logoUrl" alt="token"
+                style="width: 20px; height: 20px; border-radius: 50%; margin-right: 5px;">
+              }
+              {{ secondToken.symbol }}
+            </span>
+            } @else {
+            <span>{{"Select Token"|translate}}</span>
+            }
+            <mat-icon>expand_more</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-row">
+          <span class="muted">{{perAmountLabel}}</span>
+          @if(perAmount) {
+          <span class="strong">{{ perAmount }}</span>
+          }
+        </div>
+        @if(!isNewPair && firstTokenTotalLiquidity > 0) {
+        <div class="info-row">
+          <span class="muted">{{'Total Liquidity'|translate}}</span>
+          <span class="strong text-end">
+            <div>{{firstTokenTotalLiquidity | number:'1.0-4'}} {{firstToken.symbol}}</div>
+            <div>{{secondTokenTotalLiquidity | number:'1.0-4'}} {{secondToken.symbol}}</div>
+          </span>
+        </div>
+        }
+        @if(newPair) {
+        <div class="warn">{{newPair}}</div>
+        }
+      </div>
+
+      <div class="action">
+        @if(account && !((firstCoinAmount > firstCoinBalance) || (secondCoinAmount > secondCoinBalance))) {
+        <button mat-raised-button class="btn-primary" (click)="addLiqudity()"
+          [disabled]="!firstCoinAmount || !secondCoinAmount">
+          {{"Add Liquidity"|translate}}
+        </button>
+        }
+
+        @if(!account) {
+        <button mat-raised-button class="btn-primary" (click)="connectWallet()">
+          {{"Connect Wallet"|translate}}
+        </button>
+        }
+
+        @if(account && ((firstCoinAmount > firstCoinBalance) || (secondCoinAmount > secondCoinBalance))) {
+        <button mat-raised-button color="warn" disabled>
+          {{'Insufficient Balance'|translate}}
+        </button>
+        }
+      </div>
+    </div>
+  </section>
+
+  @if(item?.pair) {
+  <section class="summary-card">
+    <div class="summary-title">{{'Your Position'|translate}}</div>
+
+    <div class="summary-row">
+      <span>{{'Your LP tokens'|translate}}</span>
+      <span>{{item.liquidityTokenBalance | number:'1.0-6'}}</span>
+    </div>
+    <div class="summary-row">
+      <span>{{'Pooled'|translate}} {{item.token0Name}}</span>
+      <span>{{item?.pair?.reserve0 | number:'1.0-6'}}</span>
+    </div>
+    <div class="summary-row">
+      <span>{{'Pooled'|translate}} {{item.token1Name}}</span>
+      <span>{{item?.pair?.reserve1 | number:'1.0-6'}}</span>
+    </div>
+    <div class="summary-row">
+      <span>{{'Your pool share'|translate}}</span>
+      <span class="strong" style="color: var(--primary);">{{ item.share }}%</span>
+    </div>
+  </section>
+  }
+
+  @if(txHashes && txHashes.length > 0) {
+  <div class="tx-list">
+    @for(txHash of txHashes; track txHash) {
+    <div class="tx-card">
+      <a [href]="txHash" target="_blank">
+        <mat-icon>open_in_new</mat-icon>
+        {{'View Transaction'|translate}}
+      </a>
+    </div>
+    }
+  </div>
+  }
+
+  @if(error) {
+  <p class="error-text">{{error}}</p>
+  }
+</div>

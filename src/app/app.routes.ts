@@ -1,0 +1,51 @@
+import { Routes } from '@angular/router';
+import { NewFeaturesComponent } from './components/newFeatures/newFeatures.component';
+import { PrivacyComponent } from './components/privacy.component';
+import { VersionComponent } from './components/version/version.component';
+import { HomeComponent } from './components/home/home.component';
+import { DownloadComponent } from './components/download/download.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TransactionsComponent } from './components/transactions/transactions.component';
+import { SwapComponent } from './components/swap/swap.component';
+import { InfoComponent } from './components/info/info.component';
+import { RewardComponent } from './components/reward/reward.component';
+import { PoolComponent } from './components/pool/pool.component';
+import { AddLiquidityComponent } from './components/pool/addLiquidity/addLiquidity.component';
+import { RemoveLiquidityComponent } from './components/pool/removeLiquidity/removeLiquidity.component';
+import { VoteComponent } from './components/vote/vote.component';
+import { StakingComponent } from './components/staking/staking.component';
+import { ChartsComponent } from './components/charts/charts.component';
+import { AddStakingComponent } from './components/staking/add-staking/add-staking.component';
+import { WithdrawStakingComponent } from './components/staking/withdraw-staking/withdraw-staking.component';
+import { StakingHistoryComponent } from './components/staking/staking-history/staking-history.component';
+
+export const routes: Routes = [
+    { path: 'home', component: HomeComponent },
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'transactions', component: TransactionsComponent },
+    { path: 'swap', component: SwapComponent },
+    { path: 'swap/token/:tokenid', component: SwapComponent },
+    { path: 'swap/pair/:tokenid', component: SwapComponent },
+    { path: 'info', component: InfoComponent },
+    { path: 'info/pool/:identity', component: InfoComponent },
+    { path: 'info/token/:identity', component: InfoComponent },
+    { path: 'reward', component: RewardComponent },
+    { path: 'pool', component: PoolComponent },
+    { path: 'pool/add', component: AddLiquidityComponent },
+    { path: 'pool/remove', component: RemoveLiquidityComponent },
+    { path: 'pool/add/token/:tokenid', component: AddLiquidityComponent },
+    { path: 'pool/add/pair/:tokenid', component: AddLiquidityComponent },
+    { path: 'vote', component: VoteComponent },
+    { path: 'staking', component: StakingComponent },
+    { path: 'staking/add', component: AddStakingComponent },
+    { path: 'staking/withdraw', component: WithdrawStakingComponent },
+    { path: 'staking/history', component: StakingHistoryComponent },
+    { path: 'staking/withdraws', component: WithdrawStakingComponent },
+    { path: 'charts', component: ChartsComponent },
+    { path: 'privacy', component: PrivacyComponent },
+    { path: 'version', component: VersionComponent },
+    { path: 'newFeatures', component: NewFeaturesComponent },
+    { path: 'download', component: DownloadComponent },
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+
+];

@@ -1,0 +1,74 @@
+<div class="home-shell">
+  <section class="hero surface-card">
+    <div class="hero-copy">
+      <span class="badge">{{ 'BISWAP PROTOCOL' | translate }}</span>
+      <h1 class="hero-title">{{ 'The Future of Decentralized Trading' | translate }}</h1>
+      <p class="hero-sub">{{ 'BiswapProtcl' | translate }}</p>
+      <div class="hero-actions">
+        <a routerLink="/swap" class="primary-cta">{{ 'Get Started' | translate }}</a>
+        <a routerLink="/pool" class="ghost-cta">{{ 'Liquidity' | translate }}</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <img src="/assets/images/biswap-icon.png" alt="Biswap" />
+        <div class="hero-card-meta">
+          <span>{{ 'Instant Swap' | translate }}</span>
+          <span>{{ 'Liquidity Pools' | translate }}</span>
+          <span>{{ 'Earn & Get Airdrop' | translate }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-grid">
+    <div class="stat-tile">
+      <span>{{ 'Total Value Locked' | translate }}</span>
+      <strong>$42.5M+</strong>
+    </div>
+    <div class="stat-tile">
+      <span>{{ 'Total Volume' | translate }}</span>
+      <strong>$1.2B+</strong>
+    </div>
+    <div class="stat-tile">
+      <span>{{ 'Trading Pairs' | translate }}</span>
+      <strong>150+</strong>
+    </div>
+  </section>
+
+  <section class="feature-grid">
+    <div class="feature-card" routerLink="/swap">
+      <mat-icon>swap_horiz</mat-icon>
+      <h3>{{ 'Instant Swap' | translate }}</h3>
+      <p>{{ 'Swap tokens instantly with low fees and minimal slippage.' | translate }}</p>
+    </div>
+    <div class="feature-card" routerLink="/pool">
+      <mat-icon>waves</mat-icon>
+      <h3>{{ 'Liquidity Pools' | translate }}</h3>
+      <p>{{ 'PROVIDE LIQUIDITY Detial' | translate }}</p>
+    </div>
+    <div class="feature-card" routerLink="/reward">
+      <mat-icon>monetization_on</mat-icon>
+      <h3>{{ 'EARN & GET AIRDROP' | translate }}</h3>
+      <p>{{ 'EARN GET AIRDROP Detial' | translate }}</p>
+    </div>
+  </section>
+
+  <section class="cta surface-soft">
+    <div>
+      <h2>{{ 'Trade on the Go' | translate }}</h2>
+      <p>{{ 'downloadcontent' | translate }}</p>
+    </div>
+    <div class="cta-actions">
+      <a href="https://apps.apple.com/us/app/biswap/id1634279692?platform=iphone" target="_blank" class="ghost-cta">
+        <mat-icon>apple</mat-icon>
+        iOS App
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.biswap.mobile" target="_blank" class="ghost-cta">
+        <mat-icon>android</mat-icon>
+        Android App
+      </a>
+      <a routerLink="/download" class="primary-cta">Download APK</a>
+    </div>
+  </section>
+</div>

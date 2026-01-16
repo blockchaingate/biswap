@@ -1,0 +1,70 @@
+.overview {
+  display: grid;
+  gap: 16px;
+}
+
+.metrics {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.metric-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  color: var(--text);
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.metric-value {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.time {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.section {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  color: var(--text);
+}
+
+.section-header {
+  margin-bottom: 8px;
+}
+
+.section h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.page-index {
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 10px;
+  }
+}

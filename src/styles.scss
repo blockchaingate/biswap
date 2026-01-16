@@ -1,105 +1,187 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg-1: #f6f4ef;
+  --bg-2: #e7f1ee;
+  --surface: #ffffff;
+  --surface-2: #f2f5f7;
+  --border: #e1e7ef;
+  --text: #1b1f24;
+  --muted: #5b6b7c;
+  --primary: #0f766e;
+  --primary-dark: #0b5f57;
+  --accent: #f97316;
+  --accent-soft: #ffe4d2;
+  --success: #16a34a;
+  --shadow-1: 0 10px 30px rgba(16, 24, 40, 0.08);
+  --shadow-2: 0 20px 60px rgba(16, 24, 40, 0.12);
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Manrope', sans-serif;
+  --font-number: 'IBM Plex Mono', monospace;
+}
 
 html,
 body {
-    height: 100%;
-    margin: 0;
+  height: 100%;
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--text);
+  background: radial-gradient(circle at top right, rgba(15, 118, 110, 0.12), transparent 40%),
+    radial-gradient(circle at 20% 20%, rgba(249, 115, 22, 0.12), transparent 38%),
+    linear-gradient(135deg, var(--bg-1), var(--bg-2));
+  background-attachment: fixed;
+  overflow-x: hidden;
 }
 
-body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-color: #0b0e1c;
+* {
+  box-sizing: border-box;
 }
 
-.handcursor {
-    cursor: pointer;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 0.4rem 0;
+  font-family: var(--font-display);
+  color: var(--text);
 }
 
-/* Chrome, Safari, Edge, Opera */
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    margin: 0;
+p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--muted);
 }
 
-
-/* Firefox */
-
-input[type=number] {
-    -moz-appearance: textfield;
+a {
+  color: inherit;
 }
 
-.padding5 {
-    padding: 5px;
+.mat-mdc-card {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-1) !important;
 }
 
-.paddingBottom5 {
-    padding-bottom: 5px;
+.mat-mdc-raised-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-outlined-button,
+.mat-mdc-button {
+  font-family: var(--font-body) !important;
+  text-transform: none !important;
+  border-radius: 999px !important;
+  font-weight: 600 !important;
 }
 
-.paddingBottom10 {
-    padding-bottom: 10px;
+.mat-mdc-raised-button.mat-primary {
+  background: var(--primary) !important;
+  color: #fff !important;
 }
 
-.paddingRight20 {
-    padding-right: 20px;
+.mat-mdc-raised-button.mat-primary:hover {
+  background: var(--primary-dark) !important;
 }
 
-.paddingTop5 {
-    padding-top: 5px;
+.mat-mdc-outlined-button.mat-primary {
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
 }
 
-.paddingTop20 {
-    padding-top: 20px;
+.text-gradient {
+  background: linear-gradient(120deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.paddingTop10 {
-    padding-top: 10px;
+.page-shell {
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  padding: 36px 0 64px;
+  display: grid;
+  gap: 24px;
 }
 
-.marginTop3 {
-    margin-top: 3px;
+.section-title {
+  display: grid;
+  gap: 8px;
 }
 
-.marginTop20 {
-    margin-top: 20px;
+.section-title .eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+  color: var(--muted);
 }
 
-.marginBottom3 {
-    margin-bottom: 3px;
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+  color: var(--muted);
 }
 
-.margin0 {
-    margin: 0px !important;
+.surface-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
 }
 
-.warn {
-    color: orange;
+.surface-soft {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
 }
 
-.black {
-    color: black;
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: #7a3e16;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
-input {
-    font-size: small;
+.btn-primary {
+  background: var(--primary) !important;
+  color: #fff !important;
 }
 
-.titiCol.col-md-2 {
-    min-width: 150px;
-    overflow: hidden;
-    padding: 0 20px;
-    text-overflow: ellipsis;
+.btn-primary:hover {
+  background: var(--primary-dark) !important;
 }
 
-.rounded-card .container {
-    overflow-x: scroll;
+.muted {
+  color: var(--muted);
 }
 
-@media screen and (max-width: 600px) {
-    .col.col-2 {
-        min-width: 100px;
-    }
+.strong {
+  font-weight: 700;
 }
-    
+
+.text-danger {
+  color: #b91c1c;
+}
+
+.error-text {
+  color: #b91c1c;
+}
+
+@media (max-width: 720px) {
+  .page-shell {
+    padding: 24px 0 48px;
+  }
+}

@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row pt-2 title">
+        <div class="titiCol col-3">
+            <b>{{"ACTION"|translate}}</b>
+        </div>
+        <div class="titiCol col-2">
+            <b>{{"TOTAL VALUE"|translate}}</b>
+        </div>
+        <div class="titiCol col-2">
+            <b>{{"TOKEN"|translate}}1 {{"AMOUNT"|translate}}</b>
+        </div>
+        <div class="titiCol col-2">
+            <b>{{"TOKEN"|translate}}2 {{"AMOUNT"|translate}}</b>
+        </div>
+        <div class="titiCol col-1">
+            <b>{{"ACCOUNT"|translate}}</b>
+        </div>
+        <div class="titiCol col-2">
+            <b>{{"TIME"|translate}}</b>
+        </div>
+    </div>
+
+    @for(transaction of transactions; track transaction._id;) {
+    <div class="row formrow">
+        <div class="titiCol col-3">
+            {{transaction.name.replace('Swap ', '').replace(' and ', '/').replace(' for ', ' -> ')}}
+        </div>
+        <div class="titiCol col-2">
+            {{showShortAmount(transaction.amountUSD)}}
+        </div>
+        <div class="titiCol col-2">
+            {{showShortAmount(transaction.amount0)}}
+        </div>
+        <div class="titiCol col-2">
+            {{showShortAmount(transaction.amount1)}}
+        </div>
+        <div class="titiCol col-1">
+            {{toIdentityString(transaction.sender ? transaction.sender : showShortAmount(transaction.account))}}
+        </div>
+        <div class="titiCol col-2">
+            {{(transaction.time * 1000) | date : 'yyyyMMdd'}}
+        </div>
+    </div>
+    }
+</div>

@@ -1,0 +1,109 @@
+<div class="pool-page">
+  <section class="pool-card">
+    <div class="pool-header">
+      <div class="section-title">
+        <span class="eyebrow">{{'Liquidity'|translate}}</span>
+        <h2>{{'Your positions'|translate}}</h2>
+        <p class="muted">{{'Remove liquidity to receive tokens back'|translate}}</p>
+      </div>
+      <div class="header-actions">
+        <button mat-icon-button class="icon-button" aria-label="Settings">
+          <mat-icon>settings</mat-icon>
+        </button>
+        <button mat-icon-button class="icon-button" aria-label="More">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="status-card">
+      @if(!account) {
+      <div class="status-line">
+        <span class="muted">{{'Connect to a wallet to view your liquidity'|translate}}</span>
+      </div>
+      } @else if(!hasLiquidities) {
+      <div class="status-line">
+        <span class="muted">{{'No liquidity found'|translate}}.</span>
+        <span class="muted">{{"Don't see a pool you joined"|translate}}?</span>
+      </div>
+      } @else {
+      <div class="status-line">
+        <span class="muted">{{'LiquidityDetail'|translate}}</span>
+      </div>
+      }
+      <div class="action-row">
+        @if(!account) {
+        <button mat-raised-button color="primary" (click)="connectWallet()">
+          {{'Connect to wallet'|translate}}
+        </button>
+        } @else {
+        <button mat-raised-button color="primary" (click)="addLiquidityFunction()">
+          + {{'Add Liquidity'|translate}}
+        </button>
+        }
+      </div>
+    </div>
+
+    @if(existedLiquidityList.length > 0) {
+    <div class="positions-grid">
+      @for(item of existedLiquidityList; track item) {
+      <div class="liquidity-card">
+        <div class="card-header">
+          <div>
+            <div class="pair-symbol">{{item.token0Name}} / {{item.token1Name}}</div>
+            <div class="muted">{{'Manage'|translate}}</div>
+          </div>
+          <button mat-icon-button class="icon-button" aria-label="Remove liquidity" (click)="removeLiquidity($index)">
+            <mat-icon>launch</mat-icon>
+          </button>
+        </div>
+
+        <div class="metric">
+          <span>{{'Pooled'|translate}} {{item.token0Name}}</span>
+          <span>{{item.pair.reserve0}}</span>
+        </div>
+        <div class="metric">
+          <span>{{'Pooled'|translate}} {{item.token1Name}}</span>
+          <span>{{item.pair.reserve1}}</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="metric">
+          <span>{{'Your LP tokens'|translate}}</span>
+          <span>{{ (showAmount(item.liquidityTokenBalance)).toFixed(8) }}</span>
+        </div>
+        <div class="metric">
+          <span>{{'Your pool share'|translate}}</span>
+          <span>{{ (item.share * 1.0).toFixed(8) }} %</span>
+        </div>
+        <div class="metric">
+          <span>{{'You pooled' |translate}} {{item.token0Name}}</span>
+          <span>{{ (item.share * item.pair.reserve0 / 100).toFixed(8) }}</span>
+        </div>
+        <div class="metric">
+          <span>{{'You pooled'|translate}} {{item.token1Name}}</span>
+          <span>{{ (item.share * item.pair.reserve1 / 100).toFixed(8) }}</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="action-buttons" mat-raised-button color="primary" (click)="removeLiquidity($index)">
+            {{'Remove'|translate}}
+          </button>
+        </div>
+      </div>
+      }
+    </div>
+    }
+
+    <div class="load-more">
+      @if(existedLiquidityList.length > 0) {
+      <button mat-stroked-button color="primary" (click)="getExistLiquidity()">
+        {{'load more'|translate}}
+      </button>
+      }
+    </div>
+  </section>
+</div>
+
+<ngx-ui-loader></ngx-ui-loader>

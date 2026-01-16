@@ -1,0 +1,60 @@
+.tokens-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.token-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  color: var(--text);
+}
+
+.token-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.index {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.name {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.name:hover {
+  color: var(--primary-dark);
+}
+
+.price {
+  font-weight: 700;
+}
+
+.token-body {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+}
+
+.strong {
+  font-weight: 700;
+}

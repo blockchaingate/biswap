@@ -1,0 +1,11 @@
+.pager {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  color: var(--text);
+}
+
+.page-index {
+  font-weight: 700;
+}

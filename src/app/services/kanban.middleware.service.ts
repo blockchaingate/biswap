@@ -15,22 +15,15 @@ export class KanbanMiddlewareService {
     private utilService: UtilsService,
     private web3Service: Web3Service,
     private kanbanService: KanbanService
-  ) {}
+  ) { }
 
-  async balanceOfToken(pairAddress: string, tokenType: number) {
-    var params = [pairAddress, tokenType.toString()];
-    var abiHex = this.web3Service.getBalanceOfProxy(params);
-
-    var result = await this.kanbanService.kanbanCall1(
-      environment.smartConractAdressProxy,
-      abiHex
-    );
-    let res: any = result;
-    var value = this.web3Service.decodeabiHex(res.data, 'uint256');
-    var temp = Number(value);
-    return Number(new BigNumber(temp).dividedBy(new BigNumber(1e18)));
-  }
-
+  /*
+getQuoteV3(
+  reserve1, reserve2, amount1
+) {
+  return new BigNumber(reserve1).multipliedBy(reserve2).dividedBy(new BigNumber(amount1)).toNumber();
+}
+*/
   async getTotalSupply(pairAddress: string) {
     var abiHex = this.web3Service.totalSupply();
 
@@ -42,12 +35,10 @@ export class KanbanMiddlewareService {
     return Number(new BigNumber(temp).dividedBy(new BigNumber(1e18)));
   }
 
-
   async getliquidityBalanceOfuser(pairAddress: string) {
     if (this.storageService.getWalletSession() != null) {
-      const addressArray = this.storageService
-        .getWalletSession()
-        .state.accounts[0].split(':');
+      const walletSesson: any = this.storageService.getWalletSession();
+      const addressArray = walletSesson == null ? [] : walletSesson.state.accounts[0].split(':');
       const walletAddress = addressArray[addressArray.length - 1];
       const params = [this.utilService.fabToExgAddress(walletAddress)];
       var abiHex = this.web3Service.getBalanceOf(params);
@@ -60,7 +51,7 @@ export class KanbanMiddlewareService {
     } else return null;
   }
 
-  async getQuote(params: any) {
+  async getQuote(params: any, decimals: number) {
     var abiHex = this.web3Service.quote(params);
     console.log('abiHex => ' + abiHex);
     var result = await this.kanbanService.kanbanCall1(
@@ -70,7 +61,9 @@ export class KanbanMiddlewareService {
 
     let res: any = result;
     var value = this.web3Service.decodeabiHex(res.data, 'uint256');
+    console.log('value for quote=', value);
     var temp = Number(value);
-    return Number(new BigNumber(temp).dividedBy(new BigNumber(1e18)));
+    console.log('temp for quote=', temp);
+    return new BigNumber(temp).shiftedBy(-decimals).toNumber();
   }
 }

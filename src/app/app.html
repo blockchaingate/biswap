@@ -1,0 +1,26 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav role="navigation">
+    <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+@if(pairingVisible) {
+<div class="pairing-overlay" (click)="closePairing()">
+  <div class="pairing-card" (click)="$event.stopPropagation()">
+    <h3>Connect Wallet</h3>
+    <p>Scan with PayCool or copy the link to pair your wallet.</p>
+    <img class="pairing-qr" [src]="pairingQrUrl" alt="Wallet QR" />
+    <div class="pairing-actions">
+      <button class="pairing-btn outline" type="button" (click)="copyPairingLink()">Copy Link</button>
+      <button class="pairing-btn primary" type="button" (click)="confirmPairing()">I have connected</button>
+    </div>
+  </div>
+</div>
+}

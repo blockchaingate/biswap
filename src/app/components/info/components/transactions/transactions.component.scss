@@ -1,0 +1,36 @@
+.container {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-size: 12px;
+  background: #fff;
+}
+
+.title {
+  background: var(--surface-2);
+  color: var(--text);
+  height: 36px;
+  font-weight: 700;
+}
+
+.formrow {
+  border-bottom: 1px solid var(--border);
+  height: 24px;
+}
+
+.titiCol a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: all 0.2s;
+  vertical-align: middle;
+}
+
+.titiCol a:hover {
+  color: var(--primary-dark);
+}
+
+@media(max-width: 640px) {
+  .container {
+    font-size: 10px;
+  }
+}

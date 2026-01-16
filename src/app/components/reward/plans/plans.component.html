@@ -1,0 +1,28 @@
+<div class="plans-grid">
+  @for(item of plans; track item.pairName) {
+  <div class="plan-card">
+    <div class="plan-header">
+      <div class="pair">{{item.pairName}}</div>
+      <div class="token">{{item.tokenName}}</div>
+    </div>
+    <div class="plan-body">
+      <div class="plan-row">
+        <span>{{'Interval Blk'|translate}}</span>
+        <span class="strong">{{item.interval}}</span>
+      </div>
+      <div class="plan-row">
+        <span>{{'Amount'|translate}}</span>
+        <span class="strong">{{item.amount}}</span>
+      </div>
+      <div class="plan-row">
+        <span>{{'Start Blk'|translate}}</span>
+        <span>{{item.blockstart}}</span>
+      </div>
+      <div class="plan-row">
+        <span>{{'End Blk'|translate}}</span>
+        <span>{{item.blockend}}</span>
+      </div>
+    </div>
+  </div>
+  }
+</div>
