@@ -437,7 +437,10 @@ export class ConnectService {
 
     // No user or mismatch -> Attempt to login
     this.logger.info('No valid session for address, initiating login...');
-    this.login(address);
+    // Biswap DApp does not require sign-in challenge (JWT). 
+    // Just having the address is sufficient.
+    // this.login(address); 
+    this.connectionState.next('open'); // Ensure open state
   }
 
   login(address: string) {
