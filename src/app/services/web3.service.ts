@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Buffer } from 'buffer';
 import { environment } from 'src/environments/environment';
 import Web3 from 'web3';
-import Common from '@ethereumjs/common';
-import * as Eth from '@ethereumjs/tx';
+import { createCustomCommon, Mainnet } from '@ethereumjs/common';
+import { createLegacyTx } from '@ethereumjs/tx';
+import type { LegacyTxData } from '@ethereumjs/tx';
 import { SmartContractServices } from './smartcontract.service';
 
 @Injectable({
@@ -169,12 +171,12 @@ export class Web3Service {
 
     console.log('gasPrice=', gasPrice);
     console.log('gasLimit=', gasLimit);
-    const txObject = {
-      to: address,
+    const txObject: LegacyTxData = {
+      to: address as `0x${string}`,
       nonce: nonce,
-      data: '0x' + abiHex,
+      data: `0x${abiHex}`,
       value: value,
-      gas: gasLimit,
+      gasLimit: gasLimit,
 
       // coin: '0x',
       gasPrice: gasPrice, // in wei
@@ -185,28 +187,25 @@ export class Web3Service {
 
     let txhex = '';
 
-    const customCommon = Common.forCustomChain(
-      environment.chains.ETH.chain,
+    const customCommon = createCustomCommon(
       {
         name: environment.chains.KANBAN.chain.name,
-        networkId: environment.chains.KANBAN.chain.networkId,
         chainId: environment.chains.KANBAN.chain.chainId,
       },
-      environment.chains.ETH.hardfork
+      Mainnet,
+      { hardfork: environment.chains.ETH.hardfork }
     );
     console.log('txObject===', txObject);
-    let tx;
     // if(environment.production) {
     //   tx = new KanbanTxService(txObject, { common: customCommon });
     // } else {
     //   tx = new Eth.Transaction(txObject, { common: customCommon });
     // }
 
-    tx = new Eth.Transaction(txObject, { common: customCommon });
-
-    tx.sign(privKey);
-    const serializedTx = tx.serialize();
-    txhex = '0x' + serializedTx.toString('hex');
+    const tx = createLegacyTx(txObject, { common: customCommon });
+    const signedTx = tx.sign(privKey);
+    const serializedTx = signedTx.serialize();
+    txhex = '0x' + Buffer.from(serializedTx).toString('hex');
     console.log('txhex');
     console.log(txhex);
     return txhex;
